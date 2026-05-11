@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVEL97X26S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVEL97X26S');
+  </script>
+
   <title>Nissan Patrol Blog Dubai | Y61 Y62 Tips, Costs, Common Problems</title>
   <meta name="description" content="Nissan Patrol guides for UAE owners. Service costs, Y62 problems, AC issues, suspension upgrades, pre-purchase tips.">
   <meta name="keywords" content="Nissan Patrol blog, Y61 Y62 tips, Dubai Patrol, repair guides, maintenance tips">
@@ -24,262 +34,651 @@
   <meta name="twitter:description" content="Patrol owner guides, service tips, and maintenance advice">
   <meta name="twitter:image" content="https://patrolgarage.ae/images/og-blog.jpg">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="../css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-1: #111111;
+      --bg-2: #161616;
+      --bg-light: #f5f5f5;
+      --bg-warm: #e8e8e8;
+      --line: rgba(255,255,255,0.1);
+      --line-strong: rgba(255,255,255,0.2);
+      --line-dark: rgba(0,0,0,0.1);
+      --line-dark-strong: rgba(0,0,0,0.2);
+      --ink: #0a0a0a;
+      --ink-2: #2a2a2a;
+      --ink-3: #5a5a5a;
+      --white: #ffffff;
+      --text: #ededed;
+      --text-2: #a3a3a3;
+      --text-3: #6a6a6a;
+      --whatsapp: #25d366;
+      --max-w: 1280px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Archivo', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Archivo', sans-serif;
+      color: var(--white);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Top strip */
+    .top-strip {
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 0.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+    }
+    .top-strip-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .top-strip-right { display: flex; gap: 1.5rem; }
+    .dot {
+      width: 6px; height: 6px; background: #22c55e; border-radius: 50%;
+      display: inline-block; box-shadow: 0 0 6px #22c55e;
+      animation: pulse 2s ease-in-out infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes pulse { 0%,100% {opacity:1;} 50% {opacity:0.5;} }
+    @media (max-width: 720px) { .top-strip-right { display: none; } }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 1.4rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    }
+
+    /* Logo — simple wordmark */
+    .logo {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .logo .sep {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--white);
+      border-radius: 50%;
+      transform: translateY(-3px);
+    }
+    .logo .location {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 400;
+      font-size: 0.7rem;
+      color: var(--text-3);
+      letter-spacing: 0.15em;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2.25rem; align-items: center; }
+    nav a {
+      color: var(--text-2); font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.02em; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--white); }
+    .header-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--white); color: var(--bg);
+      padding: 0.7rem 1.3rem;
+      font-weight: 700; font-size: 0.82rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .header-cta:hover { background: var(--text); }
+    .header-cta svg { width: 14px; height: 14px; }
+    .menu-toggle {
+      display: none; background: transparent;
+      border: 1px solid var(--line-strong); color: var(--white);
+      width: 42px; height: 42px; cursor: pointer; font-size: 1.2rem;
+    }
+    @media (max-width: 920px) {
+      nav, .header-cta { display: none; }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .logo .location { display: none; }
+    }
+
+    /* Hero — photo dominant */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 90px);
+      display: flex; align-items: flex-end;
+      overflow: hidden; isolation: isolate;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -2; }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.2) 30%, rgba(10,10,10,0.7) 75%, rgba(10,10,10,0.95) 100%);
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 5rem 1.5rem 4rem; width: 100%;
+    }
+    .hero-meta {
+      display: flex; gap: 0.75rem; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-2);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-meta-line { width: 32px; height: 1px; background: var(--white); }
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      margin-bottom: 2rem;
+      max-width: 14ch;
+    }
+    .hero-lede {
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      color: var(--text);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.55;
+    }
+
+    /* Sections */
+    section.dark { background: var(--bg); padding: clamp(5rem, 10vw, 8rem) 0; }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--white);
+      letter-spacing: 0.15em; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-num::before {
+      content: ''; width: 24px; height: 1px; background: currentColor;
+    }
+    .section-head { max-width: 800px; margin-bottom: 4rem; }
+    .section-head h2 {
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      font-weight: 900; letter-spacing: -0.04em;
+      line-height: 0.95; margin-bottom: 1.5rem;
+    }
+    .section-head p {
+      font-size: 1.1rem; max-width: 620px; line-height: 1.6;
+      color: var(--text-2);
+    }
+
+    /* Journal grid */
+    .journal-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    @media (max-width: 880px) { .journal-grid { grid-template-columns: 1fr; } }
+    .journal-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.25s;
+    }
+    .journal-card:last-child { border-right: none; }
+    @media (max-width: 880px) { .journal-card { border-right: none; } }
+    .journal-card:hover { background: var(--bg-1); }
+    .journal-meta {
+      display: flex; gap: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-3);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 1.75rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .journal-meta span:first-child { color: var(--white); }
+    .journal-card h3 {
+      font-size: 1.5rem; font-weight: 800;
+      line-height: 1.05; letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+    .journal-card h3 a { transition: color 0.2s; }
+    .journal-card h3 a:hover { color: var(--text-2); }
+    .journal-excerpt {
+      color: var(--text-2); font-size: 0.95rem;
+      line-height: 1.55; margin-bottom: 1.75rem;
+    }
+    .journal-read {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--white);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding-bottom: 4px; border-bottom: 1px solid var(--white);
+    }
+    .journal-read svg { width: 12px; height: 12px; }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--bg-light);
+      color: var(--ink);
+      padding: 4rem 0;
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .cta-banner-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem;
+      display: grid; grid-template-columns: 1.5fr 1fr;
+      gap: 3rem; align-items: center;
+    }
+    @media (max-width: 880px) {
+      .cta-banner-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .cta-banner h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      color: var(--ink);
+      letter-spacing: -0.03em; line-height: 1.05;
+      font-weight: 900;
+    }
+    .cta-banner p {
+      color: var(--ink-3);
+      font-size: 1rem;
+      margin-top: 0.75rem;
+      max-width: 480px;
+    }
+    .cta-banner-actions {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end;
+    }
+    @media (max-width: 880px) { .cta-banner-actions { justify-content: flex-start; } }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.6rem; padding: 1.1rem 1.8rem;
+      font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: all 0.2s; cursor: pointer;
+      border: 1.5px solid transparent; white-space: nowrap;
+    }
+    .btn-dark {
+      background: var(--bg); color: var(--white);
+    }
+    .btn-dark:hover {
+      background: var(--ink-2);
+    }
+    .btn-ghost-dark {
+      background: transparent; color: var(--ink);
+      border-color: var(--line-dark-strong);
+    }
+    .btn-ghost-dark:hover {
+      background: var(--ink); color: var(--white); border-color: var(--ink);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg); color: var(--text-2);
+      padding: 5rem 0 0; border-top: 1px solid var(--line);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; padding-bottom: 4rem;
+      border-bottom: 1px solid var(--line);
+    }
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    .footer-brand .logo { margin-bottom: 1.5rem; }
+    .footer-brand p {
+      max-width: 320px; margin-bottom: 1.5rem;
+      font-size: 0.95rem; line-height: 1.6;
+    }
+    .footer-contact {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; line-height: 2;
+    }
+    .footer-contact .label {
+      color: var(--text-3); display: inline-block; min-width: 80px;
+    }
+    .footer-contact a { color: var(--white); transition: color 0.2s; }
+    .footer-contact a:hover { color: var(--text-2); }
+    .footer-col h4 {
+      color: var(--white); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.7rem; }
+    .footer-col a { font-size: 0.92rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      padding: 2rem 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--text-3);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    @media (max-width: 600px) {
+      .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+
+    /* WhatsApp */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 56px; height: 56px;
+      background: var(--whatsapp); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 12px 32px -6px rgba(37,211,102,0.5);
+      z-index: 90; transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; color: #fff; }
+
+    ::selection { background: var(--white); color: var(--bg); }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
+
+  <div class="top-strip">
+    <div class="top-strip-inner">
+      <div><span class="dot"></span>OPEN NOW · RAS AL KHOR</div>
+      <div class="top-strip-right">
+        <span>SUN–THU 09:00–19:00</span>
+        <span>SAT 09:00–14:00</span>
+      </div>
+    </div>
+  </div>
+
   <header>
-    <div class="header-container">
+    <div class="header-inner">
       <a href="/" class="logo">
-        <span>PATROL</span>
-        <span>GARAGE</span>
+        <span>Patrol Garage</span>
+        <span class="sep"></span>
+        <span class="location">Dubai</span>
       </a>
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/services.html">Services</a></li>
-          <li><a href="/about.html">About</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="./">Journal</a></li>
+          <li><a href="../contact.html">Contact</a></li>
         </ul>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-      <a href="tel:+971582211201" class="call-btn">Call Now</a>
+      <a href="tel:+971582211201" class="header-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +971 58 221 1201
+      </a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero">
-    <picture>
-      <source srcset="../images/nissan-patrol-y62-dubai-desert.avif" type="image/avif">
-      <img src="../images/nissan-patrol-y62-dubai-desert.jpg" alt="White Nissan Patrol Y62 in Dubai desert">
-    </picture>
-    <div class="hero-content">
-      <h1>Patrol Garage Blog</h1>
-      <p class="hero-subtitle">Tips, guides, and insights for Nissan Patrol owners in Dubai and the UAE</p>
+    <div class="hero-bg">
+      <picture>
+        <source srcset="../images/nissan-patrol-y62-dubai-desert.avif" type="image/avif">
+        <img src="../images/nissan-patrol-y62-dubai-desert.jpg" alt="Nissan Patrol Y62 in Dubai desert">
+      </picture>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-meta">
+        <span class="hero-meta-line"></span>
+        <span>Journal</span>
+        <span>·</span>
+        <span>Patrol Guides</span>
+      </div>
+      <h1>Patrol Owner<br>Guides.</h1>
+      <p class="hero-lede">
+        Honest advice on common issues, real costs, and modifications—written for UAE conditions.
+      </p>
     </div>
   </section>
 
-  <!-- Blog Grid -->
-  <section>
-    <div class="blog-grid">
-      <!-- Post 1 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">📰</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Problems</span>
-            <span>May 10, 2026</span>
-          </div>
-          <h3><a href="nissan-patrol-y62-problems-dubai.html">Common Nissan Patrol Y62 Problems in Dubai (2026 Guide)</a></h3>
-          <p class="blog-excerpt">Common Y62 issues UAE owners face: gearbox shudder, AC failure, suspension wear. Symptoms, causes, repair costs.</p>
-          <a href="nissan-patrol-y62-problems-dubai.html" class="read-more">Read Article →</a>
-        </div>
+  <section class="dark">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">Latest Articles</div>
+        <h2>Service Costs,<br>Common Problems.</h2>
+        <p>Real-world guides from a Dubai specialist. Y61 and Y62 insights, maintenance costs, suspension upgrades, pre-purchase tips, and everything in between.</p>
       </div>
 
-      <!-- Post 2 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">💰</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Maintenance</span>
-            <span>May 8, 2026</span>
+      <div class="journal-grid">
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>PROBLEMS</span>
+            <span>05/2026</span>
           </div>
-          <h3><a href="nissan-patrol-service-cost-dubai.html">Nissan Patrol Service Cost Dubai 2026 (Y61 & Y62 Pricing)</a></h3>
-          <p class="blog-excerpt">Real Nissan Patrol service costs in Dubai 2026. Minor service, major service, parts pricing for Y61 and Y62.</p>
-          <a href="nissan-patrol-service-cost-dubai.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-y62-problems-dubai.html">Common Y62 Problems in Dubai</a></h3>
+          <p class="journal-excerpt">Gearbox shudders, AC failures, suspension wear — the full list of Y62 issues UAE owners face.</p>
+          <a href="nissan-patrol-y62-problems-dubai.html" class="journal-read">
+            Read · 6 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 3 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">❄️</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Repair</span>
-            <span>May 5, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>COSTS</span>
+            <span>05/2026</span>
           </div>
-          <h3><a href="nissan-patrol-ac-problems-dubai.html">Nissan Patrol AC Problems in Dubai Heat (Causes & Fixes)</a></h3>
-          <p class="blog-excerpt">Why Patrol ACs fail in UAE summer. Compressor, gas, blower motor issues. Diagnosis and repair costs.</p>
-          <a href="nissan-patrol-ac-problems-dubai.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-service-cost-dubai.html">Patrol Service Cost Dubai 2026</a></h3>
+          <p class="journal-excerpt">Real AED prices for minor service, major service, and parts on Y61 and Y62 — straight from a Dubai specialist.</p>
+          <a href="nissan-patrol-service-cost-dubai.html" class="journal-read">
+            Read · 8 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 4 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">⬆️</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Upgrades</span>
-            <span>May 2, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>CLIMATE</span>
+            <span>05/2026</span>
           </div>
-          <h3><a href="nissan-patrol-suspension-dubai.html">Nissan Patrol Suspension Upgrade Dubai | Lift Kits & Repair</a></h3>
-          <p class="blog-excerpt">Patrol suspension wear, lift kit options, off-road upgrades. What works for UAE roads and dunes. Costs in AED.</p>
-          <a href="nissan-patrol-suspension-dubai.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-ac-problems-dubai.html">AC Problems in Dubai Heat</a></h3>
+          <p class="journal-excerpt">Why Patrol ACs fail in summer, what causes it, and what repairs actually cost in Dubai.</p>
+          <a href="nissan-patrol-ac-problems-dubai.html" class="journal-read">
+            Read · 5 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 5 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">⚙️</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Problems</span>
-            <span>Apr 29, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>UPGRADES</span>
+            <span>05/2026</span>
           </div>
-          <h3><a href="nissan-patrol-gearbox-problems-uae.html">Nissan Patrol Gearbox Problems UAE (Y61 & Y62 Repairs)</a></h3>
-          <p class="blog-excerpt">Patrol gearbox issues common in UAE: slipping, shuddering, leaks. Diagnosis, repair cost, and prevention tips.</p>
-          <a href="nissan-patrol-gearbox-problems-uae.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-suspension-dubai.html">Suspension Upgrade Dubai</a></h3>
+          <p class="journal-excerpt">Patrol suspension wear, lift kit options, off-road upgrades. What works for UAE roads and dunes. Costs in AED.</p>
+          <a href="nissan-patrol-suspension-dubai.html" class="journal-read">
+            Read · 7 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 6 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">🛢️</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Maintenance</span>
-            <span>Apr 26, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>PROBLEMS</span>
+            <span>04/2026</span>
           </div>
-          <h3><a href="best-oil-nissan-patrol-uae-heat.html">Best Oil for Nissan Patrol in UAE Heat (Y61 & Y62)</a></h3>
-          <p class="blog-excerpt">What engine oil to use for Patrol in UAE summer. Viscosity, brands, change intervals for Y61 and Y62.</p>
-          <a href="best-oil-nissan-patrol-uae-heat.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-gearbox-problems-uae.html">Gearbox Problems UAE</a></h3>
+          <p class="journal-excerpt">Patrol gearbox issues common in UAE: slipping, shuddering, leaks. Diagnosis, repair cost, and prevention tips.</p>
+          <a href="nissan-patrol-gearbox-problems-uae.html" class="journal-read">
+            Read · 6 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 7 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">🔄</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Buyer Guide</span>
-            <span>Apr 23, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>MAINTENANCE</span>
+            <span>04/2026</span>
           </div>
-          <h3><a href="nissan-patrol-y61-vs-y62-dubai.html">Nissan Patrol Y61 vs Y62: Which to Buy in Dubai (2026)</a></h3>
-          <p class="blog-excerpt">Y61 vs Y62 comparison for UAE buyers: reliability, running costs, off-road, parts availability. Dubai specialist's honest take.</p>
-          <a href="nissan-patrol-y61-vs-y62-dubai.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="best-oil-nissan-patrol-uae-heat.html">Best Oil for Nissan Patrol</a></h3>
+          <p class="journal-excerpt">What engine oil to use for Patrol in UAE summer. Viscosity, brands, change intervals for Y61 and Y62.</p>
+          <a href="best-oil-nissan-patrol-uae-heat.html" class="journal-read">
+            Read · 5 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 8 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">🔧</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Local Guide</span>
-            <span>Apr 20, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>BUYER GUIDE</span>
+            <span>04/2026</span>
           </div>
-          <h3><a href="nissan-patrol-mechanic-al-quoz.html">Nissan Patrol Mechanic Al Quoz vs Ras Al Khor (Dubai Guide)</a></h3>
-          <p class="blog-excerpt">Where to find a Nissan Patrol specialist in Dubai. Al Quoz vs Ras Al Khor garages compared, what to look for.</p>
-          <a href="nissan-patrol-mechanic-al-quoz.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-y61-vs-y62-dubai.html">Y61 vs Y62: Which to Buy</a></h3>
+          <p class="journal-excerpt">Y61 vs Y62 comparison for UAE buyers: reliability, running costs, off-road, parts availability. Dubai specialist's honest take.</p>
+          <a href="nissan-patrol-y61-vs-y62-dubai.html" class="journal-read">
+            Read · 8 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 9 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">🏜️</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Off-Road</span>
-            <span>Apr 17, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>LOCAL GUIDE</span>
+            <span>04/2026</span>
           </div>
-          <h3><a href="nissan-patrol-off-road-uae.html">Nissan Patrol Off-Road UAE | Setup, Mods, Common Damage</a></h3>
-          <p class="blog-excerpt">Setting up your Patrol for UAE dunes and off-road. Tyres, suspension, recovery gear, common damage prevention.</p>
-          <a href="nissan-patrol-off-road-uae.html" class="read-more">Read Article →</a>
-        </div>
-      </div>
+          <h3><a href="nissan-patrol-mechanic-al-quoz.html">Mechanic: Al Quoz vs Ras Al Khor</a></h3>
+          <p class="journal-excerpt">Where to find a Nissan Patrol specialist in Dubai. Al Quoz vs Ras Al Khor garages compared, what to look for.</p>
+          <a href="nissan-patrol-mechanic-al-quoz.html" class="journal-read">
+            Read · 6 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
 
-      <!-- Post 10 -->
-      <div class="blog-card">
-        <div class="blog-thumbnail">✓</div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Buyer Guide</span>
-            <span>Apr 14, 2026</span>
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>OFF-ROAD</span>
+            <span>04/2026</span>
           </div>
-          <h3><a href="nissan-patrol-pre-purchase-inspection.html">Nissan Patrol Pre-Purchase Inspection Dubai (Used Buyer Guide)</a></h3>
-          <p class="blog-excerpt">Buying a used Patrol in UAE? What to inspect: engine, gearbox, chassis, electronics. Y61 and Y62 red flags.</p>
-          <a href="nissan-patrol-pre-purchase-inspection.html" class="read-more">Read Article →</a>
-        </div>
+          <h3><a href="nissan-patrol-off-road-uae.html">Off-Road UAE Setup & Mods</a></h3>
+          <p class="journal-excerpt">Setting up your Patrol for UAE dunes and off-road. Tyres, suspension, recovery gear, common damage prevention.</p>
+          <a href="nissan-patrol-off-road-uae.html" class="journal-read">
+            Read · 7 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <article class="journal-card">
+          <div class="journal-meta">
+            <span>BUYER GUIDE</span>
+            <span>04/2026</span>
+          </div>
+          <h3><a href="nissan-patrol-pre-purchase-inspection.html">Pre-Purchase Inspection Dubai</a></h3>
+          <p class="journal-excerpt">Buying a used Patrol in UAE? What to inspect: engine, gearbox, chassis, electronics. Y61 and Y62 red flags.</p>
+          <a href="nissan-patrol-pre-purchase-inspection.html" class="journal-read">
+            Read · 6 min
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Contact CTA -->
-  <section class="cta-section">
-    <h2>Have a Question About Your Patrol?</h2>
-    <p>Can't find what you're looking for? Reach out to our team directly.</p>
-    <div class="cta-buttons">
-      <a href="/contact.html" class="btn">Send us a Message</a>
-      <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer" class="btn outline">WhatsApp Us</a>
+  <section class="cta-banner">
+    <div class="cta-banner-inner">
+      <div>
+        <h2>Patrol giving you trouble?</h2>
+        <p>Send a quick message and we'll tell you what's likely wrong and roughly what it costs.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="https://wa.me/971582211201" target="_blank" rel="noopener" class="btn btn-dark">WhatsApp</a>
+        <a href="tel:+971582211201" class="btn btn-dark">Call Now</a>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Patrol Garage</h4>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--spacing-md);">
-            Nissan Patrol specialists in Ras Al Khor, Dubai. Over 10 years of expertise.
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.85rem;">
-            <strong>Phone:</strong> <a href="tel:+971582211201">+971 58 221 1201</a><br>
-            <strong>WhatsApp:</strong> <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer">+971 58 221 1201</a>
-          </p>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span>Patrol Garage</span>
+            <span class="sep"></span>
+            <span class="location">Dubai</span>
+          </a>
+          <p>Nissan Patrol specialists in Ras Al Khor, Dubai. Y61 and Y62 service, repair, and modifications.</p>
+          <div class="footer-contact">
+            <span class="label">PHONE</span> <a href="tel:+971582211201">+971 58 221 1201</a><br>
+            <span class="label">WHATSAPP</span> <a href="https://wa.me/971582211201">+971 58 221 1201</a>
+          </div>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>Pages</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/services.html">Services</a></li>
-            <li><a href="/about.html">About Us</a></li>
-            <li><a href="/blog/">Blog</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="../services.html">Services</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="./">Journal</a></li>
+            <li><a href="../contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href="/services.html#service-diagnostics">Engine Diagnostics</a></li>
-            <li><a href="/services.html#service-suspension">Suspension & Lifts</a></li>
-            <li><a href="/services.html#service-ac">AC Service</a></li>
-            <li><a href="/services.html#service-modifications">Performance Mods</a></li>
-            <li><a href="/services.html#service-inspection">Pre-Purchase Inspection</a></li>
+            <li><a href="../services.html">Diagnostics</a></li>
+            <li><a href="../services.html">Suspension</a></li>
+            <li><a href="../services.html">AC Service</a></li>
+            <li><a href="../services.html">Performance</a></li>
+            <li><a href="../services.html">Inspection</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Hours</h4>
           <ul style="list-style: none;">
-            <li style="margin-bottom: 0.5rem;">Sun-Thu: 9am-7pm</li>
-            <li style="margin-bottom: 0.5rem;">Fri: Closed</li>
-            <li>Sat: 9am-2pm</li>
+            <li>SUN–THU 9–7</li>
+            <li>FRI CLOSED</li>
+            <li>SAT 9–2</li>
           </ul>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--spacing-md);">
-            <strong>Service Area:</strong> Serving Dubai — based in Ras Al Khor Industrial Area
-          </p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Patrol Garage Dubai. All rights reserved. | <a href="/sitemap.xml">Sitemap</a></p>
+        <span>© 2026 PATROL GARAGE DUBAI</span>
+        <span>BUILT IN DUBAI · RAS AL KHOR</span>
       </div>
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Chat on WhatsApp" title="Chat with us on WhatsApp">
-    💬
+  <a href="https://wa.me/971582211201" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M20.5 3.5C18.3 1.2 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4h.1c6.6 0 12-5.4 12-12 .1-3.2-1.2-6.3-3.5-8.3zm-8.4 18.4c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.3C2.2 6.6 6.6 2.2 12 2.2c2.7 0 5.2 1 7 3 1.9 1.9 2.9 4.4 2.9 7-.1 5.4-4.5 9.7-9.8 9.7z"/></svg>
   </a>
 
-  <!-- Floating Call Button (Mobile only) -->
-  <a href="tel:+971582211201" class="call-btn-float" aria-label="Call now" title="Call Patrol Garage Dubai">
-    ☎️
-  </a>
-
-  <script src="../js/main.js"></script>
 </body>
 </html>
