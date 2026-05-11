@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""generate.py — turn research JSON into a blog post draft"""
+"""generate.py — turn research JSON into AIO-ready blog post draft"""
 
 import sys
 import os
 import json
 import re
 from pathlib import Path
+from datetime import datetime
 from anthropic import Anthropic
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -33,14 +34,13 @@ NISSAN PATROL MODELS IN UAE:
 - Y62 engine: VK56VD 5.6L V8, 400hp
 - Common trims in UAE: SE, XE, LE, Platinum, Nismo
 
-DUBAI CLIMATE CONTEXT:
-- Summer temperatures hit 45-50°C ambient, 70°C+ on tarmac
-- Sand and dust ingress is constant
-- Salt humidity along the coast accelerates corrosion
-- Stop-and-go traffic in Sheikh Zayed Road, Sheikh Mohammed Bin Zayed Road
-- Off-road usage common in desert (Al Qudra, Big Red, Liwa)
+DUBAI CLIMATE:
+- Summer temperatures 45-50°C ambient, 70°C+ tarmac
+- Sand and dust ingress, salt humidity along coast
+- Heavy stop-and-go on Sheikh Zayed Road, Sheikh Mohammed Bin Zayed Road
+- Off-road usage common (Al Qudra, Big Red, Liwa)
 
-TYPICAL UAE WORKSHOP PRICING (use as plausible ranges, not exact quotes):
+TYPICAL UAE WORKSHOP PRICING (plausible ranges):
 - Major service: AED 800-2,500
 - Transmission fluid change: AED 600-1,200
 - Transmission rebuild: AED 8,000-18,000
@@ -50,51 +50,64 @@ TYPICAL UAE WORKSHOP PRICING (use as plausible ranges, not exact quotes):
 - Suspension overhaul: AED 4,000-12,000
 - Pre-purchase inspection: AED 400-800
 
-DUBAI-RELEVANT AREAS:
-- Ras Al Khor: industrial area with many workshops
-- Al Quoz: another major workshop district
-- Deira / Al Aweer: used car market
-- Sharjah Industrial: cheaper alternative workshops
+WORKSHOP AREAS: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
 
-GCC-SPECIFIC PATROL QUIRKS:
-- AC system works much harder than in temperate markets
-- Fuel quality (95 RON) is good but premium fuel is rarely needed
-- Cooling system stress is significantly higher
-- Many imported used Patrols from Japan (RHD converted) or Canada
-
-You can reference any of these facts naturally without flagging. Only flag with [NEEDS_SOURCE] for claims that would require specific data you genuinely don't have (e.g., a specific recall number, an exact dealer service interval, a named workshop's quote)."""
+You can reference any facts naturally. Only flag [NEEDS_SOURCE] for very specific data 
+(named workshop quote, specific recall number, exact dealer interval)."""
 
 
-PROMPT_TEMPLATE = """You are writing a blog post for Patrol Garage, a Nissan Patrol specialist workshop in Dubai (Ras Al Khor). Target audience: Patrol owners in the UAE searching for help with their vehicle.
+PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a Nissan Patrol specialist workshop in Dubai (Ras Al Khor). Target audience: Patrol owners in the UAE searching for help.
 
 TARGET KEYWORD: {keyword}
 
 {dubai_context}
 
-SOURCE MATERIAL (additional context to draw from):
+SOURCE MATERIAL:
 ---
 {sources}
 ---
 
-REQUIREMENTS:
-1. Length: 1500-2000 words
-2. Tone: conversational expert. Like a mechanic talking to a customer, not corporate marketing. First-person plural ("we see", "we recommend") is fine.
-3. Structure:
-   - H1 with the target keyword
-   - 200-300 word intro that hooks the reader with the actual problem
-   - 5-7 H2 sections covering different angles
-   - Specific numbers: model years, kilometers, AED costs (use the typical ranges above), part names
-   - Reference Dubai-specific factors naturally
-   - Final H2: "When to bring it to Patrol Garage" with brief CTA
-4. Only flag [NEEDS_SOURCE] for very specific data not in the context above (e.g., specific recall numbers, named workshop quotes). Standard facts about Y62/Y61/Y63, Dubai climate, typical AED price ranges are fair game.
-5. Use the degree symbol ° (not Â°). Use proper em-dashes — not â€".
-6. Output: clean HTML using only <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>. No <html>, <head>, <body>, no styling. Just the article body.
-7. End with this exact CTA block:
+THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly:
+
+1. **H1** with target keyword
+
+2. **Direct Answer block** (FIRST thing after H1): 
+   <div class="direct-answer">
+     <p><strong>Quick answer:</strong> 2-3 sentence direct answer to the keyword query with specific facts and numbers. This is what AI Overviews will cite.</p>
+   </div>
+
+3. **Evidence/Context paragraph** (200-250 words intro that hooks the reader)
+
+4. **5-7 H2 sections** covering the full query cluster. Each H2 should:
+   - Be phrased as a question when natural (e.g., "What Causes Y62 Transmission Failure in Dubai?")
+   - Have a 1-sentence direct answer immediately after the H2
+   - Then expand with details, specific AED costs, model years, Dubai context
+
+5. **FAQ section** (H2: "Frequently Asked Questions") with exactly 4 Q&A pairs in this format:
+   <div class="faq">
+     <h3>Question phrased exactly as someone would type it?</h3>
+     <p>2-4 sentence direct answer with specific facts.</p>
+   </div>
+   (Schema will be added separately)
+
+6. **Final H2: "When to bring it to Patrol Garage"** with brief CTA
+
+7. **Last updated stamp** at the very end before CTA:
+   <p class="last-updated">Last updated: {current_month_year}</p>
+
+8. **CTA block** (exactly this):
    <div class="cta">
      <p><strong>Need help with your Patrol?</strong> Call us on +971 58 221 1201 or <a href="/contact.html">request a quote</a>.</p>
    </div>
 
-Return ONLY the HTML body. No preamble, no markdown fences, no explanation."""
+REQUIREMENTS:
+- Length: 1500-2200 words
+- Tone: conversational expert. First-person plural ("we see", "we recommend").
+- Cite specific numbers: years, km, AED costs, part names. Use Dubai context facts above.
+- Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
+- Use ° (not Â°), em-dash — (not â€").
+- Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>.
+- Return ONLY the HTML body. No preamble, no markdown fences."""
 
 
 def generate_post(keyword):
@@ -112,7 +125,6 @@ def generate_post(keyword):
         print("[!] Research file has zero sources.")
         sys.exit(1)
 
-    # Prioritize forum + youtube sources over web (less marketing fluff)
     def source_priority(s):
         return {"forum": 0, "youtube": 1, "web": 2}.get(s.get("type", "web"), 3)
     sorted_sources = sorted(research["sources"], key=source_priority)
@@ -124,10 +136,12 @@ def generate_post(keyword):
         source_blocks.append(f"### SOURCE {i} [{src_type}]: {src['title']}\nURL: {src['url']}\n\n{content}\n")
     sources_text = "\n---\n".join(source_blocks)
 
+    current_month_year = datetime.now().strftime("%B %Y")
     prompt = PROMPT_TEMPLATE.format(
         keyword=keyword,
         dubai_context=DUBAI_CONTEXT,
-        sources=sources_text
+        sources=sources_text,
+        current_month_year=current_month_year
     )
 
     print(f"[+] Generating post for: {keyword}")
@@ -144,9 +158,15 @@ def generate_post(keyword):
 
     word_count = len(re.sub(r"<[^>]+>", " ", html).split())
     needs_source_count = html.count("[NEEDS_SOURCE]")
+    has_direct_answer = '<div class="direct-answer">' in html
+    has_faq = '<div class="faq">' in html
+    has_last_updated = '<p class="last-updated">' in html
 
     print(f"\n[i] Word count: {word_count}")
     print(f"[i] [NEEDS_SOURCE] flags: {needs_source_count}")
+    print(f"[i] Direct answer block: {'✓' if has_direct_answer else '✗ MISSING'}")
+    print(f"[i] FAQ block: {'✓' if has_faq else '✗ MISSING'}")
+    print(f"[i] Last updated stamp: {'✓' if has_last_updated else '✗ MISSING'}")
 
     if word_count < 1200:
         print("[!] WARNING: word count below 1200")
@@ -158,7 +178,6 @@ def generate_post(keyword):
         f.write(html)
 
     print(f"\n[+] Draft saved to {out_path}")
-    print(f"    Open it: open {out_path}")
     return out_path
 
 
