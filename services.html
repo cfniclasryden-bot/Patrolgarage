@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVEL97X26S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVEL97X26S');
+  </script>
+
   <title>Nissan Patrol Services Dubai | Service, Repair, Diagnostics</title>
   <meta name="description" content="Full Nissan Patrol service menu in Dubai. Engine, gearbox, suspension, AC, electrical, modifications. Y61 & Y62 specialists.">
   <meta name="keywords" content="Nissan Patrol service Dubai, Patrol repair, engine diagnostics, suspension, AC service, gearbox repair">
@@ -24,9 +34,9 @@
   <meta name="twitter:description" content="Full service, repair, and diagnostic menu for Nissan Patrol Y61 & Y62 in Dubai">
   <meta name="twitter:image" content="https://patrolgarage.ae/images/og-services.jpg">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- JSON-LD Schema: Service -->
   <script type="application/ld+json">
@@ -37,7 +47,7 @@
     "provider": {
       "@type": "LocalBusiness",
       "name": "Patrol Garage Dubai",
-      "telephone": "+971582211201"
+      "telephone": "+971585314281"
     },
     "areaServed": {
       "@type": "City",
@@ -46,341 +56,638 @@
     "serviceType": ["Automotive Repair", "Automotive Service", "Diagnostic Service"]
   }
   </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-1: #111111;
+      --bg-2: #161616;
+      --bg-light: #f5f5f5;
+      --bg-warm: #e8e8e8;
+      --line: rgba(255,255,255,0.1);
+      --line-strong: rgba(255,255,255,0.2);
+      --line-dark: rgba(0,0,0,0.1);
+      --line-dark-strong: rgba(0,0,0,0.2);
+      --ink: #0a0a0a;
+      --ink-2: #2a2a2a;
+      --ink-3: #5a5a5a;
+      --white: #ffffff;
+      --text: #ededed;
+      --text-2: #a3a3a3;
+      --text-3: #6a6a6a;
+      --whatsapp: #25d366;
+      --max-w: 1280px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Archivo', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Archivo', sans-serif;
+      color: var(--white);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Top strip */
+    .top-strip {
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 0.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+    }
+    .top-strip-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .top-strip-right { display: flex; gap: 1.5rem; }
+    .dot {
+      width: 6px; height: 6px; background: #22c55e; border-radius: 50%;
+      display: inline-block; box-shadow: 0 0 6px #22c55e;
+      animation: pulse 2s ease-in-out infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes pulse { 0%,100% {opacity:1;} 50% {opacity:0.5;} }
+    @media (max-width: 720px) { .top-strip-right { display: none; } }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 1.4rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    }
+
+    /* Logo — simple wordmark */
+    .logo {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .logo .sep {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--white);
+      border-radius: 50%;
+      transform: translateY(-3px);
+    }
+    .logo .location {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 400;
+      font-size: 0.7rem;
+      color: var(--text-3);
+      letter-spacing: 0.15em;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2.25rem; align-items: center; }
+    nav a {
+      color: var(--text-2); font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.02em; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--white); }
+    .header-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--white); color: var(--bg);
+      padding: 0.7rem 1.3rem;
+      font-weight: 700; font-size: 0.82rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .header-cta:hover { background: var(--text); }
+    .header-cta svg { width: 14px; height: 14px; }
+    .menu-toggle {
+      display: none; background: transparent;
+      border: 1px solid var(--line-strong); color: var(--white);
+      width: 42px; height: 42px; cursor: pointer; font-size: 1.2rem;
+    }
+    @media (max-width: 920px) {
+      nav, .header-cta { display: none; }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .logo .location { display: none; }
+    }
+
+    /* Hero — photo dominant */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 90px);
+      display: flex; align-items: flex-end;
+      overflow: hidden; isolation: isolate;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -2; }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    /* Lighter gradient — photo is dominant */
+    .hero::before {
+      content: ''; position: absolute; inset: 0; z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.2) 30%, rgba(10,10,10,0.7) 75%, rgba(10,10,10,0.95) 100%);
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 5rem 1.5rem 4rem; width: 100%;
+    }
+    .hero-meta {
+      display: flex; gap: 0.75rem; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-2);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-meta-line { width: 32px; height: 1px; background: var(--white); }
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      margin-bottom: 2rem;
+      max-width: 14ch;
+    }
+    .hero-lede {
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      color: var(--text);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.55;
+    }
+    .hero-cta {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.6rem; padding: 1.1rem 1.8rem;
+      font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: all 0.2s; cursor: pointer;
+      border: 1.5px solid transparent; white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--white); color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: var(--text); transform: translateY(-2px);
+    }
+    .btn-ghost-light {
+      background: transparent; color: var(--white);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-ghost-light:hover {
+      border-color: var(--white); background: rgba(255,255,255,0.08);
+    }
+    .btn-ghost-dark {
+      background: transparent; color: var(--ink);
+      border-color: var(--line-dark-strong);
+    }
+    .btn-ghost-dark:hover {
+      background: var(--ink); color: var(--white); border-color: var(--ink);
+    }
+    .btn-dark {
+      background: var(--bg); color: var(--white);
+    }
+    .btn-dark:hover {
+      background: var(--ink-2);
+    }
+    .btn svg { width: 14px; height: 14px; }
+
+    /* Sections */
+    section.dark { background: var(--bg); padding: clamp(5rem, 10vw, 8rem) 0; }
+    section.light { background: var(--bg-light); color: var(--ink-2); padding: clamp(5rem, 10vw, 8rem) 0; }
+    section.warm { background: var(--bg-warm); color: var(--ink-2); padding: clamp(5rem, 10vw, 8rem) 0; }
+    section.light h2, section.light h3, section.warm h2, section.warm h3 { color: var(--ink); }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--white);
+      letter-spacing: 0.15em; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    section.light .section-num, section.warm .section-num { color: var(--ink); }
+    .section-num::before {
+      content: ''; width: 24px; height: 1px; background: currentColor;
+    }
+    .section-head { max-width: 800px; margin-bottom: 4rem; }
+    .section-head h2 {
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      font-weight: 900; letter-spacing: -0.04em;
+      line-height: 0.95; margin-bottom: 1.5rem;
+    }
+    .section-head p {
+      font-size: 1.1rem; max-width: 620px; line-height: 1.6;
+    }
+    section.dark .section-head p { color: var(--text-2); }
+    section.light .section-head p, section.warm .section-head p { color: var(--ink-3); }
+
+    /* Service articles */
+    .service-article {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .service-article:last-child { border-bottom: none; }
+    .service-article h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    .service-article p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-2);
+    }
+    .service-article ul {
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+      color: var(--text-2);
+    }
+    .service-article li { margin-bottom: 0.5rem; }
+    .service-article-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .service-cta {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--bg-light);
+      color: var(--ink);
+      padding: 4rem 0;
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .cta-banner-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem;
+      display: grid; grid-template-columns: 1.5fr 1fr;
+      gap: 3rem; align-items: center;
+    }
+    @media (max-width: 880px) {
+      .cta-banner-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .cta-banner h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      color: var(--ink);
+      letter-spacing: -0.03em; line-height: 1.05;
+      font-weight: 900;
+    }
+    .cta-banner p {
+      color: var(--ink-3);
+      font-size: 1rem;
+      margin-top: 0.75rem;
+      max-width: 480px;
+    }
+    .cta-banner-actions {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end;
+    }
+    @media (max-width: 880px) { .cta-banner-actions { justify-content: flex-start; } }
+
+    /* Footer */
+    footer {
+      background: var(--bg); color: var(--text-2);
+      padding: 5rem 0 0; border-top: 1px solid var(--line);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; padding-bottom: 4rem;
+      border-bottom: 1px solid var(--line);
+    }
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    .footer-brand .logo { margin-bottom: 1.5rem; }
+    .footer-brand p {
+      max-width: 320px; margin-bottom: 1.5rem;
+      font-size: 0.95rem; line-height: 1.6;
+    }
+    .footer-contact {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; line-height: 2;
+    }
+    .footer-contact .label {
+      color: var(--text-3); display: inline-block; min-width: 80px;
+    }
+    .footer-contact a { color: var(--white); transition: color 0.2s; }
+    .footer-contact a:hover { color: var(--text-2); }
+    .footer-col h4 {
+      color: var(--white); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.7rem; }
+    .footer-col a { font-size: 0.92rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      padding: 2rem 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--text-3);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    @media (max-width: 600px) {
+      .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+
+    /* WhatsApp */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 56px; height: 56px;
+      background: var(--whatsapp); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 12px 32px -6px rgba(37,211,102,0.5);
+      z-index: 90; transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; color: #fff; }
+
+    ::selection { background: var(--white); color: var(--bg); }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
+
+  <div class="top-strip">
+    <div class="top-strip-inner">
+      <span>RAS AL KHOR · DUBAI</span>
+      <span class="top-strip-right">NISSAN PATROL SPECIALISTS</span>
+    </div>
+  </div>
+  </div>
+
   <header>
-    <div class="header-container">
-      <a href="/" class="logo">
-        <span>PATROL</span>
-        <span>GARAGE</span>
+    <div class="header-inner">
+      <a href="/" class="logo"><span>Patrol Garage</span>
+        <span class="sep"></span>
+        <span class="location">Dubai</span>
       </a>
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/services.html">Services</a></li>
-          <li><a href="/about.html">About</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog/">Journal</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-      <a href="tel:+971582211201" class="call-btn">Call Now</a>
+      <a href="tel:+971585314281" class="header-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +971 58 531 4281
+      </a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero">
-    <picture>
-      <source srcset="images/nissan-patrol-y62-dubai-desert.avif" type="image/avif">
-      <img src="images/nissan-patrol-y62-dubai-desert.jpg" alt="White Nissan Patrol Y62 in Dubai desert">
-    </picture>
-    <div class="hero-content">
-      <h1>Nissan Patrol Services</h1>
-      <p class="hero-subtitle">Complete service menu for Y61 and Y62 Patrols in Dubai</p>
+    <div class="hero-bg">
+      <picture>
+        <source srcset="images/nissan-patrol-y62-dubai-desert.avif" type="image/avif">
+        <img src="images/nissan-patrol-y62-dubai-desert.jpg" alt="Nissan Patrol Y62 in Dubai desert">
+      </picture>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-meta">
+        <span class="hero-meta-line"></span>
+        <span>Services</span>
+        <span>·</span>
+        <span>Complete Menu</span>
+      </div>
+      <h1>Built for<br>Every Job.</h1>
+      <p class="hero-lede">
+        Engine to exhaust. Oil change to full rebuild. We cover every service your Patrol needs — with the expertise to handle it right.
+      </p>
     </div>
   </section>
 
-  <!-- Services List -->
-  <section>
-    <div class="section-title">
-      <h2>Our Complete Service Menu</h2>
-    </div>
-
-    <!-- Service 1: Full Service & Maintenance -->
-    <article id="service-full-maintenance">
-      <h2>Nissan Patrol Full Service & Maintenance (Y61 & Y62)</h2>
-      <p>
-        Keep your Patrol running smoothly with a complete scheduled service. [REPLACE: detailed description, ~150 words, mention Y61/Y62, Dubai heat, common maintenance items]
-      </p>
-      <p>Our full service includes:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Oil and filter change</li>
-        <li>Fluid checks and top-ups (coolant, brake fluid, power steering)</li>
-        <li>Air filter replacement</li>
-        <li>Battery test and clean</li>
-        <li>Brake pads and rotor inspection</li>
-        <li>Suspension component check</li>
-        <li>Lights and wiper inspection</li>
-        <li>General mechanical health report</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~2-3 hours | <strong>Price Range:</strong> AED 800 - 1,500</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Interested%20in%20Full%20Service%20for%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+  <section class="dark">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">01 — Our Services</div>
+        <h2>Complete<br>Service Menu.</h2>
+        <p>From routine maintenance to complex mechanical work, we've got every system covered. Factory-trained mechanics, genuine parts, warranty on every job.</p>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 2: Engine Diagnostics -->
-    <article id="service-diagnostics">
-      <h2>Nissan Patrol Engine Diagnostics & Repair</h2>
-      <p>
-        Is your check engine light on? Strange noises or performance drops? [REPLACE: detailed description, ~150 words, mention Y61/Y62, Dubai conditions, diagnostic process]
-      </p>
-      <p>We use advanced OBD-II diagnostic equipment to:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Read all engine fault codes</li>
-        <li>Perform live data analysis</li>
-        <li>Test sensors and actuators</li>
-        <li>Identify misfires and fuel issues</li>
-        <li>Diagnose starting and running problems</li>
-        <li>Test ignition and electrical circuits</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~1-2 hours | <strong>Diagnostic Fee:</strong> AED 300 (waived with repair)</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Need%20Engine%20Diagnostics%20for%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Full Service & Maintenance</h2>
+        <p>Keep your Patrol running smoothly with scheduled service. Includes oil and filter change, fluid checks and top-ups, air filter replacement, battery test, brake inspection, suspension check, lights and wipers.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~2–3 hrs</span>
+          <span>PRICE: AED 800–1,500</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Full%20Service%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 3: Gearbox & Transmission -->
-    <article id="service-gearbox">
-      <h2>Nissan Patrol Gearbox & Transmission Service</h2>
-      <p>
-        Gearbox shuddering, slipping gears, or leaking fluid? [REPLACE: detailed description, ~150 words, mention Y61/Y62 automatic vs manual, common transmission issues in UAE heat]
-      </p>
-      <p>Our gearbox services include:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Transmission fluid and filter change</li>
-        <li>Gearbox pressure test</li>
-        <li>Shift solenoid testing and replacement</li>
-        <li>Clutch inspection and repair (manual)</li>
-        <li>Torque converter diagnosis (automatic)</li>
-        <li>Leak detection and seal replacement</li>
-        <li>Full transmission diagnostics</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~2-6 hours | <strong>Price Range:</strong> AED 1,200 - 4,500</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Need%20Gearbox%20Service%20for%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Engine Diagnostics & Repair</h2>
+        <p>Check engine light on? Strange noises or performance drops? We use advanced OBD-II diagnostic equipment to read fault codes, analyze live data, test sensors, and identify the root cause. No guessing, no parts roulette.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~1–2 hrs</span>
+          <span>DIAGNOSTIC FEE: AED 300 (waived with repair)</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Engine%20Diagnostics%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 4: Suspension & Lift Kits -->
-    <article id="service-suspension">
-      <h2>Nissan Patrol Suspension Upgrade & Lift Kits</h2>
-      <p>
-        Want to lift your Patrol for better ground clearance and off-road capability? [REPLACE: detailed description, ~150 words, mention suspension wear in Dubai roads, lift kit options, off-road use]
-      </p>
-      <p>Suspension services we offer:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Shock absorber replacement (OEM and aftermarket)</li>
-        <li>Coil spring replacement</li>
-        <li>Suspension lift kit installation</li>
-        <li>All-terrain suspension setups</li>
-        <li>Wheel alignment after lift</li>
-        <li>Stabilizer link and bushing replacement</li>
-        <li>Suspension diagnostics and inspection</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~4-8 hours | <strong>Price Range:</strong> AED 1,500 - 5,000+</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Interested%20in%20Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Gearbox & Transmission Service</h2>
+        <p>Gearbox shuddering, slipping gears, or leaking fluid? We service both automatic and manual transmissions on Y61 and Y62 Patrols. Includes transmission fluid change, pressure testing, solenoid replacement, and full diagnostics.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~2–6 hrs</span>
+          <span>PRICE: AED 1,200–4,500</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Gearbox%20Service%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 5: AC Service & Repair -->
-    <article id="service-ac">
-      <h2>Nissan Patrol AC Service & Repair (Dubai Heat)</h2>
-      <p>
-        AC not blowing cold? In Dubai summer, a broken AC isn't optional. [REPLACE: detailed description, ~150 words, mention UAE heat, common AC failures, compressor/gas/blower issues]
-      </p>
-      <p>Our AC services include:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>AC gas refill and top-up</li>
-        <li>Compressor inspection and replacement</li>
-        <li>Condenser cleaning and repair</li>
-        <li>Blower motor replacement</li>
-        <li>AC hose and connector repair</li>
-        <li>Cabin air filter replacement</li>
-        <li>Full AC system diagnostics</li>
-        <li>Refrigerant leak detection</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~1-4 hours | <strong>Price Range:</strong> AED 400 - 2,500</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=My%20Patrol%20AC%20needs%20service" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Suspension Upgrade & Lift Kits</h2>
+        <p>Want better ground clearance and off-road capability? We install suspension lifts, replace shocks and springs, align your wheels, and set up custom off-road configurations. OEM, Ironman, and custom options available.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~4–8 hrs</span>
+          <span>PRICE: AED 1,500–5,000+</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 6: Electrical & Diagnostics -->
-    <article id="service-electrical">
-      <h2>Nissan Patrol Electrical & Diagnostics</h2>
-      <p>
-        Battery problems, failing lights, or electrical gremlins? [REPLACE: detailed description, ~150 words, mention electrical systems in Patrol, Dubai heat effects on electronics, common failures]
-      </p>
-      <p>Electrical services include:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Battery test and replacement</li>
-        <li>Alternator inspection and repair</li>
-        <li>Starter motor replacement</li>
-        <li>Headlight, taillight, interior light repair</li>
-        <li>Electrical wiring diagnostics</li>
-        <li>Fuse and relay inspection</li>
-        <li>Power window and mirror repair</li>
-        <li>Complex electrical troubleshooting</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~1-3 hours | <strong>Price Range:</strong> AED 300 - 1,800</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Electrical%20issue%20with%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>AC Service & Repair</h2>
+        <p>AC not blowing cold? In Dubai summer, a broken AC isn't optional. We handle gas refills, compressor replacement, condenser cleaning, blower motor fixes, and full system diagnostics — built for 50°C heat.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~1–4 hrs</span>
+          <span>PRICE: AED 400–2,500</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=AC%20Service%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 7: Brakes, Tyres, Batteries -->
-    <article id="service-brakes">
-      <h2>Nissan Patrol Brakes, Tyres & Batteries</h2>
-      <p>
-        Brake safety is not negotiable in Dubai's traffic. [REPLACE: detailed description, ~150 words, mention brake components, tyre types for Dubai/desert, battery in heat]
-      </p>
-      <p>We service:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Brake pad and rotor replacement</li>
-        <li>Brake fluid flush and bleed</li>
-        <li>Brake hose and line inspection</li>
-        <li>Brake caliper service</li>
-        <li>Tyre replacement and alignment</li>
-        <li>Tyre rotation and balancing</li>
-        <li>Battery testing and replacement</li>
-        <li>Brake system diagnostics</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~1-3 hours | <strong>Price Range:</strong> AED 500 - 2,500</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Need%20brake%20or%20tyre%20service%20for%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Electrical & Diagnostics</h2>
+        <p>Battery problems, failing lights, or electrical gremlins? We diagnose and fix all electrical systems: battery, alternator, starter, lighting, wiring, fuses, relays, power windows, and complex electrical troubleshooting.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~1–3 hrs</span>
+          <span>PRICE: AED 300–1,800</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Electrical%20service%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 8: Pre-Purchase Inspection -->
-    <article id="service-inspection">
-      <h2>Nissan Patrol Pre-Purchase Inspection</h2>
-      <p>
-        Thinking of buying a used Patrol? Get a thorough pre-purchase inspection first. [REPLACE: detailed description, ~150 words, mention Y61/Y62 red flags, what to check, inspection checklist]
-      </p>
-      <p>Our inspection includes:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>Complete exterior check</li>
-        <li>Interior condition assessment</li>
-        <li>Engine and mechanical inspection</li>
-        <li>Gearbox function test</li>
-        <li>Brake and suspension check</li>
-        <li>AC and electrical systems test</li>
-        <li>OBD-II diagnostic scan</li>
-        <li>Detailed written report</li>
-      </ul>
-      <p><strong>Time Required:</strong> ~1.5-2 hours | <strong>Price:</strong> AED 500</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Want%20pre-purchase%20inspection%20for%20a%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Brakes, Tyres & Batteries</h2>
+        <p>Brake safety is non-negotiable. We replace pads and rotors, flush brake fluid, inspect brake systems, and perform wheel alignment. Plus tyre replacement, rotation, balancing, and battery testing for UAE conditions.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~1–3 hrs</span>
+          <span>PRICE: AED 500–2,500</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Brake%20or%20tyre%20service%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-      <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--spacing-2xl) 0;">
-    </article>
 
-    <!-- Service 9: Modifications & Upgrades -->
-    <article id="service-modifications">
-      <h2>Nissan Patrol Modifications & Performance Upgrades</h2>
-      <p>
-        Looking to customize your Patrol for more power, style, or capability? [REPLACE: detailed description, ~150 words, mention ECU tuning, exhaust, intake, styling mods, off-road upgrades]
-      </p>
-      <p>Modifications we can do:</p>
-      <ul style="margin-bottom: var(--spacing-lg);">
-        <li>ECU remapping and tuning</li>
-        <li>Exhaust system upgrades</li>
-        <li>Air intake improvements</li>
-        <li>Bumper and body kit installation</li>
-        <li>Winch and recovery gear</li>
-        <li>Lighting upgrades (LED headlights, spotlights)</li>
-        <li>Interior customization</li>
-        <li>Off-road armor and protection</li>
-      </ul>
-      <p><strong>Time Required:</strong> Varies | <strong>Price Range:</strong> AED 1,000 - 8,000+</p>
-      <div class="cta-buttons" style="margin: var(--spacing-lg) 0;">
-        <a href="https://wa.me/971582211201?text=Interested%20in%20mods%20for%20my%20Patrol" target="_blank" rel="noopener noreferrer" class="btn">Quote via WhatsApp</a>
-        <a href="tel:+971582211201" class="btn outline">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Pre-Purchase Inspection</h2>
+        <p>Buying a used Patrol? Get a thorough pre-purchase inspection before you commit. Complete exterior and interior check, engine and mechanical inspection, gearbox function test, brake and suspension check, OBD-II scan, and written report.</p>
+        <div class="service-article-meta">
+          <span>TIME: ~1.5–2 hrs</span>
+          <span>PRICE: AED 500</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Pre-purchase%20inspection%20for%20a%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
       </div>
-    </article>
-  </section>
 
-  <!-- Contact CTA -->
-  <section class="cta-section">
-    <h2>Ready to Service Your Patrol?</h2>
-    <p>Get a quick quote or book your service time. Our team will respond within 30 minutes on WhatsApp.</p>
-    <div class="cta-buttons">
-      <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer" class="btn">Message on WhatsApp</a>
-      <a href="tel:+971582211201" class="btn">Call +971 58 221 1201</a>
+      <div class="service-article">
+        <h2>Modifications & Performance Upgrades</h2>
+        <p>Looking to customize your Patrol? ECU remapping, exhaust upgrades, air intake improvements, bumper and body kits, winch and recovery gear, LED lighting, interior customization, and off-road armor.</p>
+        <div class="service-article-meta">
+          <span>TIME: Varies</span>
+          <span>PRICE: AED 1,000–8,000+</span>
+        </div>
+        <div class="service-cta">
+          <a href="https://wa.me/971585314281?text=Mods%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <section class="cta-banner">
+    <div class="cta-banner-inner">
+      <div>
+        <h2>Ready to Service Your Patrol?</h2>
+        <p>Get a quick quote or book your service time. Our team will respond within 30 minutes on WhatsApp.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="https://wa.me/971585314281" target="_blank" rel="noopener" class="btn btn-dark">WhatsApp</a>
+        <a href="tel:+971585314281" class="btn btn-ghost-dark">Call Now</a>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Patrol Garage</h4>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--spacing-md);">
-            Nissan Patrol specialists in Ras Al Khor, Dubai. Over 10 years of expertise.
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.85rem;">
-            <strong>Phone:</strong> <a href="tel:+971582211201">+971 58 221 1201</a><br>
-            <strong>WhatsApp:</strong> <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer">+971 58 221 1201</a>
-          </p>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/" class="logo"><span>Patrol Garage</span>
+            <span class="sep"></span>
+            <span class="location">Dubai</span>
+          </a>
+          <p>Nissan Patrol specialists in Ras Al Khor, Dubai. Y61 and Y62 service, repair, and modifications.</p>
+          <div class="footer-contact">
+            <span class="label">PHONE</span> <a href="tel:+971585314281">+971 58 531 4281</a><br>
+            <span class="label">WHATSAPP</span> <a href="https://wa.me/971585314281">+971 58 531 4281</a>
+          </div>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>Pages</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/services.html">Services</a></li>
-            <li><a href="/about.html">About Us</a></li>
-            <li><a href="/blog/">Blog</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog/">Journal</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href="#service-diagnostics">Engine Diagnostics</a></li>
-            <li><a href="#service-suspension">Suspension & Lifts</a></li>
-            <li><a href="#service-ac">AC Service</a></li>
-            <li><a href="#service-modifications">Performance Mods</a></li>
-            <li><a href="#service-inspection">Pre-Purchase Inspection</a></li>
+            <li><a href="services.html">Diagnostics</a></li>
+            <li><a href="services.html">Suspension</a></li>
+            <li><a href="services.html">AC Service</a></li>
+            <li><a href="services.html">Performance</a></li>
+            <li><a href="services.html">Inspection</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Hours</h4>
           <ul style="list-style: none;">
-            <li style="margin-bottom: 0.5rem;">Sun-Thu: 9am-7pm</li>
-            <li style="margin-bottom: 0.5rem;">Fri: Closed</li>
-            <li>Sat: 9am-2pm</li>
+            <li>SUN–THU 9–7</li>
+            <li>FRI CLOSED</li>
+            <li>SAT 9–2</li>
           </ul>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--spacing-md);">
-            <strong>Service Area:</strong> Serving Dubai — based in Ras Al Khor Industrial Area
-          </p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Patrol Garage Dubai. All rights reserved. | <a href="/sitemap.xml">Sitemap</a></p>
+        <span>© 2026 PATROL GARAGE DUBAI</span>
+        <span>BUILT IN DUBAI · RAS AL KHOR</span>
       </div>
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/971582211201" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Chat on WhatsApp" title="Chat with us on WhatsApp">
-    💬
+  <a href="https://wa.me/971585314281" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M20.5 3.5C18.3 1.2 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4h.1c6.6 0 12-5.4 12-12 .1-3.2-1.2-6.3-3.5-8.3zm-8.4 18.4c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.3C2.2 6.6 6.6 2.2 12 2.2c2.7 0 5.2 1 7 3 1.9 1.9 2.9 4.4 2.9 7-.1 5.4-4.5 9.7-9.8 9.7z"/></svg>
   </a>
 
-  <!-- Floating Call Button (Mobile only) -->
-  <a href="tel:+971582211201" class="call-btn-float" aria-label="Call now" title="Call Patrol Garage Dubai">
-    ☎️
-  </a>
-
-  <script src="js/main.js"></script>
 </body>
 </html>
