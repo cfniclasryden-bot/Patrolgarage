@@ -122,8 +122,8 @@ def generate_post(keyword):
         research = json.load(f)
 
     if not research["sources"]:
-        print("[!] Research file has zero sources.")
-        sys.exit(1)
+        print("[i] No sources from research - generating from keyword + Dubai context only.")
+        research["sources"] = []
 
     def source_priority(s):
         return {"forum": 0, "youtube": 1, "web": 2}.get(s.get("type", "web"), 3)
