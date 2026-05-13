@@ -2,6 +2,7 @@
 """publish.py — update sitemap, commit, deploy to Netlify"""
 
 import sys
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -50,7 +51,20 @@ def update_sitemap():
 
 
 def run(cmd, cwd=PROJECT_ROOT, capture=True):
-    print(f"    $ {' '.join(cmd)}")
+    # Hide auth token in printed command
+    safe_cmd = []
+    skip_next = False
+    for arg in cmd:
+        if skip_next:
+            safe_cmd.append("***")
+            skip_next = False
+        elif arg == "--auth":
+            safe_cmd.append(arg)
+            skip_next = True
+        else:
+            safe_cmd.append(arg)
+    print(f"    $ {' '.join(safe_cmd)}")
+
     if capture:
         result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
         if result.stdout.strip():
@@ -67,6 +81,16 @@ def publish(keyword=None):
     print("[+] Updating sitemap...")
     update_sitemap()
 
+    print("[+] Regenerating journal index...")
+    journal_result = subprocess.run(
+        ["python3", "scripts/journal_update.py"],
+        capture_output=True, text=True, cwd=PROJECT_ROOT
+    )
+    if journal_result.returncode == 0:
+        print("    Journal index updated")
+    else:
+        print(f"    [!] Journal update failed: {journal_result.stderr[:300]}")
+
     git_check = subprocess.run(
         ["git", "rev-parse", "--is-inside-work-tree"],
         cwd=PROJECT_ROOT, capture_output=True, text=True
@@ -78,7 +102,18 @@ def publish(keyword=None):
         run(["git", "commit", "-m", msg])
 
     print("\n[+] Deploying to Netlify...")
-    success = run(["netlify", "deploy", "--prod", "--dir", "."], capture=False)
+
+    # Build deploy command with env vars if available (for Railway)
+    auth_token = os.environ.get("NETLIFY_AUTH_TOKEN")
+    site_id = os.environ.get("NETLIFY_SITE_ID")
+
+    cmd = ["netlify", "deploy", "--prod", "--dir", "."]
+    if auth_token:
+        cmd.extend(["--auth", auth_token])
+    if site_id:
+        cmd.extend(["--site", site_id])
+
+    success = run(cmd, capture=False)
 
     if success:
         print("\n[+] DEPLOY SUCCESSFUL")
