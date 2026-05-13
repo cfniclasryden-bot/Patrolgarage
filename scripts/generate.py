@@ -107,6 +107,7 @@ REQUIREMENTS:
 - Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
 - Use ° (not Â°), em-dash — (not â€").
 - Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>.
+- DO NOT include image placeholders, image markdown, [HERO IMAGE], [IMAGE], <img>, or any image references. Images are added separately by the pipeline. Just write the text body.
 - Return ONLY the HTML body. No preamble, no markdown fences."""
 
 
@@ -172,6 +173,23 @@ def generate_post(keyword):
         print("[!] WARNING: word count below 1200")
     if needs_source_count > 2:
         print("[!] WARNING: too many unverified claims (>2)")
+
+    # Strip any image placeholder text the AI may have written
+    import re as _re
+    placeholder_patterns = [
+        r"\[\s*HERO\s*IMAGE\s*\]",
+        r"\[\s*IMAGE[^\]]*\]",
+        r"<!--\s*IMAGE[^>]*-->",
+        r"<img[^>]*>",
+        r"!\[[^\]]*\]\([^)]*\)",
+    ]
+    for pat in placeholder_patterns:
+        before = len(html)
+        html = _re.sub(pat, "", html, flags=_re.IGNORECASE)
+        if len(html) < before:
+            print(f"[+] Stripped image placeholder matching: {pat}")
+    html = _re.sub(r"<p>\s*</p>", "", html)
+    html = _re.sub(r"\n\s*\n\s*\n", "\n\n", html)
 
     out_path = DRAFTS_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:
