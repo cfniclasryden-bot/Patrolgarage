@@ -1,0 +1,9 @@
+[21:56:35] === PIPELINE RUN START ===
+[21:56:35] Target keyword: nissan patrol y62 vs y63 dubai comparison
+[21:56:35] Slug: nissan-patrol-y62-vs-y63-dubai-comparison
+[21:56:35] → research: nissan patrol y62 vs y63 dubai comparison
+[21:56:36]   ✓ research: nissan patrol y62 vs y63 dubai comparison done
+[21:56:36] → generate draft
+[21:56:37] [!] FAILED: generate draft
+[21:56:37]     stderr: 
+[21:56:37] === PIPELINE FAILED at: generate draft ===
