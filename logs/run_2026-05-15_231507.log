@@ -1,0 +1,9 @@
+[23:15:07] === REFRESH MODE: best engine oil nissan patrol uae heat (best-oil-nissan-patrol-uae-heat) ===
+[23:15:07] → research: best engine oil nissan patrol uae heat
+[23:15:09]   ✓ research: best engine oil nissan patrol uae heat done
+[23:15:09] → regenerate draft
+[23:16:27]   ✓ regenerate draft done
+[23:16:27] → assemble final HTML
+[23:16:28] [!] FAILED: assemble final HTML
+[23:16:28]     stderr: 
+[23:16:28] === REFRESH FAILED at: assemble final HTML ===
