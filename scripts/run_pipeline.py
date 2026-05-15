@@ -44,21 +44,52 @@ def run(cmd, desc):
     return True
 
 def run_refresh_mode(keyword, slug):
-    """Re-run pipeline stages for an existing article. Same slug, fresh content."""
+    """Re-run pipeline stages for an existing article. Always honors the existing
+    slug, even if the keyword would slugify differently. This ensures we update
+    the original URL rather than creating a new one."""
     log(f"=== REFRESH MODE: {keyword} ({slug}) ===")
 
-    stages = [
-        (["python3", "scripts/research.py", keyword], f"research: {keyword}"),
-        (["python3", "scripts/generate.py", keyword], f"regenerate draft"),
-        (["python3", "scripts/assemble.py", keyword], f"assemble final HTML"),
-        (["python3", "scripts/image_gen.py", slug], f"regenerate hero image"),
-        (["python3", "scripts/publish.py", keyword], f"publish + sitemap + deploy"),
-    ]
+    # Helper: slugify keyword like the other scripts do
+    import re
+    def slugify(text):
+        text = re.sub(r"[^\w\s-]", "", text.lower()).strip()
+        return re.sub(r"[\s_-]+", "-", text).strip("-")
 
-    for cmd, desc in stages:
-        if not run(cmd, desc):
-            log(f"=== REFRESH FAILED at: {desc} ===")
-            return 1
+    keyword_slug = slugify(keyword)
+    slug_differs = keyword_slug != slug
+    if slug_differs:
+        log(f"  NOTE: keyword slugifies to '{keyword_slug}' but article slug is '{slug}' — will rename outputs")
+
+    # Stage 1: research
+    if not run(["python3", "scripts/research.py", keyword], f"research: {keyword}"):
+        log(f"=== REFRESH FAILED at: research ==="); return 1
+
+    # Stage 2: generate draft
+    if not run(["python3", "scripts/generate.py", keyword], f"regenerate draft"):
+        log(f"=== REFRESH FAILED at: regenerate draft ==="); return 1
+
+    # If slug differs, rename the new draft (and its research) to the canonical slug
+    if slug_differs:
+        for subdir, ext in [("drafts", ".html"), ("research", ".json")]:
+            src = ROOT / subdir / f"{keyword_slug}{ext}"
+            dst = ROOT / subdir / f"{slug}{ext}"
+            if src.exists():
+                src.replace(dst)  # overwrites if exists
+                log(f"  Renamed {subdir}/{keyword_slug}{ext} → {slug}{ext}")
+
+    # Stage 3: assemble — pass the ORIGINAL keyword that maps to the article's slug.
+    # We need a keyword that slugifies to `slug`. Easiest: use slug-with-spaces as keyword.
+    canonical_keyword_for_slug = slug.replace("-", " ")
+    if not run(["python3", "scripts/assemble.py", canonical_keyword_for_slug], f"assemble final HTML"):
+        log(f"=== REFRESH FAILED at: assemble final HTML ==="); return 1
+
+    # Stage 4: image_gen (uses slug directly)
+    if not run(["python3", "scripts/image_gen.py", slug], f"regenerate hero image"):
+        log(f"=== REFRESH FAILED at: regenerate hero image ==="); return 1
+
+    # Stage 5: publish (also uses slug-derived keyword)
+    if not run(["python3", "scripts/publish.py", canonical_keyword_for_slug], f"publish + sitemap + deploy"):
+        log(f"=== REFRESH FAILED at: publish ==="); return 1
 
     # Read updated HTML and push to Supabase
     try:
