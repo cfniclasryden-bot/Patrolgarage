@@ -49,10 +49,10 @@ def run_refresh_mode(keyword, slug):
 
     stages = [
         (["python3", "scripts/research.py", keyword], f"research: {keyword}"),
-        (["python3", "scripts/generate.py", slug], f"regenerate draft"),
-        (["python3", "scripts/assemble.py", slug], f"assemble final HTML"),
+        (["python3", "scripts/generate.py", keyword], f"regenerate draft"),
+        (["python3", "scripts/assemble.py", keyword], f"assemble final HTML"),
         (["python3", "scripts/image_gen.py", slug], f"regenerate hero image"),
-        (["python3", "scripts/publish.py", slug], f"publish + sitemap + deploy"),
+        (["python3", "scripts/publish.py", keyword], f"publish + sitemap + deploy"),
     ]
 
     for cmd, desc in stages:
