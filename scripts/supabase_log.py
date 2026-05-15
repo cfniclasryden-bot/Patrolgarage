@@ -54,20 +54,25 @@ def _site_id():
     return rows[0]["id"]
 
 
-def log_article(keyword, slug, url, status="published"):
+def log_article(keyword, slug, url, status="published", content_html=None, title=None):
     """Record a published article."""
     if not _enabled():
         print("[supabase_log] disabled (missing env vars)")
         return
     try:
-        _post("articles", {
+        row = {
             "site_id": _site_id(),
             "keyword": keyword,
             "slug": slug,
             "url": url,
             "status": status,
             "published_at": datetime.utcnow().isoformat() if status == "published" else None,
-        })
+        }
+        if content_html:
+            row["content_html"] = content_html
+        if title:
+            row["title"] = title
+        _post("articles", row)
         print(f"[supabase_log] article logged: {slug}")
     except Exception as e:
         print(f"[supabase_log] article log failed (non-fatal): {e}", file=sys.stderr)

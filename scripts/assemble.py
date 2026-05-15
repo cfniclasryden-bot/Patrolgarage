@@ -61,14 +61,39 @@ Return ONLY valid JSON (no markdown, no preamble):
 
 
 def extract_faqs(draft_html):
-    """Pull FAQ Q&A pairs for FAQPage schema."""
+    """Pull FAQ Q&A pairs for FAQPage schema.
+    Handles two layouts:
+      A) Each Q&A in its own <div class="faq"><h3>...</h3><p>...</p></div>
+      B) One <div class="faq"> wrapping H2 + multiple H3/p pairs
+      C) FAQ H2 followed by H3/p pairs (no wrapper div)
+    """
     faqs = []
-    faq_pattern = r'<div class="faq">\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>\s*</div>'
-    for match in re.finditer(faq_pattern, draft_html, re.DOTALL):
-        question = re.sub(r"<[^>]+>", "", match.group(1)).strip()
-        answer = re.sub(r"<[^>]+>", "", match.group(2)).strip()
-        if question and answer:
-            faqs.append({"q": question, "a": answer})
+
+    # Layout A — per-Q&A divs
+    pattern_a = r'<div class="faq">\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>\s*</div>'
+    for match in re.finditer(pattern_a, draft_html, re.DOTALL):
+        q = re.sub(r"<[^>]+>", "", match.group(1)).strip()
+        a = re.sub(r"<[^>]+>", "", match.group(2)).strip()
+        if q and a:
+            faqs.append({"q": q, "a": a})
+    if faqs:
+        return faqs
+
+    # Layout B/C — scope to FAQ section (between FAQ H2 and next H2 or end)
+    faq_section = re.search(
+        r'<h2[^>]*>\s*(?:frequently asked questions|faq|faqs|q\s*&\s*a)\s*</h2>(.*?)(?=<h2|$)',
+        draft_html, re.I | re.S
+    )
+    scope = faq_section.group(1) if faq_section else draft_html
+
+    # Find each <h3>...</h3> followed by <p>...</p> pair within scope
+    pair_pattern = r'<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>'
+    for match in re.finditer(pair_pattern, scope, re.DOTALL):
+        q = re.sub(r"<[^>]+>", "", match.group(1)).strip()
+        a = re.sub(r"<[^>]+>", "", match.group(2)).strip()
+        if q and a and q.endswith("?"):
+            faqs.append({"q": q, "a": a})
+
     return faqs
 
 

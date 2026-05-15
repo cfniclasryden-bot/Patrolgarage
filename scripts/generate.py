@@ -104,9 +104,17 @@ REQUIREMENTS:
 - Length: 1500-2200 words
 - Tone: conversational expert. First-person plural ("we see", "we recommend").
 - Cite specific numbers: years, km, AED costs, part names. Use Dubai context facts above.
+- AUTHORITATIVE OUTBOUND LINKS (REQUIRED for AI citation): Include 2-4 contextual outbound links to authoritative sources within the article body. Use these where relevant:
+  - https://www.rta.ae (for vehicle inspection, registration, road regulations)
+  - https://www.nissan-me.com (for official Nissan UAE / Middle East specs and recalls)
+  - https://esma.gov.ae (for vehicle safety standards)
+  - https://www.moccae.gov.ae (for emissions/environmental rules)
+  - https://www.mohap.gov.ae (only if discussing health/safety angles)
+  - Wikipedia article on Nissan Patrol (https://en.wikipedia.org/wiki/Nissan_Patrol) for model history
+  Each link must be relevant to the surrounding sentence. Use natural anchor text. Open in same tab. Format: <a href="URL">anchor text</a>
 - Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
 - Use ° (not Â°), em-dash — (not â€").
-- Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>.
+- Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>, <a>.
 - DO NOT include image placeholders, image markdown, [HERO IMAGE], [IMAGE], <img>, or any image references. Images are added separately by the pipeline. Just write the text body.
 - Return ONLY the HTML body. No preamble, no markdown fences."""
 
