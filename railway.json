@@ -5,8 +5,8 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "python3 scripts/run_pipeline.py",
+    "startCommand": "python3 scripts/cron_entry.py",
     "restartPolicyType": "NEVER",
-    "cronSchedule": "0 5 * * *"
+    "cronSchedule": "*/5 * * * *"
   }
 }
