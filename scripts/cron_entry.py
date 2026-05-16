@@ -4,6 +4,11 @@ Cron entry point — runs every 5 minutes.
 - Always checks refresh queue and processes any pending refreshes.
 - Only runs the daily generator if it's the 5am UTC hour and the daily run hasn't happened today.
 """
+import os
+os.environ["TZ"] = "UTC"
+import time
+time.tzset()
+
 import subprocess
 import sys
 import os
