@@ -167,7 +167,7 @@ def build_schemas(meta, keyword, today, faqs, canonical_url):
         "@type": "AutoRepair",
         "name": "Patrol Garage Dubai",
         "image": "https://patrolgarage.ae/images/og-blog-y62.jpg",
-        "telephone": "+971582211201",
+        "telephone": "+971585143634",
         "url": "https://patrolgarage.ae",
         "areaServed": {"@type": "City", "name": "Dubai"},
         "address": {
@@ -258,8 +258,8 @@ def assemble(keyword):
     template = re.sub(r'<article>.*?</article>', new_article, template, count=1, flags=re.DOTALL)
 
     template = re.sub(
-        r'href="https://wa\.me/971582211201\?text=[^"]*"',
-        f'href="https://wa.me/971582211201?text={meta["wa_text"]}"',
+        r'href="https://wa\.me/971585143634\?text=[^"]*"',
+        f'href="https://wa.me/971585143634?text={meta["wa_text"]}"',
         template,
         count=1,
     )

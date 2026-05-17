@@ -7,7 +7,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent
 OLD_PHONE = "582211201"
 NEW_PHONE = "585143634"
-OLD_PHONE_FORMATTED = "+971 58 221 1201"
+OLD_PHONE_FORMATTED = "+971 58 514 3634"
 NEW_PHONE_FORMATTED = "+971 58 514 3634"
 
 # All HTML files in project

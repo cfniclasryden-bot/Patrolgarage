@@ -97,7 +97,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
 
 8. **CTA block** (exactly this):
    <div class="cta">
-     <p><strong>Need help with your Patrol?</strong> Call us on +971 58 221 1201 or <a href="/contact.html">request a quote</a>.</p>
+     <p><strong>Need help with your Patrol?</strong> Call us on +971 58 514 3634 or <a href="/contact.html">request a quote</a>.</p>
    </div>
 
 REQUIREMENTS:
