@@ -67,6 +67,7 @@ def log_article(keyword, slug, url, status="published", content_html=None, title
             "url": url,
             "status": status,
             "published_at": datetime.utcnow().isoformat() if status == "published" else None,
+            "created_by_luni": True,
         }
         if content_html:
             row["content_html"] = content_html
