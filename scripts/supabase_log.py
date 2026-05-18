@@ -55,7 +55,7 @@ def _site_id():
 
 
 def log_article(keyword, slug, url, status="published", content_html=None, title=None):
-    """Record a published article."""
+    """Record a published article (upsert — update if exists, insert if not)."""
     if not _enabled():
         print("[supabase_log] disabled (missing env vars)")
         return
@@ -72,7 +72,15 @@ def log_article(keyword, slug, url, status="published", content_html=None, title
             row["content_html"] = content_html
         if title:
             row["title"] = title
-        _post("articles", row)
+        # Use upsert to handle articles that already exist as pending
+        req = request.Request(
+            f"{SUPABASE_URL}/rest/v1/articles?on_conflict=site_id,keyword",
+            data=json.dumps(row).encode("utf-8"),
+            headers={**_headers(), "Prefer": "resolution=merge-duplicates"},
+            method="POST",
+        )
+        with request.urlopen(req, timeout=10) as resp:
+            resp.read()
         print(f"[supabase_log] article logged: {slug}")
     except Exception as e:
         print(f"[supabase_log] article log failed (non-fatal): {e}", file=sys.stderr)
