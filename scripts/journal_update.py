@@ -112,17 +112,12 @@ def main():
 
     # Replace grid in index.html
     index_html = INDEX.read_text()
-    new_html = re.sub(
-        r'      <div class="journal-grid">.*?      </div>',
-        new_grid,
-        index_html,
-        count=1,
-        flags=re.DOTALL,
-    )
-
-    if new_html == index_html:
-        print("[!] Failed to replace journal-grid block")
+    grid_pattern = r'      <div class="journal-grid">.*?\n      </div>'
+    if not re.search(grid_pattern, index_html, re.DOTALL):
+        print("[!] Could not find journal-grid block in index.html")
         return 1
+
+    new_html = re.sub(grid_pattern, new_grid, index_html, count=1, flags=re.DOTALL)
 
     INDEX.write_text(new_html)
     print(f"[OK] blog/index.html rebuilt with {len(posts)} cards")
