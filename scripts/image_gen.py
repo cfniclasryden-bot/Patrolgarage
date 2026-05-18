@@ -17,7 +17,7 @@ IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 # Hardcoded for Patrol Garage pipeline. Brand profile fetched from Supabase.
 SITE_ID = "03ab1c68-a6ef-48b3-987e-0069c4eb2152"
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 
 # Site-specific subject hints. Without these, brand alone can't tell DALL-E what to render.
 # These describe WHAT the article is about, brand profile describes HOW it should look.
