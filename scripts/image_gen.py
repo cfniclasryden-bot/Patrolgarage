@@ -138,13 +138,27 @@ def get_post_title(html):
 
 
 def build_prompt(title, brand):
-    """Build a brand-matched image prompt."""
+    """Build a brand-matched image prompt with strict text-hallucination guards."""
     style = brand_style_block(brand)
     base = (
-        f"Cinematic photograph illustrating: '{title}'. "
-        f"Subject: {SUBJECT_HINT}. "
-        "No text overlays, no logos, no faces, no license plates. "
-        "Wide editorial composition, 35mm lens, shallow depth of field."
+        f"Cinematic automotive photograph illustrating: '{title}'. "
+        "A Nissan Patrol Y62 SUV in a Dubai workshop or desert setting. "
+        "Dark moody lighting, professional editorial photography, "
+        "wide composition, deep blacks, warm golden Middle Eastern tones, "
+        "35mm lens, shallow depth of field, automotive magazine style.\n\n"
+        "CRITICAL CONSTRAINTS — NO TEXT ANYWHERE:\n"
+        "- NO text on car badges. The Nissan badge should be shown as the "
+        "official Nissan logo (chrome circle/oval with horizontal bar through centre), "
+        "OR omitted via lighting angle. Never invent badge text.\n"
+        "- NO license plates with any text or numbers. Either omit plates entirely "
+        "via camera angle or cropping, or show them as solid blank rectangles.\n"
+        "- NO wall signs, posters, banners, or workshop signage with any text. "
+        "Walls should be plain, industrial, or have only generic geometric patterns.\n"
+        "- NO Arabic script, no English words, no garbled characters, no fake logos.\n"
+        "- NO watermarks, captions, or overlaid text of any kind.\n"
+        "- If the model cannot render legible accurate text, it must omit text "
+        "entirely rather than approximate it.\n\n"
+        "The vehicle and scene should be visually rich but completely TEXT-FREE."
     )
     if style:
         return f"{base}\n\nBrand style: {style}"
