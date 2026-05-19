@@ -36,7 +36,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 
   <!-- JSON-LD Schema: Article -->
   <script type="application/ld+json">
@@ -160,7 +161,7 @@
   </header>
 
   <section class="hero">
-    <div class="hero-bg"><picture><source srcset="../images/nissan-patrol-y62-dubai-desert.avif" type="image/avif"><img src="../images/nissan-patrol-y62-dubai-desert.jpg" alt="Nissan Patrol"></picture></div>
+    <div class="hero-bg"><picture><source srcset="../images/nissan-patrol-y62-dubai-desert.avif" type="image/avif"><img src="../images/nissan-patrol-y62-dubai-desert.jpg" alt="Nissan Patrol" loading="eager" fetchpriority="high"></picture></div>
     <div class="hero-inner">
       <div class="hero-meta"><span class="hero-meta-line"></span><span>Gearbox</span><span>·</span><span>Transmission Issues</span></div>
       <h1>Gearbox Problems</h1>
