@@ -56,6 +56,16 @@ You can reference any facts naturally. Only flag [NEEDS_SOURCE] for very specifi
 (named workshop quote, specific recall number, exact dealer interval)."""
 
 
+AUTHORITATIVE_LINKS = [
+    "https://rta.ae",
+    "https://www.dubai.ae",
+    "https://u.ae",
+    "https://moccae.gov.ae",
+    "https://www.dubaipolice.gov.ae",
+    "https://www.ead.gov.ae",
+    "https://www.consumer.gov.ae",
+]
+
 PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a Nissan Patrol specialist workshop in Dubai (Ras Al Khor). Target audience: Patrol owners in the UAE searching for help.
 
 TARGET KEYWORD: {keyword}
@@ -104,14 +114,12 @@ REQUIREMENTS:
 - Length: 1500-2200 words
 - Tone: conversational expert. First-person plural ("we see", "we recommend").
 - Cite specific numbers: years, km, AED costs, part names. Use Dubai context facts above.
-- AUTHORITATIVE OUTBOUND LINKS (REQUIRED for AI citation): Include 2-4 contextual outbound links to authoritative sources within the article body. Use these where relevant:
-  - https://www.rta.ae (for vehicle inspection, registration, road regulations)
-  - https://www.nissan-me.com (for official Nissan UAE / Middle East specs and recalls)
-  - https://esma.gov.ae (for vehicle safety standards)
-  - https://www.moccae.gov.ae (for emissions/environmental rules)
-  - https://www.mohap.gov.ae (only if discussing health/safety angles)
-  - Wikipedia article on Nissan Patrol (https://en.wikipedia.org/wiki/Nissan_Patrol) for model history
-  Each link must be relevant to the surrounding sentence. Use natural anchor text. Open in same tab. Format: <a href="URL">anchor text</a>
+- AUTHORITATIVE SOURCES REQUIREMENT: You MUST include at least 2 outbound links to government or research authorities in the article body. Naturally integrate them where a fact is stated that benefits from a citation.
+
+  Approved authoritative sources for this site:
+{authoritative_links}
+
+  Use the exact URLs. Embed as inline links naturally in prose — e.g. 'Per <a href="https://rta.ae">the RTA</a>, all vehicles in Dubai require annual inspection...' Do NOT include them as a footnote list. Minimum 2 distinct sources per article.
 - Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
 - Use ° (not Â°), em-dash — (not â€").
 - Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>, <a>.
@@ -150,7 +158,8 @@ def generate_post(keyword):
         keyword=keyword,
         dubai_context=DUBAI_CONTEXT,
         sources=sources_text,
-        current_month_year=current_month_year
+        current_month_year=current_month_year,
+        authoritative_links="\n".join(f"  - {u}" for u in AUTHORITATIVE_LINKS),
     )
 
     print(f"[+] Generating post for: {keyword}")
