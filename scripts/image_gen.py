@@ -14,10 +14,37 @@ BLOG = ROOT / "blog"
 IMAGES_DIR = ROOT / "images" / "blog"
 IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 
+
+def _load_env_file():
+    """Load .env.local into os.environ. Checks project root first, then Luni shared keys."""
+    candidates = [
+        ROOT / ".env.local",
+        Path(__file__).resolve().parents[2] / "luni" / ".env.local",
+    ]
+    for path in candidates:
+        if path.exists():
+            for line in path.read_text().splitlines():
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                k = k.strip()
+                v = v.strip().strip('"').strip("'")
+                if k and k not in os.environ:
+                    os.environ[k] = v
+            return str(path)
+    return None
+
+
+_env_source = _load_env_file()
+if _env_source:
+    print(f"[*] Loaded env from {_env_source}")
+
+
 # Hardcoded for Patrol Garage pipeline. Brand profile fetched from Supabase.
 SITE_ID = "03ab1c68-a6ef-48b3-987e-0069c4eb2152"
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")).rstrip("/")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", os.environ.get("SUPABASE_SERVICE_ROLE_KEY", ""))
 
 # Site-specific subject hints. Without these, brand alone can't tell DALL-E what to render.
 # These describe WHAT the article is about, brand profile describes HOW it should look.
