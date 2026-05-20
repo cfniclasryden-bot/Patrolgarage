@@ -247,10 +247,9 @@ def assemble(keyword):
 
     # Swap hero background to AI-generated image for this slug
     new_hero_bg = (
-        f'<div class="hero-bg"><picture>'
-        f'<source srcset="../images/blog/{slug}.avif" type="image/avif">'
-        f'<img src="../images/blog/{slug}.jpg" alt="{meta["h1_short"]}">'
-        f'</picture></div>'
+        f'<div class="hero-bg">'
+        f'<img src="../images/blog/{slug}.jpg" alt="{meta["h1_short"]}" loading="eager" fetchpriority="high">'
+        f'</div>'
     )
     template = re.sub(r'<div class="hero-bg">.*?</div>', new_hero_bg, template, count=1, flags=re.DOTALL)
 
