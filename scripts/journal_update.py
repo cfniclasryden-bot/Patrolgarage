@@ -63,7 +63,7 @@ def extract_post_meta(html_path):
 
     # Date from file mtime
     mtime = datetime.fromtimestamp(html_path.stat().st_mtime)
-    date_str = mtime.strftime("%m/%Y")
+    date_str = mtime.strftime("%B %d, %Y")
 
     # Word count for read time
     text_only = re.sub(r'<[^>]+>', ' ', html)
