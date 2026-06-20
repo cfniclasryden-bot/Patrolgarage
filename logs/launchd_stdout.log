@@ -10,3 +10,13 @@
 [22:03:41] → publish + sitemap + deploy
 [22:03:59]   ✓ publish + sitemap + deploy done
 [22:03:59] === PIPELINE COMPLETE: nissan patrol transmission rebuild cost dubai aed ===
+[09:10:38] === PIPELINE RUN START ===
+[09:10:38] FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY
+[09:05:29] === PIPELINE RUN START ===
+[09:05:30] FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY
+[09:08:56] === PIPELINE RUN START ===
+[09:08:56] FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY
+[11:32:32] === PIPELINE RUN START ===
+[11:32:48] FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY
+[09:00:06] === PIPELINE RUN START ===
+[09:00:06] FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY
