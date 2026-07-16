@@ -48,7 +48,7 @@ SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", os.environ.get("SUPABASE_S
 
 # Site-specific subject hints. Without these, brand alone can't tell DALL-E what to render.
 # These describe WHAT the article is about, brand profile describes HOW it should look.
-SUBJECT_HINT = "a Nissan Patrol SUV (Y61, Y62, or Y63 generation) in a Dubai automotive context"
+SUBJECT_HINT = "a Nissan Patrol Y62 SUV in a Dubai automotive context"
 
 client = OpenAI()
 

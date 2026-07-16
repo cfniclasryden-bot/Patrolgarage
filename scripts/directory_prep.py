@@ -34,10 +34,10 @@ BUSINESS_DATA = {
     "name": "Patrol Garage Dubai",
     "category": "Auto Repair / Automotive Services",
     "subcategory": "Nissan Patrol Specialists",
-    "description_short": "Nissan Patrol specialists in Dubai. Y61, Y62, Y63 service, repair, and modifications.",
+    "description_short": "Nissan Patrol specialists in Dubai. Y62 service, repair, and modifications.",
     "description_long": (
         "Patrol Garage Dubai connects Nissan Patrol owners with specialist workshops in Dubai. "
-        "We focus exclusively on the Nissan Patrol — Y61 Super Safari, Y62, and the new Y63. "
+        "We focus exclusively on the Nissan Patrol Y62. "
         "Our content covers common Patrol problems in UAE conditions, service costs, "
         "workshop recommendations, and maintenance guides written for Dubai's extreme climate. "
         "Whether you need a transmission rebuild, AC repair, suspension work, or pre-purchase "
@@ -51,7 +51,7 @@ BUSINESS_DATA = {
     "city": "Dubai",
     "country": "United Arab Emirates",
     "hours": "Mon-Sat 9:00 AM - 7:00 PM, Friday Closed",
-    "tags": "Nissan Patrol, Y62, Y61, Y63, Auto Repair, Dubai, Ras Al Khor, 4x4, SUV Service",
+    "tags": "Nissan Patrol, Y62, Auto Repair, Dubai, Ras Al Khor, 4x4, SUV Service",
     "founded": "2026",
 }
 
