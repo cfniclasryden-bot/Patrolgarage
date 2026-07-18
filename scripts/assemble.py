@@ -9,6 +9,9 @@ from pathlib import Path
 from datetime import datetime
 from anthropic import Anthropic
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cta_lib
+
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
 BLOG_DIR = PROJECT_ROOT / "blog"
@@ -31,6 +34,8 @@ def generate_meta(keyword, draft_html):
 KEYWORD: {keyword}
 ARTICLE EXCERPT:
 {body_text}
+
+STYLE: plain and specific. No promotional filler or AI-tell words (renowned, seamless, robust, world-class, must-visit, elevate, crucial, vibrant, cutting-edge) in any field, and no em or en dashes. Lead with the concrete fix, cost, or model detail.
 
 Return ONLY valid JSON (no markdown, no preamble):
 {{
@@ -220,6 +225,10 @@ def assemble(keyword):
     print(f"    Adding {len(related)} internal links")
 
     article_body = extract_article_body(draft_html)
+    # Mid-article inline CTA on high-intent (cost/problems) posts — inserted before the
+    # internal-links box so it lands mid-content, not at the very end.
+    if cta_lib.wants_mid_cta(slug, meta["title"]):
+        article_body = cta_lib.insert_mid_cta(article_body, cta_lib.mid_cta_html(meta["title"], slug))
     article_body = inject_internal_links(article_body, related)
 
     today = datetime.now().strftime("%Y-%m-%d")
@@ -256,12 +265,18 @@ def assemble(keyword):
     new_article = f"<article>\n{article_body}\n    </article>"
     template = re.sub(r'<article>.*?</article>', new_article, template, count=1, flags=re.DOTALL)
 
-    template = re.sub(
-        r'href="https://wa\.me/971585143634\?text=[^"]*"',
-        f'href="https://wa.me/971585143634?text={meta["wa_text"]}"',
-        template,
-        count=1,
-    )
+    # --- Conversion CTAs: intent-tailored end-of-article banner + context-rich
+    # pre-fills on EVERY WhatsApp link (floating bubble, footer, banner, mid-article).
+    # Same cta_lib logic the static pages use, so cron articles match (see patch_cta.py).
+    prefill = cta_lib.prefill_for(meta["title"], slug)
+    h2, p, label = cta_lib.banner_for(meta["title"], slug)
+    template = re.sub(r'(<section class="cta-banner">.*?<h2>).*?(</h2>)',
+                      lambda m: m.group(1) + h2 + m.group(2), template, count=1, flags=re.DOTALL)
+    template = re.sub(r'(<section class="cta-banner">.*?<p>).*?(</p>)',
+                      lambda m: m.group(1) + p + m.group(2), template, count=1, flags=re.DOTALL)
+    template = re.sub(r'(<section class="cta-banner">.*?class="btn btn-dark">).*?(</a>)',
+                      lambda m: m.group(1) + label + m.group(2), template, count=1, flags=re.DOTALL)
+    template = cta_lib.set_all_wa_prefill(template, prefill)
 
     out_path = BLOG_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:

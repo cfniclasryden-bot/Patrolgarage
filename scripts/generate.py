@@ -121,7 +121,24 @@ REQUIREMENTS:
 
   Use the exact URLs. Embed as inline links naturally in prose — e.g. 'Per <a href="https://rta.ae">the RTA</a>, all vehicles in Dubai require annual inspection...' Do NOT include them as a footnote list. Minimum 2 distinct sources per article.
 - Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
-- Use ° (not Â°), em-dash — (not â€").
+- Use the ° symbol (not Â°). Do NOT use em dashes (—) or en dashes (–) anywhere. Use a period, comma, colon, or parentheses instead.
+
+HUMAN-VOICE RULES (write clean on the first pass so the copy reads like a real Dubai Patrol mechanic wrote it, not a chatbot):
+- No em or en dashes anywhere (restated for emphasis). Scan the output and replace every — or – with a period, comma, colon, or parentheses before returning.
+- No promotional filler. Do not use: renowned, nestled, stunning, vibrant, seamless, robust, world-class, cutting-edge, must-visit, commitment to, in the heart of. Describe the car and the work plainly.
+- Ban these AI-tell words: crucial, vital, pivotal, testament, landscape (figurative), delve, underscore, foster, elevate, enhance, unlock, realm, ever-evolving. Use the plain equivalent.
+- Use "is / are / has". Do not write "serves as / boasts / features / offers a" in place of a simple verb.
+- No forced groups of three. List as many real symptoms, causes, or costs as actually exist, not a tidy trio for rhythm.
+- No "-ing" filler tails ("...ensuring optimal performance", "...highlighting the importance of regular servicing"). End the sentence on the concrete fact.
+- No signposting ("Let's dive in", "Here's what you need to know") and no generic upbeat closer ("keep your Patrol running smoothly for years to come"). End on a specific next step or fact.
+- Vary sentence length. Mix short sentences with longer ones. Avoid an even, mid-length cadence.
+- When a claim needs authority, link one of the approved sources inline. Never write "experts recommend" or "studies show" without a real link.
+- Headings in sentence case, not Title Case (the question-phrased H2s already fit this).
+
+PROTECT THE AIO STRUCTURE (these override the voice rules — never strip them):
+- Keep the direct-answer <div> and its <strong>, the FAQ <h3> question blocks, and the CTA <strong> exactly as specified above.
+- Keep every specific number and identifier (AED costs, model years, km, engine/part names like VK56VD, JR710E). Specific detail is the goal, not filler.
+- Only remove DECORATIVE mid-paragraph bold. Do not bold phrases inside body paragraphs for emphasis.
 - Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>, <a>.
 - DO NOT include image placeholders, image markdown, [HERO IMAGE], [IMAGE], <img>, or any image references. Images are added separately by the pipeline. Just write the text body.
 - Return ONLY the HTML body. No preamble, no markdown fences."""
