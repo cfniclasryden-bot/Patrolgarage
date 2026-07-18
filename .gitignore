@@ -8,3 +8,6 @@ __pycache__/
 # Local Netlify folder
 .netlify
 logs/
+
+# Internal docs — not for the public site (also blocked via /docs/* 404 redirect)
+docs/
