@@ -5,5 +5,5 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-gearbox-problems-uae.html          /blog/nissan-patrol-y62-transmission-problems-dubai.html    301
 /blog/nissan-patrol-y62-gearbox-repair-cost-dubai.html /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301
 
-# Internal docs — not for the public site
-/docs/*  /  404
+# Internal docs — not for the public site (force 404 over the existing file)
+/docs/*  /  404!
