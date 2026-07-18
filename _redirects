@@ -1,0 +1,6 @@
+https://www.patrolgarage.ae/*  https://patrolgarage.ae/:splat  301!
+http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
+
+# Phase 2 consolidation (cannibalization merge)
+/blog/nissan-patrol-gearbox-problems-uae.html          /blog/nissan-patrol-y62-transmission-problems-dubai.html    301
+/blog/nissan-patrol-y62-gearbox-repair-cost-dubai.html /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301
