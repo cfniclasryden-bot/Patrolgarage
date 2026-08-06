@@ -11,6 +11,7 @@ from anthropic import Anthropic
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cta_lib
+import patch_clarity
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
@@ -277,6 +278,13 @@ def assemble(keyword):
     template = re.sub(r'(<section class="cta-banner">.*?class="btn btn-dark">).*?(</a>)',
                       lambda m: m.group(1) + label + m.group(2), template, count=1, flags=re.DOTALL)
     template = cta_lib.set_all_wa_prefill(template, prefill)
+
+    # Analytics safety net. The "template" is a real published post, so a tag
+    # dropped from that file would silently stop tracking every new post from
+    # then on. Re-assert it here instead of trusting the template.
+    template, injected = patch_clarity.inject(template)
+    if injected:
+        print("[i] Clarity tag was missing from the template — injected")
 
     out_path = BLOG_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:
