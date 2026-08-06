@@ -34,6 +34,13 @@ def update_sitemap():
     for f in blog_files:
         urls.append((f"/blog/{f.name}", "0.7", "monthly"))
 
+    # Paginated listing pages (/blog/page/2/ ...). Page count comes from the same
+    # constant journal_update uses, so the two can never drift.
+    import journal_update
+    total_pages = max(1, -(-len(blog_files) // journal_update.PER_PAGE))
+    for n in range(2, total_pages + 1):
+        urls.append((f"/blog/page/{n}/", "0.5", "weekly"))
+
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, priority, freq in urls:
