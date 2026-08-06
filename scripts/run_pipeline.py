@@ -36,6 +36,10 @@ def slugify(text):
 def run(cmd, desc):
     log(f"→ {desc}")
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+    # The humour pass never fails the run, so surface its verdict even on success.
+    for line in (result.stdout or "").splitlines():
+        if line.startswith("[humour_pass]"):
+            log(f"  {line}")
     if result.returncode != 0:
         log(f"[!] FAILED: {desc}")
         log(f"    stderr: {result.stderr[:500]}")
@@ -76,6 +80,9 @@ def run_refresh_mode(keyword, slug):
             if src.exists():
                 src.replace(dst)  # overwrites if exists
                 log(f"  Renamed {subdir}/{keyword_slug}{ext} → {slug}{ext}")
+
+    # Stage 2b: humour pass on the regenerated draft (never fatal, see humour_pass.py)
+    run(["python3", "scripts/humour_pass.py", slug], "humour pass")
 
     # Stage 3: assemble — pass the ORIGINAL keyword that maps to the article's slug.
     # We need a keyword that slugifies to `slug`. Easiest: use slug-with-spaces as keyword.
@@ -183,16 +190,22 @@ def main():
     log(f"Target keyword: {keyword}")
     log(f"Slug: {slug}")
 
+    # (command, description, optional). Optional stages are cosmetic: if one dies the
+    # article still ships. The humour pass must never cost us a day's post.
     stages = [
-        (["python3", "scripts/research.py", keyword], f"research: {keyword}"),
-        (["python3", "scripts/generate.py", slug], f"generate draft"),
-        (["python3", "scripts/assemble.py", slug], f"assemble final HTML"),
-        (["python3", "scripts/image_gen.py", slug], f"generate hero image"),
-        (["python3", "scripts/publish.py", slug], f"publish + sitemap + deploy"),
+        (["python3", "scripts/research.py", keyword], f"research: {keyword}", False),
+        (["python3", "scripts/generate.py", slug], f"generate draft", False),
+        (["python3", "scripts/humour_pass.py", slug], f"humour pass", True),
+        (["python3", "scripts/assemble.py", slug], f"assemble final HTML", False),
+        (["python3", "scripts/image_gen.py", slug], f"generate hero image", False),
+        (["python3", "scripts/publish.py", slug], f"publish + sitemap + deploy", False),
     ]
 
-    for cmd, desc in stages:
+    for cmd, desc, optional in stages:
         if not run(cmd, desc):
+            if optional:
+                log(f"[i] optional stage failed, continuing without it: {desc}")
+                continue
             log(f"=== PIPELINE FAILED at: {desc} ===")
             log_run(keyword=keyword, status="failed", error_message=f"Failed at: {desc}")
             return 1
