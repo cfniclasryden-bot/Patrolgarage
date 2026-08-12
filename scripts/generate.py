@@ -54,7 +54,6 @@ them as our quote; we quote per job. Sourced ranges (researched 2026-08-13):
 - Engine rebuild: AED 15,000-40,000; a partial overhaul is AED 5,000-12,000
 - AC compressor replacement: AED 1,200-4,000 including parts, labour and regas;
   large SUVs and genuine parts push past AED 4,000
-- Pre-purchase inspection: AED 500-800
 - Y62 HBMC hydraulic shock absorber: ~AED 2,000 per corner for the part alone,
   which is why a full suspension job on a Y62 is a four-figure to five-figure job
 

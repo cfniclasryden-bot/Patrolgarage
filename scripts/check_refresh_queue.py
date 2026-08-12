@@ -91,13 +91,34 @@ def process_refresh(refresh, article):
     update_refresh(refresh_id, status="running", started_at=datetime.utcnow().isoformat())
     update_article(article_id, refresh_status="running", refresh_started_at=datetime.utcnow().isoformat())
 
+    # mode decides which of two very different things happens:
+    #
+    #   patch (DEFAULT)  refresh_patch.py edits the existing article in place.
+    #                    Existing prose, numbers, headings, links and the
+    #                    quick-answer/FAQ/CTA blocks are all validated to survive;
+    #                    a failed validation leaves the post untouched.
+    #
+    #   regenerate       run_pipeline.py --refresh rebuilds the article FROM
+    #                    SCRATCH. The URL keeps its rankings but the content is
+    #                    entirely new and every hand-edit is destroyed. This is
+    #                    never scheduled automatically — refresh_scheduler.py only
+    #                    ever enqueues mode=patch. Set it by hand, deliberately.
+    #
+    # Anything unrecognised falls back to patch: the safe direction.
+    mode = (refresh.get("mode") or article.get("refresh_mode") or "patch").strip().lower()
+    if mode == "regenerate":
+        cmd = ["python3", "scripts/run_pipeline.py", "--refresh", keyword, slug]
+    else:
+        mode = "patch"
+        gaps = refresh.get("gap_keywords") or ""
+        cmd = ["python3", "scripts/refresh_patch.py", slug]
+        if gaps:
+            cmd.append(f"--gaps={gaps}")
+    log(f"  mode={mode} -> {' '.join(cmd)}")
+
     try:
-        # Run the existing pipeline in refresh mode
-        # The existing run_pipeline.py picks the next pending keyword from CSV.
-        # For refresh, we want to regenerate THIS specific keyword/slug.
-        # Use a new script we'll create, or invoke run_pipeline.py with --refresh flag.
         result = subprocess.run(
-            ["python3", "scripts/run_pipeline.py", "--refresh", keyword, slug],
+            cmd,
             cwd=Path(__file__).resolve().parent.parent,
             capture_output=True,
             text=True,

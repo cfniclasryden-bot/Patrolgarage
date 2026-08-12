@@ -34,7 +34,6 @@ PILLARS = {
 - Major service AED 800-2500
 - Engine rebuild AED 15,000-35,000
 - Suspension overhaul AED 4,000-12,000
-- Pre-purchase inspection AED 400-800
 """,
     },
     "service": {

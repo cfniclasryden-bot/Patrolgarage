@@ -48,7 +48,6 @@ HOME_MAP = {
     "Brakes & Steering": "brakes-tyres-batteries",
     "Performance & Mods": "modifications-performance-upgrades",
     "AC Service & Repair": "ac-service-repair",
-    "Pre-Purchase Inspection": "pre-purchase-inspection",
 }
 
 HOME_CSS = """

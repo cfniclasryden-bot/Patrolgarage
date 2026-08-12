@@ -43,7 +43,6 @@ SERVICE_ANCHORS = {
     "electrical": "Y62 electrical and diagnostic work",
     "brakes": "Y62 brakes, tyres and batteries",
     "service": "Y62 servicing and maintenance",
-    "inspection": "our Y62 pre-purchase inspection",
     "mods": "Y62 modifications and performance upgrades",
 }
 
@@ -56,7 +55,6 @@ TOPIC_RULES = [
     (r"abs|brake|battery|tyre", "brakes"),
     (r"dashcam|sensor|electrical|starter-motor|fourth-brake-light", "electrical"),
     (r"turbo|intercooler|snorkel|tow-bar|paint-protection|ppf|upgrade|modification", "mods"),
-    (r"pre-purchase|inspection", "inspection"),
     (r"oil|service|interval|how-many-km|maintenance", "service"),
     (r"water-pump|coolant|overheat|radiator|thermostat|head-gasket|valve-cover|"
      r"spark-plug|injector|fuel-pressure|crankshaft|oxygen|throttle|engine-mount|misfire", "engine"),

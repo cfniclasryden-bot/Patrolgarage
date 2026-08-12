@@ -40,7 +40,7 @@ BUSINESS_DATA = {
         "We focus exclusively on the Nissan Patrol Y62. "
         "Our content covers common Patrol problems in UAE conditions, service costs, "
         "workshop recommendations, and maintenance guides written for Dubai's extreme climate. "
-        "Whether you need a transmission rebuild, AC repair, suspension work, or pre-purchase "
+        "Whether you need a transmission rebuild, AC repair, suspension work, or diagnostic "
         "inspection, we help you find the right specialist for your Patrol."
     ),
     "phone": "+971 58 514 3634",
