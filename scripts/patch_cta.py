@@ -14,7 +14,13 @@ Three fixes (see cta_lib.py for the actual copy logic):
 
 Future cron-published articles inherit the same behaviour via assemble.py, which
 imports the same cta_lib functions.
+
+Preserves file mtimes. journal_update.py derives each post's DISPLAYED DATE and
+the blog listing sort order from mtime, so a bulk rewrite that touches
+timestamps re-dates the entire blog to today — and publish.py runs
+journal_update.py on every deploy, so it would ship.
 """
+import os
 import re
 import sys
 from pathlib import Path
@@ -91,7 +97,9 @@ def patch_file(path):
         html = cta_lib.set_all_wa_prefill(html, cta_lib.GENERIC_QUOTE)
         notes += ["prefill=GENERIC_QUOTE"]
 
+    st = path.stat()
     path.write_text(html, encoding="utf-8")
+    os.utime(path, (st.st_atime, st.st_mtime))  # mtime is content — see module docstring
     return "patched", " | ".join(notes)
 
 

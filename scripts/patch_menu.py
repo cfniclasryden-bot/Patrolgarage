@@ -8,7 +8,13 @@ css/style.css). This injects both, inline, using each page's own design variable
 Idempotent: skips any file already carrying the marker. Whitespace-tolerant regex
 anchor so it handles BOTH the pretty-printed pages and the older fully-minified
 blog pages (e.g. `nav,.header-cta{display:none;}`).
+
+Preserves file mtimes. journal_update.py derives each post's DISPLAYED DATE and
+the blog listing sort order from mtime, so a bulk rewrite that touches
+timestamps re-dates the entire blog to today — and publish.py runs
+journal_update.py on every deploy, so it would ship.
 """
+import os
 import re
 import sys
 from pathlib import Path
@@ -67,7 +73,9 @@ def patch_file(path):
         return "no-body", "no </body> tag"
     final = css_added[:idx] + JS_BLOCK + "\n" + css_added[idx:]
 
+    st = path.stat()
     path.write_text(final, encoding="utf-8")
+    os.utime(path, (st.st_atime, st.st_mtime))  # mtime is content — see module docstring
     return "patched", f"+CSS@{m.start()} +JS"
 
 

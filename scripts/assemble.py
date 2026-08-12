@@ -12,6 +12,7 @@ from anthropic import Anthropic
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cta_lib
 import patch_clarity
+import money_links
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
@@ -231,6 +232,11 @@ def assemble(keyword):
     if cta_lib.wants_mid_cta(slug, meta["title"]):
         article_body = cta_lib.insert_mid_cta(article_body, cta_lib.mid_cta_html(meta["title"], slug))
     article_body = inject_internal_links(article_body, related)
+    # One in-body /services link (plus a home link on pillars). The blog's other
+    # /services links are nav/footer boilerplate, which Google discounts — this is
+    # the only one inside <article>. Fail-safe: returns the body unchanged on any
+    # error, so it can never fail a nightly publish. See money_links.py.
+    article_body = money_links.add_money_links(article_body, slug)
 
     today = datetime.now().strftime("%Y-%m-%d")
     canonical_url = f"https://patrolgarage.ae/blog/{slug}.html"

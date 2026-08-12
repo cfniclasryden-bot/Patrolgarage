@@ -63,7 +63,9 @@ AUTHORITATIVE_LINKS = [
     "https://moccae.gov.ae",
     "https://www.dubaipolice.gov.ae",
     "https://www.ead.gov.ae",
-    "https://www.consumer.gov.ae",
+    # consumer.gov.ae stopped resolving (NXDOMAIN, checked 2026-08-12). The UAE
+    # consumer-protection material now lives on the government portal.
+    "https://u.ae/en/information-and-services/justice-safety-and-the-law/consumer-protection",
 ]
 
 PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a Nissan Patrol specialist workshop in Dubai (Ras Al Khor). Target audience: Patrol owners in the UAE searching for help.
