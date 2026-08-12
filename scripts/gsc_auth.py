@@ -90,7 +90,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--client-secret-file")
     ap.add_argument("--write-env", action="store_true",
-                    help="also write .gsc-oauth.json (gitignored) for local use")
+                    help="write .gsc-oauth.json (gitignored). Now the default behaviour.")
+    ap.add_argument("--print-secret", action="store_true",
+                    help="echo the refresh token to stdout. Off by default so a live "
+                         "credential is not pasted into scrollback or a transcript.")
     args = ap.parse_args()
 
     client_id, client_secret = load_client(args.client_secret_file)
@@ -148,14 +151,35 @@ def main():
     blob = json.dumps({"client_id": client_id, "client_secret": client_secret,
                        "refresh_token": refresh}, separators=(",", ":"))
 
+    out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                       ".gsc-oauth.json")
+
     print("\n" + "=" * 72)
-    print("AUTHORISED. Store this — it is a credential.")
+    print("AUTHORISED.")
     print("=" * 72)
-    print("\nLocal shell:\n")
-    print(f"  export GSC_OAUTH_JSON='{blob}'\n")
-    print("Railway (one variable, no file on disk):\n")
-    print("  railway variables --service patrolgarage-pipeline \\")
-    print(f"    --set 'GSC_OAUTH_JSON={blob}'\n")
+
+    if args.write_env or not args.print_secret:
+        # Default: never echo the refresh token. Printing it would paste a live
+        # credential into terminal scrollback, shell history and any transcript.
+        # Write it to the gitignored file and reference the FILE in the commands.
+        with open(out, "w") as fh:
+            fh.write(blob)
+        os.chmod(out, 0o600)
+        print(f"\nRefresh token written to {out} (chmod 600, gitignored).")
+        print(f"  token fingerprint: …{refresh[-6:]}  (last 6 chars, for matching only)")
+        print("\nLocal shell — the client reads that file automatically, or:\n")
+        print("  export GSC_OAUTH_JSON=\"$(cat .gsc-oauth.json)\"\n")
+        print("Railway — pipes the file straight in, so the value never appears\n"
+              "on screen or in shell history:\n")
+        print("  railway variables --service patrolgarage-pipeline \\")
+        print("    --set \"GSC_OAUTH_JSON=$(cat .gsc-oauth.json)\"\n")
+        print("Pass --print-secret if you really do need it echoed.")
+    else:
+        print("\nLocal shell:\n")
+        print(f"  export GSC_OAUTH_JSON='{blob}'\n")
+        print("Railway (one variable, no file on disk):\n")
+        print("  railway variables --service patrolgarage-pipeline \\")
+        print(f"    --set 'GSC_OAUTH_JSON={blob}'\n")
     print("=" * 72)
     print("REFRESH TOKEN LIFETIME — read this:")
     print("  If the OAuth consent screen is User type 'External' AND still in")
@@ -164,13 +188,6 @@ def main():
     print("  Fix: set User type to 'Internal', or publish the app to 'In production'.")
     print("=" * 72)
 
-    if args.write_env:
-        out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                           ".gsc-oauth.json")
-        with open(out, "w") as fh:
-            fh.write(blob)
-        os.chmod(out, 0o600)
-        print(f"\n[i] also written to {out} (chmod 600, gitignored)")
     return 0
 
 

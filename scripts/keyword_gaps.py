@@ -69,6 +69,26 @@ def content_words(q):
     return [w for w in re.findall(r"[a-z0-9]+", q.lower()) if w not in STOPWORDS and len(w) > 1]
 
 
+def variants(word):
+    """Crude singular/plural forms, so "patrols" is not reported as missing from a
+    page that says "Patrol" 40 times. Without this the detector produces confident
+    nonsense: its first real run flagged exactly that."""
+    out = {word}
+    if word.endswith("ies") and len(word) > 4:
+        out.add(word[:-3] + "y")
+    if word.endswith("es") and len(word) > 3:
+        out.add(word[:-2])
+    if word.endswith("s") and len(word) > 3:
+        out.add(word[:-1])
+    else:
+        out.update({word + "s", word + "es"})
+    return out
+
+
+def present(word, text):
+    return any(re.search(rf"\b{re.escape(v)}\b", text) for v in variants(word))
+
+
 def analyse(rows, only_slug=None):
     by_slug = {}
     for r in rows:
@@ -92,7 +112,7 @@ def analyse(rows, only_slug=None):
             ws = content_words(r["query"])
             if not ws:
                 continue
-            missing = [w for w in ws if w not in text]
+            missing = [w for w in ws if not present(w, text)]
             if not missing:
                 continue
             # closeness to page 1: position 11 scores ~1.0, position 50 ~0.
@@ -116,8 +136,15 @@ def analyse(rows, only_slug=None):
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     as_json = "--json" in sys.argv
+    # 90 days, as the docstring promises. The default window is 28 days, which
+    # at this site's volume left almost every page-2 query under MIN_IMPRESSIONS
+    # and reported a single gap for the whole site.
+    from datetime import date, timedelta
+    end = (date.today() - timedelta(days=3)).isoformat()
+    start = (date.today() - timedelta(days=93)).isoformat()
     try:
-        rows = gsc_client.query(["query", "page"], row_limit=25000)
+        rows = gsc_client.query(["query", "page"], start_date=start, end_date=end,
+                                row_limit=25000)
     except gsc_client.GSCError as e:
         print(f"[keyword_gaps] {e}")
         return 1
