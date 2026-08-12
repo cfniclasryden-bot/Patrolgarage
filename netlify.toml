@@ -1,0 +1,32 @@
+# Netlify site config.
+#
+# ONLY post-processing lives here. Redirects stay in _redirects and headers stay
+# in _headers — those files are the deployed source of truth and publish.py ships
+# them on every cron deploy. Duplicating them here would create two places to
+# edit and a precedence question nobody wants to debug at 05:00 UTC.
+#
+# pretty_urls = false is the fix for the canonical split (2026-08-12).
+#
+# Netlify's "Pretty URLs" post-processing rewrites every internal .html link to
+# its extensionless form AS THE PAGE IS SERVED. The file on disk was never
+# touched, which is why this was invisible locally and survived a fix to
+# journal_update.py: local blog/index.html had 48 .html card links, the served
+# copy had 48 extensionless ones — exactly 240 bytes smaller, 48 x len(".html").
+#
+# The effect was that canonical, og:url, schema mainEntityOfPage and the sitemap
+# all declared /blog/<slug>.html, while EVERY crawlable link Google could follow
+# pointed at /blog/<slug>. Google indexed what the links pointed at, found a
+# .html canonical on it, and filed 14 pages as "Alternate page with proper
+# canonical" — splitting impressions across 13 posts.
+#
+# Absolute URLs are exempt from the rewrite, which is why the canonical tag was
+# correct on disk and correct when served, and why the split looked like a code
+# bug rather than a platform setting.
+#
+# With this false, links are served as authored and the _redirects rules turn
+# the extensionless form into a 301 rather than a live duplicate.
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = false
