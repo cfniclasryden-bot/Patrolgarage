@@ -120,6 +120,114 @@ def _fetch_from_live(local_path):
     return True
 
 
+# Hand-authored root pages. The container must never be the source of truth for
+# these: it only legitimately mutates index.html's journal grid, which
+# journal_update.py regenerates immediately after this runs.
+STATIC_PAGES = [
+    "index.html", "services.html", "about.html", "contact.html",
+    "y62-garage-dubai.html",
+]
+
+
+def ensure_static_pages():
+    """Adopt the LIVE copy of any root static page the container has diverged from.
+
+    THE BUG THIS FIXES (two silent regressions before it existed):
+
+        Mac edit -> netlify deploy      -> live is correct,
+                                           container still holds the OLD file
+        05:00    -> container deploys `--dir .` -> ships the OLD file
+                                           -> the human edit is silently reverted
+
+    publish.py commits blog/, images/, sitemap.xml and scripts/ but never these
+    pages, and it neither pulls nor pushes, so git could not help: the container's
+    FILE was stale regardless of what it committed. Netlify deploys are atomic and
+    whole-directory, so the container cannot deploy "just the blog" either.
+
+    Live is the most recent human-published state, so live wins. The daily post
+    still ships, and the divergence is logged loudly rather than passing silently.
+
+    LIVE HTML IS NOT SOURCE HTML. Netlify rewrites some markup as it serves. The
+    one transform on this site (verified 2026-08-13 by diffing all five pages) is
+    the form tag on contact.html:
+
+        source:  <form name="contact" method="POST" data-netlify="true" ...>
+        served:  <form method='POST' name='contact'>
+
+    Netlify detects forms at DEPLOY time by scanning for data-netlify="true", so
+    naively writing the served HTML back to disk would strip that attribute and
+    silently break the contact form on the next deploy. So form tags are excluded
+    from the comparison and the LOCAL form tag is preserved when adopting.
+
+    Known limitation, logged when it applies: if someone runs `railway up` WITHOUT
+    a Netlify deploy, the container is legitimately newer than live and this would
+    discard that change. In practice those two always happen together.
+    """
+    print("[+] Checking root pages against live...")
+    form_rx = re.compile(rb"<form\b[^>]*>", re.I)
+    diverged, adopted = [], []
+    for name in STATIC_PAGES:
+        local_path = PROJECT_ROOT / name
+        url = f"{SITE_URL}/{name}"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as resp:
+                if resp.status != 200:
+                    continue
+                live = resp.read()
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, OSError) as e:
+            print(f"    [!] could not fetch {name} from live ({e}); leaving local copy")
+            continue
+
+        if not live:
+            continue
+        if not local_path.exists():
+            local_path.write_bytes(live)
+            adopted.append(f"{name} (missing locally)")
+            continue
+
+        local = local_path.read_bytes()
+        # Compare with form tags neutralised, so Netlify's serve-time rewrite is
+        # not mistaken for a stale container.
+        if form_rx.sub(b"<form>", local) == form_rx.sub(b"<form>", live):
+            continue
+
+        # Genuine divergence. Adopt live, but keep our own form tags so the
+        # data-netlify attributes survive.
+        local_forms = form_rx.findall(local)
+        merged = live
+        if local_forms:
+            i = iter(local_forms)
+            merged = form_rx.sub(lambda m: next(i, m.group(0)), live)
+
+        # Refuse the adoption if it would drop a Netlify form marker.
+        if local.count(b"data-netlify") > merged.count(b"data-netlify"):
+            print(f"    [!] {name}: adopting live would drop a data-netlify marker; "
+                  f"keeping the local copy instead")
+            diverged.append(name + " (NOT adopted, form marker at risk)")
+            continue
+
+        diverged.append(name)
+        local_path.write_bytes(merged)
+        adopted.append(f"{name} ({len(local)} -> {len(merged)} bytes)")
+
+    if not diverged and not adopted:
+        print("    all root pages match live")
+        return
+
+    # Loud on purpose. A silent revert is what caused the regressions; a silent
+    # self-heal would just hide the same divergence in the other direction.
+    print("")
+    print("    " + "=" * 66)
+    print("    [!] CONTAINER WAS STALE — root pages differed from live")
+    for line in adopted:
+        print(f"    [!]   adopted from live: {line}")
+    print("    [!] The live version won. If one of these was an intentional")
+    print("    [!] container-side change, it has just been discarded — deploy it")
+    print("    [!] from the Mac (netlify deploy) and then run `railway up`.")
+    print("    " + "=" * 66)
+    print("")
+
+
 def ensure_images():
     """Guarantee every image referenced by the site exists in the deploy tree.
 
@@ -191,6 +299,10 @@ def run(cmd, cwd=PROJECT_ROOT, capture=True):
 
 
 def publish(keyword=None):
+    # Runs BEFORE journal_update, because adopting a live page would otherwise
+    # discard the journal grid that journal_update owns and regenerates.
+    ensure_static_pages()
+
     # Runs before the journal index and git so recovered images get committed
     # and the regenerated index picks up any fallback rewrites.
     ensure_images()
@@ -217,7 +329,13 @@ def publish(keyword=None):
         msg = f"Auto-publish: {keyword}" if keyword else f"Auto-publish {datetime.now().strftime('%Y-%m-%d %H:%M')}"
         # images/ must be included: hero images are generated at pipeline time and
         # are otherwise never carried into git, so any other checkout deploys without them.
-        run(["git", "add", "blog/", "images/", "sitemap.xml", "scripts/"])
+        # Root pages are included so the container's commit reflects what it
+        # actually deployed (including anything ensure_static_pages adopted from
+        # live). Note this alone does NOT prevent the stale-revert bug — publish.py
+        # never pulls or pushes, so the commit is read by nobody; ensure_static_pages
+        # is what actually fixes it.
+        run(["git", "add", "blog/", "images/", "sitemap.xml", "scripts/",
+             *STATIC_PAGES])
         run(["git", "commit", "-m", msg])
 
     print("\n[+] Deploying to Netlify...")
