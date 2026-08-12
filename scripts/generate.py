@@ -40,15 +40,29 @@ DUBAI CLIMATE:
 - Heavy stop-and-go on Sheikh Zayed Road, Sheikh Mohammed Bin Zayed Road
 - Off-road usage common (Al Qudra, Big Red, Liwa)
 
-TYPICAL UAE WORKSHOP PRICING (plausible ranges):
-- Major service: AED 800-2,500
-- Transmission fluid change: AED 600-1,200
-- Transmission rebuild: AED 8,000-18,000
-- Transmission replacement (used): AED 12,000-25,000
-- Engine rebuild: AED 15,000-35,000
-- AC compressor replacement: AED 2,500-5,000
-- Suspension overhaul: AED 4,000-12,000
-- Pre-purchase inspection: AED 400-800
+TYPICAL UAE MARKET PRICING — independent workshops unless stated.
+These are MARKET ranges for context, NOT Patrol Garage's prices. Never present
+them as our quote; we quote per job. Sourced ranges (researched 2026-08-13):
+- Minor service / oil change + inspection: AED 350-800
+- Major service, independent: AED 800-2,500
+- Major service, Nissan dealer: ~AED 3,065 for the 40k service (documented
+  DriveArabia long-term Patrol test); basic dealer service with synthetic oil ~AED 827
+- Workshop labour rate: AED 150-400 per hour, higher at European/luxury specialists
+- Gearbox / transmission oil change: AED 300-850
+- Automatic transmission rebuild: AED 4,800-14,000 typical; large V8 SUVs sit at
+  the top of that band and luxury rebuilds run AED 9,500-18,000
+- Engine rebuild: AED 15,000-40,000; a partial overhaul is AED 5,000-12,000
+- AC compressor replacement: AED 1,200-4,000 including parts, labour and regas;
+  large SUVs and genuine parts push past AED 4,000
+- Pre-purchase inspection: AED 500-800
+- Y62 HBMC hydraulic shock absorber: ~AED 2,000 per corner for the part alone,
+  which is why a full suspension job on a Y62 is a four-figure to five-figure job
+
+UNVERIFIED — do NOT state these as fact. If the article needs them, write the
+range as an estimate and attribute it to the workshop, or leave the figure out:
+- Used/replacement transmission unit fitted: no reliable UAE market source found
+- Complete Y62 suspension overhaul as a single job: only the part price above is
+  sourced; the all-in job range is not
 
 WORKSHOP AREAS: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
 

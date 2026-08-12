@@ -37,6 +37,7 @@ def update_sitemap():
     urls = [
         ("/", "1.0", "weekly"),
         ("/services.html", "0.9", "monthly"),
+        ("/y62-garage-dubai.html", "0.9", "monthly"),
         ("/about.html", "0.8", "monthly"),
         ("/contact.html", "0.9", "monthly"),
         ("/blog/", "0.8", "weekly"),
