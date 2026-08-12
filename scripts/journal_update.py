@@ -123,15 +123,23 @@ def extract_post_meta(html_path):
 
 
 def build_card(meta):
-    """Verbatim production card markup — single-quoted, root-absolute, no .html."""
+    """Verbatim production card markup — single-quoted, root-absolute, .html.
+
+    The .html form is deliberate. These cards used to emit extensionless
+    /blog/<slug>, while canonical, og:url, schema, sitemap and every in-body
+    link emitted /blog/<slug>.html. Netlify serves both with a 200, so Google
+    indexed both and split impressions across 13 posts — the cards were the
+    single source of the split. Everything now agrees on .html; the clean form
+    301s to it (see _redirects).
+    """
     return f'''        <article class="journal-card">
           <div class="journal-meta">
             <span>{meta["category"]}</span>
             <span>{meta["date"]}</span>
           </div>
-          <h3><a href='/blog/{meta["slug"]}'>{meta["title"]}</a></h3>
+          <h3><a href='/blog/{meta["slug"]}.html'>{meta["title"]}</a></h3>
           <p class="journal-excerpt">{meta["description"]}</p>
-          <a class='journal-read' href='/blog/{meta["slug"]}'>
+          <a class='journal-read' href='/blog/{meta["slug"]}.html'>
             Read · {meta["read_min"]} min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>

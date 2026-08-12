@@ -2,8 +2,64 @@ https://www.patrolgarage.ae/*  https://patrolgarage.ae/:splat  301!
 http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 
 # Phase 2 consolidation (cannibalization merge)
+# Both forms: these slugs were also reachable extensionless before the .html
+# consolidation, and the file is gone, so the clean form would 404 instead of
+# passing its equity on. Not in the managed block below — that block is built
+# from blog/*.html, and these have no file.
 /blog/nissan-patrol-gearbox-problems-uae.html          /blog/nissan-patrol-y62-transmission-problems-dubai.html    301
+/blog/nissan-patrol-gearbox-problems-uae               /blog/nissan-patrol-y62-transmission-problems-dubai.html    301!
 /blog/nissan-patrol-y62-gearbox-repair-cost-dubai.html /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301
+/blog/nissan-patrol-y62-gearbox-repair-cost-dubai      /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301!
 
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
+
+# BEGIN managed: extensionless blog URLs -> .html (gen_redirects.py)
+# Generated — do not hand-edit. Run scripts/gen_redirects.py after adding posts.
+# One explicit rule per post: a wildcard would also match /blog/<slug>.html
+# and redirect it to <slug>.html.html. See the module docstring.
+/blog/best-oil-nissan-patrol-uae-heat                                /blog/best-oil-nissan-patrol-uae-heat.html  301!
+/blog/nissan-patrol-ac-problems-dubai                                /blog/nissan-patrol-ac-problems-dubai.html  301!
+/blog/nissan-patrol-differential-repair-cost-uae                     /blog/nissan-patrol-differential-repair-cost-uae.html  301!
+/blog/nissan-patrol-mechanic-al-quoz                                 /blog/nissan-patrol-mechanic-al-quoz.html  301!
+/blog/nissan-patrol-off-road-uae                                     /blog/nissan-patrol-off-road-uae.html  301!
+/blog/nissan-patrol-overheating-dubai-summer-fix                     /blog/nissan-patrol-overheating-dubai-summer-fix.html  301!
+/blog/nissan-patrol-pre-purchase-inspection                          /blog/nissan-patrol-pre-purchase-inspection.html  301!
+/blog/nissan-patrol-service-cost-dubai                               /blog/nissan-patrol-service-cost-dubai.html  301!
+/blog/nissan-patrol-service-dubai-complete-guide                     /blog/nissan-patrol-service-dubai-complete-guide.html  301!
+/blog/nissan-patrol-service-every-how-many-km-dubai                  /blog/nissan-patrol-service-every-how-many-km-dubai.html  301!
+/blog/nissan-patrol-suspension-dubai                                 /blog/nissan-patrol-suspension-dubai.html  301!
+/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed              /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html  301!
+/blog/nissan-patrol-y61-dubai-complete-guide                         /blog/nissan-patrol-y61-dubai-complete-guide.html  301!
+/blog/nissan-patrol-y61-vs-y62-dubai                                 /blog/nissan-patrol-y61-vs-y62-dubai.html  301!
+/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026     /blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html  301!
+/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026           /blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html  301!
+/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026            /blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html  301!
+/blog/nissan-patrol-y62-dubai-complete-guide                         /blog/nissan-patrol-y62-dubai-complete-guide.html  301!
+/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026    /blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html  301!
+/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae             /blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html  301!
+/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026    /blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html  301!
+/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026        /blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html  301!
+/blog/nissan-patrol-y62-problems-dubai                               /blog/nissan-patrol-y62-problems-dubai.html  301!
+/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026      /blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html  301!
+/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026           /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html  301!
+/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026      /blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html  301!
+/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai            /blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html  301!
+/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026              /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html  301!
+/blog/nissan-patrol-y62-transmission-problems-dubai                  /blog/nissan-patrol-y62-transmission-problems-dubai.html  301!
+/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost                     /blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html  301!
+/blog/nissan-patrol-y62-vs-y63-dubai-comparison                      /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html  301!
+/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026               /blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html  301!
+/blog/y62-abs-sensor-replacement-cost-dubai-2026                     /blog/y62-abs-sensor-replacement-cost-dubai-2026.html  301!
+/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026     /blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html  301!
+/blog/y62-engine-mount-replacement-cost-dubai-2026                   /blog/y62-engine-mount-replacement-cost-dubai-2026.html  301!
+/blog/y62-fuel-injector-cleaning-cost-dubai-2026                     /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html  301!
+/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026        /blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html  301!
+/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent   /blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html  301!
+/blog/y62-rear-air-bag-replacement-cost-uae-2026                     /blog/y62-rear-air-bag-replacement-cost-uae-2026.html  301!
+/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent      /blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html  301!
+/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026        /blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html  301!
+/blog/y62-water-pump-replacement-cost-uae-2026                       /blog/y62-water-pump-replacement-cost-uae-2026.html  301!
+/blog/y63-dashcam-installation-specialist-dubai-best-price-2026      /blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html  301!
+/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026         /blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html  301!
+# END managed
