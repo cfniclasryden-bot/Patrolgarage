@@ -11,3 +11,6 @@ logs/
 
 # Internal docs — not for the public site (also blocked via /docs/* 404 redirect)
 docs/
+
+# GSC OAuth refresh token (credential) — never commit
+.gsc-oauth.json

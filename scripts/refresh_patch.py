@@ -32,8 +32,18 @@ otherwise re-date the entire blog to today and scramble the order. The visible
 freshness signal is the in-article "Last updated:" stamp, which IS updated.
 Pass --bump-date to also move the listing date.
 
+Review workflow. The model is non-deterministic, so a dry run and a later real
+run would produce different text. --out saves the proposed body; --apply-from
+re-validates that exact saved body and writes it. What you reviewed is what
+ships, with no second API call:
+
+    python3 scripts/refresh_patch.py <slug> --dry-run --out /tmp/proposal.html
+    # review it, then:
+    python3 scripts/refresh_patch.py <slug> --apply-from /tmp/proposal.html
+
 Usage:
-    python3 scripts/refresh_patch.py <slug> [--gaps "kw1,kw2"] [--dry-run] [--bump-date]
+    python3 scripts/refresh_patch.py <slug> [--gaps "kw1,kw2"] [--dry-run]
+                                            [--out FILE] [--apply-from FILE] [--bump-date]
 """
 import os
 import re
@@ -52,18 +62,33 @@ MODEL = "claude-opus-5"
 # 300-word one. The floor keeps the rule honest at both ends.
 MAX_GROWTH = 1.35
 MIN_HEADROOM = 400
-PROTECTED = ("direct-answer", "faq", "cta", "last-updated", "MONEYLINK", "related-reading")
+# Match the actual markup, not bare substrings. The naive version counted "cta"
+# anywhere in the text, which matches inside "octane" — a legitimate edit that
+# mentioned fuel octane was rejected because the count rose from 9 to 10.
+PROTECTED = {
+    "direct-answer":   r'class="direct-answer"',
+    "faq":             r'class="faq"',
+    "cta":             r'class="cta[^"]*"',
+    "last-updated":    r'class="last-updated"',
+    "MONEYLINK":       r'<!--\s*MONEYLINK\s*-->',
+    "related-reading": r'class="related-reading"',
+}
 
 PROMPT = """You are updating an existing published article for Patrol Garage, a Nissan Patrol specialist workshop in Ras Al Khor, Dubai.
 
 This article ALREADY RANKS. You are making a surgical update, not a rewrite.
 
 ABSOLUTE RULES — breaking any of these means the edit is discarded:
+- BUDGET: add AT MOST {budget} words in total, across all three jobs combined.
+  Going over means the whole edit is thrown away, so spend it deliberately. A
+  tight, well-placed 150 words beats a sprawling 800.
 - Do NOT reword, reorder or delete any existing sentence. You may only ADD.
 - Do NOT change any existing number, price, year inside a fact, part name or measurement.
 - Do NOT touch the quick-answer block, the FAQ block, the CTA block, the
   "Last updated" line, the related-reading box, or anything near a MONEYLINK comment.
-- Do NOT add em dashes or en dashes. Use a period, comma, colon or parentheses.
+- Do NOT add em dashes (—) or en dashes (–) ANYWHERE, not even one, and not
+  even if the existing text already contains some. Use a period, comma, colon or
+  parentheses. The edit is counted and rejected if the dash count rises.
 - Do NOT add prices for Patrol Garage's own services. Market context is fine.
 - Return the FULL article body HTML, nothing else. No commentary, no code fences.
 
@@ -116,18 +141,19 @@ def links(html):
 
 
 def protected_blocks(html):
-    out = {}
-    for key in PROTECTED:
-        out[key] = len(re.findall(re.escape(key), html))
-    return out
+    return {key: len(re.findall(rx, html)) for key, rx in PROTECTED.items()}
 
 
 def validate(original, edited):
     if len(edited) < len(original) * 0.9:
         return False, "output shorter than the original body"
-    if "—" in edited or "–" in edited:
-        if "—" not in original and "–" not in original:
-            return False, "em/en dash introduced"
+    # Count, do not just test for presence. The site style rule bans em/en dashes,
+    # but several older posts already contain them; a presence check let the model
+    # add brand new ones to any article that already had one.
+    old_dashes = original.count("—") + original.count("–")
+    new_dashes = edited.count("—") + edited.count("–")
+    if new_dashes > old_dashes:
+        return False, f"em/en dashes introduced ({old_dashes} -> {new_dashes})"
     if links(original) != [l for l in links(edited) if l in links(original)]:
         return False, "an existing link was removed or altered"
     if protected_blocks(original) != protected_blocks(edited):
@@ -167,7 +193,7 @@ def stamp_updated(html):
                   rf"\g<1>{today}\g<2>", html, count=1)
 
 
-def refresh(slug, gaps, dry, bump_date):
+def refresh(slug, gaps, dry, bump_date, out_path=None, apply_from=None):
     path = BLOG / f"{slug}.html"
     if not path.exists():
         print(f"[!] no such post: {path.name}")
@@ -179,18 +205,60 @@ def refresh(slug, gaps, dry, bump_date):
         return 1
     body = m.group(1)
 
+    if apply_from:
+        # Re-validate the reviewed proposal rather than trusting it blindly.
+        edited = Path(apply_from).read_text(encoding="utf-8").strip()
+        ok, why = validate(body, edited)
+        print(f"[refresh_patch] {slug}: re-validating saved proposal — "
+              f"{'ACCEPTED' if ok else 'REJECTED'} — {why}")
+        if not ok:
+            print("[refresh_patch] article left exactly as it was.")
+            return 1
+        new_html = html[:m.start(1)] + edited + html[m.end(1):]
+        new_html = stamp_updated(new_html)
+        st = path.stat()
+        path.write_text(new_html, encoding="utf-8")
+        if not bump_date:
+            os.utime(path, (st.st_atime, st.st_mtime))
+        print(f"[refresh_patch] written from reviewed proposal "
+              f"({'date bumped' if bump_date else 'mtime preserved'})")
+        return 0
+
     from anthropic import Anthropic
     client = Anthropic()
-    prompt = PROMPT.format(gaps=", ".join(gaps) if gaps else "(none supplied)", body=body)
+    # Tell the model the same ceiling the validator enforces, minus a safety
+    # margin, so a good-faith edit is not thrown away for being over budget.
+    ow = len(words(body))
+    budget = int(max(ow * (MAX_GROWTH - 1), MIN_HEADROOM) * 0.6)
+    prompt = PROMPT.format(gaps=", ".join(gaps) if gaps else "(none supplied)",
+                           body=body, budget=budget)
     resp = client.messages.create(model=MODEL, max_tokens=16000,
                                   messages=[{"role": "user", "content": prompt}])
-    edited = resp.content[0].text.strip()
+    # content[0] is not necessarily the answer: with extended thinking enabled the
+    # first block is a ThinkingBlock, which has no .text. Concatenate the text
+    # blocks and ignore the rest.
+    edited = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text").strip()
+    if not edited:
+        print(f"[refresh_patch] {slug}: model returned no text block; leaving article as it was.")
+        return 0
     edited = re.sub(r"^```(?:html)?\s*|\s*```$", "", edited).strip()
+
+    if out_path:
+        Path(out_path).write_text(edited, encoding="utf-8")
+        print(f"[refresh_patch] proposal saved to {out_path}")
 
     ok, why = validate(body, edited)
     print(f"[refresh_patch] {slug}: {'ACCEPTED' if ok else 'REJECTED'} — {why}")
     if not ok:
         print("[refresh_patch] article left exactly as it was.")
+        if dry:
+            # Show the rejected attempt anyway: reviewing what the model WANTED to
+            # do is the whole point of a dry run.
+            print("[refresh_patch] rejected attempt, for review only:")
+            for d in difflib.unified_diff(body.splitlines(), edited.splitlines(),
+                                          lineterm="", n=0):
+                if d.startswith("+") and not d.startswith("+++"):
+                    print("   +", re.sub(r"\s+", " ", d[1:]).strip()[:170])
         return 0
 
     diff = list(difflib.unified_diff(body.splitlines(), edited.splitlines(), lineterm="", n=0))
@@ -221,7 +289,13 @@ def main():
     for a in sys.argv[1:]:
         if a.startswith("--gaps"):
             gaps = [g.strip() for g in a.split("=", 1)[-1].split(",") if g.strip()]
-    return refresh(args[0], gaps, "--dry-run" in sys.argv, "--bump-date" in sys.argv)
+    def opt(name):
+        for a in sys.argv[1:]:
+            if a.startswith(f"--{name}="):
+                return a.split("=", 1)[1]
+        return None
+    return refresh(args[0], gaps, "--dry-run" in sys.argv, "--bump-date" in sys.argv,
+                   out_path=opt("out"), apply_from=opt("apply-from"))
 
 
 if __name__ == "__main__":
