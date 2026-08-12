@@ -447,6 +447,15 @@
     .whatsapp-float svg { width: 28px; height: 28px; color: #fff; }
 
     ::selection { background: var(--white); color: var(--bg); }
+  
+    /* TAPTARGETS — whole-card tap target, same pattern as the homepage. The CTA
+       row sits above the overlay so its own link still wins the tap. */
+    .service-article { position: relative; }
+    .service-article h2 a { color: inherit; text-decoration: none; }
+    .service-article h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+    .service-article:focus-within { background: var(--bg-1); }
+    .service-article h2 a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+    .service-cta { position: relative; z-index: 2; }
   </style>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
@@ -520,8 +529,8 @@
         <p>From routine maintenance to complex mechanical work, we've got every system covered — by a team that knows <a href="blog/nissan-patrol-y62-dubai-complete-guide.html" style="text-decoration: underline; text-underline-offset: 3px;">everything about the Nissan Patrol Y62</a>. Factory-trained mechanics, genuine parts, warranty on every job.</p>
       </div>
 
-      <div class="service-article">
-        <h2>Full Service & Maintenance</h2>
+      <div class="service-article" id="full-service-maintenance">
+        <h2><a href="https://wa.me/971585143634?text=Full%20Service%20for%20my%20Patrol" target="_blank" rel="noopener">Full Service & Maintenance</a></h2>
         <p>Keep your Patrol running smoothly with scheduled service. Includes oil and filter change, fluid checks and top-ups, air filter replacement, battery test, brake inspection, suspension check, lights and wipers.</p>
         <div class="service-article-meta">
           <span>TIME: ~2–3 hrs</span>
@@ -532,8 +541,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Engine Diagnostics & Repair</h2>
+      <div class="service-article" id="engine-diagnostics-repair">
+        <h2><a href="https://wa.me/971585143634?text=Engine%20Diagnostics%20for%20my%20Patrol" target="_blank" rel="noopener">Engine Diagnostics & Repair</a></h2>
         <p>Check engine light on? Strange noises or performance drops? We use advanced OBD-II diagnostic equipment to read fault codes, analyze live data, test sensors, and identify the root cause. No guessing, no parts roulette.</p>
         <div class="service-article-meta">
           <span>TIME: ~1–2 hrs</span>
@@ -544,8 +553,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Gearbox & Transmission Service</h2>
+      <div class="service-article" id="gearbox-transmission-service">
+        <h2><a href="https://wa.me/971585143634?text=Gearbox%20Service%20for%20my%20Patrol" target="_blank" rel="noopener">Gearbox & Transmission Service</a></h2>
         <p>Gearbox shuddering, slipping gears, or leaking fluid? We service both automatic and manual transmissions on Y62 Patrols. Includes transmission fluid change, pressure testing, solenoid replacement, and full diagnostics.</p>
         <div class="service-article-meta">
           <span>TIME: ~2–6 hrs</span>
@@ -556,8 +565,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Suspension Upgrade & Lift Kits</h2>
+      <div class="service-article" id="suspension-upgrade-lift-kits">
+        <h2><a href="https://wa.me/971585143634?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener">Suspension Upgrade & Lift Kits</a></h2>
         <p>Want better ground clearance and off-road capability? We install suspension lifts, replace shocks and springs, align your wheels, and set up custom off-road configurations. OEM, Ironman, and custom options available.</p>
         <div class="service-article-meta">
           <span>TIME: ~4–8 hrs</span>
@@ -568,8 +577,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>AC Service & Repair</h2>
+      <div class="service-article" id="ac-service-repair">
+        <h2><a href="https://wa.me/971585143634?text=AC%20Service%20for%20my%20Patrol" target="_blank" rel="noopener">AC Service & Repair</a></h2>
         <p>AC not blowing cold? In Dubai summer, a broken AC isn't optional. We handle gas refills, compressor replacement, condenser cleaning, blower motor fixes, and full system diagnostics — built for 50°C heat.</p>
         <div class="service-article-meta">
           <span>TIME: ~1–4 hrs</span>
@@ -580,8 +589,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Electrical & Diagnostics</h2>
+      <div class="service-article" id="electrical-diagnostics">
+        <h2><a href="https://wa.me/971585143634?text=Electrical%20service%20for%20my%20Patrol" target="_blank" rel="noopener">Electrical & Diagnostics</a></h2>
         <p>Battery problems, failing lights, or electrical gremlins? We diagnose and fix all electrical systems: battery, alternator, starter, lighting, wiring, fuses, relays, power windows, and complex electrical troubleshooting.</p>
         <div class="service-article-meta">
           <span>TIME: ~1–3 hrs</span>
@@ -592,8 +601,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Brakes, Tyres & Batteries</h2>
+      <div class="service-article" id="brakes-tyres-batteries">
+        <h2><a href="https://wa.me/971585143634?text=Brake%20or%20tyre%20service%20for%20my%20Patrol" target="_blank" rel="noopener">Brakes, Tyres & Batteries</a></h2>
         <p>Brake safety is non-negotiable. We replace pads and rotors, flush brake fluid, inspect brake systems, and perform wheel alignment. Plus tyre replacement, rotation, balancing, and battery testing for UAE conditions.</p>
         <div class="service-article-meta">
           <span>TIME: ~1–3 hrs</span>
@@ -604,8 +613,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Pre-Purchase Inspection</h2>
+      <div class="service-article" id="pre-purchase-inspection">
+        <h2><a href="https://wa.me/971585143634?text=Pre-purchase%20inspection%20for%20a%20Patrol" target="_blank" rel="noopener">Pre-Purchase Inspection</a></h2>
         <p>Buying a used Patrol? Get a thorough pre-purchase inspection before you commit. Complete exterior and interior check, engine and mechanical inspection, gearbox function test, brake and suspension check, OBD-II scan, and written report.</p>
         <div class="service-article-meta">
           <span>TIME: ~1.5–2 hrs</span>
@@ -616,8 +625,8 @@
         </div>
       </div>
 
-      <div class="service-article">
-        <h2>Modifications & Performance Upgrades</h2>
+      <div class="service-article" id="modifications-performance-upgrades">
+        <h2><a href="https://wa.me/971585143634?text=Mods%20for%20my%20Patrol" target="_blank" rel="noopener">Modifications & Performance Upgrades</a></h2>
         <p>Looking to customize your Patrol? ECU remapping, exhaust upgrades, air intake improvements, bumper and body kits, winch and recovery gear, LED lighting, interior customization, and off-road armor.</p>
         <div class="service-article-meta">
           <span>TIME: Varies</span>

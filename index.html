@@ -628,6 +628,16 @@
     .whatsapp-float svg { width: 28px; height: 28px; color: #fff; }
 
     ::selection { background: var(--white); color: var(--bg); }
+  
+    /* TAPTARGETS — whole-card tap target. The cards used to be 0-anchor divs
+       with a hover-only background and a "→" that never went anywhere; at 390px
+       every corner and the centre resolved to DEAD. */
+    .service-card { position: relative; }
+    .service-card h3 a { color: inherit; text-decoration: none; }
+    .service-card h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+    .service-card:focus-within { background: var(--bg-1); }
+    .service-card:focus-within .arrow { transform: translateX(4px); }
+    .service-card h3 a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   </style>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
@@ -762,37 +772,37 @@
       <div class="services-grid">
         <div class="service-card">
           <div class="service-num"><span>S/01</span><span>+</span></div>
-          <h3>Engine<br>Diagnostics</h3>
+          <h3><a href="/services.html#engine-diagnostics-repair">Engine<br>Diagnostics</a></h3>
           <p>Computer scanning, fault tracing, and root-cause analysis for Y62 engines.</p>
           <div class="service-card-foot"><span>1–2 HRS</span><span class="arrow">→</span></div>
         </div>
         <div class="service-card">
           <div class="service-num"><span>S/02</span><span>+</span></div>
-          <h3>Suspension<br>&amp; Lift Kits</h3>
+          <h3><a href="/services.html#suspension-upgrade-lift-kits">Suspension<br>&amp; Lift Kits</a></h3>
           <p>Full rebuilds, OME and Ironman kits, custom off-road setups for desert and dune work.</p>
           <div class="service-card-foot"><span>4–8 HRS</span><span class="arrow">→</span></div>
         </div>
         <div class="service-card">
           <div class="service-num"><span>S/03</span><span>+</span></div>
-          <h3>Brakes &amp;<br>Steering</h3>
+          <h3><a href="/services.html#brakes-tyres-batteries">Brakes &amp;<br>Steering</a></h3>
           <p>Pads, discs, fluid flush, power steering pumps, alignment, and full safety inspection.</p>
           <div class="service-card-foot"><span>2–5 HRS</span><span class="arrow">→</span></div>
         </div>
         <div class="service-card">
           <div class="service-num"><span>S/04</span><span>+</span></div>
-          <h3>Performance<br>&amp; Mods</h3>
+          <h3><a href="/services.html#modifications-performance-upgrades">Performance<br>&amp; Mods</a></h3>
           <p>ECU tuning, exhaust systems, intake mods, snorkels — built for UAE conditions.</p>
           <div class="service-card-foot"><span>VARIABLE</span><span class="arrow">→</span></div>
         </div>
         <div class="service-card">
           <div class="service-num"><span>S/05</span><span>+</span></div>
-          <h3>AC Service<br>&amp; Repair</h3>
+          <h3><a href="/services.html#ac-service-repair">AC Service<br>&amp; Repair</a></h3>
           <p>Gas refill, compressor replacement, blower fixes — built for 50°C summers.</p>
           <div class="service-card-foot"><span>2–4 HRS</span><span class="arrow">→</span></div>
         </div>
         <div class="service-card">
           <div class="service-num"><span>S/06</span><span>+</span></div>
-          <h3>Pre-Purchase<br>Inspection</h3>
+          <h3><a href="/services.html#pre-purchase-inspection">Pre-Purchase<br>Inspection</a></h3>
           <p>Full check before you buy a used Patrol — engine, gearbox, chassis, electronics.</p>
           <div class="service-card-foot"><span>2–3 HRS</span><span class="arrow">→</span></div>
         </div>
