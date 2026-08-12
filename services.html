@@ -450,7 +450,11 @@
   
     /* TAPTARGETS — whole-card tap target, same pattern as the homepage. The CTA
        row sits above the overlay so its own link still wins the tap. */
-    .service-article { position: relative; }
+    /* scroll-margin-top clears the sticky header, which is 88px at every
+       breakpoint (measured 390/768/1280). Without it a homepage card tap lands
+       on /services.html#<id> with 19px of the section heading hidden behind the
+       header, so the reader arrives looking at a headless block of text. */
+    .service-article { position: relative; scroll-margin-top: 104px; }
     .service-article h2 a { color: inherit; text-decoration: none; }
     .service-article h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
     .service-article:focus-within { background: var(--bg-1); }
