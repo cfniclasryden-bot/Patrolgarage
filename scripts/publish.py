@@ -38,6 +38,9 @@ def update_sitemap():
         ("/", "1.0", "weekly"),
         ("/services.html", "0.9", "monthly"),
         ("/y62-garage-dubai.html", "0.9", "monthly"),
+        ("/services/y62-major-service-dubai.html", "0.9", "monthly"),
+        ("/services/y62-gearbox-transmission-dubai.html", "0.9", "monthly"),
+        ("/services/nissan-patrol-v8-engine.html", "0.9", "monthly"),
         ("/about.html", "0.8", "monthly"),
         ("/contact.html", "0.9", "monthly"),
         ("/blog/", "0.8", "weekly"),
@@ -126,6 +129,11 @@ def _fetch_from_live(local_path):
 STATIC_PAGES = [
     "index.html", "services.html", "about.html", "contact.html",
     "y62-garage-dubai.html",
+    # Hand-authored service pages. Same revert trap applies to them as to the
+    # root pages: the container would otherwise redeploy its own stale copies.
+    "services/y62-major-service-dubai.html",
+    "services/y62-gearbox-transmission-dubai.html",
+    "services/nissan-patrol-v8-engine.html",
 ]
 
 
