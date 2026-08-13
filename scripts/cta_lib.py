@@ -73,11 +73,27 @@ def _component(s):
     return None
 
 
+# Slug -> fixed topic phrase, overriding whatever topic_phrase() derives from the
+# title. Use this when the title names something the workshop does not sell: the
+# pre-fill is an OFFER ("can I get an exact quote"), so it must not invite work we
+# do not do, even if the title legitimately covers it as owner information.
+#
+# nissan-patrol-suspension-dubai: titled "Suspension Repair & Lift Kits", which
+# made all four WhatsApp CTAs read "I read your Patrol suspension repair & lift
+# kits guide — can I get an exact quote". The workshop does suspension REPAIR
+# (shocks, HBMC accumulators, bushes) but not lift kits / height modification.
+# Owner decision 2026-08-13: keep the title and the informational lift-kit
+# section, hardcode the CTA so it cannot regenerate the offer from the title.
+PREFILL_TOPIC_OVERRIDES = {
+    "nissan-patrol-suspension-dubai": "Patrol suspension repair",
+}
+
+
 def prefill_for(title, slug):
     """Context-rich WhatsApp message for an article, e.g.
     'Hi, I read your Patrol transmission rebuild cost guide — can I get an exact quote for my Patrol?'"""
     intent = classify(slug, title)
-    topic = topic_phrase(title)
+    topic = PREFILL_TOPIC_OVERRIDES.get(slug) or topic_phrase(title)
     ask = {
         "cost": "can I get an exact quote for my Patrol?",
         "problems": "I think my Patrol might have an issue — can you help?",

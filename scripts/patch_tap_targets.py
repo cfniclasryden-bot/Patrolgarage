@@ -44,7 +44,7 @@ MARKER = "/* TAPTARGETS"
 # homepage card heading -> services.html section id
 HOME_MAP = {
     "Engine Diagnostics": "engine-diagnostics-repair",
-    "Suspension & Lift Kits": "suspension-upgrade-lift-kits",
+    "Suspension & HBMC": "suspension-hbmc-repair",
     "Brakes & Steering": "brakes-tyres-batteries",
     "AC Service & Repair": "ac-service-repair",
 }

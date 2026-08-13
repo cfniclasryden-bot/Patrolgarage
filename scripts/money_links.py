@@ -38,7 +38,7 @@ HOME_URL = "/"
 SERVICE_ANCHORS = {
     "transmission": "Y62 gearbox and transmission work",
     "engine": "Y62 engine diagnostics and repair",
-    "suspension": "Y62 suspension and lift kit work",
+    "suspension": "Y62 suspension and HBMC repair",
     "ac": "Y62 AC service and repair",
     "electrical": "Y62 electrical and diagnostic work",
     "brakes": "Y62 brakes, tyres and batteries",
@@ -49,7 +49,7 @@ SERVICE_ANCHORS = {
 # specific patterns sit above the general ones.
 TOPIC_RULES = [
     (r"transmission|gearbox|torque-converter|differential|cv-joint|driveshaft|diff", "transmission"),
-    (r"suspension|air-bag|lift-kit|shock|hbmc", "suspension"),
+    (r"suspension|air-bag|shock|hbmc", "suspension"),
     (r"\bac\b|air-con|compressor", "ac"),
     (r"abs|brake|battery|tyre", "brakes"),
     (r"dashcam|sensor|electrical|starter-motor|fourth-brake-light", "electrical"),

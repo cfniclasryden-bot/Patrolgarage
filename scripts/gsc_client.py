@@ -1,8 +1,23 @@
 #!/usr/bin/env python3
 """Google Search Console API client. No third-party SaaS.
 
-Replaces the SEO Gets MCP dependency, which has been subscription-blocked and
-has therefore blocked every data question about this site.
+*** THIS IS THE ONLY SOURCE OF TRAFFIC DATA FOR THIS SITE. ***
+
+Do NOT call the SEO Gets MCP. There is no subscription on that account, so
+every call returns "you need an SEO Gets subscription to use the MCP" — it has
+never once returned data, and reaching for it only stalls the question. GSC is
+wired directly here instead. Anything you would have asked SEO Gets (clicks,
+impressions, position, per-page or per-query performance) comes from query()
+below, which talks to the Search Console API itself.
+
+    import sys; sys.path.insert(0, "scripts")
+    import gsc_client as g
+    g.query(["query"], start_date="2026-05-12", end_date="2026-08-10")
+    g.query(["page"],  start_date=..., end_date=...)   # dimensions: date,
+    #     query, page, country, device — as GSC defines them, not SEO Gets'.
+
+GSC keeps 16 months. There is no "Super Site" long-history tier here, so do not
+ask for more and expect it back.
 
 AUTH: OAuth refresh token, because this Google org enforces
 iam.disableServiceAccountKeyCreation and no service-account key can be issued.
