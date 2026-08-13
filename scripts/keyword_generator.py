@@ -31,7 +31,13 @@ from anthropic import Anthropic
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from keyword_volume import VolumeError, verify_location_code  # noqa: E402
-from keyword_breadth import MIN_HEAD_VOLUME, evaluate  # noqa: E402
+from keyword_breadth import MIN_HEAD_VOLUME, evaluate, head_candidates  # noqa: E402
+from keyword_overlap import (  # noqa: E402
+    MAX_RANK,
+    load_published,
+    overlap_reason,
+    ranking_reason,
+)
 
 ROOT = Path(__file__).parent.parent
 CSV_FILE = ROOT / "keywords.csv"
@@ -251,6 +257,24 @@ def main():
     # non-zero — run_pipeline.py logs the failure and the queue simply does not
     # grow. An empty queue costs one day's post; an unverified queue costs a
     # month of them, which is the trade that produced 25 dead posts.
+    # Gate 1: topic overlap with anything already PUBLISHED. Free and local, so
+    # it runs first — no point paying for a volume lookup on a duplicate.
+    # Synonym-folded, so "gearbox problems" collides with the published
+    # "transmission problems" pillar.
+    published = load_published()
+    survivors = []
+    for kw in unique_new:
+        why = overlap_reason(kw, published)
+        if why:
+            print(f"    [reject] {kw}  — {why}")
+        else:
+            survivors.append(kw)
+    if not survivors:
+        print(f"[!] All {len(unique_new)} candidates duplicate published topics. "
+              f"Queue not grown.")
+        return 1
+    unique_new = survivors
+
     try:
         loc = verify_location_code()
         print(f"[*] Checking topic breadth for {len(unique_new)} candidates "
@@ -259,6 +283,32 @@ def main():
     except VolumeError as e:
         print(f"[!] BREADTH CHECK FAILED — adding nothing.\n    {e}")
         return 1
+
+    # Gate 2: does a page already rank for this? Writing a second page for an
+    # intent we already rank for makes a competitor to ourselves.
+    try:
+        import gsc_client
+        from datetime import date, timedelta
+        gsc_rows = gsc_client.query(
+            ["query", "page"],
+            start_date=(date.today() - timedelta(days=93)).isoformat(),
+            end_date=(date.today() - timedelta(days=3)).isoformat(),
+            row_limit=25000,
+        )
+    except Exception as e:
+        # Fail closed, same principle as the volume gate: an unverifiable
+        # candidate is not added.
+        print(f"[!] GSC RANKING CHECK FAILED — adding nothing.\n    {e}")
+        return 1
+
+    kept = []
+    for kw, head, vol in accepted:
+        why = ranking_reason(kw, head_candidates(kw), gsc_rows, max_rank=MAX_RANK)
+        if why:
+            rejected.append((kw, why))
+        else:
+            kept.append((kw, head, vol))
+    accepted = kept
 
     for kw, why in rejected:
         print(f"    [reject] {kw}  — {why}")
