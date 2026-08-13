@@ -261,7 +261,14 @@ def main():
     # it runs first — no point paying for a volume lookup on a duplicate.
     # Synonym-folded, so "gearbox problems" collides with the published
     # "transmission problems" pillar.
-    published = load_published()
+    # Corpus is every published post PLUS every article row already in
+    # Supabase whatever its status — pending rows included. Comparing only
+    # against published files let a preview propose "nissan patrol high
+    # mileage problems" while "nissan patrol high mileage" sat in the queue.
+    published = load_published() + [
+        (a.get("slug") or "queued", a.get("keyword") or "")
+        for a in existing_articles if a.get("keyword")
+    ]
     survivors = []
     for kw in unique_new:
         why = overlap_reason(kw, published)
@@ -309,6 +316,24 @@ def main():
         else:
             kept.append((kw, head, vol))
     accepted = kept
+
+    # Gate 4: one post per head term. Candidates are checked against published
+    # and queued topics but not against EACH OTHER, and a single batch happily
+    # proposed four posts all climbing to "nissan patrol engine" (140/mo) —
+    # engine overheating, smoke from engine, check engine light, engine
+    # rebuild. Four pages competing for one head term is the cannibalisation
+    # the other gates exist to prevent. Keep the highest-volume candidate per
+    # head; the rest are logged, not silently dropped.
+    accepted.sort(key=lambda t: -t[2])
+    seen_heads, deduped = {}, []
+    for kw, head, vol in accepted:
+        if head in seen_heads:
+            rejected.append((kw, f"head {head!r} already claimed this batch by "
+                                 f"{seen_heads[head]!r} — one post per head term"))
+            continue
+        seen_heads[head] = kw
+        deduped.append((kw, head, vol))
+    accepted = deduped
 
     for kw, why in rejected:
         print(f"    [reject] {kw}  — {why}")

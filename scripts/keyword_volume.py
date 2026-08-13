@@ -97,7 +97,13 @@ BANNED_PATTERNS = [
     # lift kits / height modification: the workshop does not offer these
     # (owner decision 2026-08-13) — a post that ranks for them draws the wrong
     # enquiry, so they must not enter the queue even at real volume.
-    r"\blift kit\b",
+    # Bare "lift", not just "lift kit". A generator preview proposed "nissan
+    # patrol body lift" and it passed every gate; a qualifier-aware pattern
+    # then still missed "2 inch lift", because the qualifier sits BEFORE the
+    # word. In a Patrol keyword list "lift" always means raising the car, which
+    # is not a service here, so match the word itself and stop playing
+    # whack-a-mole with the qualifiers.
+    r"\blift\b",
     # Component compounds from the dead cohort. These carry real generic
     # volume ("head gasket" 480/mo, "rear differential" 170) but it is all-car
     # volume a Patrol-only site cannot capture, and every post built on them
