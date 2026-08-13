@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Replacing the fourth brake light (also called the high-mounted stop lamp or HMSL) on a Nissan Patrol Y62 in Dubai typically costs AED 250 to 600 for the part, plus AED 100 to 200 labour, depending on whether you fit a genuine Nissan unit or a quality aftermarket equivalent. The job takes around 30 to 45 minutes at a specialist workshop. Per <a href="https://rta.ae">the RTA</a>, a faulty or missing high-mounted stop lamp will fail the annual Tasjeel vehicle inspection, so getting it sorted quickly is not optional.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Own one, or about to? Tell us the year and we will tell you what that particular car tends to need in Dubai heat.</p><a href="https://wa.me/971585143634?text=Question%20about%20my%20Patrol%20-%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask about your Patrol &rarr;</a></div>
+
 
 <p>The fourth brake light on the Y62 Patrol sits at the top of the rear tailgate, inside the cabin, pressed against the glass. It is easy to overlook until one of two things happens: someone behind you drives into the back of your Patrol because the centre stop signal was not firing, or your car fails the annual roadworthiness test at Tasjeel. Both outcomes cost far more than a timely lamp replacement. In Dubai, the problem comes around more often than you might expect. Summer heat on the Y62, with ambient temperatures running at 45°C to 50°C and the inside of the tailgate area pushing well beyond that when the car sits in direct sun, degrades the light assembly faster than it would in a cooler climate. We see failed LEDs, cracked lens covers, and corroded lamp connectors every week at the workshop. The Y62 has been on UAE roads since 2010, and on the 2010 to 2015 build years in particular the original lamp housings are now old enough that a replacement is overdue on many cars. Whether your Y62 is a pre-facelift, the 2016 refresh, or the 2020 model, the process and costs are close to identical. This guide covers everything: what the part is called, what causes it to fail, what a genuine versus aftermarket unit costs, how the replacement is done, and when you need to come in.</p>
 
@@ -427,19 +428,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

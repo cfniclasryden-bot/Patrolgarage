@@ -1050,19 +1050,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

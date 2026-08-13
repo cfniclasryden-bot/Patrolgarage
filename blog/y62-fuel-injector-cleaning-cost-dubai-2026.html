@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Professional fuel injector cleaning for a Nissan Patrol Y62 (VK56VD 5.6L V8) in Dubai typically costs between AED 400 and AED 900 for on-car pressurised cleaning, or AED 700 to AED 1,400 for off-car ultrasonic cleaning where all eight injectors are removed, flow-tested, and reinstalled. Most Ras Al Khor and Al Quoz workshops can complete the job same day, and the service is worth doing every 40,000 to 60,000 km given the accelerated carbon buildup the UAE climate causes.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y62 Patrol is not a delicate machine, but its VK56VD engine does have one known sensitivity: the fuel injectors on a direct-injection V8 running through Dubai stop-and-go traffic accumulate carbon deposits faster than the same engine would in a cooler, cleaner climate. Summer ambient temperatures sitting at 45 to 50°C mean fuel vapourises inside the fuel rail faster, leaving behind varnish on injector tips. Add the fine grit from Al Qudra or Liwa weekend runs, and you have a recipe for injectors that are partially blocked long before a check engine light appears. The symptoms are subtle at first. The engine feels a little flat off the line. Fuel economy drops by a few litres per 100 km. Cold starts have a slight stumble. Most owners assume it is just the heat. By the time the rough idle is obvious, the injectors may be delivering 15 to 20 percent less fuel than they should, which forces the ECU to compensate in ways that put extra load on other components. Catching this early with a cleaning service rather than a replacement is almost always the better decision on a Y62 with fewer than 200,000 km on the clock. This post covers what the service actually involves, what it costs in Dubai in 2026, and when cleaning is no longer enough.</p>
 
@@ -431,19 +432,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

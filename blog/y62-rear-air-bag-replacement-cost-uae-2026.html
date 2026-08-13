@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Replacing a rear air suspension bag on a Nissan Patrol Y62 in the UAE typically costs between AED 1,800 and AED 4,500 per bag, depending on whether you use an OEM Nissan part or a quality aftermarket unit and which workshop you choose. Labour adds AED 400 to AED 800 on top of the part price, and most jobs are completed in a single day.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y62 Patrol runs a hydraulic body motion control system at the front and a rear air suspension setup at the back. It is one of the things that makes the Y62 feel planted on Sheikh Zayed Road, even in the 6pm crawl, and reasonably composed on a Liwa dune at the same time. But the rear air bags are also one of the first components to show their age, especially on high-kilometre UAE cars. We see failed or leaking rear air bags on Y62s fairly regularly at our Ras Al Khor workshop, and the failure mode is almost always the same: the bag membrane develops a crack or a seam splits after repeated heat cycles. Dubai ambient temperatures regularly hit 45 to 50°C in summer, and tarmac surface temperatures can reach 70°C or above. That constant expansion and contraction accelerates the rubber ageing process. Add weekend off-road trips to Big Red or Al Qudra, where the bag is working hard through its full travel range, and the wear adds up faster than most owners expect. This guide covers what the replacement actually costs in 2026, why prices vary, what happens if you ignore a failing bag, and how to decide between OEM and aftermarket parts.</p>
 
@@ -442,19 +443,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

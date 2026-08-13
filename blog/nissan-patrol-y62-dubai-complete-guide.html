@@ -258,6 +258,8 @@
       <div class="direct-answer">
         <p><strong>Quick answer:</strong> The Y62 is the right choice for most Dubai buyers: V8 power, modern features, and strong parts availability. The Y61 suits buyers who want simpler mechanicals and lower running costs. The Y63 is the current flagship and worth it if your budget allows. Before buying any used Patrol, a pre-purchase inspection is non-negotiable. Independent specialists in the UAE typically charge AED 500 to 800 for one. If you are looking for a <a href="/y62-garage-dubai.html">Y62 garage</a> in Dubai, that is what we are.</p>
       </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Own one, or about to? Tell us the year and we will tell you what that particular car tends to need in Dubai heat.</p><a href="https://wa.me/971585143634?text=Question%20about%20my%20Patrol%20-%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask about your Patrol &rarr;</a></div>
+
 
       <p>The Nissan Patrol has been the UAE's defining 4x4 for over four decades. Three generations are actively circulating in Dubai right now (Y61, Y62, and Y63), and each is a different ownership proposition. Which one fits your needs depends on your budget, how you plan to use it, and how much mechanical complexity you're comfortable with. This guide covers what distinguishes each generation and what to look for before you buy.</p>
 
@@ -386,19 +388,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

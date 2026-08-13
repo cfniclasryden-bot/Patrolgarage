@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> A Nissan Patrol Y62 rear differential rebuild in the UAE costs AED 1,500 to AED 4,500 for an in-situ rebuild (bearings, seals, and gear set replacement with the housing remaining in the vehicle). If the housing or carrier is damaged and a replacement unit is needed, expect AED 3,000 to AED 8,000 all-in for a remanufactured unit plus labour. At Patrol Garage in Ras Al Khor, we quote each job after a full stripdown inspection so you pay for what is actually worn, not a blanket package.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The rear differential on a Y62 Patrol works hard. In Dubai, that means 50°C ambient heat in summer, tarmac temperatures above 70°C, sand and salt air along the coast, and regular weekend runs through Al Qudra, Big Red, or Liwa. The VK56VD 5.6L V8 produces 400 hp, and every bit of that torque goes through the rear diff on acceleration. Add stop-and-go traffic on Sheikh Zayed Road or Sheikh Mohammed Bin Zayed Road to the mix, and the differential oil gets hot, breaks down faster than the service schedule expects, and starts leaving metal particles in suspension. Those particles then lap the gears and bearings like very fine sandpaper. Most of the Y62 rear differential failures we see at Patrol Garage trace back to one root cause: the differential oil was not changed at the right interval for the way the vehicle was actually used. The good news is that early-stage failures, where the damage is limited to bearings and seals, are rebuilds, not replacements. The cost difference between catching it early and waiting is often AED 3,000 or more.</p>
 
@@ -434,19 +435,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

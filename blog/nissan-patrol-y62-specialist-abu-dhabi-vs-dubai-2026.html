@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> If you own a Y62 Patrol in the UAE, the practical difference between Abu Dhabi and Dubai for specialist servicing comes down to workshop density and travel time. Dubai has a higher concentration of independent Patrol specialists, particularly in the Ras Al Khor, Al Quoz, and Al Aweer corridors, which typically means faster turnaround and more price competition. Abu Dhabi owners with a Y62 running a VK56VD 5.6L V8 or Jatco JR710E 7-speed transmission often drive to Dubai for complex rebuilds, where specialist labor for those jobs runs AED 8,000 to 18,000 for a transmission rebuild and AED 15,000 to 35,000 for a full engine rebuild.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Deciding between them? Tell us which one you are looking at and we will tell you what that year actually needs.</p><a href="https://wa.me/971585143634?text=Deciding%20on%20a%20Patrol%20-%20which%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask before you buy &rarr;</a></div>
+
 
 <p>The Y62 Patrol has been on UAE roads since 2010, and by now the earliest examples are pushing 15 years old. That matters because the VK56VD V8 and the Jatco JR710E 7-speed automatic are now at an age where we see the first wave of serious mechanical work: transmission rebuilds, valve body replacements, timing chain services, and suspension overhauls on higher-mileage trucks. Whether you are in Abu Dhabi or Dubai, the problem is the same. The question is where you go to get it fixed properly.</p>
 
@@ -433,19 +434,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

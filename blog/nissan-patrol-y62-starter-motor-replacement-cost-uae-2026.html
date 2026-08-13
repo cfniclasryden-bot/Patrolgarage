@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Replacing the starter motor on a Nissan Patrol Y62 in the UAE typically costs between AED 800 and AED 2,200 all-in, depending on whether you use a genuine Nissan part, a quality aftermarket unit, or a tested used starter. Labour alone usually runs AED 300 to AED 600 at a specialist workshop in Dubai, with the VK56VD 5.6L V8 requiring more access time than smaller engines. Getting a proper diagnosis first matters, because a weak battery or corroded terminal can mimic a dead starter and lead to an unnecessary replacement.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y62 Patrol has been on UAE roads since 2010, and the 5.6L VK56VD V8 is generally a strong engine. But the starter motor is one component that takes real punishment in this climate. Ambient temperatures hitting 45 to 50°C in summer, combined with the stop-start traffic on Sheikh Zayed Road and the sand ingress from weekend runs to Big Red or Liwa, accelerate wear on electrical components in ways that owners coming from cooler climates do not always expect. We see Y62 starters come in having done anywhere from 80,000 km to well over 200,000 km, and the failure pattern is rarely sudden. There is usually a slow crank, a grind, or a first-start hesitation in the morning that owners ignore for weeks before the car refuses to start entirely. Understanding what the part costs, what the labour involves, and how to pick the right replacement unit will save you both money and a frustrating breakdown on the roadside. Per <a href="https://rta.ae">the RTA</a>, all registered vehicles in Dubai must be roadworthy and able to start and operate safely to pass the annual Muroor inspection, so a marginal starter is not something to defer indefinitely.</p>
 
@@ -426,19 +427,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

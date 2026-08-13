@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Patrol Garage in Ras Al Khor installs dashcams on the Y63 Nissan Patrol with clean hardwiring, hidden cabling, and a voltage cutoff relay to protect the battery in Dubai's heat. Professional dual-channel installation (front plus rear) typically runs AED 700 to AED 1,500 depending on the camera unit, and the job takes two to three hours on a Y63.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y63 launched in the UAE in 2024 and brought a completely different electrical architecture from the outgoing Y62. The dashboard is wider, the headliner trim clips differently, and the factory wiring runs are not where experienced installers expect them from years of Y62 work. We see this every week at the workshop: a Y63 owner brings in a dashcam they had fitted elsewhere, and the cable is routed along the top of the windscreen with a rubber grommet stuffed against the A-pillar. It looks rough. Worse, some of those jobs are tapped into fuse slots without an inline fuse or a battery cutoff relay. In a Dubai summer, ambient temperatures hit 45 to 50 degrees Celsius and the cabin can reach 80 degrees when parked. A dashcam drawing on an unprotected circuit in parking mode can drain a Y63 battery inside four hours at those temperatures. Getting the installation right on a car worth AED 300,000 or more matters. This guide explains exactly what a proper Y63 dashcam installation covers, what it costs in Dubai in 2026, and what to watch out for when comparing workshops.</p>
 
@@ -440,19 +441,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

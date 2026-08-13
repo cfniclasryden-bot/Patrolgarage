@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Fitting a tow bar to a Nissan Patrol Y62 in Dubai costs between AED 400 and AED 1,500 depending on the type. A fixed swan neck tow bar supplied and fitted runs AED 400 to AED 700, a detachable tow bar runs AED 700 to AED 1,200, and adding a 7-pin trailer wiring harness adds AED 200 to AED 400 on top.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y62 Patrol is one of the most capable tow vehicles in the UAE. With a 5.6L VK56VD V8 producing 400hp, it handles boat trailers, horse floats, and loaded utility trailers without breaking a sweat. What surprises most owners is how affordable a proper tow bar fitting actually is compared to what the dealership charges for accessories. It is one of the few jobs where the invoice ends up smaller than the worry you carried into the workshop. We see a lot of Y62s come through Patrol Garage in Ras Al Khor with aftermarket tow bars fitted at varying quality levels, and the price difference between a safe installation and a botched one is not always obvious until you are already on Sheikh Zayed Road with something heavy in tow. This guide covers the real cost of tow bar fitting in Dubai in 2026, what type of tow bar suits the Y62 best, what the UAE law requires before you tow anything, and what the installation actually involves. Whether you are towing a jet ski to Fujairah every weekend or pulling a quad trailer out to Big Red, the right setup matters.</p>
 
@@ -431,19 +432,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

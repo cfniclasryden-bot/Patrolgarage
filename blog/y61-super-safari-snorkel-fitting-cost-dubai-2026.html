@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Fitting a snorkel to a Y61 Super Safari in Dubai typically costs between AED 800 and AED 2,200 all-in, depending on the brand of snorkel kit and whether any bodywork modification is needed. That price covers the snorkel body, intake ram, fitting hardware, and labour at a specialist Patrol workshop in areas like Ras Al Khor or Al Quoz. Budget an extra AED 200 to AED 400 if your A-pillar panel needs repainting after the cut.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The Y61 Super Safari has been sold in the GCC continuously since 1997, and in the UAE it is still the go-to choice for serious off-road work. Head out to Big Red in Al Ain, the Liwa dunes, or the softer tracks around Al Qudra and you will notice that most of the working Patrols have a snorkel fitted. There is a good reason for that. Dubai summers push ambient temperatures to 45°C to 50°C, and the sand and dust that travel with that heat are hard on any air filtration system. A low-mounted factory airbox pulls hot, dusty air from directly above the engine bay. A snorkel relocates the intake point to roof height, where the air is cooler and cleaner, and it gives you genuine water-crossing ability without risking a hydrolocked engine. For the Y61 specifically, which uses a mechanically straightforward TB48DE 4.8-litre inline-six or the older TB45E 4.5-litre depending on year, protecting the intake is one of the smartest and cheapest modifications you can make before hitting the desert. This guide covers exactly what a snorkel fitting costs here in Dubai in 2026, what the job involves, and what to watch out for.</p>
 
@@ -426,19 +427,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

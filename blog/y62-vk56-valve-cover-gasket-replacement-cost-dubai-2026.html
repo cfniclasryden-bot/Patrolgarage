@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> Replacing both valve cover gaskets on a Y62 Nissan Patrol VK56VD 5.6L V8 in Dubai typically costs between AED 1,400 and AED 2,800 at a specialist workshop, covering OEM-grade gaskets for both cylinder banks plus three to five hours of labour. Dealer pricing runs higher. The wide spread comes down to whether the spark plug tube seals need replacing at the same time, which we almost always recommend on any Patrol past 80,000 km.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>The VK56VD is a big engine and a good one, but it has a known tendency to seep oil from the valve covers once heat cycles and Dubai summers start doing their work. We see this regularly at Patrol Garage, especially on Y62 models from the 2012 to 2017 production run. The ambient temperature here sits at 45°C to 50°C in peak summer, and the radiant heat from Sheikh Zayed Road tarmac pushes past 70°C. That kind of sustained heat hardens rubber gaskets faster than temperate climates, and the VK56VD runs its covers close to the intake manifold with limited airflow around them. The result is a gasket that can start weeping as early as 70,000 km, particularly at the rear corners of each bank. Left alone, the oil runs down onto the exhaust manifold, burns off, and fills the cabin with that faint cooked-oil smell every time you stop. Eventually it finds the spark plug wells and you get misfires on P0300 through P0308. This guide gives you real 2026 cost numbers, explains what the job actually involves on the VK56VD, and helps you decide when to act.</p>
 
@@ -453,19 +454,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

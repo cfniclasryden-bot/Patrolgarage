@@ -158,8 +158,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -303,6 +302,8 @@
 <div class="direct-answer">
 <p><strong>Quick answer:</strong> A Nissan Patrol transmission rebuild in Dubai typically costs between AED 8,000-18,000 depending on the model and extent of damage. Y62 Patrol 7-speed automatic rebuilds average AED 12,000-15,000, while older Y61 models range from AED 8,000-12,000 at Y62/Y61 transmission specialists with proper diagnostic equipment.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Want the number for your own Y62, not a range? Send us the year and the mileage and we will price the actual job.</p><a href="https://wa.me/971585143634?text=Y62%20quote%20-%20year%20and%20mileage%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Get a quote on WhatsApp &rarr;</a></div>
+
 
 <p>When your Nissan Patrol starts showing signs of transmission trouble in Dubai's demanding climate, understanding rebuild costs becomes crucial for making informed decisions. We've been rebuilding Patrol transmissions at our Ras Al Khor workshop for over a decade, and we know how Dubai's extreme heat, sand, and heavy traffic can push these robust gearboxes beyond their limits. The <a href="https://en.wikipedia.org/wiki/Nissan_Patrol">Nissan Patrol</a> remains the UAE's most popular full-size SUV, but even its legendary reliability can't always withstand 50°C summers, stop-and-go traffic on Sheikh Zayed Road, and weekend adventures in the desert. Whether you're driving a Y61 Super Safari or the latest Y62 with its complex 7-speed automatic, transmission problems don't have to mean the end of your Patrol's journey. We see dozens of transmission rebuilds every month, and the costs vary significantly based on your model, the extent of damage, and where you choose to have the work done. Understanding these factors upfront can save you thousands of dirhams and weeks of uncertainty.</p>
 
@@ -458,19 +459,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

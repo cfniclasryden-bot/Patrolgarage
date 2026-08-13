@@ -65,6 +65,8 @@
 </div>
 
 <p>The Nissan Patrol Y61 remains one of Dubai's most beloved off-road vehicles, combining legendary reliability with robust engineering that thrives in the UAE's extreme conditions. From conquering the dunes of Al Qudra to navigating Big Red, the Y61 has earned its reputation as the desert warrior's vehicle of choice. This comprehensive guide covers everything Y61 owners in Dubai need to know, from buying advice to maintenance schedules tailored for the UAE's harsh climate.</p>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Own one, or about to? Tell us the year and we will tell you what that particular car tends to need in Dubai heat.</p><a href="https://wa.me/971585143634?text=Question%20about%20my%20Patrol%20-%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask about your Patrol &rarr;</a></div>
+
 
 <p>Produced globally from 1997 to 2016 and still available today as the Super Safari in GCC markets, the Y61 represents the last generation of truly simple, mechanical Patrol engineering. Unlike modern vehicles loaded with electronics, the Y61's body-on-frame construction, solid axles, and straightforward drivetrain make it both maintainable and modifiable—crucial advantages in Dubai's demanding environment where temperatures soar to 45-50°C and tarmac can reach 70°C or higher.</p>
 
@@ -213,19 +215,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

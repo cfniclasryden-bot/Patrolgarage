@@ -193,6 +193,8 @@
   <a href="/blog/nissan-patrol-y62-problems-dubai.html">Nissan Patrol Common Problems &amp; Repair Guide Dubai →</a>
 </div>
 <p>If you're driving a Nissan Patrol Y62 around Dubai and starting to notice hesitation when shifting gears, unusual noises, or that dreaded burning smell — you're not alone. The Y62's 7-speed automatic transmission (Jatco JR710E/RE7R01A) is generally reliable, but Dubai's extreme conditions can push even the most robust systems to their limits. We've seen countless Y62 Patrols roll into our Ras Al Khor workshop with transmission issues that could have been prevented with early intervention.</p>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Own one, or about to? Tell us the year and we will tell you what that particular car tends to need in Dubai heat.</p><a href="https://wa.me/971585143634?text=Question%20about%20my%20Patrol%20-%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask about your Patrol &rarr;</a></div>
+
 
 <p>The reality is that Dubai's 45-50°C summer temperatures, combined with stop-and-go traffic on Sheikh Zayed Road and weekend desert adventures to Al Qudra or Big Red, create a perfect storm for transmission stress. Add in the constant sand ingress and humidity, and your Y62's transmission is working overtime compared to the same vehicle in a temperate climate. The good news? Most Y62 transmission problems are predictable, diagnosable, and — when caught early — surprisingly affordable to fix.</p>
 
@@ -335,19 +337,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

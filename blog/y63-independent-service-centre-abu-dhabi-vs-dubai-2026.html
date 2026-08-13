@@ -142,8 +142,7 @@
       "opens": "09:00",
       "closes": "14:00"
     }
-  ],
-  "priceRange": "AED 400-25000"
+  ]
 }
 </script>
 
@@ -299,6 +298,8 @@
 <div class="direct-answer">
   <p><strong>Quick answer:</strong> For Y63 Patrol owners in 2026, Dubai has a clear advantage in independent specialist coverage, with established workshops in Ras Al Khor and Al Quoz offering Y63-specific servicing from AED 800 to AED 2,500 for a major service, compared to fewer specialist options in Abu Dhabi where most independent trade is concentrated around Mussafah. If you are based in Abu Dhabi, the drive to a proven Dubai specialist is often worth it for complex work like transmission or suspension on a vehicle this new.</p>
 </div>
+<div class="early-cta" data-cta="early" style="margin:1.5rem 0 2rem;padding:1.1rem 1.25rem;border:1px solid rgba(37,211,102,0.45);background:rgba(37,211,102,0.07);border-radius:12px;"><p style="margin:0 0 0.9rem;font-weight:600;font-size:1rem;line-height:1.45;">Deciding between them? Tell us which one you are looking at and we will tell you what that year actually needs.</p><a href="https://wa.me/971585143634?text=Deciding%20on%20a%20Patrol%20-%20which%20year%3A%20" target="_blank" rel="noopener" data-cta="early" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.65rem 1.15rem;font-weight:700;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;">Ask before you buy &rarr;</a></div>
+
 
 <p>The Y63 landed in UAE showrooms in 2024 and replaced the Y62 as Nissan's flagship Patrol. It is a different car under the skin: twin-turbo V6 engines replace the old VK56VD V8, a new 9-speed automatic replaces the Jatco JR710E 7-speed, and the electronics package is significantly more complex. That last point matters a lot when you are choosing where to service it outside the dealer network. Independent workshops that confidently handled Y62s are not automatically ready for the Y63. Tooling, software licences for the newer CAN-bus architecture, and familiarity with the adaptive air suspension system all vary considerably between workshops, and between cities. We see this gap directly at Patrol Garage in Ras Al Khor. Owners come in having been turned away by general workshops who cannot read Y63 fault codes, or who have been quoted dealer prices for work that an experienced independent can do for significantly less. This article maps out what that difference looks like in 2026, what to check before booking your car in anywhere, and which jobs genuinely need a specialist rather than a general-purpose garage.</p>
 
@@ -436,19 +437,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

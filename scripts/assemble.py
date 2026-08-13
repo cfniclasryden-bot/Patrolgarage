@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cta_lib
 import patch_clarity
 import money_links
+import early_cta
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
@@ -188,7 +189,9 @@ def build_schemas(meta, keyword, today, faqs, canonical_url):
             {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "19:00"},
             {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00"}
         ],
-        "priceRange": "AED 400-25000"
+        # No priceRange: that is the workshop's own advertised price band, and the
+        # 2026-08-12 decision removed our service prices from the site. It was
+        # still being injected into every new post's AutoRepair schema.
     })
 
     blocks = []
@@ -237,6 +240,11 @@ def assemble(keyword):
     # the only one inside <article>. Fail-safe: returns the body unchanged on any
     # error, so it can never fail a nightly publish. See money_links.py.
     article_body = money_links.add_money_links(article_body, slug)
+    # Early contextual CTA directly under the quick answer (~9% of page depth).
+    # Posts run 11-19 screens on mobile and the first in-flow CTA sat at 35-94%,
+    # so roughly half of readers never reached one. Fail-safe: returns the body
+    # unchanged on any error. See early_cta.py.
+    article_body = early_cta.insert(article_body, slug)
 
     today = datetime.now().strftime("%Y-%m-%d")
     canonical_url = f"https://patrolgarage.ae/blog/{slug}.html"
