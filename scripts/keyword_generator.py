@@ -1,5 +1,24 @@
 #!/usr/bin/env python3
-"""Auto-generate BOFU keywords for the queue and insert them into Supabase."""
+"""Auto-generate BOFU keywords for the queue and insert them into Supabase.
+
+EVERY KEYWORD IS VOLUME-CHECKED BEFORE IT CAN BE ADDED (keyword_volume.py).
+
+This script previously asked an LLM for keywords and inserted whatever came
+back. Nothing checked demand, and it showed: the 25 posts published from that
+queue between 2026-07-19 and 2026-08-12 earned ZERO impressions between them,
+while the 19 launch posts had 1,171 by the same age. Across all 24 component
+topics that queue targeted, GSC recorded 2 impressions in 90 days.
+
+So generation is now a proposal step, not an insertion step. The LLM proposes;
+DataForSEO decides. Anything at zero volume, below the floor, or matching a
+banned component pattern is dropped and logged.
+
+The gate FAILS CLOSED: if DataForSEO is unconfigured or unreachable, this
+script adds nothing and exits non-zero. That is deliberate. At one post a day,
+a validator that degrades to a pass-through would refill the queue with dead
+keywords within weeks and the failure would be invisible until the next GSC
+review — which is exactly how the first queue died.
+"""
 
 import csv
 import os
@@ -10,8 +29,20 @@ from pathlib import Path
 import requests
 from anthropic import Anthropic
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from keyword_volume import (  # noqa: E402
+    MIN_VOLUME,
+    VolumeError,
+    validate,
+    verify_location_code,
+)
+
 ROOT = Path(__file__).parent.parent
 CSV_FILE = ROOT / "keywords.csv"
+
+# Ask for more than we need: most candidates are rejected, and a run that
+# proposes 10 and keeps 2 is a wasted day of publishing.
+CANDIDATES_TO_REQUEST = int(os.environ.get("KEYWORD_CANDIDATES", "30"))
 
 client = Anthropic()
 
@@ -88,12 +119,27 @@ def generate_keywords(existing_articles):
 
     titles_block = "\n".join(f"- {t}" for t in titles_list) if titles_list else "(none yet)"
 
-    prompt = f"""Generate 10 new BOFU (bottom-of-funnel) SEO keywords for a Nissan Patrol specialist website in Dubai.
+    prompt = f"""Generate {CANDIDATES_TO_REQUEST} new BOFU (bottom-of-funnel) SEO keywords for a Nissan Patrol specialist website in Dubai.
 
 CONTEXT:
 - Site: patrolgarage.ae (Nissan Patrol specialist - Y62)
 - Location: Dubai, UAE
 - Audience: Patrol owners searching for service, repair, comparisons, pricing
+
+WHAT ACTUALLY EARNS ON THIS SITE (measured in Google Search Console, 90 days):
+Every query that has ever produced a click is commercial-intent or
+cost/problem-shaped — "nissan patrol garage" (8.8% CTR), "patrol garage"
+(5.9%), "nissan patrol specialist" (7.1%), "nissan patrol tuning dubai",
+plus service-cost and common-problems queries. Propose keywords of THAT shape.
+
+WHAT FAILED, AND WHY YOU MUST NOT REPEAT IT:
+An earlier queue targeted individual small components — ABS sensor, throttle
+body, CV joint, oxygen sensor, water pump, spark plugs, engine mounts. Twenty
+five posts were published against it and earned ZERO impressions between them,
+because nobody searches for a Patrol part by name. Owners search for the
+SYMPTOM ("patrol overheating dubai"), the SERVICE ("patrol major service
+cost"), or the WORKSHOP ("patrol specialist near me"). Do not propose a
+keyword whose subject is a single replaceable part.
 
 EXISTING ARTICLES (do not duplicate these topics):
 {titles_block}
@@ -113,13 +159,16 @@ REQUIREMENTS for new keywords:
 - Include some "Al Futtaim alternative", workshop comparisons, parts pricing
 - Avoid TOFU informational queries (no "what is", "how does")
 - Each keyword 4-10 words, lowercase, no punctuation
+- Subject must be a service, a symptom, a cost, a comparison, or a workshop
+  choice — never a single component
 
-OUTPUT: Return ONLY the 10 keywords, one per line, no numbering, no explanations."""
+OUTPUT: Return ONLY the {CANDIDATES_TO_REQUEST} keywords, one per line, no numbering, no explanations."""
 
-    print(f"[*] Asking Claude for 10 new BOFU keywords (avoiding {len(titles_list)} existing topics)...")
+    print(f"[*] Asking Claude for {CANDIDATES_TO_REQUEST} candidate keywords "
+          f"(avoiding {len(titles_list)} existing topics)...")
     resp = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=500,
+        max_tokens=1500,
         messages=[{"role": "user", "content": prompt}]
     )
     raw = resp.content[0].text.strip()
@@ -184,6 +233,33 @@ def main():
         print("All generated keywords were topic-duplicates — queue not grown. "
               "Site topic coverage may be saturated; consider adding keywords manually.")
         return 0
+
+    # --- THE GATE ---------------------------------------------------------
+    # Nothing below this point may run on an unverified keyword. A VolumeError
+    # means demand could not be established, so we add nothing and exit
+    # non-zero — run_pipeline.py logs the failure and the queue simply does not
+    # grow. An empty queue costs one day's post; an unverified queue costs a
+    # month of them, which is the trade that produced 25 dead posts.
+    try:
+        loc = verify_location_code()
+        print(f"[*] Validating {len(unique_new)} candidates against DataForSEO "
+              f"({loc}, min {MIN_VOLUME}/mo)...")
+        accepted, rejected = validate(unique_new)
+    except VolumeError as e:
+        print(f"[!] VOLUME CHECK FAILED — adding nothing.\n    {e}")
+        return 1
+
+    for kw, why in rejected:
+        print(f"    [reject] {kw}  — {why}")
+    if not accepted:
+        print(f"[!] All {len(unique_new)} candidates rejected. Queue not grown.")
+        return 1
+
+    print(f"[+] {len(accepted)} of {len(unique_new)} candidates cleared:")
+    for kw, vol in accepted:
+        print(f"    [keep]   {vol:>6}/mo  {kw}")
+
+    unique_new = [kw for kw, _ in accepted]
 
     # Write survivors to CSV
     for k in unique_new:
