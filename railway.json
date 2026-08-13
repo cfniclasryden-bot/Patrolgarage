@@ -5,7 +5,7 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "python3 -c \"print('[cron_entry] PAUSED 2026-08-13 pending queue diagnosis - no post published')\"",
+    "startCommand": "python3 scripts/cron_entry.py",
     "restartPolicyType": "NEVER",
     "cronSchedule": "0 5 * * 1,4"
   }
