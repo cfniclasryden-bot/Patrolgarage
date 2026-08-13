@@ -46,7 +46,6 @@ HOME_MAP = {
     "Engine Diagnostics": "engine-diagnostics-repair",
     "Suspension & Lift Kits": "suspension-upgrade-lift-kits",
     "Brakes & Steering": "brakes-tyres-batteries",
-    "Performance & Mods": "modifications-performance-upgrades",
     "AC Service & Repair": "ac-service-repair",
 }
 

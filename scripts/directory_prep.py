@@ -34,7 +34,7 @@ BUSINESS_DATA = {
     "name": "Patrol Garage Dubai",
     "category": "Auto Repair / Automotive Services",
     "subcategory": "Nissan Patrol Specialists",
-    "description_short": "Nissan Patrol specialists in Dubai. Y62 service, repair, and modifications.",
+    "description_short": "Nissan Patrol specialists in Dubai. Engine, gearbox, servicing and diagnostics.",
     "description_long": (
         "Patrol Garage Dubai connects Nissan Patrol owners with specialist workshops in Dubai. "
         "We focus exclusively on the Nissan Patrol Y62. "

@@ -50,7 +50,7 @@ MARKER = "<!-- LOCALLAYER -->"
 
 HOME_TITLE = "Nissan Patrol Garage in Ras Al Khor, Dubai | Y62 Specialists"   # 540px
 HOME_DESC = ("Nissan Patrol specialist garage in Ras Al Khor, Dubai. Patrols only: "
-             "Y62 service, repair, diagnostics and modifications. Call +971 58 514 3634.")
+             "engine, gearbox, major servicing and diagnostics. Call +971 58 514 3634.")
 
 CONTACT_TITLE = "Patrol Garage, Ras Al Khor | Nissan Patrol Workshop Dubai"    # 531px
 CONTACT_DESC = ("Patrol Garage is in the Ras Al Khor industrial area, Dubai. Directions, "
