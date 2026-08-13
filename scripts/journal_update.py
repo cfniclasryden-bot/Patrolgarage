@@ -88,10 +88,21 @@ def extract_post_meta(html_path):
             category = "PROBLEMS"
         elif "cost" in sl or "price" in sl:
             category = "COSTS"
-        elif "ac" in sl:
+        # Word-boundary, not substring: bare `"ac" in sl` also matched the "ac"
+        # inside "accumulator" and "replacement", so an hbmc-accumulator or any
+        # replacement post with no "cost" in its slug was filed as CLIMATE.
+        elif re.search(r"\bac\b", sl):
             category = "CLIMATE"
-        elif "suspension" in sl or "upgrade" in sl:
-            category = "UPGRADES"
+        # Suspension work here is REPAIR — shocks, HBMC accumulators, bushes.
+        # The workshop does not do lift kits or height modification, so this
+        # must not label a suspension post "UPGRADES" (owner decision
+        # 2026-08-13). "upgrade" is deliberately NOT a trigger any more: the
+        # slugs that carry it are informational cost posts (y62-turbo-upgrade-
+        # dubai-cost, y62-intercooler-upgrade-cost-...), and they already match
+        # the "cost" branch above, so routing them here only ever mislabelled
+        # them as something the workshop sells.
+        elif "suspension" in sl or "hbmc" in sl or "air-bag" in sl:
+            category = "SUSPENSION"
         elif "service" in sl or "maintenance" in sl or "oil" in sl:
             category = "MAINTENANCE"
         elif "vs" in sl or "compari" in sl:
