@@ -98,6 +98,22 @@ BANNED_PATTERNS = [
     # (owner decision 2026-08-13) — a post that ranks for them draws the wrong
     # enquiry, so they must not enter the queue even at real volume.
     r"\blift kit\b",
+    # Component compounds from the dead cohort. These carry real generic
+    # volume ("head gasket" 480/mo, "rear differential" 170) but it is all-car
+    # volume a Patrol-only site cannot capture, and every post built on them
+    # earned zero. Note "differential" alone is NOT banned — the differential
+    # repair post earns 45 impressions; only the component compound is.
+    r"\bhead gasket\b",
+    r"\brear differential\b",
+    r"\bdifferential seal\b",
+    r"\boil cooler\b",
+    r"\bbrake caliper\b",
+    r"\bexhaust manifold\b",
+    r"\bfuel tank\b",
+    r"\bsuspension arm\b",
+    r"\bty?re rotation\b",
+    r"\btransfer case\b",
+    r"\bcatalytic converter\b",
 ]
 _BANNED = [re.compile(p, re.I) for p in BANNED_PATTERNS]
 

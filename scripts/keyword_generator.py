@@ -30,12 +30,8 @@ import requests
 from anthropic import Anthropic
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from keyword_volume import (  # noqa: E402
-    MIN_VOLUME,
-    VolumeError,
-    validate,
-    verify_location_code,
-)
+from keyword_volume import VolumeError, verify_location_code  # noqa: E402
+from keyword_breadth import MIN_HEAD_VOLUME, evaluate  # noqa: E402
 
 ROOT = Path(__file__).parent.parent
 CSV_FILE = ROOT / "keywords.csv"
@@ -152,15 +148,30 @@ CRITICAL: Avoid any keyword that covers a topic ALREADY in the list above. Treat
 - repair = fix
 So if an article about 'transmission rebuild cost' exists, do NOT generate 'gearbox repair cost' — it's the same topic. Only propose keywords on genuinely NEW topics or angles not covered above.
 
-REQUIREMENTS for new keywords:
-- BOFU intent: comparisons, costs, "best", "vs", "near me", brand pricing, alternatives
-- Dubai/UAE specific where natural
-- Focus on Y62 topics
-- Include some "Al Futtaim alternative", workshop comparisons, parts pricing
-- Avoid TOFU informational queries (no "what is", "how does")
-- Each keyword 4-10 words, lowercase, no punctuation
-- Subject must be a service, a symptom, a cost, a comparison, or a workshop
-  choice — never a single component
+SHAPE — this is the important part, measured from this site's own history:
+Posts here do NOT rank for the long phrase they are built around. Across the
+top 10 posts, ZERO rank for their target keyword, and 86% of all impressions
+come from queries of 1-3 words. A post targeting "nissan patrol y62 dubai
+complete guide" earns its traffic on "y62", "nissan patrol y62" and "nissan
+y62". The long keyword is a writing prompt; the short head term is what
+actually ranks.
+
+So propose BROAD topics that own a short head term, not long specific phrases:
+- SYMPTOM or PROBLEM shaped: "nissan patrol engine problems", "nissan patrol
+  gearbox problems", "nissan patrol not starting", "nissan patrol warning lights"
+- OWNERSHIP or BUYING shaped: "buying a used nissan patrol", "nissan patrol
+  best year to buy", "nissan patrol high mileage", "nissan patrol reliability"
+- BROAD SERVICE shaped: "nissan patrol maintenance", "nissan patrol service
+  intervals"
+
+REQUIREMENTS:
+- 3-6 words, lowercase, no punctuation, no year numbers
+- Must name the car ("nissan patrol", or a model: y61 / y62 / y63)
+- The subject must be a whole system, a symptom, or an ownership decision —
+  never a single replaceable component
+- Do NOT bolt on "dubai"/"uae"/"cost"/"2026" to make a phrase longer; those
+  qualifiers do not help and the head term is what matters
+- Avoid "what is" / "how does" explainers
 
 OUTPUT: Return ONLY the {CANDIDATES_TO_REQUEST} keywords, one per line, no numbering, no explanations."""
 
@@ -242,11 +253,11 @@ def main():
     # month of them, which is the trade that produced 25 dead posts.
     try:
         loc = verify_location_code()
-        print(f"[*] Validating {len(unique_new)} candidates against DataForSEO "
-              f"({loc}, min {MIN_VOLUME}/mo)...")
-        accepted, rejected = validate(unique_new)
+        print(f"[*] Checking topic breadth for {len(unique_new)} candidates "
+              f"({loc}, head term must reach {MIN_HEAD_VOLUME}/mo)...")
+        accepted, rejected = evaluate(unique_new)
     except VolumeError as e:
-        print(f"[!] VOLUME CHECK FAILED — adding nothing.\n    {e}")
+        print(f"[!] BREADTH CHECK FAILED — adding nothing.\n    {e}")
         return 1
 
     for kw, why in rejected:
@@ -256,10 +267,10 @@ def main():
         return 1
 
     print(f"[+] {len(accepted)} of {len(unique_new)} candidates cleared:")
-    for kw, vol in accepted:
-        print(f"    [keep]   {vol:>6}/mo  {kw}")
+    for kw, head, vol in accepted:
+        print(f"    [keep]   {vol:>6}/mo via {head!r}  <- {kw}")
 
-    unique_new = [kw for kw, _ in accepted]
+    unique_new = [kw for kw, _, _ in accepted]
 
     # Write survivors to CSV
     for k in unique_new:
