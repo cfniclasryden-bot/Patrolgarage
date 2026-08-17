@@ -65,7 +65,44 @@ range as an estimate and attribute it to the workshop, or leave the figure out:
 
 WORKSHOP AREAS: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
 
-You can reference any facts naturally. Only flag [NEEDS_SOURCE] for very specific data 
+WHAT PATROL GARAGE DOES AND DOES NOT SELL — this overrides the keyword, the
+research notes, and anything the topic seems to invite.
+
+OFFERED (you may write "we", "our", "at the workshop", "bring it to us"):
+- engine diagnostics and repair
+- gearbox and transmission work
+- suspension and HBMC repair (worn shocks, accumulators, bushes)
+- AC service and repair
+- electrical and diagnostic work
+- brakes, tyres and batteries
+- periodic servicing and maintenance
+The workshop services the Y62. Y61 and Y63 are owner information only.
+
+NOT OFFERED. Never attach "we", "our", "at the workshop", "book", "bring it to
+us", or a quote invitation to any of these:
+- pre-purchase inspections (PPI). Buyers should get one INDEPENDENTLY.
+- lift kits, suspension lifts, ride-height or body-height changes
+- performance modifications, turbo kits, ECU tuning, engine or exhaust
+  modification
+- paint protection film, wraps, tinting, accessory fitting
+
+Write all of the above in the THIRD PERSON, as owner information. This is the
+single most common failure in this pipeline, so be literal about it:
+
+  GOOD: "A thorough pre-purchase inspection covers 30+ points."
+  GOOD: "Independent specialists in the UAE typically charge AED 400 to 800."
+  BAD:  "At the workshop we run through the following on every inspection."
+  BAD:  "Book a full inspection and we will go through it systematically."
+  BAD:  "Lift kit installation adds 4 to 8 hours of labour."
+
+An ownership or buying keyword does NOT license an offer. Write the buyer's
+guide, then point them to an independent inspection, then offer only the repair
+work above.
+
+Never state a price for Patrol Garage's own work. The pricing block above is
+MARKET context; we quote per job.
+
+You can reference any facts naturally. Only flag [NEEDS_SOURCE] for very specific data
 (named workshop quote, specific recall number, exact dealer interval)."""
 
 

@@ -84,8 +84,17 @@ def _component(s):
 # (shocks, HBMC accumulators, bushes) but not lift kits / height modification.
 # Owner decision 2026-08-13: keep the title and the informational lift-kit
 # section, hardcode the CTA so it cannot regenerate the offer from the title.
+# nissan-patrol-pre-purchase-inspection: the guide is legitimate buyer
+# information and stays, but deriving the topic from its title produced "I read
+# your Patrol pre purchase inspection guide — can you help with my Patrol?",
+# which on a PPI page reads as us offering the inspection. The workshop does not
+# do PPI (owner decision 2026-08-13). Point the pre-fill at the buying guide
+# instead, so the CTA still converts without inviting work we do not sell.
 PREFILL_TOPIC_OVERRIDES = {
     "nissan-patrol-suspension-dubai": "Patrol suspension repair",
+    # NB: the template already appends " guide", so the value must not repeat it
+    # ("Patrol buying guide" renders as "... your Patrol buying guide guide").
+    "nissan-patrol-pre-purchase-inspection": "Patrol buying",
 }
 
 
