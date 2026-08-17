@@ -55,6 +55,49 @@ PAGINATION_CSS = """
 """
 
 
+DATE_PUBLISHED_RE = re.compile(r'"datePublished"\s*:\s*"([^"]+)"')
+
+# Set by post_date() whenever it has to fall back to mtime. main() reports it.
+_mtime_fallbacks = []
+
+
+def post_date(html, html_path):
+    """The post's own published date, from its JSON-LD datePublished.
+
+    THE BUG THIS FIXES. This used to be `html_path.stat().st_mtime`, which made
+    the displayed date and the sort order a property of the FILESYSTEM rather
+    than of the post. Anything that rewrote a file re-dated it: a site-wide
+    patch script, or publish.py's own ensure_images() swapping a missing hero
+    for the fallback. On 2026-08-17 that put six posts published 2026-08-07
+    through 08-12 at the top of the listing dated today, and it had already
+    flattened the whole archive into four clusters (the four bulk-touch days)
+    instead of 31 distinct publish dates.
+
+    datePublished is the real date, is written once by assemble.py, and no
+    rewrite touches it — so reading it here makes the listing immune to file
+    churn by construction.
+
+    mtime remains the last-resort fallback for a post with no parseable
+    datePublished, but it is recorded and reported loudly rather than silently
+    reintroducing the old behaviour.
+    """
+    m = DATE_PUBLISHED_RE.search(html)
+    if m:
+        raw = m.group(1).strip()
+        try:
+            return datetime.fromisoformat(raw.replace("Z", "+00:00")).replace(tzinfo=None)
+        except ValueError:
+            pass
+        try:  # tolerate a bare date with trailing junk, e.g. "2026-08-17 (updated)"
+            return datetime.strptime(raw[:10], "%Y-%m-%d")
+        except ValueError:
+            pass
+        _mtime_fallbacks.append(f"{html_path.name}: unparseable datePublished {raw!r}")
+    else:
+        _mtime_fallbacks.append(f"{html_path.name}: no datePublished in JSON-LD")
+    return datetime.fromtimestamp(html_path.stat().st_mtime)
+
+
 def page_url(n):
     """Canonical URL path for listing page n. Page 1 is /blog/, never /blog/page/1/."""
     return "/blog/" if n == 1 else f"/blog/page/{n}/"
@@ -118,7 +161,7 @@ def extract_post_meta(html_path):
         else:
             category = "GUIDE"
 
-    mtime = datetime.fromtimestamp(html_path.stat().st_mtime)
+    published = post_date(html, html_path)
     text_only = re.sub(r"<[^>]+>", " ", html)
     read_min = max(3, len(text_only.split()) // 250)
 
@@ -127,8 +170,8 @@ def extract_post_meta(html_path):
         "title": title,
         "description": description,
         "category": category,
-        "date": mtime.strftime("%B %d, %Y"),
-        "mtime": mtime,
+        "date": published.strftime("%B %d, %Y"),
+        "published": published,
         "read_min": read_min,
     }
 
@@ -229,10 +272,20 @@ def clean_stale_pages(keep_total):
 
 def main():
     posts = [extract_post_meta(f) for f in BLOG.glob("*.html") if f.name != "index.html"]
-    posts.sort(key=lambda p: p["mtime"], reverse=True)
+    # Newest first. Slug breaks ties ascending, so the 11 launch posts that share
+    # a datePublished keep a stable order instead of reshuffling every run —
+    # which is what filesystem order used to do.
+    posts.sort(key=lambda p: (-p["published"].timestamp(), p["slug"]))
     if not posts:
         print("[!] No posts found")
         return 1
+
+    if _mtime_fallbacks:
+        print(f"[!] {len(_mtime_fallbacks)} post(s) fell back to file mtime for their date —")
+        print("[!] their listing date will drift whenever the file is rewritten:")
+        for line in _mtime_fallbacks:
+            print(f"[!]   {line}")
+        print("[!] Fix: give the post a JSON-LD datePublished in assemble.py.")
 
     pages = [posts[i:i + PER_PAGE] for i in range(0, len(posts), PER_PAGE)]
     total = len(pages)

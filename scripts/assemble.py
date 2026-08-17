@@ -12,6 +12,7 @@ from anthropic import Anthropic
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cta_lib
 import patch_clarity
+import patch_favicon
 import money_links
 import early_cta
 
@@ -299,6 +300,14 @@ def assemble(keyword):
     template, injected = patch_clarity.inject(template)
     if injected:
         print("[i] Clarity tag was missing from the template — injected")
+
+    # Same safety net for the favicon links, for the same reason: the template is
+    # a real published post, so if its icon links ever go missing every future
+    # post loses them too — and a post with no icon reference is exactly what put
+    # the globe placeholder in Google's results in the first place.
+    template, injected = patch_favicon.inject(template)
+    if injected:
+        print("[i] Favicon links were missing from the template — injected")
 
     out_path = BLOG_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:

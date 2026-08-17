@@ -325,6 +325,13 @@ def publish(keyword=None):
     )
     if journal_result.returncode == 0:
         print("    Journal index updated")
+        # stdout is otherwise swallowed on success, which would hide the
+        # "fell back to mtime" warning journal_update emits when a post has no
+        # JSON-LD datePublished — the exact condition that silently re-dated the
+        # listing before. Forward just those lines.
+        for line in journal_result.stdout.splitlines():
+            if line.startswith("[!]"):
+                print(f"    {line}")
     else:
         print(f"    [!] Journal update failed: {journal_result.stderr[:300]}")
 
