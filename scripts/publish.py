@@ -33,7 +33,6 @@ def slugify(text):
 
 
 def update_sitemap():
-    today = datetime.now().strftime("%Y-%m-%d")
     urls = [
         ("/", "1.0", "weekly"),
         ("/services.html", "0.9", "monthly"),
@@ -56,12 +55,51 @@ def update_sitemap():
     for n in range(2, total_pages + 1):
         urls.append((f"/blog/page/{n}/", "0.5", "weekly"))
 
+    # lastmod must be the date the page ACTUALLY changed, per URL.
+    #
+    # This used to stamp datetime.now() on every URL on every run, and the cron
+    # runs daily — so the sitemap asserted that all ~55 pages changed that
+    # morning, including posts untouched for months. A lastmod that is
+    # demonstrably wrong carries no information, and Google's documented
+    # response is to disregard it. Measured 2026-08-19: GSC had the sitemap as
+    # downloaded ONCE (2026-05-11) and never re-fetched, still listing the 21
+    # URLs it saw that day, while 31 URLs added afterwards sat at "URL is
+    # unknown to Google" — including /y62-garage-dubai.html and all three
+    # /services/ pages. Nothing else about the sitemap was wrong: valid XML,
+    # correct host, every URL 200, zero errors, zero warnings.
+    #
+    # mtime is the right source because this site already treats it as content:
+    # journal_update.py derives each post's displayed date AND the listing sort
+    # order from it. Anything that corrupts mtime now breaks the listing and the
+    # sitemap together, instead of leaving them silently disagreeing.
+    def _mtime(path):
+        return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+
+    _newest = max((f.stat().st_mtime for f in blog_files), default=None)
+    newest_date = (datetime.fromtimestamp(_newest).strftime("%Y-%m-%d")
+                   if _newest else datetime.now().strftime("%Y-%m-%d"))
+
+    def lastmod_for(url_path):
+        # "/" is index.html; the other trailing-slash URLs (/blog/,
+        # /blog/page/N/) are generated listings with no file of their own, and
+        # they change exactly when the newest post does.
+        if url_path == "/":
+            f = PROJECT_ROOT / "index.html"
+        elif url_path.endswith("/"):
+            return newest_date
+        else:
+            f = PROJECT_ROOT / url_path.lstrip("/")
+        try:
+            return _mtime(f)
+        except OSError:
+            return newest_date
+
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, priority, freq in urls:
         parts.append("  <url>")
         parts.append(f"    <loc>{SITE_URL}{path}</loc>")
-        parts.append(f"    <lastmod>{today}</lastmod>")
+        parts.append(f"    <lastmod>{lastmod_for(path)}</lastmod>")
         parts.append(f"    <changefreq>{freq}</changefreq>")
         parts.append(f"    <priority>{priority}</priority>")
         parts.append("  </url>")
