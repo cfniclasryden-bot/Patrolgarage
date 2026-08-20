@@ -11,6 +11,26 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-y62-gearbox-repair-cost-dubai.html /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301
 /blog/nissan-patrol-y62-gearbox-repair-cost-dubai      /blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html 301!
 
+# Removed Y63 upgrade posts (deleted with the modifications service, 2026-08).
+# They were 404ing, not redirecting, and they were still EARNING: over the 90
+# days to 2026-08-18 the three of them took 193 impressions and 13 clicks —
+# 5.9% of every click the site got. The exhaust post alone did 10 clicks at
+# 9.8% CTR, the best CTR on the site.
+#
+# Deliberately NOT restored: the workshop no longer offers modifications, so
+# the content is off-brand. Each one redirects to the nearest surviving topical
+# match instead, so the equity lands somewhere relevant rather than on a 404 —
+# a 301 to an unrelated page is treated as a soft 404 and passes nothing.
+# Same both-forms rule as the block above: these slugs have no file, so the
+# extensionless form would 404 too, and gen_redirects.py (which reads
+# blog/*.html) cannot emit them.
+/blog/nissan-patrol-y63-exhaust-upgrade-specialist-dubai-2026.html /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html 301
+/blog/nissan-patrol-y63-exhaust-upgrade-specialist-dubai-2026      /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html 301!
+/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai.html  /blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html 301
+/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai       /blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html 301!
+/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026.html  /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html 301
+/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026       /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html 301!
+
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 
