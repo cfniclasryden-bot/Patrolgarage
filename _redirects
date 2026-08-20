@@ -39,8 +39,10 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 # One explicit rule per post: a wildcard would also match /blog/<slug>.html
 # and redirect it to <slug>.html.html. See the module docstring.
 /blog/best-oil-nissan-patrol-uae-heat                                /blog/best-oil-nissan-patrol-uae-heat.html  301!
+/blog/buying-a-used-nissan-patrol                                    /blog/buying-a-used-nissan-patrol.html  301!
 /blog/nissan-patrol-ac-problems-dubai                                /blog/nissan-patrol-ac-problems-dubai.html  301!
 /blog/nissan-patrol-differential-repair-cost-uae                     /blog/nissan-patrol-differential-repair-cost-uae.html  301!
+/blog/nissan-patrol-high-mileage                                     /blog/nissan-patrol-high-mileage.html  301!
 /blog/nissan-patrol-mechanic-al-quoz                                 /blog/nissan-patrol-mechanic-al-quoz.html  301!
 /blog/nissan-patrol-off-road-uae                                     /blog/nissan-patrol-off-road-uae.html  301!
 /blog/nissan-patrol-overheating-dubai-summer-fix                     /blog/nissan-patrol-overheating-dubai-summer-fix.html  301!
