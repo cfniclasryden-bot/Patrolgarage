@@ -426,7 +426,17 @@ def publish(keyword=None):
     else:
         print("\n[!] Deploy failed. Run manually: netlify deploy --prod")
 
+    return success
+
 
 if __name__ == "__main__":
     keyword = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else None
-    publish(keyword)
+    # Exit non-zero when the deploy fails. run_pipeline.py judges a stage purely
+    # by this exit code, and it marks the article "published" in Supabase and
+    # consumes the keyword as soon as publish "succeeds". Exiting 0 after a
+    # failed deploy would burn a keyword on a post that never went live, with no
+    # error anywhere. Currently masked here because NETLIFY_AUTH_TOKEN is valid;
+    # found on topchallenger, where the same code lost two runs silently once
+    # the loud image-gen crash was removed. A failed deploy must leave the
+    # keyword pending so the next cron retries it.
+    sys.exit(0 if publish(keyword) else 1)
