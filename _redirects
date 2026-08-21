@@ -34,10 +34,17 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 
-# BEGIN managed: extensionless blog URLs -> .html (gen_redirects.py)
-# Generated — do not hand-edit. Run scripts/gen_redirects.py after adding posts.
-# One explicit rule per post: a wildcard would also match /blog/<slug>.html
-# and redirect it to <slug>.html.html. See the module docstring.
+# BEGIN managed: extensionless URLs -> .html (gen_redirects.py)
+# Generated — do not hand-edit. Run scripts/gen_redirects.py after adding pages.
+# One explicit rule per page: a wildcard would also match /<path>.html
+# and redirect it to <path>.html.html. See the module docstring.
+/about                                                               /about.html  301!
+/contact                                                             /contact.html  301!
+/services                                                            /services.html  301!
+/y62-garage-dubai                                                    /y62-garage-dubai.html  301!
+/services/nissan-patrol-v8-engine                                    /services/nissan-patrol-v8-engine.html  301!
+/services/y62-gearbox-transmission-dubai                             /services/y62-gearbox-transmission-dubai.html  301!
+/services/y62-major-service-dubai                                    /services/y62-major-service-dubai.html  301!
 /blog/best-oil-nissan-patrol-uae-heat                                /blog/best-oil-nissan-patrol-uae-heat.html  301!
 /blog/buying-a-used-nissan-patrol                                    /blog/buying-a-used-nissan-patrol.html  301!
 /blog/nissan-patrol-ac-problems-dubai                                /blog/nissan-patrol-ac-problems-dubai.html  301!

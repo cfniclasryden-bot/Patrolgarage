@@ -1,0 +1,18 @@
+# Vercel auto-detects a Python project from requirements.txt at the root, builds
+# a serverless function, finds no entrypoint and 502s every page. Excluding the
+# pipeline files is what keeps this a plain static deploy. Verified failure mode
+# on topchallenger.ae; do not remove without testing a preview first.
+requirements.txt
+Dockerfile
+railway.json
+scripts/
+drafts/
+research/
+logs/
+docs/
+_redirects
+netlify.toml
+.netlify/
+keywords.csv
+*.md
+.gsc-oauth.json

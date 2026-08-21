@@ -1,0 +1,349 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.patrolgarage.ae"
+        }
+      ],
+      "destination": "https://patrolgarage.ae/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-gearbox-problems-uae.html",
+      "destination": "/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-gearbox-problems-uae",
+      "destination": "/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-gearbox-repair-cost-dubai.html",
+      "destination": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-gearbox-repair-cost-dubai",
+      "destination": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-exhaust-upgrade-specialist-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-exhaust-upgrade-specialist-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai.html",
+      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai",
+      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "/",
+      "statusCode": 404
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/services",
+      "destination": "/services.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/y62-garage-dubai",
+      "destination": "/y62-garage-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/nissan-patrol-v8-engine",
+      "destination": "/services/nissan-patrol-v8-engine.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/y62-gearbox-transmission-dubai",
+      "destination": "/services/y62-gearbox-transmission-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/y62-major-service-dubai",
+      "destination": "/services/y62-major-service-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/best-oil-nissan-patrol-uae-heat",
+      "destination": "/blog/best-oil-nissan-patrol-uae-heat.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buying-a-used-nissan-patrol",
+      "destination": "/blog/buying-a-used-nissan-patrol.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-ac-problems-dubai",
+      "destination": "/blog/nissan-patrol-ac-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-differential-repair-cost-uae",
+      "destination": "/blog/nissan-patrol-differential-repair-cost-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-high-mileage",
+      "destination": "/blog/nissan-patrol-high-mileage.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-mechanic-al-quoz",
+      "destination": "/blog/nissan-patrol-mechanic-al-quoz.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-off-road-uae",
+      "destination": "/blog/nissan-patrol-off-road-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-overheating-dubai-summer-fix",
+      "destination": "/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-pre-purchase-inspection",
+      "destination": "/blog/nissan-patrol-pre-purchase-inspection.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-service-cost-dubai",
+      "destination": "/blog/nissan-patrol-service-cost-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-service-dubai-complete-guide",
+      "destination": "/blog/nissan-patrol-service-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-service-every-how-many-km-dubai",
+      "destination": "/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-suspension-dubai",
+      "destination": "/blog/nissan-patrol-suspension-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed",
+      "destination": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y61-dubai-complete-guide",
+      "destination": "/blog/nissan-patrol-y61-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y61-vs-y62-dubai",
+      "destination": "/blog/nissan-patrol-y61-vs-y62-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-dubai-complete-guide",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae",
+      "destination": "/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-problems-dubai",
+      "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai",
+      "destination": "/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-transmission-problems-dubai",
+      "destination": "/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost",
+      "destination": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison",
+      "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026",
+      "destination": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-abs-sensor-replacement-cost-dubai-2026",
+      "destination": "/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026",
+      "destination": "/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-engine-mount-replacement-cost-dubai-2026",
+      "destination": "/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026",
+      "destination": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026",
+      "destination": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent",
+      "destination": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-rear-air-bag-replacement-cost-uae-2026",
+      "destination": "/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent",
+      "destination": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026",
+      "destination": "/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-water-pump-replacement-cost-uae-2026",
+      "destination": "/blog/y62-water-pump-replacement-cost-uae-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026",
+      "destination": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026",
+      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "statusCode": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

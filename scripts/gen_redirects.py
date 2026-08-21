@@ -37,27 +37,54 @@ ROOT = Path(__file__).resolve().parent.parent
 REDIRECTS = ROOT / "_redirects"
 BLOG = ROOT / "blog"
 
-BEGIN = "# BEGIN managed: extensionless blog URLs -> .html (gen_redirects.py)"
+BEGIN = "# BEGIN managed: extensionless URLs -> .html (gen_redirects.py)"
 END = "# END managed"
 
+# The marker text changed on 2026-08-21 when this went site-wide. render() also
+# strips the old marker, otherwise the previous block would survive underneath
+# the new one and the file would carry every blog rule twice.
+OLD_BEGIN = "# BEGIN managed: extensionless blog URLs -> .html (gen_redirects.py)"
 
-def slugs():
-    return sorted(
-        p.stem for p in BLOG.glob("*.html") if p.name != "index.html"
-    )
+
+def pages():
+    """Every URL path that needs an extensionless -> .html redirect.
+
+    Site-wide as of 2026-08-21, not blog-only. The blog got these rules on
+    2026-08-12; the root and /services pages never did, so Netlify's implicit
+    extensionless fallback kept serving them at 200 with a canonical pointing
+    at the .html form. Measured on the live site before this change: 46
+    extensionless URLs 301'd correctly and 7 served a 200 duplicate —
+    /about, /contact, /services, /y62-garage-dubai and three /services/ pages.
+
+    index.html is excluded everywhere: those are directory URLs (/, /blog/,
+    /blog/page/2/) whose canonical carries the trailing slash. They have no
+    extensionless form to redirect, and a rule for them would loop.
+    """
+    out = []
+    for f in sorted(ROOT.glob("*.html")):
+        if f.name != "index.html":
+            out.append("/" + f.stem)
+    for sub in ("services", "blog"):
+        d = ROOT / sub
+        if not d.is_dir():
+            continue
+        for f in sorted(d.glob("*.html")):
+            if f.name != "index.html":
+                out.append(f"/{sub}/{f.stem}")
+    return out
 
 
 def build_block():
     lines = [
         BEGIN,
-        "# Generated — do not hand-edit. Run scripts/gen_redirects.py after adding posts.",
-        "# One explicit rule per post: a wildcard would also match /blog/<slug>.html",
-        "# and redirect it to <slug>.html.html. See the module docstring.",
+        "# Generated — do not hand-edit. Run scripts/gen_redirects.py after adding pages.",
+        "# One explicit rule per page: a wildcard would also match /<path>.html",
+        "# and redirect it to <path>.html.html. See the module docstring.",
     ]
-    width = max((len(s) for s in slugs()), default=0) + len("/blog/") + 2
-    for s in slugs():
-        src = f"/blog/{s}"
-        lines.append(f"{src:<{width}} /blog/{s}.html  301!")
+    paths = pages()
+    width = max((len(p) for p in paths), default=0) + 2
+    for src in paths:
+        lines.append(f"{src:<{width}} {src}.html  301!")
     lines.append(END)
     return "\n".join(lines)
 
@@ -67,6 +94,11 @@ def current_text():
 
 
 def render(existing, block):
+    if OLD_BEGIN in existing and END in existing and BEGIN not in existing:
+        head = existing.split(OLD_BEGIN)[0].rstrip("\n")
+        tail = existing.split(END, 1)[1].lstrip("\n")
+        existing = (head + "\n\n" + BEGIN + "\n" + END +
+                    ("\n\n" + tail.rstrip("\n") if tail.strip() else "")) + "\n"
     if BEGIN in existing and END in existing:
         head = existing.split(BEGIN)[0].rstrip("\n")
         tail = existing.split(END, 1)[1].lstrip("\n")
@@ -89,7 +121,7 @@ def main():
         return 0
 
     REDIRECTS.write_text(new, encoding="utf-8")
-    print(f"[OK] _redirects: {len(slugs())} blog redirect(s) written")
+    print(f"[OK] _redirects: {len(pages())} extensionless redirect(s) written")
     return 0
 
 

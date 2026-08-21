@@ -1,0 +1,1100 @@
+{
+ "captured_utc": "2026-08-21T13:06:23.056510Z",
+ "base": "https://patrolgarage.ae",
+ "host": "netlify",
+ "sitemap_count": 56,
+ "repo_count": 56,
+ "probed": 109,
+ "records": [
+  {
+   "url": "https://patrolgarage.ae/",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/",
+   "og_url": "https://patrolgarage.ae/",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/about",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/about",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/about.html",
+   "og_url": "https://patrolgarage.ae/about.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/about.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/about.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/about.html",
+   "og_url": "https://patrolgarage.ae/about.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/",
+   "og_url": "https://patrolgarage.ae/blog/",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat",
+   "status": 301,
+   "location": "/blog/best-oil-nissan-patrol-uae-heat.html",
+   "final_url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "og_url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "og_url": "https://patrolgarage.ae/blog/best-oil-nissan-patrol-uae-heat.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol",
+   "status": 301,
+   "location": "/blog/buying-a-used-nissan-patrol.html",
+   "final_url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "og_url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "og_url": "https://patrolgarage.ae/blog/buying-a-used-nissan-patrol.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-ac-problems-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-ac-problems-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae",
+   "status": 301,
+   "location": "/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage",
+   "status": 301,
+   "location": "/blog/nissan-patrol-high-mileage.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz",
+   "status": 301,
+   "location": "/blog/nissan-patrol-mechanic-al-quoz.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-mechanic-al-quoz.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae",
+   "status": 301,
+   "location": "/blog/nissan-patrol-off-road-uae.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-off-road-uae.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix",
+   "status": 301,
+   "location": "/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-overheating-dubai-summer-fix.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection",
+   "status": 301,
+   "location": "/blog/nissan-patrol-pre-purchase-inspection.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-pre-purchase-inspection.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-service-cost-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-cost-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide",
+   "status": 301,
+   "location": "/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-dubai-complete-guide.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-service-every-how-many-km-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-suspension-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-suspension-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed",
+   "status": 301,
+   "location": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-dubai-complete-guide.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y61-vs-y62-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-dubai-complete-guide.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-problems-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-problems-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "status": null,
+   "error": "The read operation timed out",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+   "final_url": null,
+   "final_status": null,
+   "canonical": null,
+   "og_url": null,
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-transmission-problems-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison",
+   "status": 301,
+   "location": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "og_url": "https://patrolgarage.ae/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/page/2/",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/page/2/",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/page/2/",
+   "og_url": "https://patrolgarage.ae/blog/page/2/",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-engine-mount-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent",
+   "status": 301,
+   "location": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent",
+   "status": 301,
+   "location": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026",
+   "status": 301,
+   "location": "/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026",
+   "status": 301,
+   "location": "/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026",
+   "status": 301,
+   "location": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026",
+   "status": 301,
+   "location": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "final_url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "og_url": "https://patrolgarage.ae/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/contact",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/contact",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/contact.html",
+   "og_url": "https://patrolgarage.ae/contact.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/contact.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/contact.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/contact.html",
+   "og_url": "https://patrolgarage.ae/contact.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/services",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services.html",
+   "og_url": "https://patrolgarage.ae/services.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/services.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services.html",
+   "og_url": "https://patrolgarage.ae/services.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "og_url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "og_url": "https://patrolgarage.ae/services/nissan-patrol-v8-engine.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "og_url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "og_url": "https://patrolgarage.ae/services/y62-gearbox-transmission-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/y62-major-service-dubai",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/y62-major-service-dubai",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "og_url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "og_url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+   "form": "html"
+  },
+  {
+   "url": "https://patrolgarage.ae/y62-garage-dubai",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/y62-garage-dubai",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "og_url": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "form": "extensionless"
+  },
+  {
+   "url": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "status": 200,
+   "location": null,
+   "final_url": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "final_status": 200,
+   "canonical": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "og_url": "https://patrolgarage.ae/y62-garage-dubai.html",
+   "form": "html"
+  }
+ ]
+}
