@@ -344,6 +344,68 @@ def run(cmd, cwd=PROJECT_ROOT, capture=True):
         return result.returncode == 0
 
 
+def deploy_site(keyword=None):
+    """Deploy the working directory to whichever platform DEPLOY_TARGET names.
+
+    Split out of publish() so the DEPLOY_TARGET branch can be exercised on its
+    own, with DEPLOY_DRY_RUN, without running a sitemap rebuild or a git commit
+    first. A rollback switch that has never been executed is a guess.
+    """
+    # --- deploy -------------------------------------------------------------
+    # Vercel as of the 2026-08 migration. DEPLOY_TARGET exists so a rollback is
+    # an env-var change on Railway rather than a code change and a rebuild: set
+    # it to "netlify" and the old path runs again, unchanged.
+    target = os.environ.get("DEPLOY_TARGET", "vercel").strip().lower()
+
+    if target == "netlify":
+        print("\n[+] Deploying to Netlify (DEPLOY_TARGET=netlify)...")
+        auth_token = os.environ.get("NETLIFY_AUTH_TOKEN")
+        site_id = os.environ.get("NETLIFY_SITE_ID")
+        cmd = ["netlify", "deploy", "--prod", "--dir", "."]
+        if auth_token:
+            cmd.extend(["--auth", auth_token])
+        if site_id:
+            cmd.extend(["--site", site_id])
+        manual = "netlify deploy --prod"
+    else:
+        print("\n[+] Deploying to Vercel...")
+        token = os.environ.get("VERCEL_TOKEN")
+        if not token:
+            # Fail loudly. Without a token the CLI drops into an interactive
+            # login that hangs a cron container until it times out.
+            print("[!] VERCEL_TOKEN is not set. Refusing to deploy.")
+            return False
+        # --archive=tgz: the images directory is ~52 MB and the plain file
+        # upload failed with an SSL error on this connection more than once.
+        cmd = ["vercel", "deploy", "--prod", "--yes", "--archive=tgz",
+               "--token", token]
+        manual = "vercel deploy --prod --yes"
+
+    # DEPLOY_DRY_RUN prints the command that WOULD run and stops. It exists so
+    # both branches of the DEPLOY_TARGET switch can be exercised for real —
+    # same env, same code path, same argv construction — without shipping a
+    # site. A switch nobody has ever run is not a rollback plan.
+    if os.environ.get("DEPLOY_DRY_RUN", "").strip() not in ("", "0", "false"):
+        redacted = ["***" if i and cmd[i - 1] in ("--token", "--auth") else a
+                    for i, a in enumerate(cmd)]
+        print(f"[dry-run] target={target}")
+        print(f"[dry-run] would run: {' '.join(redacted)}")
+        print(f"[dry-run] cwd={PROJECT_ROOT}")
+        return True
+
+    success = run(cmd, capture=False)
+
+    if success:
+        print("\n[+] DEPLOY SUCCESSFUL")
+        if keyword:
+            slug = slugify(keyword)
+            print(f"    Live: {SITE_URL}/blog/{slug}.html")
+    else:
+        print(f"\n[!] Deploy failed. Run manually: {manual}")
+
+    return success
+
+
 def publish(keyword=None):
     # Runs BEFORE journal_update, because adopting a live page would otherwise
     # discard the journal grid that journal_update owns and regenerates.
@@ -404,47 +466,8 @@ def publish(keyword=None):
              *STATIC_PAGES])
         run(["git", "commit", "-m", msg])
 
-    # --- deploy -------------------------------------------------------------
-    # Vercel as of the 2026-08 migration. DEPLOY_TARGET exists so a rollback is
-    # an env-var change on Railway rather than a code change and a rebuild: set
-    # it to "netlify" and the old path runs again, unchanged.
-    target = os.environ.get("DEPLOY_TARGET", "vercel").strip().lower()
+    return deploy_site(keyword)
 
-    if target == "netlify":
-        print("\n[+] Deploying to Netlify (DEPLOY_TARGET=netlify)...")
-        auth_token = os.environ.get("NETLIFY_AUTH_TOKEN")
-        site_id = os.environ.get("NETLIFY_SITE_ID")
-        cmd = ["netlify", "deploy", "--prod", "--dir", "."]
-        if auth_token:
-            cmd.extend(["--auth", auth_token])
-        if site_id:
-            cmd.extend(["--site", site_id])
-        manual = "netlify deploy --prod"
-    else:
-        print("\n[+] Deploying to Vercel...")
-        token = os.environ.get("VERCEL_TOKEN")
-        if not token:
-            # Fail loudly. Without a token the CLI drops into an interactive
-            # login that hangs a cron container until it times out.
-            print("[!] VERCEL_TOKEN is not set. Refusing to deploy.")
-            return False
-        # --archive=tgz: the images directory is ~52 MB and the plain file
-        # upload failed with an SSL error on this connection more than once.
-        cmd = ["vercel", "deploy", "--prod", "--yes", "--archive=tgz",
-               "--token", token]
-        manual = "vercel deploy --prod --yes"
-
-    success = run(cmd, capture=False)
-
-    if success:
-        print("\n[+] DEPLOY SUCCESSFUL")
-        if keyword:
-            slug = slugify(keyword)
-            print(f"    Live: {SITE_URL}/blog/{slug}.html")
-    else:
-        print(f"\n[!] Deploy failed. Run manually: {manual}")
-
-    return success
 
 
 if __name__ == "__main__":
