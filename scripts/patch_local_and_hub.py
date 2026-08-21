@@ -61,13 +61,6 @@ SERVICES_TITLE = "Nissan Patrol Service Menu | Engine, Gearbox, Suspension"    #
 SERVICES_DESC = ("Every job we do on a Nissan Patrol, by system: engine, gearbox and "
                  "transmission, suspension, AC, electrical and periodic servicing.")
 
-ADDRESS = {
-    "@type": "PostalAddress",
-    "streetAddress": "Ras Al Khor Industrial Area",
-    "addressLocality": "Dubai",
-    "addressRegion": "Dubai",
-    "addressCountry": "AE",
-}
 
 # Homepage: replace the thin "Coverage" blurb with a real Ras Al Khor block.
 HOME_OLD_HEAD = """<h2>Serving all of<br>Dubai.</h2>
@@ -102,13 +95,9 @@ def patch_home(dry):
                f'<meta name="description" content="{HOME_DESC}">', h, count=1)
     h = h.replace(HOME_OLD_HEAD, HOME_NEW_HEAD, 1)
 
-    # add postalAddress to the AutoRepair schema (it had geo but no address)
-    def add_addr(m):
-        d = json.loads(m.group(1))
-        if "address" not in d:
-            d["address"] = ADDRESS
-        return '<script type="application/ld+json">\n  ' + json.dumps(d, indent=2) + '\n  </script>'
-    h = re.sub(r'<script type="application/ld\+json">(.*?)</script>', add_addr, h, count=1, flags=re.S)
+    # The postalAddress this used to inject has been removed: the site has no
+    # premises, so there is no address to publish. Re-running this script must
+    # not reintroduce it. See scripts/patch_entity_schema.py.
 
     if not dry:
         p.write_text(h, encoding="utf-8")
@@ -131,20 +120,25 @@ def patch_contact(dry):
         "@context": "https://schema.org",
         "@type": "AutoRepair",
         "name": "Patrol Garage Dubai",
-        "description": "Nissan Patrol specialist workshop in Ras Al Khor, Dubai.",
+        "description": "Nissan Patrol Y62 specialists serving Dubai.",
         "url": "https://patrolgarage.ae/contact.html",
         "telephone": "+971585143634",
         "email": "info@patrolgarage.ae",
-        "address": ADDRESS,
-        "geo": {"@type": "GeoCoordinates", "latitude": 25.1768, "longitude": 55.3537},
         "areaServed": [{"@type": "City", "name": n} for n in ("Dubai", "Sharjah")],
-        "openingHoursSpecification": [
-            {"@type": "OpeningHoursSpecification",
-             "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-             "opens": "09:00", "closes": "19:00"},
-            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday",
-             "opens": "09:00", "closes": "14:00"},
-        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "telephone": "+971585143634",
+            "areaServed": "AE",
+            "availableLanguage": ["en", "ar"],
+            "hoursAvailable": [
+                {"@type": "OpeningHoursSpecification",
+                 "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+                 "opens": "09:00", "closes": "19:00"},
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday",
+                 "opens": "09:00", "closes": "14:00"},
+            ],
+        },
     }
     block = ('<script type="application/ld+json">\n  '
              + json.dumps(schema, indent=2) + '\n  </script>\n\n  ')

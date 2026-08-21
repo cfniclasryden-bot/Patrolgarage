@@ -47,15 +47,15 @@
     "description": "Nissan Patrol Y62 specialist workshop in Ras Al Khor, Dubai.",
     "url": "https://patrolgarage.ae/y62-garage-dubai.html",
     "telephone": "+971585143634",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Ras Al Khor",
-      "addressRegion": "Dubai",
-      "addressCountry": "AE"
-    },
     "areaServed": [
-      { "@type": "City", "name": "Dubai" },
-      { "@type": "City", "name": "Sharjah" }
+      {
+        "@type": "City",
+        "name": "Dubai"
+      },
+      {
+        "@type": "City",
+        "name": "Sharjah"
+      }
     ],
     "makesOffer": {
       "@type": "Offer",
@@ -63,6 +63,36 @@
         "@type": "Service",
         "name": "Nissan Patrol Y62 service and repair"
       }
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "telephone": "+971585143634",
+      "areaServed": "AE",
+      "availableLanguage": [
+        "en",
+        "ar"
+      ],
+      "hoursAvailable": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday"
+          ],
+          "opens": "09:00",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "14:00"
+        }
+      ]
     }
   }
   </script>

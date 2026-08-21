@@ -171,6 +171,15 @@ def build_schemas(meta, keyword, today, faqs, canonical_url):
             ]
         })
 
+    # No address / geo / openingHoursSpecification. This site has no premises —
+    # it books the work and a partner workshop fulfils it. Selling a service you
+    # subcontract needs no disclosure; claiming a postal address and a map pin
+    # for a building you do not have is a different thing, and this block used
+    # to do it on every post. The pin was wrong as well: it read 25.1768 /
+    # 55.3537, about 1.6 km from where the work is actually done.
+    # Booking hours are real, so they stay — as ContactPoint.hoursAvailable,
+    # which means "when you can reach us", not "when this building is open".
+    # See scripts/patch_entity_schema.py, which swept the already-built pages.
     schemas.append({
         "@context": "https://schema.org",
         "@type": "AutoRepair",
@@ -179,17 +188,17 @@ def build_schemas(meta, keyword, today, faqs, canonical_url):
         "telephone": "+971585143634",
         "url": "https://patrolgarage.ae",
         "areaServed": {"@type": "City", "name": "Dubai"},
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Ras Al Khor",
-            "addressRegion": "Dubai",
-            "addressCountry": "AE"
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "telephone": "+971585143634",
+            "areaServed": "AE",
+            "availableLanguage": ["en", "ar"],
+            "hoursAvailable": [
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "19:00"},
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00"}
+            ],
         },
-        "geo": {"@type": "GeoCoordinates", "latitude": 25.1768, "longitude": 55.3537},
-        "openingHoursSpecification": [
-            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "19:00"},
-            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00"}
-        ],
         # No priceRange: that is the workshop's own advertised price band, and the
         # 2026-08-12 decision removed our service prices from the site. It was
         # still being injected into every new post's AutoRepair schema.

@@ -101,15 +101,9 @@ SCHEMA = '''<script type="application/ld+json">
     "@context": "https://schema.org",
     "@type": "AutoRepair",
     "name": "Patrol Garage Dubai",
-    "description": "Nissan Patrol Y62 specialist workshop in Ras Al Khor, Dubai.",
+    "description": "Nissan Patrol Y62 specialists serving Dubai.",
     "url": "https://patrolgarage.ae/y62-garage-dubai.html",
     "telephone": "+971585143634",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Ras Al Khor",
-      "addressRegion": "Dubai",
-      "addressCountry": "AE"
-    },
     "areaServed": [
       { "@type": "City", "name": "Dubai" },
       { "@type": "City", "name": "Sharjah" }

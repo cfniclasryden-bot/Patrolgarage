@@ -41,33 +41,57 @@
   <!-- JSON-LD Schema: Service -->
   <script type="application/ld+json">
   {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Nissan Patrol service and maintenance",
-  "serviceType": "Nissan Patrol service and maintenance",
-  "url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
-  "provider": {
-    "@type": "AutoRepair",
-    "name": "Patrol Garage Dubai",
-    "telephone": "+971585143634",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Ras Al Khor Industrial Area",
-      "addressLocality": "Dubai",
-      "addressCountry": "AE"
-    }
-  },
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Dubai"
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Nissan Patrol service and maintenance",
+    "serviceType": "Nissan Patrol service and maintenance",
+    "url": "https://patrolgarage.ae/services/y62-major-service-dubai.html",
+    "provider": {
+      "@type": "AutoRepair",
+      "name": "Patrol Garage Dubai",
+      "telephone": "+971585143634",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+971585143634",
+        "areaServed": "AE",
+        "availableLanguage": [
+          "en",
+          "ar"
+        ],
+        "hoursAvailable": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday"
+            ],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "14:00"
+          }
+        ]
+      }
     },
-    {
-      "@type": "City",
-      "name": "Sharjah"
-    }
-  ]
-}
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Dubai"
+      },
+      {
+        "@type": "City",
+        "name": "Sharjah"
+      }
+    ]
+  }
   </script>
 
   <style>

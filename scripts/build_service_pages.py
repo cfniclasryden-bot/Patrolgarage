@@ -266,10 +266,7 @@ def build(page):
                   "serviceType": page["schema_name"],
                   "url": url,
                   "provider": {"@type": "AutoRepair", "name": "Patrol Garage Dubai",
-                               "telephone": "+971585143634",
-                               "address": {"@type": "PostalAddress",
-                                           "streetAddress": "Ras Al Khor Industrial Area",
-                                           "addressLocality": "Dubai", "addressCountry": "AE"}},
+                               "telephone": "+971585143634"},
                   "areaServed": [{"@type": "City", "name": n} for n in ("Dubai", "Sharjah")]}
     html = re.sub(r'<script type="application/ld\+json">.*?</script>',
                   '<script type="application/ld+json">\n  ' + json.dumps(schema, indent=2) + '\n  </script>',

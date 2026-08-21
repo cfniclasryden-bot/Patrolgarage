@@ -356,6 +356,19 @@ def publish(keyword=None):
     print("[+] Updating sitemap...")
     update_sitemap()
 
+    # Regenerated every run for the same reason as the sitemap: the cron adds
+    # posts twice a week, so a hand-written llms.txt goes stale immediately.
+    print("[+] Regenerating llms.txt...")
+    llms_result = subprocess.run(
+        ["python3", "scripts/gen_llms_txt.py"],
+        capture_output=True, text=True, cwd=PROJECT_ROOT
+    )
+    if llms_result.returncode == 0:
+        print(f"    {llms_result.stdout.strip()}")
+    else:
+        # Never fatal: llms.txt going stale must not block a publish.
+        print(f"    [!] llms.txt generation failed: {llms_result.stderr[:300]}")
+
     print("[+] Regenerating journal index...")
     journal_result = subprocess.run(
         ["python3", "scripts/journal_update.py"],
@@ -387,7 +400,7 @@ def publish(keyword=None):
         # live). Note this alone does NOT prevent the stale-revert bug — publish.py
         # never pulls or pushes, so the commit is read by nobody; ensure_static_pages
         # is what actually fixes it.
-        run(["git", "add", "blog/", "images/", "sitemap.xml", "scripts/",
+        run(["git", "add", "blog/", "images/", "sitemap.xml", "llms.txt", "scripts/",
              *STATIC_PAGES])
         run(["git", "commit", "-m", msg])
 
