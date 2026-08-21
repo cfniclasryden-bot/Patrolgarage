@@ -94,6 +94,23 @@ def parse_headers():
     return out
 
 
+# Every Vercel deployment is reachable on a *.vercel.app host as well as on the
+# real domain, and the project alias (patrolgarage.vercel.app) is publicly
+# indexable. While both platforms are live that host is a full duplicate of
+# patrolgarage.ae, so it is marked noindex.
+#
+# The has[] host condition is what keeps this off the real domain: the rule only
+# fires when the request Host matches *.vercel.app. patrolgarage.ae never
+# matches, so it never receives the header. Getting this wrong in the other
+# direction would deindex the live site, which is why it is generated here with
+# an explicit anchored pattern rather than hand-written per deployment.
+NOINDEX_HOST_RULE = {
+    "source": "/(.*)",
+    "has": [{"type": "host", "value": "^.*\\.vercel\\.app$"}],
+    "headers": [{"key": "X-Robots-Tag", "value": "noindex, nofollow"}],
+}
+
+
 def build():
     host_rules, path_rules = parse_redirects()
     return {
@@ -101,7 +118,7 @@ def build():
         "framework": None,
         "cleanUrls": False,
         "redirects": host_rules + path_rules,
-        "headers": parse_headers(),
+        "headers": [NOINDEX_HOST_RULE] + parse_headers(),
     }
 
 

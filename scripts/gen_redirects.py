@@ -30,6 +30,7 @@ Usage:
     python3 scripts/gen_redirects.py            # rewrite the managed block
     python3 scripts/gen_redirects.py --check    # exit 1 if out of date
 """
+import subprocess
 import sys
 from pathlib import Path
 
@@ -118,10 +119,44 @@ def main():
             print("[!] _redirects is out of date — run scripts/gen_redirects.py")
             return 1
         print("[OK] _redirects is up to date")
+        # vercel.json is derived from _redirects, so an up-to-date _redirects
+        # with a stale vercel.json is exactly the drift this chain prevents.
+        gen = Path(__file__).with_name("gen_vercel_json.py")
+        if gen.exists():
+            r = subprocess.run([sys.executable, str(gen), "--check"],
+                               capture_output=True, text=True)
+            print("    " + (r.stdout or "").strip())
+            return r.returncode
         return 0
 
     REDIRECTS.write_text(new, encoding="utf-8")
     print(f"[OK] _redirects: {len(pages())} extensionless redirect(s) written")
+    return _sync_vercel()
+
+
+def _sync_vercel():
+    """Regenerate vercel.json from the _redirects we just wrote.
+
+    Both platforms are live during the migration and _redirects is the single
+    source of truth for both. If these two files drift, the symptom is a URL
+    that redirects correctly on one host and 404s on the other, discovered only
+    after DNS moves. Chaining them here makes drift impossible by construction:
+    there is no way to add a post, regenerate _redirects, and forget vercel.json.
+
+    Non-fatal by design. A publish must not fail because the Vercel config could
+    not be rewritten — the deploy that follows would still ship a correct site on
+    Netlify. It logs loudly instead.
+    """
+    gen = Path(__file__).with_name("gen_vercel_json.py")
+    if not gen.exists():
+        print("[!] gen_vercel_json.py missing — vercel.json NOT regenerated")
+        return 0
+    r = subprocess.run([sys.executable, str(gen)], capture_output=True, text=True)
+    for line in (r.stdout or "").splitlines():
+        print("    " + line)
+    if r.returncode != 0:
+        print(f"[!] gen_vercel_json.py failed ({r.returncode}) — vercel.json may be "
+              f"out of date with _redirects:\n{(r.stderr or '')[:300]}")
     return 0
 
 

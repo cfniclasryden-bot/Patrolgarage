@@ -404,17 +404,35 @@ def publish(keyword=None):
              *STATIC_PAGES])
         run(["git", "commit", "-m", msg])
 
-    print("\n[+] Deploying to Netlify...")
+    # --- deploy -------------------------------------------------------------
+    # Vercel as of the 2026-08 migration. DEPLOY_TARGET exists so a rollback is
+    # an env-var change on Railway rather than a code change and a rebuild: set
+    # it to "netlify" and the old path runs again, unchanged.
+    target = os.environ.get("DEPLOY_TARGET", "vercel").strip().lower()
 
-    # Build deploy command with env vars if available (for Railway)
-    auth_token = os.environ.get("NETLIFY_AUTH_TOKEN")
-    site_id = os.environ.get("NETLIFY_SITE_ID")
-
-    cmd = ["netlify", "deploy", "--prod", "--dir", "."]
-    if auth_token:
-        cmd.extend(["--auth", auth_token])
-    if site_id:
-        cmd.extend(["--site", site_id])
+    if target == "netlify":
+        print("\n[+] Deploying to Netlify (DEPLOY_TARGET=netlify)...")
+        auth_token = os.environ.get("NETLIFY_AUTH_TOKEN")
+        site_id = os.environ.get("NETLIFY_SITE_ID")
+        cmd = ["netlify", "deploy", "--prod", "--dir", "."]
+        if auth_token:
+            cmd.extend(["--auth", auth_token])
+        if site_id:
+            cmd.extend(["--site", site_id])
+        manual = "netlify deploy --prod"
+    else:
+        print("\n[+] Deploying to Vercel...")
+        token = os.environ.get("VERCEL_TOKEN")
+        if not token:
+            # Fail loudly. Without a token the CLI drops into an interactive
+            # login that hangs a cron container until it times out.
+            print("[!] VERCEL_TOKEN is not set. Refusing to deploy.")
+            return False
+        # --archive=tgz: the images directory is ~52 MB and the plain file
+        # upload failed with an SSL error on this connection more than once.
+        cmd = ["vercel", "deploy", "--prod", "--yes", "--archive=tgz",
+               "--token", token]
+        manual = "vercel deploy --prod --yes"
 
     success = run(cmd, capture=False)
 
@@ -424,7 +442,7 @@ def publish(keyword=None):
             slug = slugify(keyword)
             print(f"    Live: {SITE_URL}/blog/{slug}.html")
     else:
-        print("\n[!] Deploy failed. Run manually: netlify deploy --prod")
+        print(f"\n[!] Deploy failed. Run manually: {manual}")
 
     return success
 
