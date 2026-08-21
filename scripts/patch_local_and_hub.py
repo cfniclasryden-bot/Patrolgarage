@@ -53,8 +53,8 @@ HOME_DESC = ("Nissan Patrol specialist garage in Ras Al Khor, Dubai. Patrols onl
              "engine, gearbox, major servicing and diagnostics. Call +971 58 514 3634.")
 
 CONTACT_TITLE = "Patrol Garage, Ras Al Khor | Nissan Patrol Workshop Dubai"    # 531px
-CONTACT_DESC = ("Patrol Garage is in the Ras Al Khor industrial area, Dubai. Directions, "
-                "hours and WhatsApp. We work on Nissan Patrol only, Y61 through Y63.")
+CONTACT_DESC = ("Book a Nissan Patrol Y62 service in Dubai. Message or call and we confirm the "
+                "drop-off point and a time that suits you. Quote before any work starts.")
 
 # "garage" deliberately absent — that is the word it was losing on to the homepage.
 SERVICES_TITLE = "Nissan Patrol Service Menu | Engine, Gearbox, Suspension"    # 529px
