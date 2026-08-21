@@ -8,6 +8,17 @@
       "has": [
         {
           "type": "host",
+          "value": "patrolgarage.vercel.app"
+        }
+      ],
+      "destination": "https://patrolgarage.ae/$1",
+      "statusCode": 308
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
           "value": "www.patrolgarage.ae"
         }
       ],

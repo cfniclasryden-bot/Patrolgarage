@@ -104,6 +104,23 @@ def parse_headers():
 # matches, so it never receives the header. Getting this wrong in the other
 # direction would deindex the live site, which is why it is generated here with
 # an explicit anchored pattern rather than hand-written per deployment.
+# The project's production alias, patrolgarage.vercel.app, cannot be gated by
+# Vercel Authentication: ssoProtection "all_except_custom_domains" exempts
+# PRODUCTION domains, and that alias is one. Tightening SSO to cover it would
+# also gate patrolgarage.ae and take the live site down.
+#
+# So the alias is redirected to the real domain instead. It stays reachable but
+# serves nothing of its own, which removes the duplicate copy — the actual
+# concern. Deployment-specific preview URLs are NOT matched here: they are
+# already SSO-gated (302), and redirecting them would make every future preview
+# bounce to production and become untestable.
+ALIAS_REDIRECT = {
+    "source": "/(.*)",
+    "has": [{"type": "host", "value": "patrolgarage.vercel.app"}],
+    "destination": "https://patrolgarage.ae/$1",
+    "statusCode": 308,
+}
+
 NOINDEX_HOST_RULE = {
     "source": "/(.*)",
     "has": [{"type": "host", "value": "^.*\\.vercel\\.app$"}],
@@ -117,7 +134,7 @@ def build():
         "$schema": "https://openapi.vercel.sh/vercel.json",
         "framework": None,
         "cleanUrls": False,
-        "redirects": host_rules + path_rules,
+        "redirects": [ALIAS_REDIRECT] + host_rules + path_rules,
         "headers": [NOINDEX_HOST_RULE] + parse_headers(),
     }
 

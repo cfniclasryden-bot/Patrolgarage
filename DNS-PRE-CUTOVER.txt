@@ -1,0 +1,35 @@
+# patrolgarage.ae DNS, captured before the Netlify -> Vercel cutover
+# 2026-08-21T14:02:19Z  (UTC)
+# Restore these exact values to roll back. TTL is 120s, so recovery is ~2 minutes.
+
+## authoritative, straight from Netlify's nameserver dns1.p07.nsone.net
+
+patrolgarage.ae.	120	IN	A	63.176.8.218
+patrolgarage.ae.	120	IN	A	35.157.26.135
+www.patrolgarage.ae.	120	IN	A	35.157.26.135
+www.patrolgarage.ae.	120	IN	A	63.176.8.218
+
+## delegation (NOT to be changed — nameservers stay at Netlify/NS1)
+patrolgarage.ae.	1831	IN	NS	dns2.p07.nsone.net.
+patrolgarage.ae.	1831	IN	NS	dns4.p07.nsone.net.
+patrolgarage.ae.	1831	IN	NS	dns1.p07.nsone.net.
+patrolgarage.ae.	1831	IN	NS	dns3.p07.nsone.net.
+
+## SOA
+patrolgarage.ae.	3600	IN	SOA	dns1.p01.nsone.net. domains+netlify.netlify.com. 1778413511 43200 7200 1209600 3600
+
+## resolver view at capture time
+patrolgarage.ae.	120	IN	A	63.176.8.218
+patrolgarage.ae.	120	IN	A	35.157.26.135
+
+## serving host at capture time
+server: Netlify
+x-nf-request-id: 01M0JA2F0JH2V5KY2PRHEZ7E5Q
+
+## CORRECTION 2026-08-21T14:2x UTC — the stored records are NOT A records
+## apex and www are Netlify's proprietary NETLIFY type, managed=True, pointing at
+## beautiful-cuchufli-e12a90.netlify.app. The A values above are synthesised by
+## ns1 at query time. Rollback = recreate these, or failing that create A records
+## to 35.157.26.135 + 63.176.8.218 (captured above).
+##   patrolgarage.ae      NETLIFY beautiful-cuchufli-e12a90.netlify.app id=6a006fc82d95d20008231790
+##   www.patrolgarage.ae  NETLIFY beautiful-cuchufli-e12a90.netlify.app id=6a006fc82d95d20008231791

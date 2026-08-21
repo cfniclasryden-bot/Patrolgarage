@@ -1,3 +1,143 @@
+# OUTCOME — cutover completed 2026-08-21
+
+patrolgarage.ae is live on Vercel. Parity against
+`URL-BASELINE-PRE-MIGRATION.json`: **0 unexpected mismatches** across 109 URLs,
+7 intended (the split-canonical fix, `200` -> `301`), 2 baseline probe artefacts.
+
+Everything below the horizontal rule is the original plan, kept as written. This
+section records what actually happened, including four things the plan got
+wrong. **Read this before migrating topchallenger.ae.**
+
+---
+
+## Trap 1 — there were no A records to change
+
+The plan, and the instructions built on it, said "change the A records". There
+were none. Netlify DNS stored:
+
+```
+patrolgarage.ae      NETLIFY  beautiful-cuchufli-e12a90.netlify.app  managed=True
+www.patrolgarage.ae  NETLIFY  beautiful-cuchufli-e12a90.netlify.app  managed=True
+```
+
+`NETLIFY` is a proprietary record type. `dig` shows A records because ns1
+**synthesises** them at query time; nothing of type A is stored in the zone. A
+`dig`-based capture therefore records values that do not exist as records.
+
+Consequences:
+
+* "Same record type in, same type out" is impossible. `NETLIFY` records cannot
+  point anywhere but Netlify, so the cutover is necessarily delete-then-create.
+* Rollback is **not** "restore the A records". It is either recreate the
+  `NETLIFY` records, or create A records to the synthesised IPs
+  (`35.157.26.135`, `63.176.8.218`) captured in `DNS-PRE-CUTOVER.txt`.
+
+**Check the zone through the DNS provider's API before writing a cutover plan.**
+`dig` alone cannot tell you what is stored.
+
+## Trap 2 — delete-before-create took the site down for ~90 seconds
+
+The two `NETLIFY` records were deleted first, then four A records were created
+in a shell loop using `set -- $pair`. The split did not happen, so every POST
+went out with a blank `value` and returned `422`. Between the deletes and the
+fix the domain had no apex or `www` record at all.
+
+Recovered in about 90 seconds by creating the records with explicit arguments.
+
+**Create the new records first where the provider allows it, or at minimum
+verify the create call succeeds against one record before deleting anything.**
+Never run a delete and an untested create in the same block. Do not use shell
+word-splitting for values that must not be empty — build the calls explicitly,
+or assert non-empty before sending.
+
+## Trap 3 — the TLS certificate cannot exist before DNS moves
+
+Vercel will not pre-issue:
+
+```
+POST /v3/certs {"cns":["patrolgarage.ae","www.patrolgarage.ae"]}
+HTTP 449  http_pretest_domain_not_resolving_to_vercel_error
+```
+
+The dependency is circular — verifying Vercel serves the domain needs TLS, TLS
+needs a certificate, the certificate needs DNS already pointing at Vercel. Any
+plan with a "confirm TLS before cutover" gate is unsatisfiable.
+
+What this means in practice: **there is an unavoidable unverified window.**
+Budget for it, arm the rollback, and keep TTL low. Here the certificate issued
+**195 seconds** after DNS propagated. Poll for 5 minutes before deciding it has
+failed.
+
+Related: `GET /v6/domains/{d}/config` returns `aValues` describing the domain's
+**currently observed** A records, not Vercel's targets. Reading that field as
+"what Vercel wants" sent an entire verification round at Netlify's own IPs
+(`13.52.188.95`, `52.52.192.191` — both `server: Netlify`) and produced a false
+pass. The target values are under `recommendedIPv4`:
+
+```
+rank 1: 216.198.79.1, 64.29.17.1      <- use these
+rank 2: 76.76.21.21                    <- legacy, did not respond at all
+```
+
+**Always confirm an edge is the right one with `x-vercel-id` in the response
+headers.** A `200` and a valid certificate prove nothing about which platform
+answered.
+
+## Trap 4 — the .vercel.app production alias cannot be SSO-gated
+
+`ssoProtection: {"deploymentType": "all_except_custom_domains"}` exempts
+**production** domains, and the project alias `patrolgarage.vercel.app` is one.
+It stays publicly reachable. Tightening SSO to cover it also gates the real
+custom domain and takes the live site down.
+
+Solution used: a `has[host]` redirect in `vercel.json` sending
+`patrolgarage.vercel.app` to `https://patrolgarage.ae` with a `308`. The alias
+stays reachable but serves nothing of its own, which removes the duplicate copy.
+Deployment-specific preview URLs are deliberately **not** matched — they are
+already SSO-gated (`302`), and redirecting them would make every future preview
+bounce to production and become untestable.
+
+A `noindex` header via `has[host]` on `^.*\.vercel\.app$` is also in place as
+defence in depth.
+
+## Other things worth carrying over
+
+* **`permanent: true` emits 308, not 301.** Use `"statusCode": 301` if parity
+  against a Netlify baseline is the acceptance test.
+* **`trailingSlash` must be omitted, not set false.** `false` strips the slash
+  from directory canonicals (`/`, `/blog/`, `/blog/page/2/`) and breaks them.
+* **Netlify's `!` force flag needs no equivalent.** Vercel evaluates `redirects`
+  before the filesystem, so forcing is implicit.
+* **`.vercelignore` is load-bearing.** `requirements.txt` at the repo root makes
+  Vercel auto-detect Python, build a serverless function, find no entrypoint and
+  502 every page.
+* **Large uploads need `--archive=tgz`.** The plain file upload failed twice with
+  an SSL error on a 52 MB images directory.
+* **Baseline probes need retries.** Two of 109 URLs timed out during capture and
+  again during verification, producing "mismatches" that were pure measurement
+  noise. The first parity run said FAIL; hand-verification showed both were
+  correct. Retry transient failures rather than recording a false `None`, and
+  verify before acting on a revert trigger.
+
+## Final state
+
+```
+patrolgarage.ae      A  216.198.79.1, 64.29.17.1   ttl=120   server: Vercel
+www.patrolgarage.ae  A  216.198.79.1, 64.29.17.1   ttl=120   301 -> apex
+nameservers          dns1-4.p07.nsone.net (Netlify DNS, unchanged)
+TXT google-site-verification preserved
+```
+
+Netlify site `beautiful-cuchufli-e12a90` is **still live**, state `current`,
+deploy permalinks returning `200`. **Do not delete before 2026-09-20** — those
+permalinks have twice been the only surviving copy of lost posts and hero images.
+
+Rollback: create A records to `35.157.26.135` and `63.176.8.218`. TTL 120s, so
+roughly two minutes. The pipeline rolls back separately via `DEPLOY_TARGET=netlify`,
+which needs no rebuild because both CLIs are in the image.
+
+---
+
 # patrolgarage.ae — Netlify to Vercel migration plan
 
 Written 2026-08-21. **Plan only. Nothing was changed and nothing was deployed.**
