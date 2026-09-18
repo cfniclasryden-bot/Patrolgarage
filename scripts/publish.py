@@ -19,6 +19,164 @@ SITE_URL = "https://patrolgarage.ae"
 # This file is committed to the repo and shipped by every deploy.
 FALLBACK_IMAGE = "images/nissan-patrol-y62-dubai-desert.jpg"
 
+# ---------------------------------------------------------------- git sync
+#
+# Ported from topchallenger 2026-09-18. THE BUG THIS EXISTS TO KILL:
+#
+# This pipeline wrote posts into a disposable container, committed them to a
+# .git that COPY . . had baked in at the last `railway up`, and deployed to the
+# host. It never pulled and never pushed, so those commits were read by nobody
+# and died with the container. Six posts were lost that way and recovered by
+# hand in 0cd6d2b and d1564b1; the log shows the same class of loss in de863e4,
+# 3e4599f and eb0881d. It is endemic, not occasional.
+#
+# The fix is two halves that must both be present:
+#   sync_to_origin()  — make the tree equal origin BEFORE generating anything,
+#                       so the container never deploys its baked-in snapshot
+#   commit_and_push() — push the run's output BEFORE deploying, so a post that
+#                       is live is always a post that is in git
+#
+# ORDER MATTERS AND IS NOT NEGOTIABLE. Deploy-first-push-second is what produced
+# posts that existed only on the host. If the push fails, publish() returns
+# without deploying and the next cron simply retries.
+BRANCH = os.environ.get("GIT_BRANCH", "main")
+AUTHOR_NAME = os.environ.get("GIT_AUTHOR_NAME", "Patrol Garage Blog Bot")
+# Must be an address verified on the GitHub account that owns the repo.
+AUTHOR_EMAIL = os.environ.get("GIT_AUTHOR_EMAIL", "cfniclas.ryden@gmail.com")
+
+
+def in_cloud():
+    """True inside the Railway container. Railway always sets this."""
+    return bool(os.environ.get("RAILWAY_ENVIRONMENT"))
+
+
+def git_ready():
+    return bool(os.environ.get("GH_TOKEN") and os.environ.get("GH_REPO"))
+
+
+def _remote_url():
+    token = os.environ["GH_TOKEN"]
+    repo = os.environ["GH_REPO"].strip().removesuffix(".git")
+    return f"https://x-access-token:{token}@github.com/{repo}.git"
+
+
+def _scrub(text):
+    """Never let the token reach stdout — Railway logs are retained."""
+    token = os.environ.get("GH_TOKEN")
+    return text.replace(token, "***") if token and text else text
+
+
+def _git(args, check=True):
+    printable = " ".join("***REMOTE***" if "x-access-token" in a else a for a in args)
+    print(f"    $ git {printable}")
+    r = subprocess.run(["git"] + args, cwd=PROJECT_ROOT, capture_output=True, text=True)
+    out, err = _scrub((r.stdout or "").strip()), _scrub((r.stderr or "").strip())
+    if out:
+        print(f"    {out[:500]}")
+    if r.returncode != 0 and err:
+        print(f"    [err] {err[:400]}")
+    if check and r.returncode != 0:
+        raise RuntimeError(f"git {args[0]} failed ({r.returncode})")
+    return r
+
+
+def _is_repo():
+    r = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
+                       cwd=PROJECT_ROOT, capture_output=True, text=True)
+    return r.returncode == 0
+
+
+def _ensure_identity_and_remote():
+    """Wire identity + tokenised origin. ONLY writes the tokenised URL in the
+    cloud: doing it locally would leave a live PAT sitting in .git/config."""
+    _git(["config", "user.name", AUTHOR_NAME])
+    _git(["config", "user.email", AUTHOR_EMAIL])
+    if not in_cloud():
+        return
+    have = subprocess.run(["git", "remote"], cwd=PROJECT_ROOT,
+                          capture_output=True, text=True).stdout.split()
+    verb = "set-url" if "origin" in have else "add"
+    _git(["remote", verb, "origin", _remote_url()])
+
+
+def sync_to_origin():
+    """Make the working directory equal origin/BRANCH, BEFORE anything is generated.
+
+    Returns True if the sync actually ran.
+
+    FATAL IN THE CLOUD. A container that cannot reach origin has no way to know
+    whether its own copy of the site is current, and deploying it anyway is the
+    exact bug this exists to kill — so it refuses to continue rather than
+    falling back to the baked-in snapshot. With no GH_TOKEN the run stops here
+    and nothing is generated, committed or deployed.
+
+    That is the intended behaviour and it means no daily post until GH_TOKEN and
+    GH_REPO are set on the Railway service. A skipped post is recoverable; a
+    deploy of a months-old tree over a live site is not.
+    """
+    if not git_ready():
+        if in_cloud():
+            print("[publish] FATAL: GH_TOKEN / GH_REPO are not set in this container.")
+            print("[publish] Refusing to run: without origin there is no way to tell")
+            print("[publish] whether this copy of the site is current, and deploying")
+            print("[publish] a stale copy is the failure this check exists to prevent.")
+            print("[publish] Set GH_TOKEN and GH_REPO on the Railway service.")
+            raise SystemExit(2)
+        print("[publish] GH_TOKEN/GH_REPO unset — local run, skipping sync.")
+        return False
+    if not in_cloud():
+        # reset --hard would destroy uncommitted work. The container is
+        # disposable and its working tree is worthless; a developer's is not.
+        print("[publish] GH_TOKEN is set but this is not the container — "
+              "refusing to reset --hard a real working tree. Skipping sync.")
+        return False
+    if not _is_repo():
+        print("[publish] no .git in the container — initialising")
+        _git(["init"])
+    _ensure_identity_and_remote()
+    _git(["fetch", "origin", BRANCH])
+    _git(["reset", "--hard", f"origin/{BRANCH}"])
+    _git(["checkout", "-B", BRANCH])
+    head = _git(["rev-parse", "--short", "HEAD"], check=False).stdout.strip()
+    print(f"[publish] synced to origin/{BRANCH} @ {head}")
+    return True
+
+
+def commit_and_push(keyword=None):
+    """Commit the run's output and push it. Returns False if anything failed.
+
+    Called BEFORE the deploy on purpose — see the ordering note above.
+
+    images/ must be included: hero images are generated at pipeline time and are
+    otherwise never carried into git, so any other checkout deploys without
+    them. That is what cost eight hero images in 3e4599f.
+    """
+    if not _is_repo():
+        print("    [i] not a git repo — nothing to commit (local sandbox?)")
+        return True
+    _ensure_identity_and_remote()
+    msg = (f"Auto-publish: {keyword}" if keyword
+           else f"Auto-publish {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    _git(["add", "blog/", "images/", "sitemap.xml", "llms.txt", "scripts/",
+          *STATIC_PAGES], check=False)
+    st = _git(["status", "--porcelain"], check=False).stdout.strip()
+    if not st:
+        print("    [i] nothing to commit — tree already matches origin")
+    else:
+        _git(["commit", "-m", msg], check=False)
+    if not git_ready():
+        print("    [i] GH_TOKEN unset — committed locally, not pushing.")
+        return True
+    r = _git(["push", "origin", f"HEAD:{BRANCH}"], check=False)
+    if r.returncode != 0:
+        print("    [!] PUSH FAILED — not deploying. The post is not live anywhere")
+        print("    [!] and the next run will retry. This is deliberate: a deploy")
+        print("    [!] without a push is how posts end up existing only on the host.")
+        return False
+    print(f"    [+] pushed to origin/{BRANCH}")
+    return True
+
+
 IMG_REF_RE = re.compile(
     r'(?:src|href|content)="([^"]*\.(?:jpg|jpeg|png|webp|avif|gif))"',
     re.IGNORECASE,
@@ -37,6 +195,7 @@ def update_sitemap():
         ("/", "1.0", "weekly"),
         ("/services.html", "0.9", "monthly"),
         ("/y62-garage-dubai.html", "0.9", "monthly"),
+        ("/nissan-patrol-abu-dhabi.html", "0.9", "monthly"),
         ("/services/y62-major-service-dubai.html", "0.9", "monthly"),
         ("/services/y62-gearbox-transmission-dubai.html", "0.9", "monthly"),
         ("/services/nissan-patrol-v8-engine.html", "0.9", "monthly"),
@@ -167,6 +326,11 @@ def _fetch_from_live(local_path):
 STATIC_PAGES = [
     "index.html", "services.html", "about.html", "contact.html",
     "y62-garage-dubai.html",
+    # Generated by scripts/build_abu_dhabi_page.py from the services.html shell,
+    # same as y62-garage-dubai.html above. A service-area page: it names Abu
+    # Dhabi and Mussafah but claims no address, hours or map, because this site
+    # has no premises. See that script's docstring before editing it.
+    "nissan-patrol-abu-dhabi.html",
     # Hand-authored service pages. Same revert trap applies to them as to the
     # root pages: the container would otherwise redeploy its own stale copies.
     "services/y62-major-service-dubai.html",
@@ -409,7 +573,22 @@ def deploy_site(keyword=None):
 def publish(keyword=None):
     # Runs BEFORE journal_update, because adopting a live page would otherwise
     # discard the journal grid that journal_update owns and regenerates.
-    ensure_static_pages()
+    # SKIPPED ONCE GIT IS THE SOURCE OF TRUTH, decided 2026-09-18.
+    #
+    # This adopts the LIVE copy of a root page the container has diverged from.
+    # It was the right fix while the container held a frozen COPY . . snapshot
+    # and had no way to learn about a human edit. With sync_to_origin() running
+    # first, the tree already equals origin/main — so "live wins" would now let
+    # a stale deployed page overwrite a change that is committed and correct,
+    # which is the same class of silent revert pointed the other way.
+    #
+    # Kept, not deleted, because it is the only protection while GH_TOKEN is
+    # unset, and because two competing recovery mechanisms running at once is
+    # worse than either alone. Delete it once the sync has run clean for a week.
+    if git_ready() and in_cloud():
+        print("[+] Tree synced from origin — skipping ensure_static_pages()")
+    else:
+        ensure_static_pages()
 
     # Runs before the journal index and git so recovered images get committed
     # and the regenerated index picks up any fallback rewrites.
@@ -448,23 +627,18 @@ def publish(keyword=None):
     else:
         print(f"    [!] Journal update failed: {journal_result.stderr[:300]}")
 
-    git_check = subprocess.run(
-        ["git", "rev-parse", "--is-inside-work-tree"],
-        cwd=PROJECT_ROOT, capture_output=True, text=True
-    )
-    if git_check.returncode == 0:
-        print("\n[+] Committing to git...")
-        msg = f"Auto-publish: {keyword}" if keyword else f"Auto-publish {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-        # images/ must be included: hero images are generated at pipeline time and
-        # are otherwise never carried into git, so any other checkout deploys without them.
-        # Root pages are included so the container's commit reflects what it
-        # actually deployed (including anything ensure_static_pages adopted from
-        # live). Note this alone does NOT prevent the stale-revert bug — publish.py
-        # never pulls or pushes, so the commit is read by nobody; ensure_static_pages
-        # is what actually fixes it.
-        run(["git", "add", "blog/", "images/", "sitemap.xml", "llms.txt", "scripts/",
-             *STATIC_PAGES])
-        run(["git", "commit", "-m", msg])
+    # COMMIT AND PUSH BEFORE THE DEPLOY. This replaced a commit-only step on
+    # 2026-09-18. The old comment here said it plainly: "this alone does NOT
+    # prevent the stale-revert bug — publish.py never pulls or pushes, so the
+    # commit is read by nobody". Six posts were lost to exactly that.
+    #
+    # A failed push now ABORTS the deploy. The post is then live nowhere and the
+    # next cron retries, which is strictly better than a post that is live and
+    # exists in no repository.
+    print("\n[+] Committing and pushing to git...")
+    if not commit_and_push(keyword):
+        print("[!] Aborting before deploy: the run's output is not in origin.")
+        return False
 
     return deploy_site(keyword)
 

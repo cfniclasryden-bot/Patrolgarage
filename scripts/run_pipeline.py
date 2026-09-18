@@ -133,6 +133,24 @@ def main():
 
     log(f"=== PIPELINE RUN START ===")
 
+    # STEP ZERO: make the tree equal origin BEFORE generating anything.
+    #
+    # Added 2026-09-18. The container is built with COPY . ., so without this it
+    # runs against whatever the repo looked like at the last `railway up` — and
+    # on 2026-09-18 that snapshot was two months and 53 commits behind origin.
+    # Generating a post on top of a stale tree and deploying it is how this site
+    # reverted live content more than once.
+    #
+    # FATAL IN THE CLOUD WITH NO GH_TOKEN. sync_to_origin() raises SystemExit(2)
+    # rather than falling through, so the run stops here: nothing is generated,
+    # nothing is committed, nothing is deployed, and the live site is untouched.
+    # That is the intended failure mode. Until GH_TOKEN and GH_REPO are set on
+    # the Railway service there will be no daily post, and that is the correct
+    # trade — a skipped post is recoverable, a stale-tree deploy is not.
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import publish as _publish
+    _publish.sync_to_origin()
+
     # Get next pending keyword from Supabase (source of truth)
     import requests as _req
     SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
