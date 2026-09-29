@@ -18,9 +18,22 @@ script adds nothing and exits non-zero. That is deliberate. At one post a day,
 a validator that degrades to a pass-through would refill the queue with dead
 keywords within weeks and the failure would be invisible until the next GSC
 review — which is exactly how the first queue died.
+
+DEDUPE IS AGAINST SUPABASE ONLY, since 2026-09-29. keywords.csv used to be a
+second filter: a candidate already in the file was dropped whatever its status,
+and the file was never updated when a post went out (43 rows still `pending`,
+most long published). On topchallenger, whose generator shared this line, that
+emptied the queue: four keywords that passed every gate were discarded as
+"duplicates" while Supabase held 0 pending. keywords.csv is now a mirror written
+FROM Supabase (supabase_log.write_queue_mirror) and read by nothing.
+
+    python3 scripts/keyword_generator.py            # propose, gate and insert
+    python3 scripts/keyword_generator.py --dry-run  # propose and gate; no insert,
+                                                    # no CSV write (Claude,
+                                                    # DataForSEO and GSC are
+                                                    # still called)
 """
 
-import csv
 import os
 import re
 import sys
@@ -40,7 +53,12 @@ from keyword_overlap import (  # noqa: E402
 )
 
 ROOT = Path(__file__).parent.parent
-CSV_FILE = ROOT / "keywords.csv"
+
+# The only flag. Anything else on the command line is an error, not a keyword.
+DRY_RUN = "--dry-run" in sys.argv[1:]
+_unknown = [a for a in sys.argv[1:] if a != "--dry-run"]
+if _unknown:
+    sys.exit(f"keyword_generator.py: unknown argument(s) {_unknown}; only --dry-run is accepted")
 
 # Ask for more than we need: most candidates are rejected, and a run that
 # proposes 10 and keeps 2 is a wasted day of publishing.
@@ -55,14 +73,6 @@ def slugify(text):
     text = re.sub(r"[^\w\s-]", "", text)
     text = re.sub(r"[\s_-]+", "-", text)
     return text.strip("-")
-
-
-def load_existing():
-    if not CSV_FILE.exists():
-        return [], []
-    rows = list(csv.DictReader(open(CSV_FILE)))
-    existing = [r["keyword"].lower() for r in rows]
-    return rows, existing
 
 
 def fetch_site_data():
@@ -230,7 +240,8 @@ def sync_to_supabase(unique_new, supabase_url, headers, site_id, existing_keywor
 
 
 def main():
-    rows, csv_existing = load_existing()
+    if DRY_RUN:
+        print("[i] --dry-run: nothing will be inserted and keywords.csv will not be written")
 
     # Fetch Supabase state BEFORE generating so the prompt has full topic context
     try:
@@ -241,14 +252,13 @@ def main():
 
     new_keywords = generate_keywords(existing_articles)
 
-    # Dedup against DB (authoritative) union CSV — reject exact-string matches
-    all_existing_lower = existing_keywords | {k.lower() for k in csv_existing}
-    unique_new = [k for k in new_keywords if k.lower().strip() not in all_existing_lower]
+    # Exact-string dedupe against Supabase only (any status). The CSV is not
+    # consulted; see the module docstring.
+    unique_new = [k for k in new_keywords if k.lower().strip() not in existing_keywords]
     duplicates = len(new_keywords) - len(unique_new)
 
     if not unique_new:
-        print("All generated keywords were topic-duplicates — queue not grown. "
-              "Site topic coverage may be saturated; consider adding keywords manually.")
+        print("Every proposed keyword is already a Supabase row — queue not grown.")
         return 0
 
     # --- THE GATE ---------------------------------------------------------
@@ -347,18 +357,14 @@ def main():
 
     unique_new = [kw for kw, _, _ in accepted]
 
-    # Write survivors to CSV
-    for k in unique_new:
-        rows.append({"keyword": k, "status": "pending", "date_published": ""})
-
-    with open(CSV_FILE, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=["keyword", "status", "date_published"])
-        w.writeheader()
-        w.writerows(rows)
-
-    print(f"[+] CSV: added {len(unique_new)} keywords ({duplicates} exact-string duplicates filtered)")
+    print(f"[+] {len(unique_new)} keyword(s) to queue ({duplicates} exact-string "
+          f"duplicates of Supabase rows filtered earlier):")
     for k in unique_new:
         print(f"    - {k}")
+
+    if DRY_RUN:
+        print(f"[dry-run] would insert {len(unique_new)} pending row(s); nothing written")
+        return 0
 
     # Sync to Supabase using pre-fetched data
     inserted = sync_to_supabase(
@@ -370,6 +376,13 @@ def main():
               "(all duplicates or slug collisions)")
     else:
         print(f"✓  Keyword queue replenished ({inserted} new pending articles inserted into Supabase)")
+
+    # Refresh the mirror so a publish later in this run commits the new rows too.
+    try:
+        import supabase_log
+        supabase_log.write_queue_mirror()
+    except Exception as e:
+        print(f"[warn] keywords.csv mirror not refreshed (non-fatal): {e}")
 
     return 0
 

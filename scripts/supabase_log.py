@@ -136,6 +136,55 @@ def sync_queue(rows):
         print(f"[supabase_log] queue sync failed (non-fatal): {e}", file=sys.stderr)
 
 
+
+def write_queue_mirror(published=None, csv_path=None):
+    """Rewrite keywords.csv as a MIRROR of the Supabase queue. Returns row count.
+
+    Added 2026-09-29. Supabase is the queue; this file only reflects it. Until
+    then keywords.csv was both a mirror nobody updated and a filter the keyword
+    generator trusted: every row stayed `pending` forever, published or not, and
+    the generator refused any candidate already in the file. On topchallenger
+    that left Supabase with 0 pending while the CSV listed 32 "pending" rows, and
+    the 2026-09-28 run dropped four keywords that had passed every gate as
+    "duplicates". The generator now dedupes against Supabase alone and nothing
+    reads this file as input.
+
+    `published` is the keyword OR slug of a post going out in this run. At commit
+    time Supabase still says `pending` for it (run_pipeline marks it published
+    after publish.py returns), so it is marked published here, dated today, and
+    the file is committed with the post.
+
+    Never raises into a publish: callers wrap it, and a failure leaves the
+    previous file in place.
+    """
+    from pathlib import Path
+    csv_path = Path(csv_path) if csv_path else Path(__file__).resolve().parent.parent / "keywords.csv"
+    rows = _get(f"articles?site_id=eq.{_site_id()}"
+                "&select=keyword,slug,status,published_at,created_at&order=created_at.asc")
+    mark = (published or "").lower().strip()
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    out = []
+    for a in rows:
+        kw = (a.get("keyword") or "").strip()
+        if not kw:
+            continue
+        status = a.get("status") or ""
+        date = (a.get("published_at") or "")[:10]
+        if mark and mark in (kw.lower(), (a.get("slug") or "").lower(), _slug(kw)):
+            status, date = "published", date or today
+        out.append({"keyword": kw, "status": status,
+                    "date_published": date if status == "published" else ""})
+    import csv
+    tmp = csv_path.with_suffix(".csv.tmp")
+    with open(tmp, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["keyword", "status", "date_published"])
+        w.writeheader()
+        w.writerows(out)
+    tmp.replace(csv_path)
+    print(f"[supabase_log] keywords.csv mirrored from Supabase ({len(out)} rows"
+          + (f", {published} marked published" if published else "") + ")")
+    return len(out)
+
 def _slug(text):
     import re
     s = text.lower().strip()

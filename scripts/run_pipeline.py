@@ -15,6 +15,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from supabase_log import log_article, log_run, sync_queue
 
 CSV_FILE = ROOT / "keywords.csv"
+
+# Exit code for a run that found nothing to publish. Distinct from 1 (a stage
+# failed) and 2 (sync_to_origin refused to run), so the log says which it was.
+IDLE_EXIT = 3
 LOG_DIR = ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -172,7 +176,8 @@ def main():
         return 1
     site_id = site_rows[0]["id"]
 
-    # Auto-replenish queue if running low (still uses CSV for keyword generation source)
+    # Auto-replenish queue if running low. Supabase is the queue; keywords.csv is
+    # only a mirror of it and is not an input to anything (2026-09-29).
     r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
                  params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id"})
     pending_count = len(r.json())
@@ -184,10 +189,21 @@ def main():
             ["python3", "scripts/keyword_generator.py"],
             capture_output=True, text=True, cwd=ROOT
         )
+        # Log the generator's own report, always. "exited 0" is not "added
+        # anything": the generator also exits 0 when every candidate is already a
+        # Supabase row. This used to print "✓ Keyword queue replenished" on any
+        # exit 0, the same misleading line topchallenger replaced on 2026-09-15.
+        for line in kw_result.stdout.splitlines():
+            log("    [keyword_generator] " + line)
+        for line in kw_result.stderr.splitlines()[-20:]:
+            log("    [keyword_generator stderr] " + line)
         if kw_result.returncode == 0:
-            log("  ✓ Keyword queue replenished")
+            log("  keyword_generator exited 0 (see its output above for what it added)")
         else:
-            log(f"  [!] Keyword generation failed: {kw_result.stderr[:300]}")
+            log(f"  [!] keyword_generator FAILED (exit {kw_result.returncode})")
+        r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
+                     params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id"})
+        log(f"Pending in queue after replenishment: {len(r.json())} (was {pending_count})")
 
     # Fetch the oldest pending article from Supabase
     r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
@@ -196,7 +212,13 @@ def main():
     pending_articles = r.json()
     if not pending_articles:
         log("No pending keywords. Pipeline idle.")
-        return 0
+        # A scheduled run that publishes nothing exits NON-ZERO (2026-09-29), so
+        # Railway marks it CRASHED and emails, instead of the run reading as a
+        # healthy exit 0. Expect Railway to create a `redeploy` deployment on the
+        # next cron tick after a CRASHED run; that is Railway, not a second fault.
+        log(f"[!] SCHEDULED RUN PUBLISHED NOTHING: the queue is empty. Exit {IDLE_EXIT} "
+            "so Railway flags it.")
+        return IDLE_EXIT
 
     article_row = pending_articles[0]
     keyword = article_row["keyword"]

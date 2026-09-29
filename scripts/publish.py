@@ -157,8 +157,18 @@ def commit_and_push(keyword=None):
     _ensure_identity_and_remote()
     msg = (f"Auto-publish: {keyword}" if keyword
            else f"Auto-publish {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    # keywords.csv is a mirror of the Supabase queue (2026-09-29). Rewrite it with
+    # this post marked published and commit it alongside the post, so the file
+    # in the repo stops going stale. `keyword` here is the slug run_pipeline
+    # passes; the mirror matches keyword or slug. Never allowed to block a publish.
+    if keyword:
+        try:
+            import supabase_log
+            supabase_log.write_queue_mirror(published=keyword)
+        except Exception as e:
+            print(f"    [warn] keywords.csv mirror not written (non-fatal): {e}")
     _git(["add", "blog/", "images/", "sitemap.xml", "llms.txt", "scripts/",
-          *STATIC_PAGES], check=False)
+          "keywords.csv", *STATIC_PAGES], check=False)
     st = _git(["status", "--porcelain"], check=False).stdout.strip()
     if not st:
         print("    [i] nothing to commit — tree already matches origin")
