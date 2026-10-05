@@ -108,10 +108,11 @@ def main(argv):
         if any(" Y61_SERVICE [" in f for f in fails):
             print("\n    Y61_SERVICE: the Y61 is comparison content only, never a job "
                   "this business takes on.")
-        if any(r in f for f in fails for r in (" HORSEPOWER [", " TORQUE [", " Y63_DETAIL [", " GRADE_0W20 [")):
+        if any(r in f for f in fails for r in (" HORSEPOWER [", " TORQUE [", " Y63_DETAIL [", " GRADE_0W20 [",
+                                                 " GRADE_5W30 [", " INTERVAL_10K_6M [")):
             print("\n    UNVERIFIED FIGURE: no horsepower or torque figure, no Y63 launch year or "
-                  "spec\n    (it is a twin-turbo V6, nothing more), no 0W-20 outside an approved "
-                  "sentence.")
+                  "spec\n    (it is a twin-turbo V6, nothing more), no 0W-20 or 5W-30 outside an "
+                  "approved\n    sentence, no \"10,000 km or 6 months\" (the manual says 12).")
         if any(" TENURE [" in f for f in fails):
             print("\n    TENURE: no years in business and no counts of cars, customers "
                   "or jobs.")

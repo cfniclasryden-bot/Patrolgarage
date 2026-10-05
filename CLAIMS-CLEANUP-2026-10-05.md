@@ -1696,3 +1696,55 @@ Notes on the two removals:
 - **The Y61 vs Y62 engine paragraph** also claimed the Y62 is "more efficient" and that its "fuel consumption is better". Both followed from the invented diesel, and both contradict the fuel-consumption post, so they were removed along with it.
 - **Unverified figures that no guard covers yet (not changed):** "2.7 tonnes" / "2,700 kg", the Y61's "4.8L" and "3.0L" displacements, "5W-30" grades on the best-oil post, and "10,000 km or 6 months" (service-cost).
 - **The turbo-upgrade post** still describes performance modifications, and per earlier notes the business no longer offers those. The power figures are gone; whether the post stays is a separate decision.
+
+---
+
+# Round 4 (2026-10-05, same day): 5W-30, "10,000 km or 6 months", Supabase, turbo post traffic
+
+**Pages changed:** 6 (`best-oil-nissan-patrol-uae-heat.html`, `nissan-patrol-engine-problems.html`, `nissan-patrol-high-mileage.html`, `nissan-patrol-service-cost-dubai.html`, `nissan-patrol-service-dubai-complete-guide.html`, `nissan-patrol-service-every-how-many-km-dubai.html`). **Guards:** all five pass on all 70 patrolgarage pages and all 43 topchallenger pages.
+
+## R4.1 Scope note
+
+You named the best-oil post (5W-30) and the service-cost post (the interval). Both claims also appeared word for word on other pages: 5W-30 on the engine-problems, high-mileage and service-guide posts, and "10,000km or 6 months" twice on the service-interval post. Once these became guards, every page had to pass, so the two claims were removed wherever they appeared. Only these two claims were touched. Other grades (5W-40, 10W-40, 20W-50) and other intervals ("5,000 km or 3 months") were left as they are, as were the Y61 4.8L and 3.0L engine sizes and the 2.7-tonne weight.
+
+## R4.2 Every edit, before and after
+
+| Page | Kind | Before | After |
+|---|---|---|---|
+| `blog/best-oil-nissan-patrol-uae-heat.html` | grade-5W-30 | models require full synthetic 5W-30 oil with API SN Plus rating | models need a full synthetic oil with API SN Plus rating |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | grade-5W-30 | Stick to manufacturer-recommended viscosities like 5W-30 or 5W-40 full synthetic, which provide better protection | Stick to a quality full synthetic, which provides better protection |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | grade-5W-30 | We've found 5W-30 full synthetic strikes the perfect balance | We've found a quality full synthetic strikes the right balance |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | grade-5W-30 | Y62 Patrols perform best with 5W-30 full synthetic, while Y61 Super Safari models can use 5W-30 or 10W-40 depending on mileage and condition. | Y62 Patrols perform best with a full synthetic, while Y61 Super Safari models can also use 10W-40 depending on mileage and condition. |
+| `blog/nissan-patrol-engine-problems.html` | grade-5W-30 | a standard 5W-30 or 5W-40 synthetic can thin faster | a standard synthetic can thin faster |
+| `blog/nissan-patrol-engine-problems.html` | grade-5W-30 | The TB48DE requires a full synthetic 5W-30, or 10W-40 for high-mileage examples. | The TB48DE takes a full synthetic, or 10W-40 for high-mileage examples. |
+| `blog/nissan-patrol-high-mileage.html` | grade-5W-30 | every 7,500 to 10,000 km with full synthetic 5W-30. | every 7,500 to 10,000 km with full synthetic oil. |
+| `blog/nissan-patrol-high-mileage.html` | grade-5W-30 | with the correct synthetic oil (typically 5W-30 fully synthetic). | with the correct fully synthetic oil. |
+| `blog/nissan-patrol-service-dubai-complete-guide.html` | grade-5W-30 | The Y61's TD42 and TB45 engines accept 5W-30 or 10W-40 depending on mileage and condition. | The Y61's TD42 and TB45 engines take a full synthetic, or 10W-40 depending on mileage and condition. |
+| `blog/nissan-patrol-service-dubai-complete-guide.html` | grade-5W-30 | Use full synthetic 5W-30. | Use a full synthetic. |
+| `blog/nissan-patrol-service-cost-dubai.html` | interval-10k-6m | The most common service interval for a Patrol is every 10,000 km or 6 months. | *(deleted)* |
+| `blog/nissan-patrol-service-every-how-many-km-dubai.html` | interval-10k-6m | Nissan Patrol models in Dubai require service every 10,000km or 6 months under normal conditions, but Dubai's extreme heat (45-50°C) and dusty conditions require more frequent servicing every 5,000-7,500km. | Nissan Patrol models in Dubai need more frequent servicing than a temperate climate calls for: Dubai's extreme heat (45-50°C) and dusty conditions mean a service every 5,000-7,500km. |
+| `blog/nissan-patrol-service-every-how-many-km-dubai.html` | interval-10k-6m | You will often see 10,000km or 6 months quoted as the standard service interval for Patrol models under normal operating conditions. | You will often see a 10,000km interval quoted as the standard for Patrol models under normal operating conditions. |
+
+## R4.3 Guards added (shared `copy_rules.py`)
+
+| Rule | Catches | Exempt | topchallenger |
+|---|---|---|---|
+| GRADE_5W30 | "5W-30" | a sentence with an approved `check_claims` ACCEPTED wording | **off** (`copy_rules_site.py`): 5W-30 is that workshop's stated recommendation |
+| INTERVAL_10K_6M | "10,000 km or 6 months" in any spacing | the same | on (its only interval is the approved "10,000 km or 12 month" sentence, which is exempt) |
+
+Why "6 months" is wrong and not just unsourced: the owner's manual interval verified on topchallenger is 10,000 km or **12** months.
+
+`test_copy_rules.py`: 32 must-fire, 20 must-not-fire. New must-not-fire cases are the approved 12-month sentence, "5,000km or 3 months" and "a 10,000km interval" with no month figure.
+
+## R4.4 Supabase
+
+| Article slug | Before | After | editorial_notes |
+|---|---|---|---|
+| `y62-spark-plug-replacement-cost-al-futtaim-vs-independent` | published | **retired** | 301 to https://patrolgarage.ae/blog/nissan-patrol-major-service.html |
+| `y63-independent-service-centre-abu-dhabi-vs-dubai-2026` | published | **retired** | 301 to https://patrolgarage.ae/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html |
+
+The keyword generator dedupes against every status, so neither keyword can be re-queued.
+
+## R4.5 Turbo-upgrade post: traffic only, not changed
+
+`/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html`, 90 days 2026-07-05 to 2026-10-02: **12 clicks, 199 impressions**, average position 7.8. That is above the Round 3 keep threshold on both counts. Its largest visible query is "nissan patrol y62 stereo upgrade in dubai" (0 clicks, 28 impressions, position 13.9). GSC withholds the queries behind most of the clicks. The post still describes performance modifications, which the business no longer offers. Keep, reframe or redirect is the owner's decision.

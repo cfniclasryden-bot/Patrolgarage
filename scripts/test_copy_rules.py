@@ -56,9 +56,13 @@ MUST_FIRE = [
     ("Y63_DETAIL", "The Y63, launched in the UAE in 2024, is too new for a meaningful leak history."),
     ("Y63_DETAIL", "The Y63 only arrived in UAE showrooms in 2024, so used examples are rare."),
     ("Y63_DETAIL", "The Y63 uses a 3.5L twin-turbo V6 with a 9-speed automatic."),
+    # Round 4
+    ("INTERVAL_10K_6M", "The most common service interval for a Patrol is every 10,000 km or 6 months."),
+    ("INTERVAL_10K_6M", "Nissan Patrol models in Dubai require service every 10,000km or 6 months under normal conditions."),
 ]
 SITE_RULE_CASES = [
     ("GRADE_0W20", "Nissan Patrol Y62 models require full synthetic 5W-30 or 0W-20 oil."),
+    ("GRADE_5W30", "Y62 Patrols perform best with 5W-30 full synthetic."),
 ]
 
 MUST_NOT_FIRE = [
@@ -79,6 +83,9 @@ MUST_NOT_FIRE = [
     "What does Y63 dashcam installation cost in Dubai in 2026?",
     "The VK56VD 5.6L V8 is strong, but it is thirsty and heat-sensitive.",
     "Nissan's North American owner's manual for the Armada, which uses the same VK56VD, recommends 0W-20, so the grade is not wrong for the engine.",
+    "The owner's manual sets a 10,000 km or 12 month service interval.",
+    "Change oil every 5,000km or 3 months in Dubai conditions.",
+    "You will often see a 10,000km interval quoted as the standard for Patrol models.",
 ]
 
 
