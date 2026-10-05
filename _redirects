@@ -54,6 +54,43 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-suspension-dubai.html  /blog/nissan-patrol-y62-problems-dubai.html 301
 /blog/nissan-patrol-suspension-dubai       /blog/nissan-patrol-y62-problems-dubai.html 301!
 
+# Old 404s, redirected 2026-10-05 (lead check). Every URL Search Console still
+# showed in the 90 days to 2026-10-02 that returned 404 live: posts removed in
+# August with no redirect (four had June-July lead clicks), and mistyped URLs.
+# Single hop to a live .html page, both forms, closest repair or owner-info post.
+/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026.html  /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html 301
+/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026       /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html 301!
+/blog/nissan-patrol-y62-timing-chain-replacement-cost-dubai.html  /blog/nissan-patrol-engine-problems.html 301
+/blog/nissan-patrol-y62-timing-chain-replacement-cost-dubai       /blog/nissan-patrol-engine-problems.html 301!
+/blog/y63-independent-service-centre-dubai-al-barsha-2026.html  /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html 301
+/blog/y63-independent-service-centre-dubai-al-barsha-2026       /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html 301!
+/blog/nissan-patrol-y63-window-tint-specialist-dubai-best-price-2026.html  /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html 301
+/blog/nissan-patrol-y63-window-tint-specialist-dubai-best-price-2026       /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html 301!
+/blog/y62-alternator-replacement-cost-dubai-uae-2026.html  /blog/nissan-patrol-not-starting.html 301
+/blog/y62-alternator-replacement-cost-dubai-uae-2026       /blog/nissan-patrol-not-starting.html 301!
+/blog/y62-vk56-engine-replacement-cost-dubai-2026.html  /blog/nissan-patrol-engine-problems.html 301
+/blog/y62-vk56-engine-replacement-cost-dubai-2026       /blog/nissan-patrol-engine-problems.html 301!
+/blog/y62-power-steering-rack-replacement-cost-dubai-2026.html  /blog/nissan-patrol-steering-problems.html 301
+/blog/y62-power-steering-rack-replacement-cost-dubai-2026       /blog/nissan-patrol-steering-problems.html 301!
+/blog/nissan-patrol-exhaust-upgrade-specialist-dubai-2026.html  /blog/nissan-patrol-engine-problems.html 301
+/blog/nissan-patrol-exhaust-upgrade-specialist-dubai-2026       /blog/nissan-patrol-engine-problems.html 301!
+/blog/nissan-patrol-y61-leaf-spring-upgrade-cost-uae.html  /blog/nissan-patrol-y61-dubai-complete-guide.html 301
+/blog/nissan-patrol-y61-leaf-spring-upgrade-cost-uae       /blog/nissan-patrol-y61-dubai-complete-guide.html 301!
+/blog/y61-super-safari-engine-swap-cost-uae-2026.html  /blog/nissan-patrol-y61-dubai-complete-guide.html 301
+/blog/y61-super-safari-engine-swap-cost-uae-2026       /blog/nissan-patrol-y61-dubai-complete-guide.html 301!
+/blog/y61-safari-club-vs-independent-workshop-dubai-2026.html  /blog/nissan-patrol-y61-dubai-complete-guide.html 301
+/blog/y61-safari-club-vs-independent-workshop-dubai-2026       /blog/nissan-patrol-y61-dubai-complete-guide.html 301!
+/blog/nissan-patrol-best-year-by-buy.html  /blog/nissan-patrol-best-year-to-buy.html 301
+/blog/nissan-patrol-best-year-by-buy       /blog/nissan-patrol-best-year-to-buy.html 301!
+/blog/nissan-patrol-best-year-to-due.html  /blog/nissan-patrol-best-year-to-buy.html 301
+/blog/nissan-patrol-best-year-to-due       /blog/nissan-patrol-best-year-to-buy.html 301!
+/blog/nissan-patrol-best-year-to_buy.html  /blog/nissan-patrol-best-year-to-buy.html 301
+/blog/nissan-patrol-best-year-to_buy       /blog/nissan-patrol-best-year-to-buy.html 301!
+/blog/nissan-patrol-y62-complete-guide.html  /blog/nissan-patrol-y62-dubai-complete-guide.html 301
+/blog/nissan-patrol-y62-complete-guide       /blog/nissan-patrol-y62-dubai-complete-guide.html 301!
+/blog/nissan-patrol-y62-problems-dni.html  /blog/nissan-patrol-y62-problems-dubai.html 301
+/blog/nissan-patrol-y62-problems-dni       /blog/nissan-patrol-y62-problems-dubai.html 301!
+
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 
