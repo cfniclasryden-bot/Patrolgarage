@@ -50,7 +50,7 @@ TYPE_RULES = [
 
 COPY = {
     "COST": (
-        "Want the number for your own Y62, not a range? Send us the year and the "
+        "Want a quote for your own Y62? Send us the year and the "
         "mileage and we will price the actual job.",
         "Get a quote on WhatsApp",
         "Y62 quote - year and mileage: ",

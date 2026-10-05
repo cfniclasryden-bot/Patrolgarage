@@ -33,7 +33,7 @@ NISSAN PATROL MODELS IN UAE:
   there was NO 2016 facelift
 - Y63: the current model, a twin-turbo V6. Owner information only
 - Y62 transmission: 7-speed automatic (Jatco JR710E / RE7R01A)
-- Y62 engine: VK56VD 5.6L V8, 400hp
+- Y62 engine: VK56VD 5.6L V8 (state no horsepower or torque figure)
 - Common trims in UAE: SE, XE, LE, Platinum, Nismo
 
 DUBAI CLIMATE:

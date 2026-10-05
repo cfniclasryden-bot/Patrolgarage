@@ -123,7 +123,7 @@ def banner_for(title, slug):
         subj = comp or (model if model != "Patrol" else None)
         # The Y62 is the only model this business works on (2026-10-05): never
         # build a quote CTA around a Y61 job.
-        if subj and subj.upper() == "Y61":
+        if subj and subj.upper() in ("Y61", "Y63"):
             subj = None
         if subj:
             h2 = f"Get your exact {subj} quote"

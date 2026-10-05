@@ -47,6 +47,18 @@ MUST_FIRE = [
     ("REFRESH", "On newer Y62 models (the 2020 refresh onward), the rear bumper has integrated sensors."),
     ("REFRESH", "Refreshed 2020-onwards Y62 Platinums have fewer kilometres on them."),
     ("REFRESH", "Confirm your model year: 2010 to 2015, 2016 to 2019 mid-cycle, or 2020 onwards."),
+    # Round 3: unverified figures
+    ("HORSEPOWER", "The Y62's 5.6L VK56VD V8 produces 400hp, and all that power has to transfer."),
+    ("HORSEPOWER", "Typical single-turbo Y62 upgrades produce 450-500hp compared to stock."),
+    ("HORSEPOWER", "The TB48DE produces approximately 210 horsepower."),
+    ("TORQUE", "The Y62 petrol V8 produces 560 Nm and has modern traction control."),
+    ("TORQUE", "The VK56VD plugs go in at approximately 18 to 20 Nm."),
+    ("Y63_DETAIL", "The Y63, launched in the UAE in 2024, is too new for a meaningful leak history."),
+    ("Y63_DETAIL", "The Y63 only arrived in UAE showrooms in 2024, so used examples are rare."),
+    ("Y63_DETAIL", "The Y63 uses a 3.5L twin-turbo V6 with a 9-speed automatic."),
+]
+SITE_RULE_CASES = [
+    ("GRADE_0W20", "Nissan Patrol Y62 models require full synthetic 5W-30 or 0W-20 oil."),
 ]
 
 MUST_NOT_FIRE = [
@@ -62,6 +74,11 @@ MUST_NOT_FIRE = [
     "Message us on WhatsApp for a quote on your car.",
     "We see this pattern regularly.",
     "The fan runs at 2,000 rpm.",
+    "The Y63 uses a twin-turbo V6, replacing the Y62's 5.6L naturally aspirated V8.",
+    "Ask how many Y63 services they have completed in 2025 and 2026.",
+    "What does Y63 dashcam installation cost in Dubai in 2026?",
+    "The VK56VD 5.6L V8 is strong, but it is thirsty and heat-sensitive.",
+    "Nissan's North American owner's manual for the Armada, which uses the same VK56VD, recommends 0W-20, so the grade is not wrong for the engine.",
 ]
 
 
@@ -79,6 +96,20 @@ def main():
             failures.append(f"FALSE+ {got}: {sent[:90]}")
         else:
             print(f"  quiet    {sent[:80]}")
+
+    # Per-site rules: fire where enabled, stay quiet where copy_rules_site.py
+    # switches them off. Patrolgarage enables all; topchallenger disables 0W-20.
+    for rule, sent in SITE_RULE_CASES:
+        got = [r for r, _ in copy_rules.sentence_findings(sent)]
+        if rule in copy_rules.DISABLED:
+            if rule in got:
+                failures.append(f"SITE   {rule} is disabled here but fired: {sent[:70]}")
+            else:
+                print(f"  off      {rule:12} (disabled on this site)")
+        elif rule not in got:
+            failures.append(f"MISS   {rule}: {sent[:90]}")
+        else:
+            print(f"  fires    {rule:12} {sent[:70]}")
 
     # Through the guards themselves, on a real file, in body AND head scopes.
     with tempfile.TemporaryDirectory() as td:

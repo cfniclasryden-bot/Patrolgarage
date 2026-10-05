@@ -1548,3 +1548,151 @@ Where a FAQ answer exists twice (visible text and FAQ JSON-LD), one edit usually
 - The Y61 complete guide's Article JSON-LD headline and description belong to the Y61 vs Y62 post.
 
 **Kept on purpose:** the contact hours as relabelled, "Free Quote" and "Transparent Pricing" (claims about quoting practice, not listed badges), third-party warranty advice ("an installer should offer a written warranty"), "an approved testing centre", and market mentions of Ras Al Khor and Al Quoz workshops.
+
+---
+
+# Round 3 (2026-10-05, same day): traffic decisions, wrong facts, unverified figures
+
+**Pages changed:** 43 HTML pages edited, 2 posts removed and redirected, plus `_redirects`, `vercel.json`, `sitemap.xml`, `llms.txt`, the blog listing and 5 scripts. **Guards:** all five pass on all 70 patrolgarage pages and all 43 topchallenger pages.
+
+## R3.1 Keep or redirect: 90-day GSC, 2026-07-05 to 2026-10-02
+
+Rule: keep the URL if it has 3+ clicks OR 100+ impressions, otherwise remove it and 301 to the closest live post. Figures are `gsc_client.query(['page'])` summed over the `.html` and extensionless forms of each URL.
+
+| Post | Clicks | Impressions | Decision | New title |
+|---|---|---|---|---|
+| `/blog/nissan-patrol-best-year-to-buy.html` | 3 | 387 | Keep, reframe | How to Choose a Used Nissan Patrol Y62: What to Check in the Service History |
+| `/blog/nissan-patrol-service-cost-dubai.html` | 17 | 1379 | Keep, reframe | What Drives Nissan Patrol Service Cost in Dubai |
+| `/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html` | 0 | 67 | **301** to /blog/nissan-patrol-major-service.html | (removed) |
+| `/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | 3 | 21 | Keep, reframe as Y61 owner information | Y61 Super Safari Snorkel Fitting in Dubai: What the Job Involves |
+| `/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | 3 | 26 | Keep, reframe as general owner advice, no Y63 service offer | Y63 Dashcam Installation in Dubai: What a Proper Hardwired Install Involves |
+| `/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html` | 0 | 46 | **301** to /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html | (removed) |
+
+Notes on the two removals:
+- **Spark plug, dealer vs independent:** 0 clicks and 67 impressions. With every price gone it compared nothing. Spark plugs are part of the major service, so the major-service post is the closest live match. Both URL forms 301 there.
+- **Y63 servicing, Abu Dhabi vs Dubai:** 0 clicks and 46 impressions. It offered Y63 servicing, which this business does not do. The Y62 Abu Dhabi vs Dubai post is the same question for the car the business does service. Both URL forms 301 there.
+- **Chain removed:** the older Sharjah Y63 redirect pointed at the Y63 servicing post. It now goes straight to the final target, so no redirect chains exist (checked across all 83 rules in `vercel.json`).
+- **References updated:** the sitemap entries, the `llms.txt` lines and two related-reading links (engine mount, black smoke) now point at the targets. The blog listing has been rebuilt (58 posts). The hero images for both posts were deleted. The Supabase `articles` rows still say `published`; nothing reads them for the live site.
+
+## R3.2 Guards added (shared `copy_rules.py`, both repos)
+
+| Rule | Catches | Stays quiet on |
+|---|---|---|
+| HORSEPOWER | any power figure: "400 hp", "450-500hp", "210 horsepower" | "a large engine", "makes a lot of power" |
+| TORQUE | any Nm figure: "560 Nm", "18 to 20 Nm" | "makes its torque at higher revs" |
+| Y63_DETAIL | a Y63 launch year (2024 or earlier) or spec: a displacement other than the Y62's 5.6L, VR3x, "9-speed" | "the Y63 uses a twin-turbo V6", "in 2025 and 2026" |
+| GRADE_0W20 | "0W-20" outside an approved `check_claims` ACCEPTED sentence | the Armada-manual sentence. **Off on topchallenger** via `copy_rules_site.py`, because its oil post gives grades as the workshop's own recommendation |
+
+`test_copy_rules.py` (identical in both repos) now has 30 must-fire, 17 must-not-fire and a per-site switch test. `generate.py` no longer gives "400hp". `early_cta.py`'s "not a range" line and `cta_lib.py`'s Y63 quote subject are fixed.
+
+## R3.3 Every edit, before and after
+
+| Page | Kind | Before | After |
+|---|---|---|---|
+| `blog/nissan-patrol-y61-vs-y62-dubai.html` | wrong-fact | Y61 offers 4.8L petrol (210 hp) or 3.0L turbo diesel (160 hp). Y62 offers 5.6L petrol (400 hp) or 4.0L turbo diesel (250 hp). Y62 is significantly more powerful and efficient. Y62 fuel consumption is better despite more power. Y62 has turbo diesel option which Y61 lacks. For UAE towing and hauling, Y62 diesel is superior. Y61 is adequate | Y61 offers 4.8L petrol or 3.0L turbo diesel. The Y62 sold in the UAE is petrol only, with a 5.6L V8, and it is significantly more powerful. Y61 is adequate |
+| `blog/nissan-patrol-y62-vs-y63-dubai-comparison.html` | wrong-fact | including transmission cooler lines, CVT chain wear in the 7-speed automatic, and AC evaporator condition | including transmission cooler lines, the condition of the 7-speed automatic, and AC evaporator condition |
+| `blog/nissan-patrol-y61-dubai-complete-guide.html` | wrong-fact | "headline":"Nissan Patrol Y61 vs Y62: Which to Buy in Dubai (2026 Guide)","description":"Y61 vs Y62 comparison: reliability, costs, engine, off-road capability. Which Patrol is best for Dubai?" | "headline":"Nissan Patrol Y61 Dubai: The Complete Owner's Guide","description":"Complete guide to owning a Nissan Patrol Y61 / Super Safari in Dubai. Common issues, maintenance, costs, and Dubai-specific advice." |
+| `blog/buying-a-used-nissan-patrol.html` | hp-torque | The VK56VD 5.6L V8 producing 400hp is strong | The VK56VD 5.6L V8 is strong |
+| `blog/nissan-patrol-best-year-to-buy.html` | hp-torque | It uses the VK56VD 5.6L V8 producing around 400 horsepower, a 7-speed | It uses the VK56VD 5.6L V8, a 7-speed |
+| `blog/nissan-patrol-diesel-vs-petrol.html` | hp-torque | But the Y62's 5.6L V8 produces 560 Nm of torque (at higher revs than a diesel) and with modern traction control | But the Y62's 5.6L V8 makes its torque at higher revs than a diesel, and with modern traction control |
+| `blog/nissan-patrol-diesel-vs-petrol.html` | hp-torque | Output is 400 hp, and the gearbox is | The gearbox is |
+| `blog/nissan-patrol-diesel-vs-petrol.html` | hp-torque | the 5.6L VK56VD V8 producing 400 hp. | the 5.6L VK56VD V8. |
+| `blog/nissan-patrol-diesel-vs-petrol.html` | hp-torque | The Y62 petrol V8 produces 560 Nm and has modern traction control systems that compensate for the higher torque peak. | The Y62 petrol V8 makes its peak torque higher in the rev range, and modern traction control systems compensate for that. |
+| `blog/nissan-patrol-engine-overheating.html` | hp-torque | That engine produces 400 hp and generates heat accordingly. | That is a large engine, and it generates heat accordingly. |
+| `blog/nissan-patrol-high-mileage.html` | hp-torque | a 5.6L direct-injection V8 rated at 400 hp. | a 5.6L direct-injection V8. |
+| `blog/nissan-patrol-y61-dubai-complete-guide.html` | hp-torque | inline-six petrol engine, producing approximately 210 horsepower and 380 Nm of torque. | inline-six petrol engine. |
+| `blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html` | hp-torque | 5.6L V8 produces 400 hp and significant torque, and | 5.6L V8 produces significant torque, and |
+| `blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html` | hp-torque | VK56VD V8 pushing 400hp through a Jatco | VK56VD V8 driving through a Jatco |
+| `blog/nissan-patrol-y62-dubai-complete-guide.html` | hp-torque | V8 produces 400 hp in stock form, drives through | V8 drives through |
+| `blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html` | hp-torque | The VK56VD runs at high compression and produces 400 horsepower. | The VK56VD runs at high compression. |
+| `blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html` | hp-torque | The VK56VD 5.6L V8 produces 400 hp, and every bit of that torque goes | The VK56VD 5.6L V8 makes a lot of torque, and every bit of it goes |
+| `blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html` | hp-torque | On a 400hp V8 that weighs | On a big V8 that weighs |
+| `blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html` | hp-torque | With a 5.6L VK56VD V8 producing 400hp, it handles | With a 5.6L VK56VD V8, it handles |
+| `blog/nissan-patrol-y62-transmission-problems-dubai.html` | hp-torque | 5.6L VK56VD V8 produces 400hp, and all that power has to transfer | 5.6L VK56VD V8 makes a lot of power, and all of it has to transfer |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | However, power levels above 500hp typically require | However, large power increases typically require |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | The GT3076R can support 450-500hp reliably while | The GT3076R can support a substantial power increase while |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | These setups typically produce 420-450hp while maintaining | These setups typically add a modest amount of power while maintaining |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | Typical single-turbo Y62 upgrades produce 450-500hp compared to stock 400hp, with | Single-turbo Y62 upgrades add power over stock, with |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | While 400hp sounds impressive, the naturally aspirated V8 | The naturally aspirated V8 |
+| `blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | hp-torque | While the Y62's 400hp serves most owners well | While the stock Y62 serves most owners well |
+| `blog/nissan-patrol-y62-vs-y63-dubai-comparison.html` | hp-torque | 5.6L V8 engine producing 400hp, paired with | 5.6L V8 engine, paired with |
+| `services/nissan-patrol-v8-engine.html` | hp-torque | naturally aspirated V8 producing around 400hp. | naturally aspirated V8. |
+| `blog/buying-a-used-nissan-patrol.html` | y63-spec | The Y63 only arrived in UAE showrooms in 2024, so used examples are rare | The Y63 is the current model, so used examples are rare |
+| `blog/nissan-patrol-best-year-to-buy.html` | y63-spec | the Y62, and the Y63 which arrived in 2024. | the Y62, and the Y63. |
+| `blog/nissan-patrol-best-year-to-buy.html` | y63-spec | The Y63 arrived in the UAE in 2024 and replaces | The Y63 replaces |
+| `blog/nissan-patrol-best-year-to-buy.html` | y63-spec | The Y63 launched in the UAE in 2024. | *(deleted)* |
+| `blog/nissan-patrol-fuel-consumption.html` | y63-spec | The Y63 uses a 3.5L twin-turbo V6 producing 425 hp, replacing the Y62's 5.6L naturally aspirated V8 at 400 hp. | The Y63 uses a twin-turbo V6, replacing the Y62's 5.6L naturally aspirated V8. |
+| `blog/nissan-patrol-fuel-consumption.html` | y63-spec | The Y63's 3.5L twin-turbo V6 makes comparable or greater power through boost pressure, | The Y63's twin-turbo V6 makes its power through boost pressure, |
+| `blog/nissan-patrol-fuel-consumption.html` | y63-spec | The Y63, which arrived in the UAE in 2024, uses a 3.5L twin-turbo V6 producing 425 hp in standard tune and 495 hp in the Nismo version. | The Y63 uses a twin-turbo V6. |
+| `blog/nissan-patrol-fuel-consumption.html` | y63-spec | powered by a 3.5L twin-turbo V6, targets lower consumption than the outgoing V8 despite producing more power. | powered by a twin-turbo V6, targets lower consumption than the outgoing V8. |
+| `blog/nissan-patrol-high-mileage.html` | y63-spec | The Y63, launched in the UAE in 2024, is too new | The Y63 is too new |
+| `blog/nissan-patrol-oil-leak.html` | y63-spec | The Y63, launched in the UAE in 2024, is too new | The Y63 is too new |
+| `blog/nissan-patrol-steering-problems.html` | y63-spec | The Y63, launched in the UAE in 2024, is still early | The Y63 is still early |
+| `blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html` | y63-spec | The Y63 launched in the UAE in 2024 and uses a 3.8L V6 or 3.5L twin-turbo V6 with a 9-speed automatic, which is a fundamentally different mechanical platform than | The Y63 uses a twin-turbo V6, a fundamentally different mechanical platform from |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | 0W-20 | require full synthetic 5W-30 or 0W-20 oil with | require full synthetic 5W-30 oil with |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | 0W-20 | Avoid 0W-20 oils unless specifically recommended | Avoid very thin, low-viscosity oils unless specifically recommended |
+| `blog/nissan-patrol-major-service.html` | 0W-20 | (full synthetic 5W-30 or 0W-20 depending on year and spec) | (full synthetic) |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Nissan Patrol Best Year to Buy 2026 / Patrol Garage Dubai | How to Choose a Used Nissan Patrol Y62: Service History Checks / Patrol Garage Dubai |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Target a Y62 with full service history for the mature VK56VD V8 and lower price. This guide covers every generation, known faults, and what drives UAE repair costs. | Choosing a used Nissan Patrol Y62 in the UAE? Judge the car by its service history, not its build year. What to check, the known faults, and what drives repair costs. |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Nissan Patrol Best Year to Buy: UAE Guide | How to Choose a Used Nissan Patrol Y62: What to Check in the Service History |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | A Y62 with full service history hits the value point for UAE buyers. Full breakdown of Y61, Y62, Y63 faults and what drives repair costs. | Judge a used Y62 by its documented service history. What to check, the known faults across the Y61, Y62 and Y63, and what drives repair costs. |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Which Patrol Year to Buy in the UAE: 2026 | Choosing a Used Y62: Service History Checks |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | A documented Y62 is the target. Y61 suits off-road use. What drives UAE repair costs, inside. | A documented Y62 is the target. What to check in the service history before you buy. |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Nissan Patrol Best Year to Buy: UAE Owner's Guide | How to Choose a Used Nissan Patrol Y62: What to Check in the Service History |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Identifies a Y62 with documented service history as the strongest used buy, with fault history and what drives local repair costs. | Explains why a Y62 with documented service history is the strongest used buy, what to check, the fault history and what drives local repair costs. |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Which Patrol Year Wins | Choosing a Used Y62 |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | Y62 Value · Generations | Y62 Buying · Service History |
+| `blog/nissan-patrol-best-year-to-buy.html` | reframe | asking which year to target, and the answer is never one sentence. | asking which year to target. The honest answer is that the record matters more than the year: what was serviced, when, and how. |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | Nissan Patrol Service Costs in Dubai: What Drives Them (2026) | What Drives Nissan Patrol Service Cost in Dubai |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | What a Nissan Patrol service costs in Dubai: minor and major services, plus AC, brakes and gearbox. What each one includes and what drives the cost. | What a Nissan Patrol minor and major service in Dubai includes, plus AC, brakes and gearbox work, and what moves the cost of each. Message us for a quote. |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | Complete breakdown of maintenance and repair costs for Nissan Patrol in Dubai. Learn what you'll spend on service. | What each Nissan Patrol service in Dubai covers and what moves the cost, from routine oil changes to major services. |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe |  | *(deleted)* |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | Complete breakdown of Nissan Patrol maintenance costs in Dubai: oil changes, filters, AC service, suspension, gearbox. | What each Nissan Patrol service in Dubai covers and what drives its cost: oil changes, filters, AC service, suspension, gearbox. |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | Service Cost Breakdown | What Drives Service Cost |
+| `blog/nissan-patrol-service-cost-dubai.html` | reframe | Service Pricing | Service Costs |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Y61 Super Safari Snorkel Fitting Cost Dubai 2026 | Y61 Super Safari Snorkel Fitting in Dubai: What the Job Involves |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Snorkel fitting for a Y61 Super Safari in Dubai: what drives the cost, what is included, which brands fit, and what to check in 2026. | Snorkel fitting on a Y61 Super Safari: what the job involves, which kits fit, what drives the cost, and what to check before the A-pillar is cut. |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Y61 Super Safari Snorkel Cost Dubai 2026 | Y61 Snorkel Fitting: What the Job Involves |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | What drives Y61 Super Safari snorkel costs, plus brands and workshops in Dubai 2026. | What a Y61 Super Safari snorkel fitting involves, which kits fit, and what drives the cost. |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | What a snorkel fitting job covers in Dubai and which workshops to use in 2026. | What a Y61 snorkel fitting covers and what to check before you book it in Dubai. |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Snorkel fitting for a Y61 Super Safari in Dubai in 2026, covering what drives the cost of the kit, hardware, and labour at a specialist workshop. | Owner guide to fitting a snorkel to a Y61 Super Safari in Dubai: what the job involves, which kits fit, and what drives the cost of the kit, hardware and labour. |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Y61 Snorkel Fitting Cost | Y61 Snorkel Fitting Explained |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Y61 Snorkel · Pricing | Y61 Snorkel · Owner Guide |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Dashcam Installation Dubai 2026: Hardwired Setup | Y63 Dashcam Installation in Dubai: What a Proper Hardwired Install Involves |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Nissan Patrol dashcam installation in Dubai. Hardwired dual-channel setup with voltage cutoff relay. Book at Patrol Garage. | Hardwiring a dashcam in a Y63 Nissan Patrol in Dubai: dual-channel setup, voltage cutoff relay, and what to ask the installer. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Dashcam Install Dubai 2026 / Patrol Garage | Y63 Dashcam Install Guide: What a Proper Hardwired Job Involves |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Patrol dashcam installation: hardwired dual-channel dashcam on a Y63 Patrol. Hidden cables, voltage relay, 2 to 3 hours. | What a proper hardwired dashcam install on a Y63 Patrol involves: hidden cables, a voltage relay, and two to three hours of work. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 dashcam installation. Hardwired, hidden cables, battery relay. Dubai. | What a proper Y63 dashcam install involves: hardwired, hidden cables, battery relay. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Dashcam Installation Dubai 2026 / Patrol Garage | Y63 Dashcam Installation in Dubai: What a Proper Hardwired Install Involves |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Nissan Patrol dashcam installation in Dubai. Hardwired dual-channel setup with voltage cutoff relay at Patrol Garage. | Owner guide to a proper hardwired dashcam install on a Y63 Nissan Patrol in Dubai: dual-channel setup, voltage cutoff relay, ADAS-safe routing. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Y63 Dashcam Dubai | Y63 Dashcam Install Guide |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Patrol Garage installs dashcams on the Y63 Nissan Patrol with clean hardwiring, hidden cabling, and a voltage cutoff relay to protect the battery in Dubai's heat. | A proper dashcam install on the Y63 Nissan Patrol means clean hardwiring, hidden cabling, and a voltage cutoff relay to protect the battery in Dubai's heat. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We see this every week at the workshop: a Y63 owner brings in a dashcam they had fitted elsewhere, and the cable is routed | A rushed install is easy to spot: the cable is routed |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We pull the Y63 headliner trim carefully, identify a switched ignition fuse (not a constant-live slot), add an inline fuse, fit a voltage-sensing cutoff relay set to around 12.2 volts, and route the cable behind the A-pillar rubber seal. | A proper install pulls the Y63 headliner trim carefully, identifies a switched ignition fuse (not a constant-live slot), adds an inline fuse, fits a voltage-sensing cutoff relay set to around 12.2 volts, and routes the cable behind the A-pillar rubber seal. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | This is the first thing we tell Y63 owners who arrive with a unit they bought online. | Check the rating before you buy a unit online. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We use cards rated for automotive use, not standard consumer cards. | Use cards rated for automotive use, not standard consumer cards. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Hidden cable routing behind headliner and A-pillar on Y63: included in labour at Patrol Garage | Hidden cable routing behind the headliner and A-pillar on the Y63 |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | How do we actually install a dashcam on a Y63? | How is a dashcam properly installed on a Y63? |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | The process at Patrol Garage takes two to three hours on a Y63, done properly. | Done properly, the job takes two to three hours on a Y63. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | First, we position the front camera behind | First, the front camera is positioned behind |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We then pull the A-pillar trim on the driver's side, feed the cable behind the rubber door seal and along the headliner, and bring it to the fuse box. We select a switched ignition fuse slot (one that goes dead when the key is removed, or one that the voltage cutoff relay manages for parking mode). We fit an inline blade fuse rated to the camera's draw, add the relay, and test the circuit with a multimeter before closing anything up. | The installer then pulls the A-pillar trim on the driver's side, feeds the cable behind the rubber door seal and along the headliner, and brings it to the fuse box. The cable goes to a switched ignition fuse slot (one that goes dead when the key is removed, or one that the voltage cutoff relay manages for parking mode). An inline blade fuse rated to the camera's draw and the relay are added, and the circuit is tested with a multimeter before anything is closed up. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Technically possible. Not something we would recommend on a Y63. | Technically possible, but risky on a Y63. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We can usually fit a dashcam installation into a scheduled service slot without adding a separate booking. | *(deleted)* |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | If you have had a dashcam fitted elsewhere and are not confident in how it was installed, bring it in for a check. We have seen units wired directly to the battery positive with no fuse and no relay, which is a fire risk, not just a battery drain risk. | If you have had a dashcam fitted and are not confident in how it was installed, have the wiring checked. A unit wired directly to the battery positive with no fuse and no relay is a fire risk, not just a battery drain risk. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | A professionally installed dashcam, hardwired to a switched fuse slot with an inline fuse and voltage cutoff relay, does not void the Nissan warranty. The risk is if the installation causes an electrical fault or damages a factory component. | Check the warranty terms with the dealer before any electrical work. The main risk is an installation that causes an electrical fault or damages a factory component. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | We stock units we have tested specifically in Dubai summer conditions and can advise on what suits your usage. | *(deleted)* |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | When to bring it to Patrol Garage | Before you book an install |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | If you have a new Y63 and want a dashcam installed properly, with clean routing, no exposed cabling, no risk to the factory ADAS system, and a voltage cutoff that protects your battery in parking mode, book it with us.Same if you have a dashcam already fitted and want someone to check the wiring before the summer peak hits. The installation takes two to three hours and we can often fit it alongside another service appointment. Here is what | Whoever fits it, ask for clean routing, no exposed cabling, no contact with the factory ADAS wiring, and a voltage cutoff that protects the battery in parking mode. If a dashcam is already fitted, have the wiring checked before the summer peak. For a Y62, here is what |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | we'll quote your Y63 job fast. | we'll quote your Y62 job fast. |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | reframe | Get your exact Y63 quote | Get your exact Y62 quote |
+| every page with the early CTA | template | Want the number for your own Y62, not a range? | Want a quote for your own Y62? |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | When to bring it to Patrol Garage | Before you book a snorkel fitting |
+| `blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | reframe | Here is what we do to a Y62, job by job. | If you also run a Y62, here is what we do to a Y62, job by job. |
+| `blog/y62-engine-mount-replacement-cost-dubai-2026.html` | redirect | related link: Y63 Service Dubai vs Abu Dhabi; Y62 Spark Plug Cost | Y62 Specialist Abu Dhabi vs Dubai; Patrol Major Service |
+| `blog/nissan-patrol-black-smoke.html` | redirect | related link: Y62 Spark Plug Cost | Patrol Major Service |
+
+## R3.4 Still open
+
+- **The Y61 vs Y62 engine paragraph** also claimed the Y62 is "more efficient" and that its "fuel consumption is better". Both followed from the invented diesel, and both contradict the fuel-consumption post, so they were removed along with it.
+- **Unverified figures that no guard covers yet (not changed):** "2.7 tonnes" / "2,700 kg", the Y61's "4.8L" and "3.0L" displacements, "5W-30" grades on the best-oil post, and "10,000 km or 6 months" (service-cost).
+- **The turbo-upgrade post** still describes performance modifications, and per earlier notes the business no longer offers those. The power figures are gone; whether the post stays is a separate decision.

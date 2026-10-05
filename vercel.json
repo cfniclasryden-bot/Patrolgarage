@@ -57,12 +57,12 @@
     },
     {
       "source": "/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai.html",
-      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
       "statusCode": 301
     },
     {
       "source": "/blog/nissan-patrol-y63-specialist-workshop-sharjah-vs-dubai",
-      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
       "statusCode": 301
     },
     {
@@ -73,6 +73,26 @@
     {
       "source": "/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026",
       "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
+      "destination": "/blog/nissan-patrol-major-service.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent",
+      "destination": "/blog/nissan-patrol-major-service.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html",
       "statusCode": 301
     },
     {
@@ -88,6 +108,11 @@
     {
       "source": "/contact",
       "destination": "/contact.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/nissan-patrol-abu-dhabi",
+      "destination": "/nissan-patrol-abu-dhabi.html",
       "statusCode": 301
     },
     {
@@ -126,8 +151,28 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-4wd-not-engaging",
+      "destination": "/blog/nissan-patrol-4wd-not-engaging.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-ac-problems-dubai",
       "destination": "/blog/nissan-patrol-ac-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-best-year-to-buy",
+      "destination": "/blog/nissan-patrol-best-year-to-buy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-black-smoke",
+      "destination": "/blog/nissan-patrol-black-smoke.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-diesel-vs-petrol",
+      "destination": "/blog/nissan-patrol-diesel-vs-petrol.html",
       "statusCode": 301
     },
     {
@@ -136,8 +181,28 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-engine-overheating",
+      "destination": "/blog/nissan-patrol-engine-overheating.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-engine-problems",
+      "destination": "/blog/nissan-patrol-engine-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-fuel-consumption",
+      "destination": "/blog/nissan-patrol-fuel-consumption.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-high-mileage",
       "destination": "/blog/nissan-patrol-high-mileage.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-major-service",
+      "destination": "/blog/nissan-patrol-major-service.html",
       "statusCode": 301
     },
     {
@@ -146,8 +211,18 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-not-starting",
+      "destination": "/blog/nissan-patrol-not-starting.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-off-road-uae",
       "destination": "/blog/nissan-patrol-off-road-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-oil-leak",
+      "destination": "/blog/nissan-patrol-oil-leak.html",
       "statusCode": 301
     },
     {
@@ -176,6 +251,16 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-shaking-at-high-speed",
+      "destination": "/blog/nissan-patrol-shaking-at-high-speed.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-steering-problems",
+      "destination": "/blog/nissan-patrol-steering-problems.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-suspension-dubai",
       "destination": "/blog/nissan-patrol-suspension-dubai.html",
       "statusCode": 301
@@ -183,6 +268,16 @@
     {
       "source": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed",
       "destination": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-vibration-when-driving",
+      "destination": "/blog/nissan-patrol-vibration-when-driving.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-warning-lights-meaning",
+      "destination": "/blog/nissan-patrol-warning-lights-meaning.html",
       "statusCode": 301
     },
     {
@@ -321,11 +416,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent",
-      "destination": "/blog/y62-spark-plug-replacement-cost-al-futtaim-vs-independent.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026",
       "destination": "/blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html",
       "statusCode": 301
@@ -338,11 +428,6 @@
     {
       "source": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026",
       "destination": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026",
-      "destination": "/blog/y63-independent-service-centre-abu-dhabi-vs-dubai-2026.html",
       "statusCode": 301
     }
   ],

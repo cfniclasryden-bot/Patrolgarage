@@ -18,8 +18,22 @@ page after page, none of which any guard was looking for:
                "refresh" is the same invention as the 2016 facelift that
                check_model_years already blocks, in a word it did not know.
 
+Round 3 (also 2026-10-05) added four unverified-figure rules:
+
+  HORSEPOWER   any power figure ("400 hp", "450-500hp", "210 horsepower").
+               None was ever sourced, and "400 hp" was repeated on 19 pages.
+  TORQUE       any torque figure in Nm ("560 Nm", "18 to 20 Nm").
+  Y63_DETAIL   a Y63 launch year (2024 or earlier) or a Y63 spec: a
+               displacement, the VR3x engine code, "9-speed". The Y63 is
+               described as a twin-turbo V6 and nothing more.
+  GRADE_0W20   "0W-20", unless the sentence carries an approved check_claims
+               ACCEPTED wording (the Armada-manual sentence).
+
 Kept in one module, identical in topchallenger-site and Patrolgarage, so the
-two sites cannot drift. test_copy_rules.py holds every rule against sentences
+two sites cannot drift. A rule can be switched off for ONE site in that
+repo's copy_rules_site.py (DISABLED = {...}); topchallenger disables
+GRADE_0W20, because its oil-grade post states grades as the workshop's own
+recommendation, which is that site's call and not an unverified figure. test_copy_rules.py holds every rule against sentences
 that must fire and sentences that must not.
 
 Sentence-level and deliberately narrow. TENURE and Y61_SERVICE need a
@@ -68,6 +82,31 @@ TENURE_FIRST_PERSON = re.compile(
     r"cars|vehicles|customers|trucks|owners|transmissions|engines|jobs|"
     r"gearboxes|overheated Patrols)\b", re.I)
 
+HORSEPOWER = re.compile(r"\b\d{2,3}(?:,\d{3})?\s?-?(?:hp|bhp|horsepower|PS)\b", re.I)
+TORQUE = re.compile(r"\b\d+(?:\.\d+)?(?:\s*(?:to|-|–)\s*\d+(?:\.\d+)?)?\s?Nm\b")
+Y63_WORD = re.compile(r"\bY63\b", re.I)
+Y63_YEAR = re.compile(
+    r"\bY63\b[^.!?]{0,80}?\b(?:launch\w*|introduc\w*|arriv\w*|releas\w*|debut\w*|"
+    r"unveil\w*|landed|since|from|in|\()\s*(?:the UAE |UAE showrooms |showrooms |the GCC |"
+    r"late |early )?(?:in )?(?:20(?:0\d|1\d|2[0-4]))\b"
+    r"|\b20(?:0\d|1\d|2[0-4])\b[^.!?]{0,20}\bY63\b", re.I)
+Y63_SPEC = re.compile(r"(?<![\d.])(?!5\.6)\d\.\d\s?-?(?:L|litre|liter)\b|\bVR3\d\w*|\b9-speed\b", re.I)
+GRADE_0W20 = re.compile(r"\b0W-?20\b", re.I)
+
+try:                                   # per-site switches; see the docstring
+    from copy_rules_site import DISABLED
+except ImportError:
+    DISABLED = set()
+
+
+def _accepted_fragments():
+    try:
+        import check_claims
+        return tuple(check_claims.ACCEPTED)
+    except Exception:
+        return ()
+
+
 MAX_SENTENCE = 300   # longer "sentences" are navigation and footer run together
 
 
@@ -87,6 +126,17 @@ def sentence_findings(sent):
     m = PRICE.search(sent)
     if m:
         out.append(("PRICE", m.group(0)))
+    for rule, rx in (("HORSEPOWER", HORSEPOWER), ("TORQUE", TORQUE)):
+        m = rx.search(sent)
+        if m:
+            out.append((rule, m.group(0)))
+    if Y63_WORD.search(sent):
+        m = Y63_YEAR.search(sent) or Y63_SPEC.search(sent)
+        if m:
+            out.append(("Y63_DETAIL", m.group(0)))
+    m = GRADE_0W20.search(sent)
+    if m and not any(a in sent for a in _accepted_fragments()):
+        out.append(("GRADE_0W20", m.group(0)))
     if len(sent) <= MAX_SENTENCE:
         if (Y61.search(sent) and FIRST_PERSON.search(sent) and SERVICE.search(sent)
                 and not NEGATION.search(sent)):
@@ -96,7 +146,7 @@ def sentence_findings(sent):
             m = TENURE_FIRST_PERSON.search(sent)
         if m:
             out.append(("TENURE", m.group(0)))
-    return out
+    return [f for f in out if f[0] not in DISABLED]
 
 
 def scopes(raw):
