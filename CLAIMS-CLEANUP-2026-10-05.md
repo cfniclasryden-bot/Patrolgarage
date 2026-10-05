@@ -1748,3 +1748,74 @@ The keyword generator dedupes against every status, so neither keyword can be re
 ## R4.5 Turbo-upgrade post: traffic only, not changed
 
 `/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html`, 90 days 2026-07-05 to 2026-10-02: **12 clicks, 199 impressions**, average position 7.8. That is above the Round 3 keep threshold on both counts. Its largest visible query is "nissan patrol y62 stereo upgrade in dubai" (0 clicks, 28 impressions, position 13.9). GSC withholds the queries behind most of the clicks. The post still describes performance modifications, which the business no longer offers. Keep, reframe or redirect is the owner's decision.
+
+---
+
+# Round 5 (2026-10-05, same day): no modifications or upgrades; remaining fluid figures
+
+**Pages changed:** 17 HTML pages edited, 3 posts removed and redirected, plus `_redirects`, `vercel.json`, `sitemap.xml`, `llms.txt`, the blog listing and 5 scripts. **Guards:** all five pass on all 67 patrolgarage pages and all 43 topchallenger pages.
+
+## R5.1 Modification posts: 90-day GSC, 2026-07-05 to 2026-10-02
+
+Rule as before: a post whose main topic is a modification is kept and reframed as owner information if it has 3+ clicks or 100+ impressions, otherwise removed with a 301.
+
+| Post | Clicks | Impressions | Decision |
+|---|---|---|---|
+| `/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html` | 12 | 199 | **Removed on your instruction** (above the threshold, but the whole post is a turbo-kit offer). 301 to `/blog/nissan-patrol-engine-problems.html`, the engine diagnostics post that covers power loss |
+| `/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html` | 2 | 35 | Below threshold: **301** to `/blog/nissan-patrol-engine-problems.html`. An intercooler only exists with an aftermarket turbo kit, so the turbo post's target is the closest match |
+| `/blog/nissan-patrol-suspension-dubai.html` | 1 | 21 | Below threshold: **301** to `/blog/nissan-patrol-y62-problems-dubai.html`, whose "Suspension Wear in Dubai Conditions" section is the closest repair content. The post was titled "Suspension Repair & Lift Kits" and promoted lift-kit installation |
+| `/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html` | 3 | 21 | Kept. A snorkel is an intake modification, but this post was already reframed as owner information with no offer in Round 3 |
+| `/blog/nissan-patrol-off-road-uae.html` | 6 | 318 | Not a mod post (main topic is off-road driving). Kept; its lift-kit and suspension advice is neutral owner information with no offer |
+
+For reference, the redirect targets: engine problems 8 clicks / 874 impressions; Y62 problems is the site's hub post.
+
+Each removed post: both URL forms 301 (hand block in `_redirects`, then `gen_vercel_json.py`; 86 rules, no chains). The sitemap entry and `llms.txt` line are removed. The blog listing has been rebuilt (55 posts). Related links on 7 posts are swapped to the target, and the Y62 problems post's own two links to the suspension post are removed (they would have pointed at itself). Hero images deleted. Supabase rows marked `retired` with the target in `editorial_notes`.
+
+## R5.2 The modification sweep
+
+Every shipped page on both sites was scanned for turbo, supercharger, intake, exhaust, tuning, remap, lift kits, suspension lifts, stereo or audio upgrades, body kits, NISMO kits, performance parts and intercooler upgrades.
+- **First-person offers** were all on the three removed posts, except one: the overheating post's "We help evaluate whether upgrades make financial sense" (cooling upgrades). It now reads as neutral owner information.
+- **Neutral mentions kept**, for example: "after a lift kit has been fitted by a third party, altered driveshaft angles accelerate CV wear", "Professionally installed lift kits ... improve capability" (Y61 guide, owner info), "Nismo variants run slightly hotter due to performance tuning", the snorkel post's high-flow filter note, and topchallenger's HBMC post ("particularly when fitting a lift kit").
+- **Generators:**
+  - `keyword_generator.py` no longer cites "nissan patrol tuning dubai" as a model query. A new Gate 0 rejects any modification topic before the DataForSEO lookup, so a rejected idea costs nothing. It was checked against "tuning", "turbo kit", "stereo upgrade" and "lift kit" (all rejected) and "losing power" and "performance loss" (both pass).
+  - `cta_lib.py` dropped "turbo" from its quote components, so no post can get "Get your exact turbo quote".
+  - `generate.py` already lists lift kits, turbo kits, ECU tuning and exhaust work as NOT OFFERED.
+
+## R5.3 Guards (shared `copy_rules.py`, both repos)
+
+| Rule | Catches | topchallenger |
+|---|---|---|
+| MOD_OFFER (new) | a modification term + a first-person business subject or booking/quote wording, not negated | on |
+| OIL_GRADE (replaces GRADE_0W20, GRADE_5W30) | any engine or gear oil grade: 0W-20, 5W-30, 5W-40, 10W-40, 20W-50, 75W-140; approved sentences exempt | off |
+| INTERVAL_KM_MONTHS (replaces INTERVAL_10K_6M) | any "N km or N months" interval; approved sentences exempt | **off**: its oil post gives "5,000 km or every three months" as the workshop's own interval |
+
+`test_copy_rules.py`: 35 must-fire (including 5 real modification offers), 25 must-not-fire (including neutral lift-kit and warranty mentions, "We do not fit lift kits", "twin-turbo V6"), plus per-site cases for both fluid rules.
+
+**Found beyond the list you gave:** a gear-oil grade, "75W-140", three times on the rear-differential post. The first version of OIL_GRADE allowed only two digits after the W and missed it. It was widened and the grade removed.
+
+## R5.4 Every edit, before and after
+
+| Page | Kind | Before | After |
+|---|---|---|---|
+| `blog/best-oil-nissan-patrol-uae-heat.html` | oil-grade | while Y61 Super Safari models can also use 10W-40 depending on mileage and condition. | while Y61 Super Safari models can also run a slightly thicker oil depending on mileage and condition. |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | oil-grade | slightly thicker 10W-40 oil can help maintain oil pressure | slightly thicker oil can help maintain oil pressure |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | oil-grade | Similarly, 20W-50 "racing" oils are unnecessarily thick | Similarly, heavy "racing" oils are unnecessarily thick |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | oil-grade | Can I use 20W-50 oil in my Patrol for extra protection? | Can I use a much thicker oil in my Patrol for extra protection? |
+| `blog/best-oil-nissan-patrol-uae-heat.html` | oil-grade | Thick 20W-50 oil isn't recommended for modern Patrols | A much thicker oil isn't recommended for modern Patrols |
+| `blog/nissan-patrol-engine-problems.html` | oil-grade | The TB48DE takes a full synthetic, or 10W-40 for high-mileage examples. | The TB48DE takes a full synthetic, or a slightly thicker oil for high-mileage examples. |
+| `blog/nissan-patrol-service-dubai-complete-guide.html` | oil-grade | engines take a full synthetic, or 10W-40 depending on mileage and condition. | engines take a full synthetic, or a slightly thicker oil depending on mileage and condition. |
+| `blog/nissan-patrol-service-every-how-many-km-dubai.html` | interval | Change oil every 5,000km or 3 months in Dubai conditions, using | Change oil more often in Dubai conditions, using |
+| `blog/nissan-patrol-y61-dubai-complete-guide.html` | interval | Oil change intervals should be shortened—every 5,000km or 3 months maximum, using | Oil change intervals should be shortened, using |
+| `blog/nissan-patrol-y61-dubai-complete-guide.html` | interval | Every 5,000km or 3 months maximum for basic service including oil change and inspections. | Basic service, including an oil change and inspection, comes round more often than in a temperate climate. |
+| `blog/nissan-patrol-engine-problems.html` | redirect-link | Suspension Work | Y62 Problems Guide |
+| `blog/nissan-patrol-high-mileage.html` | redirect-link | Y62 Turbo Upgrade Costs | Patrol Engine Problems |
+| `blog/nissan-patrol-off-road-uae.html` | redirect-link | Suspension Work | Y62 Problems Guide |
+| `blog/nissan-patrol-steering-problems.html` | redirect-link | Y62 Intercooler Upgrade Cost | Patrol Engine Problems |
+| `blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html` | redirect-link | Y62 Turbo Upgrade Costs | Patrol Engine Problems |
+| `blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html` | redirect-link | Y62 Turbo Upgrade Costs | Patrol Engine Problems |
+| `blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html` | redirect-link | Y62 Turbo Upgrade Costs | Patrol Engine Problems |
+| `blog/nissan-patrol-y62-problems-dubai.html` | redirect-link | → Patrol suspension repairs and costs in Dubai — what to expect | *(deleted)* |
+| `blog/nissan-patrol-y62-problems-dubai.html` | redirect-link | Patrol Suspension Repairs in Dubai — What to Expect | *(deleted)* |
+| `blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html` | oil-grade (gear oil) | Using a GL-5 rated 75W-140 gear oil is appropriate for most Y62 applications in the UAE. | *(deleted)* |
+| `blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html` | oil-grade (gear oil) | use a high-quality GL-5 gear oil with the correct viscosity for UAE temperatures (typically 75W-140 for high-load or off-road use). | use a high-quality GL-5 gear oil with the correct viscosity for UAE temperatures. |
+| `blog/nissan-patrol-overheating-dubai-summer-fix.html` | upgrade offer (cooling) | We help evaluate whether upgrades make financial sense based on your specific requirements and vehicle condition. | Whether a heavier-duty cooling part makes financial sense depends on how the car is used and its condition. |

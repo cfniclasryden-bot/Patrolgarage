@@ -57,12 +57,21 @@ MUST_FIRE = [
     ("Y63_DETAIL", "The Y63 only arrived in UAE showrooms in 2024, so used examples are rare."),
     ("Y63_DETAIL", "The Y63 uses a 3.5L twin-turbo V6 with a 9-speed automatic."),
     # Round 4
-    ("INTERVAL_10K_6M", "The most common service interval for a Patrol is every 10,000 km or 6 months."),
-    ("INTERVAL_10K_6M", "Nissan Patrol models in Dubai require service every 10,000km or 6 months under normal conditions."),
+    # Round 5: modification offers
+    ("MOD_OFFER", "We can advise on the right intercooler specification for your existing turbo kit and quote the job in full."),
+    ("MOD_OFFER", "We fit lift kits and suspension lifts for serious dune work."),
+    ("MOD_OFFER", "Book your ECU remap with Patrol Garage."),
+    ("MOD_OFFER", "Get a quote for a stereo upgrade on your Y62."),
+    ("MOD_OFFER", "Top Challenger installs performance exhausts and body kits."),
 ]
 SITE_RULE_CASES = [
-    ("GRADE_0W20", "Nissan Patrol Y62 models require full synthetic 5W-30 or 0W-20 oil."),
-    ("GRADE_5W30", "Y62 Patrols perform best with 5W-30 full synthetic."),
+    ("OIL_GRADE", "Nissan Patrol Y62 models require full synthetic 5W-30 or 0W-20 oil."),
+    ("OIL_GRADE", "Thick 20W-50 oil isn't recommended for modern Patrols."),
+    ("OIL_GRADE", "Older engines can use a slightly thicker 10W-40."),
+    ("OIL_GRADE", "Use a GL-5 rated 75W-140 gear oil for most Y62 applications."),
+    ("INTERVAL_KM_MONTHS", "The most common service interval for a Patrol is every 10,000 km or 6 months."),
+    ("INTERVAL_KM_MONTHS", "Nissan Patrol models in Dubai require service every 10,000km or 6 months under normal conditions."),
+    ("INTERVAL_KM_MONTHS", "Change oil every 5,000km or 3 months in Dubai conditions."),
 ]
 
 MUST_NOT_FIRE = [
@@ -84,8 +93,13 @@ MUST_NOT_FIRE = [
     "The VK56VD 5.6L V8 is strong, but it is thirsty and heat-sensitive.",
     "Nissan's North American owner's manual for the Armada, which uses the same VK56VD, recommends 0W-20, so the grade is not wrong for the engine.",
     "The owner's manual sets a 10,000 km or 12 month service interval.",
-    "Change oil every 5,000km or 3 months in Dubai conditions.",
     "You will often see a 10,000km interval quoted as the standard for Patrol models.",
+    "After a lift kit has been fitted by a third party, altered driveshaft angles accelerate CV wear.",
+    "Aftermarket parts can affect the warranty.",
+    "A conversion to a conventional shock setup is possible, particularly when fitting a lift kit.",
+    "The Y63 uses a twin-turbo V6.",
+    "We do not fit lift kits or turbo kits.",
+    "Nismo variants run slightly hotter due to performance tuning.",
 ]
 
 

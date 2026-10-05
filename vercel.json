@@ -96,6 +96,36 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
+      "destination": "/blog/nissan-patrol-engine-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost",
+      "destination": "/blog/nissan-patrol-engine-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
+      "destination": "/blog/nissan-patrol-engine-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent",
+      "destination": "/blog/nissan-patrol-engine-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-suspension-dubai.html",
+      "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-suspension-dubai",
+      "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
       "source": "/docs/:path*",
       "destination": "/",
       "statusCode": 404
@@ -261,11 +291,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-suspension-dubai",
-      "destination": "/blog/nissan-patrol-suspension-dubai.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed",
       "destination": "/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html",
       "statusCode": 301
@@ -366,11 +391,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost",
-      "destination": "/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison",
       "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
       "statusCode": 301
@@ -403,11 +423,6 @@
     {
       "source": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026",
       "destination": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent",
-      "destination": "/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html",
       "statusCode": 301
     },
     {

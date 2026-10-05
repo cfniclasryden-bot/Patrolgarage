@@ -36,12 +36,29 @@ Round 4 (2026-10-05) added two more, the same shape:
   INTERVAL_10K_6M  "10,000 km or 6 months". The interval the owner's manual
                actually sets (verified on topchallenger) is 10,000 km or 12
                months, so "6 months" was a wrong figure, not just an unsourced
-               one. Other "km or months" pairs are not covered.
+               one.
+
+Round 5 (2026-10-05) generalised the last two and added an offer rule:
+
+  OIL_GRADE    ANY oil grade (0W-20, 5W-30, 5W-40, 10W-40, 20W-50...), with the
+               ACCEPTED exemption. Replaces GRADE_0W20 and GRADE_5W30.
+  INTERVAL_KM_MONTHS  any "N km or N months" service interval ("5,000 km or
+               3 months", "10,000 km or 6 months"), ACCEPTED exempt. Replaces
+               INTERVAL_10K_6M.
+  MOD_OFFER    a modification or upgrade (turbo kit, supercharger, performance
+               intake or exhaust, ECU tuning or remap, lift kit, suspension
+               lift, stereo or audio upgrade, body kit, NISMO kit, performance
+               parts, intercooler upgrade) presented as a service: the term plus
+               a first-person business subject or booking / quote wording, in
+               one sentence, not negated. Neither business does modifications.
+               Neutral owner information ("after a lift kit has been fitted by a
+               third party...", "aftermarket parts can affect the warranty")
+               passes, because it offers nothing.
 
 Kept in one module, identical in topchallenger-site and Patrolgarage, so the
 two sites cannot drift. A rule can be switched off for ONE site in that
 repo's copy_rules_site.py (DISABLED = {...}); topchallenger disables
-GRADE_0W20 and GRADE_5W30, because its oil-grade post states grades as the workshop's own
+OIL_GRADE, because its oil-grade post states grades as the workshop's own
 recommendation, which is that site's call and not an unverified figure. test_copy_rules.py holds every rule against sentences
 that must fire and sentences that must not.
 
@@ -100,10 +117,26 @@ Y63_YEAR = re.compile(
     r"late |early )?(?:in )?(?:20(?:0\d|1\d|2[0-4]))\b"
     r"|\b20(?:0\d|1\d|2[0-4])\b[^.!?]{0,20}\bY63\b", re.I)
 Y63_SPEC = re.compile(r"(?<![\d.])(?!5\.6)\d\.\d\s?-?(?:L|litre|liter)\b|\bVR3\d\w*|\b9-speed\b", re.I)
-GRADE_0W20 = re.compile(r"\b0W-?20\b", re.I)
-GRADE_5W30 = re.compile(r"\b5W-?30\b", re.I)
-INTERVAL_10K_6M = re.compile(
-    r"\b10,?000\s?(?:km|kilomet\w+)\s+or\s+(?:every\s+)?(?:6|six)[\s-]*months?\b", re.I)
+OIL_GRADE = re.compile(r"\b\d{1,2}W-?\d{2,3}\b", re.I)   # engine AND gear oil (75W-140)
+INTERVAL_KM_MONTHS = re.compile(
+    r"\b\d{1,3}(?:,\d{3})?\s?(?:km|kilomet\w+)\s+or\s+(?:every\s+)?"
+    r"(?:\d+|one|two|three|four|six|twelve)[\s-]*months?\b", re.I)
+MOD_TERM = re.compile(
+    r"\b(?:turbo(?:charger)?\s+(?:kits?|upgrades?|conversions?|install\w*|setups?|builds?)"
+    r"|(?:twin|single)[- ]turbo\s+(?:kits?|upgrades?|conversions?|setups?|builds?)"
+    r"|supercharg\w*"
+    r"|(?:cold[- ]air|performance|aftermarket)\s+intakes?|intake\s+upgrades?"
+    r"|(?:performance|aftermarket|sports?|cat[- ]back|straight[- ]through)\s+exhausts?"
+    r"|exhaust\s+(?:upgrades?|mods?|modifications?)"
+    r"|ECU\s+(?:tun\w*|remap\w*|flash\w*)|remap\w*|(?:performance|dyno|engine|ECU)\s+tuning|tuning\s+(?:packages?|services?|work)"
+    r"|lift\s+kits?|suspension\s+lifts?|body\s+lifts?"
+    r"|(?:stereo|audio|sound system|speaker|head unit)\s+(?:upgrades?|install\w*|fit\w*)"
+    r"|body\s+kits?|nismo\s+kits?"
+    r"|performance\s+(?:parts|upgrades?|mods?|modifications?)"
+    r"|intercooler\s+(?:upgrades?|kits?|install\w*))\b", re.I)
+OFFER = re.compile(
+    r"\b(?:book\w*|get (?:a|your|an) (?:exact |free )?quote|quote (?:you|the job|it)|"
+    r"we (?:fit|install|supply|offer|do|can|will|carry|stock))\b", re.I)
 
 try:                                   # per-site switches; see the docstring
     from copy_rules_site import DISABLED
@@ -146,8 +179,7 @@ def sentence_findings(sent):
         m = Y63_YEAR.search(sent) or Y63_SPEC.search(sent)
         if m:
             out.append(("Y63_DETAIL", m.group(0)))
-    for rule, rx in (("GRADE_0W20", GRADE_0W20), ("GRADE_5W30", GRADE_5W30),
-                     ("INTERVAL_10K_6M", INTERVAL_10K_6M)):
+    for rule, rx in (("OIL_GRADE", OIL_GRADE), ("INTERVAL_KM_MONTHS", INTERVAL_KM_MONTHS)):
         m = rx.search(sent)
         if m and not any(a in sent for a in _accepted_fragments()):
             out.append((rule, m.group(0)))
@@ -160,6 +192,9 @@ def sentence_findings(sent):
             m = TENURE_FIRST_PERSON.search(sent)
         if m:
             out.append(("TENURE", m.group(0)))
+        m = MOD_TERM.search(sent)
+        if m and (FIRST_PERSON.search(sent) or OFFER.search(sent)) and not NEGATION.search(sent):
+            out.append(("MOD_OFFER", m.group(0)))
     return [f for f in out if f[0] not in DISABLED]
 
 

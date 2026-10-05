@@ -141,7 +141,7 @@ CONTEXT:
 WHAT ACTUALLY EARNS ON THIS SITE (measured in Google Search Console, 90 days):
 Every query that has ever produced a click is commercial-intent or
 cost/problem-shaped — "nissan patrol garage" (8.8% CTR), "patrol garage"
-(5.9%), "nissan patrol specialist" (7.1%), "nissan patrol tuning dubai",
+(5.9%), "nissan patrol specialist" (7.1%),
 plus service-cost and common-problems queries. Propose keywords of THAT shape.
 
 WHAT FAILED, AND WHY YOU MUST NOT REPEAT IT:
@@ -291,6 +291,28 @@ def main():
               f"Queue not grown.")
         return 1
     unique_new = survivors
+
+    # Gate 0 (2026-10-05): no modification or upgrade topics, ever. Neither this
+    # site nor its partner does turbo kits, tuning, lift kits, stereo upgrades,
+    # body kits or performance parts, and a post about one is an offer the
+    # business cannot fulfil. Checked BEFORE the DataForSEO lookups so a
+    # rejected idea costs nothing. Same pattern as the publish guard
+    # (copy_rules.MOD_TERM), plus the bare words a keyword uses.
+    import copy_rules
+    _mod_kw = re.compile(r"\b(?:turbo|supercharg\w*|intercooler|tun(?:e|ing)|remap\w*|"
+                         r"lift|stereo|audio|speaker|body kit|exhaust upgrade|"
+                         r"performance (?:parts|upgrade\w*|kits?|tun\w*|mods?)|"
+                         r"modif\w*|upgrade\w*)\b", re.I)
+    _kept = []
+    for kw in unique_new:
+        if copy_rules.MOD_TERM.search(kw) or _mod_kw.search(kw):
+            print(f"    [reject] {kw}  — modification/upgrade topic (Gate 0)")
+        else:
+            _kept.append(kw)
+    unique_new = _kept
+    if not unique_new:
+        print("[!] Every candidate was a modification topic. Queue not grown.")
+        return 0
 
     try:
         loc = verify_location_code()

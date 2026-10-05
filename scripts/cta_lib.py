@@ -18,7 +18,9 @@ GENERIC_QUOTE = "Hi, I'd like a quote for my Nissan Patrol"
 # Tokens kept uppercase when rebuilding a human-readable topic phrase.
 _ACR = {"y61", "y62", "y63", "v8", "v6", "ac", "gcc", "tb48", "cvt", "ecu", "uae", "aed", "suv"}
 # Components we can name explicitly in banner/CTA copy (first match wins).
-_COMPONENTS = ["transmission", "gearbox", "differential", "suspension", "turbo",
+# No "turbo": a turbo is a modification here (2026-10-05), and neither business
+# quotes for one. A turbo-titled post must never get "Get your exact turbo quote".
+_COMPONENTS = ["transmission", "gearbox", "differential", "suspension",
                "radiator", "clutch", "engine", "brake", "alternator", "overheating"]
 _LEADING_FILLER = {"common", "best", "top", "the", "your", "ultimate", "complete", "guide"}
 
