@@ -92,7 +92,7 @@ PAGES = [
         "title": "Nissan Patrol Service in Dubai | Major Service &amp; Maintenance",
         "desc": ("Nissan Patrol service in Dubai: what a major service actually covers on a "
                  "Y62, how often it is due in UAE heat, and what we check every time."),
-        "hero": hero("Periodic Service", "Ras Al Khor", "Nissan Patrol<br>Service.",
+        "hero": hero("Periodic Service", "Dubai", "Nissan Patrol<br>Service.",
                      "What a proper Patrol service covers, why the intervals are shorter here than the book says, and what we check every time one comes in."),
         "body": '''<section class="dark">
     <div class="container">
@@ -120,7 +120,7 @@ PAGES = [
       <div class="section-head" style="margin-top:4rem;">
         <div class="section-num">02 &mdash; Booking</div>
         <h2>Getting it<br>booked in.</h2>
-        <p>Send us the year, the mileage and roughly how the car is used, and we will tell you which service it is due for before you come in rather than after. We are in Ras Al Khor and we work on Nissan Patrols only, so the parts are on the shelf and the job does not wait on a dealer order. Full job list on the <a href="/services.html" style="text-decoration: underline; text-underline-offset: 3px;">service menu</a>. Abu Dhabi owners: the same servicing is covered on the <a href="/nissan-patrol-abu-dhabi.html" style="text-decoration: underline; text-underline-offset: 3px;">Nissan Patrol Y62 page for Abu Dhabi</a>.</p>
+        <p>Send us the year, the mileage and roughly how the car is used, and we will tell you which service it is due for before you come in rather than after. We work on Nissan Patrols only, so the parts are on the shelf and the job does not wait on a dealer order. Full job list on the <a href="/services.html" style="text-decoration: underline; text-underline-offset: 3px;">service menu</a>. Abu Dhabi owners: the same servicing is covered on the <a href="/nissan-patrol-abu-dhabi.html" style="text-decoration: underline; text-underline-offset: 3px;">Nissan Patrol Y62 page for Abu Dhabi</a>.</p>
       </div>
 
       <div class="service-cta">
@@ -218,7 +218,7 @@ PAGES = [
         <div class="section-num">02 &mdash; Where To Next</div>
         <h2>Reading on,<br>by topic.</h2>
         <p>If you are researching the car generally, the <a href="/blog/nissan-patrol-y62-dubai-complete-guide.html" style="text-decoration: underline; text-underline-offset: 3px;">Y62 owner's guide</a> covers generations, trims and what to check before buying. If something specific is happening to yours, the <a href="/blog/nissan-patrol-y62-problems-dubai.html" style="text-decoration: underline; text-underline-offset: 3px;">common Y62 problems</a> page is organised by symptom, and <a href="/blog/nissan-patrol-overheating-dubai-summer-fix.html" style="text-decoration: underline; text-underline-offset: 3px;">overheating in Dubai summer</a> covers the cooling side.</p>
-        <p>We are a Nissan Patrol workshop in Ras Al Khor, so if you do end up needing someone to look at a VK56VD, we are here. But this page exists to answer the question you searched for, not to sell you a rebuild. If nothing is wrong with your engine, nothing here is asking you to do anything about it.</p>
+        <p>We work on Nissan Patrols only, so if you do end up needing someone to look at a VK56VD, message us. But this page exists to answer the question you searched for, not to sell you a rebuild. If nothing is wrong with your engine, nothing here is asking you to do anything about it.</p>
       </div>
 
       <div class="service-cta">

@@ -72,11 +72,11 @@ PILLARS = {
 TEMPLATES = [
     'Here is what <a href="{url}">{anchor}</a> covers at the workshop.',
     'Here is <a href="{url}">what we do to a Y62</a>, job by job.',
-    'The rest of the work handled at <a href="{url}">our Y62 workshop in Ras Al Khor</a> is listed here.',
+    'The rest of the work handled at <a href="{url}">Patrol Garage</a> is listed here.',
 ]
 
 HOME_SENTENCE = (
-    ' <a href="{url}">Patrol Garage</a> is a Nissan Patrol specialist workshop in Ras Al Khor, Dubai.'
+    ' <a href="{url}">Patrol Garage</a> is a Nissan Patrol specialist serving Dubai.'
 )
 
 

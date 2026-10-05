@@ -31,11 +31,11 @@ for f in html_files:
     # Match the entire top-strip section
     new_strip = '''<div class="top-strip">
     <div class="top-strip-inner">
-      <span>RAS AL KHOR · DUBAI</span>
+      <span>DUBAI · UAE</span>
       <div class="top-strip-right">
         <span>SUN–THU 09:00–19:00</span>
         <span>SAT 09:00–14:00</span>
-        <span>FRI CLOSED</span>
+        <span>FRI OFF</span>
       </div>
     </div>
   </div>'''

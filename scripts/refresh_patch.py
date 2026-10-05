@@ -74,7 +74,7 @@ PROTECTED = {
     "related-reading": r'class="related-reading"',
 }
 
-PROMPT = """You are updating an existing published article for Patrol Garage, a Nissan Patrol specialist workshop in Ras Al Khor, Dubai.
+PROMPT = """You are updating an existing published article for Patrol Garage, a Nissan Patrol specialist service for owners in Dubai. Patrol Garage books the work and has no premises of its own: never write that it has a workshop, garage, facility or location anywhere, never give an address, district, opening hours or directions for it, and never say where it is based. "Bring it to us" and "message us" are fine.
 
 This article ALREADY RANKS. You are making a surgical update, not a rewrite.
 

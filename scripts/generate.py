@@ -64,7 +64,8 @@ range as an estimate and attribute it to the workshop, or leave the figure out:
 - Complete Y62 suspension overhaul as a single job: only the part price above is
   sourced; the all-in job range is not
 
-WORKSHOP AREAS: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
+INDEPENDENT WORKSHOP AREAS (market context only, NOT where Patrol Garage is):
+Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
 
 WHAT PATROL GARAGE DOES AND DOES NOT SELL — this overrides the keyword, the
 research notes, and anything the topic seems to invite.
@@ -156,7 +157,9 @@ AUTHORITATIVE_LINKS = [
     "https://u.ae/en/information-and-services/justice-safety-and-the-law/consumer-protection",
 ]
 
-PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a Nissan Patrol specialist workshop in Dubai (Ras Al Khor). Target audience: Patrol owners in the UAE searching for help.
+PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a Nissan Patrol specialist service for owners in Dubai. Target audience: Patrol owners in the UAE searching for help.
+
+NO PREMISES — HARD RULE: Patrol Garage books the work and has no premises of its own: never write that it has a workshop, garage, facility or location anywhere, never give an address, district, opening hours or directions for it, and never say where it is based. "Bring it to us" and "message us" are fine.
 
 TARGET KEYWORD: {keyword}
 

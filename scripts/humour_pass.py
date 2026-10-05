@@ -33,7 +33,7 @@ def log(msg):
 
 
 PROMPT = """You are adding humour to a finished blog post for Patrol Garage, a Nissan Patrol \
-specialist workshop in Ras Al Khor, Dubai. The readers are Patrol owners in the UAE, often \
+specialist service for owners in Dubai. The readers are Patrol owners in the UAE, often \
 reading because something on their truck is broken and they are worried about the bill.
 
 The post is already written. You are NOT rewriting it. You are inserting a few small humour \

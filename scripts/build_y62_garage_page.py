@@ -30,7 +30,7 @@ OUT = ROOT / "y62-garage-dubai.html"
 URL = "https://patrolgarage.ae/y62-garage-dubai.html"
 TITLE = "Y62 Garage Dubai | Nissan Patrol Y62 Specialist Workshop"
 # Measured at 14px Arial: must stay under ~920px or Google truncates the tail.
-DESC = ("A Y62-only garage in Ras Al Khor, Dubai. VK56VD engines, JR710E "
+DESC = ("Y62-only Nissan Patrol service in Dubai. VK56VD engines, JR710E "
         "gearboxes, HBMC suspension — from mechanics who work on one car.")
 OG_DESC = ("A Dubai workshop built around the Nissan Patrol Y62 — engine, "
            "gearbox, suspension and heat-related faults.")
@@ -47,7 +47,7 @@ HERO = '''<section class="hero">
         <span class="hero-meta-line"></span>
         <span>Y62 Only</span>
         <span>&middot;</span>
-        <span>Ras Al Khor</span>
+        <span>Dubai</span>
       </div>
       <h1>The Y62<br>Garage.</h1>
       <p class="hero-lede">
@@ -85,9 +85,9 @@ BODY = '''<section class="dark">
       </div>
 
       <div class="section-head" style="margin-top:4rem;">
-        <div class="section-num">02 &mdash; Where We Are</div>
-        <h2>Ras Al Khor,<br>Dubai.</h2>
-        <p>We are an independent workshop in Ras Al Khor, working on Nissan Patrols across Dubai, Sharjah and the Northern Emirates. We do not quote a Y62 job from a price list &mdash; we look at the car first, tell you what it actually needs, and price that. Send us the symptom and the year on WhatsApp and you will get a straight answer about whether it is worth bringing in.</p>
+        <div class="section-num">02 &mdash; Coverage</div>
+        <h2>Across<br>Dubai.</h2>
+        <p>We work on Nissan Patrols for owners across Dubai, Sharjah and the Northern Emirates. We do not quote a Y62 job from a price list &mdash; we look at the car first, tell you what it actually needs, and price that. Send us the symptom and the year on WhatsApp and you will get a straight answer about whether it is worth bringing in.</p>
       </div>
 
       <div class="service-cta">
@@ -128,7 +128,7 @@ def build():
                   f'<meta name="description" content="{DESC}">', html, count=1)
     html = re.sub(r'<meta name="keywords" content=".*?">',
                   '<meta name="keywords" content="Y62 garage, Y62 garage Dubai, Nissan Patrol Y62 specialist, '
-                  'Y62 workshop Dubai, Patrol Y62 mechanic Ras Al Khor">', html, count=1)
+                  'Y62 workshop Dubai">', html, count=1)
     html = re.sub(r'<link rel="canonical" href=".*?">',
                   f'<link rel="canonical" href="{URL}">', html, count=1)
     html = re.sub(r'<meta property="og:title" content=".*?">',

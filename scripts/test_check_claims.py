@@ -5,10 +5,10 @@ Ported from topchallenger-site on 2026-10-05 with the guard. The MUST_FIRE and
 MUST_NOT_FIRE cases are that site's history, kept verbatim: it is the same
 vehicle and the same guard, so they hold the same contract here.
 
-ONE DIFFERENCE: on topchallenger every published page passing is an invariant.
-Here it cannot be yet. This site had no gate until 2026-10-05 and 26 of its 72
-pages carry findings, so the live scan below REPORTS the count instead of
-failing on it. Once those pages are corrected, make it fail again.
+Every published page passing is an invariant here too, since 2026-10-05: the
+26 pages that carried findings when the gate was ported were corrected the same
+day (see CLAIMS-CLEANUP-2026-10-05.md). If this fails, something was deployed
+around the pipeline.
 
     python3 scripts/test_check_claims.py
 
@@ -242,9 +242,11 @@ def main():
                          SITE / "nissan-patrol-abu-dhabi.html") if p.exists()]
     dirty = [(f, check_claims.review_items(f)) for f in live]
     dirty = [(f, i) for f, i in dirty if i]
-    # REPORTED, not failed: see the docstring.
-    print(f"  report   {len(dirty)} of {len(live)} published page(s) carry findings "
-          f"({sum(len(i) for _, i in dirty)} in all); pre-gate content, not a regression")
+    if dirty:
+        for f, items in dirty:
+            failures.append(f"LIVE   — {f.relative_to(SITE)} carries {len(items)} finding(s)")
+    else:
+        print(f"  quiet    all {len(live)} published page(s)")
 
     print()
     if failures:
