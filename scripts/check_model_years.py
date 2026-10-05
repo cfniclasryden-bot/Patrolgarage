@@ -63,6 +63,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shipped_pages
+import copy_rules
 
 SITE = Path(__file__).parent.parent
 
@@ -81,6 +82,10 @@ TRIGGERS = [
      re.compile(r"\b(?:earlier|later|newer|older)\s+cars\b", re.I)),
     ("model-year claim",
      re.compile(r"\b(?:from|since|until|before|after)\s+(20\d\d)\b", re.I)),
+    # 2026-10-05: "refreshed in 2016", "pre-refresh", "the 2020 refresh". The
+    # phantom 2016 facelift survived the facelift rule by being called a
+    # refresh. Always hard: see copy_rules.REFRESH.
+    ("refresh tied to a year", copy_rules.REFRESH),
 ]
 
 
@@ -120,6 +125,7 @@ def review_items(path):
                 or re.search(r"(?:pre|post)[- ]facelift", sent, re.I)
                 or bool(boundary_years - VERIFIED_YEARS)
                 or re.search(r"(?:earlier|later|newer|older)\s+cars", sent, re.I)
+                or copy_rules.REFRESH.search(sent)
             )
             if not unverified and not hard:
                 continue

@@ -89,7 +89,8 @@ ABSOLUTE RULES — breaking any of these means the edit is discarded:
 - Do NOT add em dashes (—) or en dashes (–) ANYWHERE, not even one, and not
   even if the existing text already contains some. Use a period, comma, colon or
   parentheses. The edit is counted and rejected if the dash count rises.
-- Do NOT add prices for Patrol Garage's own services. Market context is fine.
+- Do NOT add any price: no AED or dirham figure, no cost range, no labour rate, no
+  dealer price, no percentage saving. Not ours and not the market's.
 - Return the FULL article body HTML, nothing else. No commentary, no code fences.
 
 YOUR THREE JOBS:

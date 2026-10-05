@@ -27,10 +27,11 @@ def slugify(text):
 DUBAI_CONTEXT = """KNOWN FACTS YOU CAN USE WITHOUT FLAGGING:
 
 NISSAN PATROL MODELS IN UAE:
-- Y61: produced 1997-2016 globally, still sold as Super Safari in GCC region today
+- Y61: still sold as the Super Safari in the GCC. Comparison and owner
+  information only: Patrol Garage does not work on it
 - Y62: launched 2010 in UAE, sold with VK56VD 5.6L V8. See MODEL YEARS below:
   there was NO 2016 facelift
-- Y63: launched in UAE in 2024, replaces Y62 as the new flagship
+- Y63: the current model, a twin-turbo V6. Owner information only
 - Y62 transmission: 7-speed automatic (Jatco JR710E / RE7R01A)
 - Y62 engine: VK56VD 5.6L V8, 400hp
 - Common trims in UAE: SE, XE, LE, Platinum, Nismo
@@ -41,28 +42,19 @@ DUBAI CLIMATE:
 - Heavy stop-and-go on Sheikh Zayed Road, Sheikh Mohammed Bin Zayed Road
 - Off-road usage common (Al Qudra, Big Red, Liwa)
 
-TYPICAL UAE MARKET PRICING — independent workshops unless stated.
-These are MARKET ranges for context, NOT Patrol Garage's prices. Never present
-them as our quote; we quote per job. Sourced ranges (researched 2026-08-13):
-- Minor service / oil change + inspection: AED 350-800
-- Major service, independent: AED 800-2,500
-- Major service, Nissan dealer: ~AED 3,065 for a major service (documented
-  DriveArabia long-term Patrol test); basic dealer service with synthetic oil ~AED 827
-- Workshop labour rate: AED 150-400 per hour, higher at European/luxury specialists
-- Gearbox / transmission oil change: AED 300-850
-- Automatic transmission rebuild: AED 4,800-14,000 typical; large V8 SUVs sit at
-  the top of that band and luxury rebuilds run AED 9,500-18,000
-- Engine rebuild: AED 15,000-40,000; a partial overhaul is AED 5,000-12,000
-- AC compressor replacement: AED 1,200-4,000 including parts, labour and regas;
-  large SUVs and genuine parts push past AED 4,000
-- Y62 HBMC hydraulic shock absorber: ~AED 2,000 per corner for the part alone,
-  which is why a full suspension job on a Y62 is a four-figure to five-figure job
-
-UNVERIFIED — do NOT state these as fact. If the article needs them, write the
-range as an estimate and attribute it to the workshop, or leave the figure out:
-- Used/replacement transmission unit fitted: no reliable UAE market source found
-- Complete Y62 suspension overhaul as a single job: only the part price above is
-  sourced; the all-in job range is not
+PRICING — HARD RULE, NO EXCEPTIONS (2026-10-05; the same rule as the sister site):
+- Do NOT state, estimate, imply or hint at any price. Not ours, not a dealer's,
+  not "the market's".
+- This bans: any AED or dirham amount; any range ("AED 3,000 to 6,000", "between
+  2k and 5k"); any "from" / "starting at" / "as low as"; any hourly labour rate,
+  labour total, parts price or job total; any percentage saving or numeric price
+  comparison ("20 to 35 percent lower", "half the dealer price"); any figure in
+  another currency. A pre-publish check blocks the post if one appears.
+- Where a price would normally go, describe what DRIVES the cost instead (parts
+  vs labour, repair vs replace, how long the job takes, what the diagnosis finds)
+  and point the reader to WhatsApp for a quote on their car.
+- A keyword may well contain "cost" or "price". Answer the intent by explaining
+  what the job involves and what moves the cost, never with a number.
 
 INDEPENDENT WORKSHOP AREAS (market context only, NOT where Patrol Garage is):
 Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
@@ -92,7 +84,7 @@ Write all of the above in the THIRD PERSON, as owner information. This is the
 single most common failure in this pipeline, so be literal about it:
 
   GOOD: "A thorough pre-purchase inspection covers 30+ points."
-  GOOD: "Independent specialists in the UAE typically charge AED 400 to 800."
+  GOOD: "Ask any independent specialist for an itemised quote before work starts."
   BAD:  "At the workshop we run through the following on every inspection."
   BAD:  "Book a full inspection and we will go through it systematically."
   BAD:  "Lift kit installation adds 4 to 8 hours of labour."
@@ -101,8 +93,7 @@ An ownership or buying keyword does NOT license an offer. Write the buyer's
 guide, then point them to an independent inspection, then offer only the repair
 work above.
 
-Never state a price for Patrol Garage's own work. The pricing block above is
-MARKET context; we quote per job.
+Never state a price of any kind. See PRICING above: we quote per job.
 
 MODEL YEARS AND GENERATIONS — HARD RULE (added 2026-10-05):
 There was NO 2016 facelift of the Y62, and an earlier version of this list said
@@ -184,7 +175,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
 4. **5-7 H2 sections** covering the full query cluster. Each H2 should:
    - Be phrased as a question when natural (e.g., "What Causes Y62 Transmission Failure in Dubai?")
    - Have a 1-sentence direct answer immediately after the H2
-   - Then expand with details, specific AED costs, model years, Dubai context
+   - Then expand with details, what drives the cost (never a figure), mileage, Dubai context
 
 5. **FAQ section** (H2: "Frequently Asked Questions") with exactly 4 Q&A pairs in this format:
    <div class="faq">
@@ -206,7 +197,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
 REQUIREMENTS:
 - Length: 1500-2200 words
 - Tone: conversational expert. First-person plural ("we see", "we recommend").
-- Cite specific numbers: mileage, AED market costs, part names. Use Dubai context facts above. NOT model years beyond the MODEL YEARS rule, and NOT fluid grades, capacities or service intervals (see the HARD RULE).
+- Cite specific details: mileage, part names, what drives the cost. NO prices (see PRICING). Use Dubai context facts above. NOT model years beyond the MODEL YEARS rule, and NOT fluid grades, capacities or service intervals (see the HARD RULE).
 - AUTHORITATIVE SOURCES REQUIREMENT: You MUST include at least 2 outbound links to government or research authorities in the article body. Naturally integrate them where a fact is stated that benefits from a citation.
 
   Approved authoritative sources for this site:
@@ -230,7 +221,7 @@ HUMAN-VOICE RULES (write clean on the first pass so the copy reads like a real D
 
 PROTECT THE AIO STRUCTURE (these override the voice rules — never strip them):
 - Keep the direct-answer <div> and its <strong>, the FAQ <h3> question blocks, and the CTA <strong> exactly as specified above.
-- Keep every specific number and identifier (AED costs, mileage, engine/part names like VK56VD, JR710E). Specific detail is the goal, not filler. This never licenses a model year, fluid grade, capacity or interval that the hard rules above forbid.
+- Keep every specific identifier (mileage, engine/part names like VK56VD, JR710E). Never a price. Specific detail is the goal, not filler. This never licenses a model year, fluid grade, capacity or interval that the hard rules above forbid.
 - Only remove DECORATIVE mid-paragraph bold. Do not bold phrases inside body paragraphs for emphasis.
 - Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>, <a>.
 - DO NOT include image placeholders, image markdown, [HERO IMAGE], [IMAGE], <img>, or any image references. Images are added separately by the pipeline. Just write the text body.

@@ -31,6 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shipped_pages
+import copy_rules
 
 SITE = Path(__file__).parent.parent
 
@@ -75,6 +76,12 @@ def check_file(path):
             start = max(0, m.start() - 70)
             fails.append(f"{rel}: '{name}' in visible copy — "
                          f"…{text[start:m.end() + 90].strip()}…")
+
+    # Business-copy rules (2026-10-05): prices, the Y61 as a service, and
+    # years-in-business / car-count claims, in every scope a reader or a SERP
+    # sees, not just visible text. See copy_rules.py for what each one means.
+    for scope, rule, hit, sent in copy_rules.page_findings(path.read_text(encoding="utf-8")):
+        fails.append(f"{rel}: {rule} [{scope}] {hit!r} — {sent[:200]}")
     return fails
 
 
@@ -91,10 +98,19 @@ def main(argv):
         fails += check_file(f)
 
     if fails:
-        print(f"\n[!] PROSE CHECK FAILED — {len(fails)} placeholder(s) in visible copy. "
+        print(f"\n[!] PROSE CHECK FAILED — {len(fails)} problem(s) in page copy. "
               f"Build stopped; nothing deployed.\n")
         for f in fails:
             print(f"    {f}")
+        if any(" PRICE [" in f for f in fails):
+            print("\n    PRICE: no AED figure, dirham amount, or dealer or labour total. "
+                  "Say what drives\n    the cost and point the reader to a quote.")
+        if any(" Y61_SERVICE [" in f for f in fails):
+            print("\n    Y61_SERVICE: the Y61 is comparison content only, never a job "
+                  "this business takes on.")
+        if any(" TENURE [" in f for f in fails):
+            print("\n    TENURE: no years in business and no counts of cars, customers "
+                  "or jobs.")
         print("\n    An editorial marker reached the page. Either resolve it (attach the "
               "source,\n    fill the value) or rewrite the sentence so it does not need "
               "one. Do NOT\n    delete the marker and leave the claim standing.\n")

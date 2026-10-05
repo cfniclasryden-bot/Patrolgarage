@@ -121,13 +121,17 @@ def banner_for(title, slug):
 
     if intent == "cost":
         subj = comp or (model if model != "Patrol" else None)
+        # The Y62 is the only model this business works on (2026-10-05): never
+        # build a quote CTA around a Y61 job.
+        if subj and subj.upper() == "Y61":
+            subj = None
         if subj:
             h2 = f"Get your exact {subj} quote"
-            p = (f"You've seen the price ranges — now get a real number for your Patrol. "
+            p = (f"Want a quote for your Patrol? "
                  f"Send your car's details on WhatsApp and we'll quote your {subj} job fast.")
         else:
             h2 = "Get your exact Patrol quote"
-            p = ("You've seen the price ranges — now get a real number. Send your Patrol's "
+            p = ("Want a quote for your Patrol? Send your Patrol's "
                  "details on WhatsApp and we'll quote you fast.")
         label = "Get my quote on WhatsApp"
     elif intent == "problems":
@@ -169,7 +173,7 @@ def mid_cta_html(title, slug):
         hook = "Want a transparent price for your service? Skip the dealer markup."
         label = "Get your service quote on WhatsApp →"
     else:  # cost / guide
-        hook = "Want the exact number for your Patrol — not just a range?"
+        hook = "Want a quote for your Patrol?"
         label = "Get your quote on WhatsApp →"
     href = f"https://wa.me/{WA_NUM}?text={enc(prefill)}"
     return (

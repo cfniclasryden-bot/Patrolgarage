@@ -31,9 +31,6 @@ PILLARS = {
 - Common trims: GL, GLX, Safari, Super Safari
 - Dubai: 45-50°C ambient, 70°C+ tarmac
 - Off-road areas: Al Qudra, Big Red, Liwa
-- Major service AED 800-2500
-- Engine rebuild AED 15,000-35,000
-- Suspension overhaul AED 4,000-12,000
 """,
     },
     "service": {
@@ -52,13 +49,6 @@ PILLARS = {
         ],
         "facts": """
 - Dubai workshop areas: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
-- Major service AED 800-2,500
-- Transmission fluid change AED 600-1,200
-- Transmission rebuild AED 8,000-18,000
-- Engine rebuild AED 15,000-35,000
-- AC compressor replacement AED 2,500-5,000
-- Suspension overhaul AED 4,000-12,000
-- Pre-purchase inspection AED 400-800
 - Al Futtaim Nissan = official dealer (premium pricing, genuine parts)
 - Independent workshops 30-50% cheaper, varying quality
 - Service intervals: every 5,000-7,500 km in Dubai (vs factory 10,000 km) due to heat
