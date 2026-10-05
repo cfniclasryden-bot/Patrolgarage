@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(Path(__file__).parent))
 
+import supabase_log
 from supabase_log import log_article, log_run, sync_queue
 
 CSV_FILE = ROOT / "keywords.csv"
@@ -19,6 +20,9 @@ CSV_FILE = ROOT / "keywords.csv"
 # Exit code for a run that found nothing to publish. Distinct from 1 (a stage
 # failed) and 2 (sync_to_origin refused to run), so the log says which it was.
 IDLE_EXIT = 3
+
+# The one gate that earns a regenerate. See gate_with_one_retry().
+CLAIMS_STAGE = "pre-publish: no figure attributed to an authority we cannot produce"
 LOG_DIR = ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -37,19 +41,129 @@ def slugify(text):
     text = re.sub(r"[\s_-]+", "-", text)
     return text.strip("-")
 
-def run(cmd, desc):
+def run(cmd, desc, show_stdout_on_fail=False, env=None):
+    """Run one stage. False if it failed.
+
+    `show_stdout_on_fail` is for the guards, which report on STDOUT and say
+    nothing on stderr; without it a blocked publish logs an empty reason.
+    `env` adds variables for this stage only (the claims retry uses it).
+    """
     log(f"→ {desc}")
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT,
+                            env={**os.environ, **env} if env else None)
     # The humour pass never fails the run, so surface its verdict even on success.
     for line in (result.stdout or "").splitlines():
         if line.startswith("[humour_pass]"):
             log(f"  {line}")
     if result.returncode != 0:
         log(f"[!] FAILED: {desc}")
-        log(f"    stderr: {result.stderr[:500]}")
+        if show_stdout_on_fail and result.stdout:
+            for line in result.stdout.splitlines():
+                log("    " + line)
+        if result.stderr:
+            log(f"    stderr: {result.stderr[:500]}")
         return False
+    # --repair exits 0 but says so loudly; that line is the signal to look.
+    if "ALT REPAIRED" in (result.stdout or ""):
+        log("  [~] check_alt reset the hero alt to the neutral one")
     log(f"  ✓ {desc} done")
     return True
+
+
+# ------------------------------------------------------------ pre-publish gates
+#
+# Ported from topchallenger-site on 2026-10-05, same rules, same order, same
+# contract: BLOCKING, scoped to THIS post's file, run after the hero image and
+# before publish. This pipeline had no content guard at all before then. Run
+# across the 72 pages already live, check_claims fired on 26 and
+# check_model_years on 15, and 11 pages carry a literal [NEEDS_SOURCE] in visible
+# copy. Those pages are not touched here; the gates only stop new ones.
+#
+# What each one adapts for this site is in its own docstring: check_schema
+# fails a premises claim (address, geo, opening hours) instead of a missing
+# address, check_prose and check_schema also block the partner workshop's
+# name, and check_alt's neutral alt names nobody.
+
+def gate_stages(slug):
+    post = f"blog/{slug}.html"
+    return [
+        (["python3", "scripts/check_prose.py", post],
+         "pre-publish: no editorial placeholders", True),
+        (["python3", "scripts/check_schema.py", post],
+         "pre-publish: JSON-LD parses, no placeholders, no premises", True),
+        (["python3", "scripts/check_model_years.py", post],
+         "pre-publish: no invented model-year or generation split", True),
+        (["python3", "scripts/check_claims.py", post], CLAIMS_STAGE, True),
+        # Repairs rather than refuses, as on topchallenger: a wrong alt has a
+        # safe alternative, so it never costs the day's post.
+        (["python3", "scripts/check_alt.py", "--repair", post],
+         "pre-publish: hero alt asserts nothing the picture cannot support", True),
+    ]
+
+
+def run_gates(slug):
+    """Every guard in order. The description of the first that blocked, or None."""
+    for cmd, desc, show in gate_stages(slug):
+        if not run(cmd, desc, show_stdout_on_fail=show):
+            return desc
+    return None
+
+
+def claims_flagged(slug):
+    """The sentences check_claims blocked on, for the regenerate prompt."""
+    import check_claims
+    items = check_claims.review_items(ROOT / "blog" / f"{slug}.html")
+    return list(dict.fromkeys(sent for _, _, _, sent in items))
+
+
+def gate_with_one_retry(slug, regenerate):
+    """Run the gates; on a check_claims block, regenerate ONCE and gate again.
+
+    `regenerate(env)` re-runs the content stages with GATE_FEEDBACK in env and
+    returns the description of a stage that failed, or None.
+
+    The retry is not a softening. The regenerated post goes through every gate
+    from the top, a second block of any kind fails the run, and there is no
+    second retry. Only check_claims earns one, because its failures are about
+    wording ("the owner's manual says...") and a draft told which sentences to
+    drop usually drops them. Same logic as topchallenger-site.
+    """
+    failed = run_gates(slug)
+    if failed != CLAIMS_STAGE:
+        return failed
+    flagged = claims_flagged(slug)
+    log(f"[retry] check_claims blocked {len(flagged)} sentence(s); regenerating once "
+        f"with them fed back as claims to remove")
+    broke = regenerate({"GATE_FEEDBACK": "\n".join(flagged)})
+    if broke:
+        return f"{broke} (during the one claims retry)"
+    failed = run_gates(slug)
+    if failed:
+        return f"{failed} (after the one claims retry)"
+    log("[retry] the regenerated post passed every gate")
+    return None
+
+
+def requeue_if_stuck(article_id, keyword, failed_at):
+    """After REQUEUE_AFTER consecutive failed runs, move the keyword to the back.
+
+    Called after this run's failure is logged, so the streak includes it.
+    Best-effort: the run exits 1 either way.
+    """
+    streak = supabase_log.failure_streak(keyword)
+    if streak is None:
+        log("[queue] could not read the failure streak; keyword left in place")
+        return
+    log(f"[queue] '{keyword}' has now failed {streak} consecutive run(s)")
+    if streak < supabase_log.REQUEUE_AFTER:
+        return
+    reason = (f"Moved to the back of the queue {datetime.utcnow():%Y-%m-%d}: "
+              f"{streak} consecutive failed runs, the last at: {failed_at}")
+    if supabase_log.requeue_to_back(article_id, keyword, reason):
+        log(f"[queue] MOVED TO THE BACK: {reason}")
+    else:
+        log("[queue] [!] tried to move it to the back of the queue and could not; "
+            "the next run will pick the same keyword")
 
 def run_refresh_mode(keyword, slug):
     """Re-run pipeline stages for an existing article. Always honors the existing
@@ -98,6 +212,26 @@ def run_refresh_mode(keyword, slug):
     if not run(["python3", "scripts/image_gen.py", slug], f"regenerate hero image"):
         log(f"=== REFRESH FAILED at: regenerate hero image ==="); return 1
 
+    # Stage 4b: the same blocking gates as a daily post. A refresh publishes
+    # over a live URL, so it is held to the same rules.
+    def regenerate(env):
+        if not run(["python3", "scripts/generate.py", keyword],
+                   "regenerate draft (claims retry)", env=env):
+            return "regenerate draft (claims retry)"
+        if slug_differs:
+            for subdir, ext in [("drafts", ".html"), ("research", ".json")]:
+                src = ROOT / subdir / f"{keyword_slug}{ext}"
+                if src.exists():
+                    src.replace(ROOT / subdir / f"{slug}{ext}")
+        run(["python3", "scripts/humour_pass.py", slug], "humour pass (claims retry)")
+        if not run(["python3", "scripts/assemble.py", canonical_keyword_for_slug],
+                   "re-assemble final HTML (claims retry)"):
+            return "re-assemble final HTML (claims retry)"
+        return None
+    failed_at = gate_with_one_retry(slug, regenerate)
+    if failed_at:
+        log(f"=== REFRESH FAILED at: {failed_at} ==="); return 1
+
     # Stage 5: publish (also uses slug-derived keyword)
     if not run(["python3", "scripts/publish.py", canonical_keyword_for_slug], f"publish + sitemap + deploy"):
         log(f"=== REFRESH FAILED at: publish ==="); return 1
@@ -131,11 +265,20 @@ def run_refresh_mode(keyword, slug):
 
 
 def main():
-    # Check for refresh mode
-    if len(sys.argv) >= 4 and sys.argv[1] == "--refresh":
-        return run_refresh_mode(sys.argv[2], sys.argv[3])
+    # --dry-run: research, generate, humour, assemble, image and every gate, then
+    # stop. No sync, no queue refill, no Supabase write, no publish/commit/push/
+    # deploy. It still writes the generated files to this tree, so run it in a
+    # scratch copy of the repo, never in a working tree you care about.
+    dry_run = "--dry-run" in sys.argv[1:]
+    argv = [a for a in sys.argv[1:] if a != "--dry-run"]
 
-    log(f"=== PIPELINE RUN START ===")
+    # Check for refresh mode
+    if not dry_run and len(argv) >= 3 and argv[0] == "--refresh":
+        return run_refresh_mode(argv[1], argv[2])
+
+    log(f"=== PIPELINE RUN START ===" + (" (DRY RUN)" if dry_run else ""))
+    if dry_run:
+        return dry_run_main()
 
     # STEP ZERO: make the tree equal origin BEFORE generating anything.
     #
@@ -232,23 +375,12 @@ def main():
 
     # (command, description, optional). Optional stages are cosmetic: if one dies the
     # article still ships. The humour pass must never cost us a day's post.
-    stages = [
-        (["python3", "scripts/research.py", keyword], f"research: {keyword}", False),
-        (["python3", "scripts/generate.py", slug], f"generate draft", False),
-        (["python3", "scripts/humour_pass.py", slug], f"humour pass", True),
-        (["python3", "scripts/assemble.py", slug], f"assemble final HTML", False),
-        (["python3", "scripts/image_gen.py", slug], f"generate hero image", False),
-        (["python3", "scripts/publish.py", slug], f"publish + sitemap + deploy", False),
-    ]
-
-    for cmd, desc, optional in stages:
-        if not run(cmd, desc):
-            if optional:
-                log(f"[i] optional stage failed, continuing without it: {desc}")
-                continue
-            log(f"=== PIPELINE FAILED at: {desc} ===")
-            log_run(keyword=keyword, status="failed", error_message=f"Failed at: {desc}")
-            return 1
+    failed_at = run_stages(keyword, slug)
+    if failed_at:
+        log(f"=== PIPELINE FAILED at: {failed_at} ===")
+        log_run(keyword=keyword, status="failed", error_message=f"Failed at: {failed_at}")
+        requeue_if_stuck(article_id, keyword, failed_at)
+        return 1
 
     # Mark this article as published in Supabase (source of truth)
     _req.patch(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
@@ -281,6 +413,85 @@ def main():
 
     log(f"=== PIPELINE COMPLETE: {keyword} ===")
     return 0
+
+def content_stages(keyword, slug):
+    # (command, description, optional). Optional stages are cosmetic: if one dies the
+    # article still ships. The humour pass must never cost us a day's post.
+    return [
+        (["python3", "scripts/research.py", keyword], f"research: {keyword}", False),
+        (["python3", "scripts/generate.py", slug], f"generate draft", False),
+        (["python3", "scripts/humour_pass.py", slug], f"humour pass", True),
+        (["python3", "scripts/assemble.py", slug], f"assemble final HTML", False),
+        (["python3", "scripts/image_gen.py", slug], f"generate hero image", False),
+    ]
+
+
+def run_stages(keyword, slug, dry_run=False):
+    """content -> gates (one claims retry) -> publish. Description of a failed
+    stage, or None. `dry_run` stops after the gates."""
+    for cmd, desc, optional in content_stages(keyword, slug):
+        if not run(cmd, desc):
+            if optional:
+                log(f"[i] optional stage failed, continuing without it: {desc}")
+                continue
+            return desc
+
+    def regenerate(env):
+        # research.py's output is still on disk, and the hero image is kept: the
+        # re-assembled post points at the same images/blog/<slug>.jpg.
+        for cmd, desc, optional in content_stages(keyword, slug)[1:4]:
+            if not run(cmd, desc + " (claims retry)", env=env) and not optional:
+                return desc + " (claims retry)"
+        return None
+
+    failed = gate_with_one_retry(slug, regenerate)
+    if failed:
+        return failed
+
+    if dry_run:
+        log("[dry-run] every gate passed — publish, commit, push and deploy SKIPPED")
+        return None
+
+    if not run(["python3", "scripts/publish.py", slug], "publish + sitemap + deploy"):
+        return "publish + sitemap + deploy"
+    return None
+
+
+def dry_run_main():
+    """Read the queue head and run every stage up to and including the gates.
+
+    Read-only against Supabase: nothing is written, and the refill is NOT run
+    even when the queue is low, because it inserts rows and spends DataForSEO
+    credit. A block exits 1 like a real run, without logging the failure.
+    """
+    import requests as _req
+    url = os.environ.get("SUPABASE_URL", "").rstrip("/")
+    key = os.environ.get("SUPABASE_SERVICE_KEY", "")
+    domain = os.environ.get("SITE_DOMAIN", "patrolgarage.ae")
+    if not (url and key):
+        log("FATAL: missing SUPABASE_URL or SUPABASE_SERVICE_KEY")
+        return 1
+    sh = {"apikey": key, "Authorization": f"Bearer {key}"}
+    site_id = _req.get(f"{url}/rest/v1/sites", headers=sh,
+                       params={"domain": f"eq.{domain}", "select": "id"}).json()[0]["id"]
+    pending = _req.get(f"{url}/rest/v1/articles", headers=sh,
+                       params={"site_id": f"eq.{site_id}", "status": "eq.pending",
+                               "select": "id,keyword,slug", "order": "created_at.asc"}).json()
+    log(f"[dry-run] pending in queue: {len(pending)}"
+        + ("  (a real run would refill first: below 5)" if len(pending) < 5 else ""))
+    if not pending:
+        log("[dry-run] queue empty — a real run would exit 3")
+        return IDLE_EXIT
+    row = pending[0]
+    keyword, slug = row["keyword"], row.get("slug") or slugify(row["keyword"])
+    log(f"[dry-run] target keyword: {keyword}  (slug {slug})")
+    failed_at = run_stages(keyword, slug, dry_run=True)
+    if failed_at:
+        log(f"=== DRY RUN BLOCKED at: {failed_at} ===")
+        return 1
+    log(f"=== DRY RUN COMPLETE: {keyword} — would publish ===")
+    return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

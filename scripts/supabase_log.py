@@ -191,3 +191,83 @@ def _slug(text):
     s = re.sub(r"[^\w\s-]", "", s)
     s = re.sub(r"[\s_-]+", "-", s)
     return s.strip("-")
+
+
+# ---------------------------------------------------------------- stuck keywords
+#
+# Added 2026-10-05. A run that fails leaves its keyword `pending` at the head of
+# the queue, so the next run picks the same keyword and usually fails the same
+# way. That is what happened to topchallenger's "y62 service cost dubai": blocked
+# by check_claims on 2026-10-02 and again on 2026-10-05, with the Wednesday run
+# lined up to do it a third time. One keyword held the whole site.
+#
+# The streak is read from pipeline_runs, which already gets one row per run with
+# the keyword and status, so no schema change was needed. A `requeued` row ends a
+# streak, as a `success` does: a keyword moved to the back gets two fresh
+# attempts when it comes round again, rather than being moved again on its
+# first failure.
+
+REQUEUE_AFTER = 2
+
+
+def streak_from_runs(rows):
+    """Consecutive `failed` runs at the head of `rows` (newest first).
+
+    `success` and `requeued` end the streak. Any other status (the table also
+    holds `started` rows written by other tooling) neither counts nor ends it.
+    """
+    n = 0
+    for r in rows:
+        status = r.get("status")
+        if status == "failed":
+            n += 1
+        elif status in ("success", "requeued"):
+            break
+    return n
+
+
+def failure_streak(keyword):
+    """How many runs in a row have failed on `keyword`. None if unreadable."""
+    if not _enabled():
+        return None
+    from urllib.parse import quote
+    try:
+        rows = _get(f"pipeline_runs?site_id=eq.{_site_id()}"
+                    f"&keyword=eq.{quote(keyword, safe='')}"
+                    "&select=status,started_at&order=started_at.desc&limit=20")
+        return streak_from_runs(rows)
+    except Exception as e:
+        print(f"[supabase_log] failure streak unreadable (non-fatal): {e}", file=sys.stderr)
+        return None
+
+
+def requeue_to_back(article_id, keyword, reason):
+    """Move a pending article to the back of the queue. True on success.
+
+    The runner takes the oldest pending row by created_at, so "the back" is
+    created_at = now. The reason goes in editorial_notes and in a `requeued`
+    pipeline_runs row, which also ends the failure streak.
+    """
+    if not _enabled():
+        return False
+    from urllib.parse import quote
+    try:
+        req = request.Request(
+            f"{SUPABASE_URL}/rest/v1/articles?id=eq.{quote(str(article_id), safe='')}"
+            "&status=eq.pending",
+            data=json.dumps({"created_at": datetime.utcnow().isoformat() + "Z",
+                             "editorial_notes": reason}).encode("utf-8"),
+            headers=_headers(),
+            method="PATCH",
+        )
+        with request.urlopen(req, timeout=10) as resp:
+            moved = json.loads(resp.read() or b"[]")
+        if not moved:
+            print(f"[supabase_log] requeue matched no pending row for {keyword!r}",
+                  file=sys.stderr)
+            return False
+        log_run(keyword=keyword, status="requeued", error_message=reason)
+        return True
+    except Exception as e:
+        print(f"[supabase_log] requeue failed (non-fatal): {e}", file=sys.stderr)
+        return False

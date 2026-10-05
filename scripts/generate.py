@@ -28,7 +28,8 @@ DUBAI_CONTEXT = """KNOWN FACTS YOU CAN USE WITHOUT FLAGGING:
 
 NISSAN PATROL MODELS IN UAE:
 - Y61: produced 1997-2016 globally, still sold as Super Safari in GCC region today
-- Y62: launched 2010 in UAE, refreshed in 2016 and 2020, sold with VK56VD 5.6L V8
+- Y62: launched 2010 in UAE, sold with VK56VD 5.6L V8. See MODEL YEARS below:
+  there was NO 2016 facelift
 - Y63: launched in UAE in 2024, replaces Y62 as the new flagship
 - Y62 transmission: 7-speed automatic (Jatco JR710E / RE7R01A)
 - Y62 engine: VK56VD 5.6L V8, 400hp
@@ -45,7 +46,7 @@ These are MARKET ranges for context, NOT Patrol Garage's prices. Never present
 them as our quote; we quote per job. Sourced ranges (researched 2026-08-13):
 - Minor service / oil change + inspection: AED 350-800
 - Major service, independent: AED 800-2,500
-- Major service, Nissan dealer: ~AED 3,065 for the 40k service (documented
+- Major service, Nissan dealer: ~AED 3,065 for a major service (documented
   DriveArabia long-term Patrol test); basic dealer service with synthetic oil ~AED 827
 - Workshop labour rate: AED 150-400 per hour, higher at European/luxury specialists
 - Gearbox / transmission oil change: AED 300-850
@@ -102,8 +103,45 @@ work above.
 Never state a price for Patrol Garage's own work. The pricing block above is
 MARKET context; we quote per job.
 
-You can reference any facts naturally. Only flag [NEEDS_SOURCE] for very specific data
-(named workshop quote, specific recall number, exact dealer interval)."""
+MODEL YEARS AND GENERATIONS — HARD RULE (added 2026-10-05):
+There was NO 2016 facelift of the Y62, and an earlier version of this list said
+there was. On the sister site the same invention grew into a whole taxonomy of
+"pre-2016" and "post-2016" cars across five posts. A pre-publish check now
+BLOCKS the post if it finds any of these, so do not write them:
+  - "facelift", "pre-facelift", "post-facelift", or any named facelift year
+  - "pre-" or "post-" followed by a year, except 2010 and 2020
+  - "earlier cars", "later cars", "newer cars", "older cars"
+  - "from", "since", "until", "before" or "after" followed by a year, except
+    2010 and 2020
+Describe a car by its mileage and service history instead of its build year.
+
+FLUID GRADES, CAPACITIES, SERVICE INTERVALS AND THE OWNER'S MANUAL — HARD RULE,
+NO EXCEPTIONS (added 2026-10-05):
+Do not state any fluid grade or viscosity (0W-20, 5W-30, any ATF, gear oil or
+coolant grade), any fill capacity, or any service or change interval in
+kilometres, miles or months. Do not attribute anything to an owner's manual and
+do not mention an owner's manual at all. Do not attribute any figure to Nissan,
+the manufacturer, the factory, a dealer schedule, a specification or an "OEM"
+figure. This covers the workshop's own figures too.
+The ONLY exception is one of these sentences, copied WORD FOR WORD as a sentence
+on its own, with nothing paraphrased, shortened, extended or changed:
+<<ACCEPTED_SENTENCES>>
+If none of them says what you need, leave the figure out and explain what the
+job protects and what to watch for instead. A pre-publish check blocks any
+figure credited to an authority this site cannot produce.
+
+NO EDITORIAL MARKERS: never write [NEEDS_SOURCE], TODO, TK or any other
+placeholder. This post is published unattended and a marker in the copy blocks
+it. If a claim needs a source you do not have, leave the claim out."""
+
+
+# The approved sentences live in check_claims.ACCEPTED_SENTENCES, beside the
+# fragments the guard matches, so the prompt and the guard cannot drift apart.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import check_claims  # noqa: E402
+DUBAI_CONTEXT = DUBAI_CONTEXT.replace(
+    "<<ACCEPTED_SENTENCES>>",
+    "\n".join(f'  - "{s}"' for s in check_claims.ACCEPTED_SENTENCES))
 
 
 AUTHORITATIVE_LINKS = [
@@ -165,14 +203,14 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
 REQUIREMENTS:
 - Length: 1500-2200 words
 - Tone: conversational expert. First-person plural ("we see", "we recommend").
-- Cite specific numbers: years, km, AED costs, part names. Use Dubai context facts above.
+- Cite specific numbers: mileage, AED market costs, part names. Use Dubai context facts above. NOT model years beyond the MODEL YEARS rule, and NOT fluid grades, capacities or service intervals (see the HARD RULE).
 - AUTHORITATIVE SOURCES REQUIREMENT: You MUST include at least 2 outbound links to government or research authorities in the article body. Naturally integrate them where a fact is stated that benefits from a citation.
 
   Approved authoritative sources for this site:
 {authoritative_links}
 
   Use the exact URLs. Embed as inline links naturally in prose — e.g. 'Per <a href="https://rta.ae">the RTA</a>, all vehicles in Dubai require annual inspection...' Do NOT include them as a footnote list. Minimum 2 distinct sources per article.
-- Only flag [NEEDS_SOURCE] for very specific named workshop quotes or recall numbers.
+- Never write [NEEDS_SOURCE] or any other marker. See NO EDITORIAL MARKERS above.
 - Use the ° symbol (not Â°). Do NOT use em dashes (—) or en dashes (–) anywhere. Use a period, comma, colon, or parentheses instead.
 
 HUMAN-VOICE RULES (write clean on the first pass so the copy reads like a real Dubai Patrol mechanic wrote it, not a chatbot):
@@ -189,11 +227,38 @@ HUMAN-VOICE RULES (write clean on the first pass so the copy reads like a real D
 
 PROTECT THE AIO STRUCTURE (these override the voice rules — never strip them):
 - Keep the direct-answer <div> and its <strong>, the FAQ <h3> question blocks, and the CTA <strong> exactly as specified above.
-- Keep every specific number and identifier (AED costs, model years, km, engine/part names like VK56VD, JR710E). Specific detail is the goal, not filler.
+- Keep every specific number and identifier (AED costs, mileage, engine/part names like VK56VD, JR710E). Specific detail is the goal, not filler. This never licenses a model year, fluid grade, capacity or interval that the hard rules above forbid.
 - Only remove DECORATIVE mid-paragraph bold. Do not bold phrases inside body paragraphs for emphasis.
 - Output: HTML body only. Allowed tags: <h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <div>, <a>.
 - DO NOT include image placeholders, image markdown, [HERO IMAGE], [IMAGE], <img>, or any image references. Images are added separately by the pipeline. Just write the text body.
 - Return ONLY the HTML body. No preamble, no markdown fences."""
+
+
+def retry_block():
+    """The prompt addition for a regenerate after check_claims blocked a draft.
+
+    run_pipeline.py sets GATE_FEEDBACK to the flagged sentences, one per line,
+    and re-runs this script once. An environment variable rather than a flag
+    because every argument here is joined into the keyword. Unset, this
+    returns "" and the prompt is unchanged. Same as topchallenger-site.
+    """
+    flagged = [s.strip() for s in os.environ.get("GATE_FEEDBACK", "").splitlines()
+               if s.strip()]
+    if not flagged:
+        return ""
+    lines = "\n".join(f'  - "{s}"' for s in flagged)
+    return (
+        "\n\nRETRY. A DRAFT OF THIS POST WAS BLOCKED BEFORE PUBLISHING.\n"
+        "The claims check stopped the previous draft on the sentence(s) below. "
+        "Each one credited a figure to an authority this site cannot produce. "
+        "REMOVE these claims. Do not write these sentences, any rewording of "
+        "them, or any other sentence making the same claim, anywhere: not in "
+        "the body, the FAQ, the quick answer or the meta description. Do not "
+        "restate the figure as the workshop's own instead. The only permitted "
+        "form of a grade, capacity, interval or owner's manual mention is an "
+        "approved sentence copied word for word, as the hard rule above says. "
+        "Every other rule in this prompt still applies.\n" + lines + "\n"
+    )
 
 
 def generate_post(keyword):
@@ -229,7 +294,7 @@ def generate_post(keyword):
         sources=sources_text,
         current_month_year=current_month_year,
         authoritative_links="\n".join(f"  - {u}" for u in AUTHORITATIVE_LINKS),
-    )
+    ) + retry_block()
 
     print(f"[+] Generating post for: {keyword}")
     print(f"    Using {len(sorted_sources[:12])} sources")
