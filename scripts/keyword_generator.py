@@ -68,6 +68,47 @@ client = Anthropic()
 
 
 # Verbatim from run_pipeline.py — do not change
+# --- Refill accept/reject rules (2026-10-07) --------------------------------
+# From PERFORMANCE-REVIEW-2026-10-07.md §4.3. topchallenger.ae is the workshop:
+# premises in Ras Al Khor and Mussafah, two Business Profiles, reviews. This
+# site is the reference. So the WORKSHOP vocabulary, anything that frames
+# Abu Dhabi as a place to get the car serviced, and the topics topchallenger.ae
+# has queued or planned are rejected here, before any DataForSEO call, so a
+# rejected idea costs nothing. "nissan patrol specialist vs dealer" was retired
+# from the queue the same day for the first reason.
+#
+# Prefer, and the prompt says so: symptom explainers (rough idle, hard start,
+# burning or fuel smell, temperature gauge rising, jerking when accelerating)
+# and Abu Dhabi OWNERSHIP questions (is it reliable, what keeping one there
+# involves), which GSC shows people asking this site with no page written for
+# them. Abu Dhabi in an ownership question is allowed; Abu Dhabi as a place to
+# have work done is not.
+TC_TERRITORY = re.compile(
+    r"\b(?:specialists?|garages?|workshops?|mechanics?|near me|dealers?(?:hip)?|"
+    r"service cent(?:er|re)s?|mus+af+ah?|al quoz|ras al khor)\b", re.I)
+AD_SERVICE = re.compile(
+    r"\babu ?dhabi\b.*\b(?:service|servicing|repair|fix|maintenance shop|garage|"
+    r"workshop|mechanic|specialist)\b|\b(?:service|servicing|repair|garage|workshop|"
+    r"mechanic|specialist)\b.*\babu ?dhabi\b", re.I)
+# topchallenger.ae's queued and planned slots (site_config.PUBLISHING_ORDER there,
+# 2026-10-07). Update this list when that queue changes; nothing syncs it.
+TC_RESERVED = re.compile(
+    r"\b(?:limp mode|tyre pressure|tire pressure|diff(?:erential)? lock|"
+    r"(?:desert|sand) tyres|best tyres|liwa|moreeb|4wd light|air filter|battery|"
+    r"alternator|brake pads?|abs light|handbrake|desert driving|dune bashing)\b", re.I)
+
+
+def refill_rule(kw):
+    """Why a refill candidate is rejected under the 2026-10-07 rules, or None."""
+    if TC_TERRITORY.search(kw):
+        return "workshop/specialist/dealer framing is topchallenger.ae territory"
+    if AD_SERVICE.search(kw):
+        return "Abu Dhabi as a place to have work done is topchallenger.ae territory"
+    if TC_RESERVED.search(kw):
+        return "topic is queued or planned on topchallenger.ae"
+    return None
+
+
 def slugify(text):
     text = text.lower().strip()
     text = re.sub(r"[^\w\s-]", "", text)
@@ -142,7 +183,24 @@ WHAT ACTUALLY EARNS ON THIS SITE (measured in Google Search Console, 90 days):
 Every query that has ever produced a click is commercial-intent or
 cost/problem-shaped — "nissan patrol garage" (8.8% CTR), "patrol garage"
 (5.9%), "nissan patrol specialist" (7.1%),
-plus service-cost and common-problems queries. Propose keywords of THAT shape.
+plus service-cost and common-problems queries. Those first three land on the
+homepage; for NEW posts, propose the problem and ownership shapes below.
+
+DO NOT PROPOSE (rejected automatically, so they waste a slot):
+- workshop vocabulary: specialist, garage, workshop, mechanic, near me, dealer,
+  service centre, Mussafah, Al Quoz, Ras Al Khor
+- Abu Dhabi as a place to have work done ("... service abu dhabi", "... repair
+  abu dhabi")
+- limp mode, tyre pressure, diff lock, desert tyres, Liwa, Moreeb, 4WD light,
+  air filter, battery, alternator, brake pads, ABS light, handbrake, desert
+  driving, dune bashing: another site covers these
+
+PREFER:
+- symptom explainers the site does not have yet, e.g. rough idle, hard start,
+  burning smell, fuel smell, temperature gauge rising, jerking when accelerating
+- Abu Dhabi OWNERSHIP questions, e.g. "nissan patrol reliability abu dhabi",
+  "owning a nissan patrol in abu dhabi". People ask this site these questions
+  and nothing answers them. No prices.
 
 WHAT FAILED, AND WHY YOU MUST NOT REPEAT IT:
 An earlier queue targeted individual small components — ABS sensor, throttle
@@ -150,7 +208,7 @@ body, CV joint, oxygen sensor, water pump, spark plugs, engine mounts. Twenty
 five posts were published against it and earned ZERO impressions between them,
 because nobody searches for a Patrol part by name. Owners search for the
 SYMPTOM ("patrol overheating dubai"), the SERVICE ("patrol major service
-cost"), or the WORKSHOP ("patrol specialist near me"). Do not propose a
+cost"). Do not propose a
 keyword whose subject is a single replaceable part.
 
 EXISTING ARTICLES (do not duplicate these topics):
@@ -312,6 +370,20 @@ def main():
     unique_new = _kept
     if not unique_new:
         print("[!] Every candidate was a modification topic. Queue not grown.")
+        return 0
+
+    # Gate 0b (2026-10-07): the refill accept/reject rules above. Before the
+    # DataForSEO lookups, like Gate 0, so a rejected idea costs nothing.
+    _kept = []
+    for kw in unique_new:
+        why = refill_rule(kw)
+        if why:
+            print(f"    [reject] {kw}  — {why} (Gate 0b)")
+        else:
+            _kept.append(kw)
+    unique_new = _kept
+    if not unique_new:
+        print("[!] Every candidate broke the refill rules (Gate 0b). Queue not grown.")
         return 0
 
     try:

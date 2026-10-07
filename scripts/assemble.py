@@ -12,6 +12,7 @@ from anthropic import Anthropic
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cta_lib
 import patch_clarity
+import patch_internal_traffic
 import patch_favicon
 import money_links
 import early_cta
@@ -317,6 +318,12 @@ def assemble(keyword):
     template, injected = patch_favicon.inject(template)
     if injected:
         print("[i] Favicon links were missing from the template — injected")
+
+    # And the GA4 internal-traffic flag (2026-10-07), so the owner's own taps on
+    # a new post are dropped by the Internal Traffic filter like everywhere else.
+    template, injected = patch_internal_traffic.inject(template)
+    if injected:
+        print("[i] GA4 internal-traffic flag was missing from the template — injected")
 
     out_path = BLOG_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:
