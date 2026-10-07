@@ -23,6 +23,9 @@ MUST_REJECT = [
     "nissan patrol limp mode",                 # queued on topchallenger.ae
     "nissan patrol battery problems",
     "nissan patrol liwa trip",
+    "nissan patrol white smoke",               # topchallenger.ae Abu Dhabi slots, 2026-10-07
+    "nissan patrol ac blowing hot air",
+    "nissan patrol engine knocking",
 ]
 MUST_ACCEPT = [
     "nissan patrol rough idle",

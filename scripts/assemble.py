@@ -302,6 +302,12 @@ def assemble(keyword):
                       lambda m: m.group(1) + p + m.group(2), template, count=1, flags=re.DOTALL)
     template = re.sub(r'(<section class="cta-banner">.*?class="btn btn-dark">).*?(</a>)',
                       lambda m: m.group(1) + label + m.group(2), template, count=1, flags=re.DOTALL)
+    # The first-screen CTA (patch_first_screen_cta.py, 2026-10-07) lives on five
+    # top posts only, and this template IS one of them. Strip it before the
+    # prefill rewrite below, which would otherwise give its Arabic button the
+    # English article prefill on every new post.
+    template = re.sub(r'\s*<div class="fs-cta" data-fs="1">.*?</div>', "", template,
+                      count=1, flags=re.S)
     template = cta_lib.set_all_wa_prefill(template, prefill)
 
     # Analytics safety net. The "template" is a real published post, so a tag

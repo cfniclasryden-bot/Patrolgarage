@@ -95,7 +95,11 @@ AD_SERVICE = re.compile(
 TC_RESERVED = re.compile(
     r"\b(?:limp mode|tyre pressure|tire pressure|diff(?:erential)? lock|"
     r"(?:desert|sand) tyres|best tyres|liwa|moreeb|4wd light|air filter|battery|"
-    r"alternator|brake pads?|abs light|handbrake|desert driving|dune bashing)\b", re.I)
+    r"alternator|brake pads?|abs light|handbrake|desert driving|dune bashing|"
+    # topchallenger.ae's Abu Dhabi symptom slots, added 2026-10-07.
+    r"delayed engagement|transmission warning light|knocking|white smoke|"
+    r"(?:ac|a/c|air ?con\w*) blowing (?:hot|warm)|suspension warning light|"
+    r"timing chain noise)\b", re.I)
 
 
 def refill_rule(kw):
@@ -193,7 +197,9 @@ DO NOT PROPOSE (rejected automatically, so they waste a slot):
   abu dhabi")
 - limp mode, tyre pressure, diff lock, desert tyres, Liwa, Moreeb, 4WD light,
   air filter, battery, alternator, brake pads, ABS light, handbrake, desert
-  driving, dune bashing: another site covers these
+  driving, dune bashing, delayed engagement, transmission warning light, engine
+  knocking, white smoke, AC blowing hot air, suspension warning light, timing
+  chain noise: another site covers these
 
 PREFER:
 - symptom explainers the site does not have yet, e.g. rough idle, hard start,

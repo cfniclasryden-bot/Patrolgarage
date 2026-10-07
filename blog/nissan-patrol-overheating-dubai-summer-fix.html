@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (typeof gtag === 'function') {
         gtag('event', name, {
           'event_category': 'engagement',
-          'event_label': window.location.pathname + ' | ' + ctaPos(el)
+          'event_label': (el.closest('[data-cta-label]') ? el.closest('[data-cta-label]').getAttribute('data-cta-label') : window.location.pathname + ' | ' + ctaPos(el))
         });
       }
     });
