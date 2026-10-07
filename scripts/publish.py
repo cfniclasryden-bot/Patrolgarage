@@ -200,6 +200,58 @@ def slugify(text):
     return text.strip("-")
 
 
+# The part of a page that is its content: everything between the site header
+# and the site footer. Every shipped page has exactly one of each (2026-10-07).
+_CONTENT_RE = re.compile(r"</header>(.*?)<footer\b", re.S)
+
+
+def _content(blob):
+    m = _CONTENT_RE.search(blob)
+    return m.group(1) if m else blob
+
+
+def git_lastmod(path, today, max_revs=60):
+    """<lastmod> for one file: the date of the last commit that changed its CONTENT.
+
+    Added 2026-10-07, ported from topchallenger.ae (scripts/publish.py there).
+    Each revision's header-to-footer region is compared with the one before it
+    and the newest commit where it changed wins, so a site-wide chrome patch
+    (menu, footer, CTA bar, analytics tag) never moves a page's date.
+
+    A file with uncommitted changes, or one git does not know yet (a post being
+    published right now), gets today. Outside a git checkout, or if git fails,
+    it falls back to today rather than guessing. sync_to_origin() fetches full
+    history (no --depth), so the container's dates match this Mac's.
+    """
+    rel = str(Path(path).resolve().relative_to(PROJECT_ROOT.resolve()))
+
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=PROJECT_ROOT, capture_output=True,
+                              text=True, timeout=60)
+    try:
+        dirty = git("status", "--porcelain", "--", rel)
+        if dirty.returncode != 0 or dirty.stdout.strip():
+            return today
+        log = git("log", f"-{max_revs}", "--format=%H %cs", "--", rel)
+        revs = [line.split() for line in log.stdout.splitlines() if line.strip()]
+        if log.returncode != 0 or not revs:
+            return today
+        cache = {}
+
+        def body(sha):
+            if sha not in cache:
+                r = git("show", f"{sha}:{rel}")
+                cache[sha] = _content(r.stdout) if r.returncode == 0 else None
+            return cache[sha]
+
+        for (sha, day), older in zip(revs, revs[1:] + [None]):
+            if older is None or body(sha) != body(older[0]):
+                return day
+        return revs[-1][1]
+    except Exception:
+        return today
+
+
 def update_sitemap():
     urls = [
         ("/", "1.0", "weekly"),
@@ -237,31 +289,20 @@ def update_sitemap():
     # /services/ pages. Nothing else about the sitemap was wrong: valid XML,
     # correct host, every URL 200, zero errors, zero warnings.
     #
-    # mtime is the right source because this site already treats it as content:
-    # journal_update.py derives each post's displayed date AND the listing sort
-    # order from it. Anything that corrupts mtime now breaks the listing and the
-    # sitemap together, instead of leaving them silently disagreeing.
-    def _mtime(path):
-        return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
-
-    _newest = max((f.stat().st_mtime for f in blog_files), default=None)
-    newest_date = (datetime.fromtimestamp(_newest).strftime("%Y-%m-%d")
-                   if _newest else datetime.now().strftime("%Y-%m-%d"))
+    # The fix for that read file mtimes, which broke again once the container
+    # started syncing from git (2026-09-18): `reset --hard` gives every file the
+    # checkout time, so on 2026-10-07 63 of 67 URLs read 2026-10-01, the last
+    # cron run. Since 2026-10-07 each URL is dated by git history instead, by
+    # the last commit that changed its content (git_lastmod below), the same
+    # rule topchallenger.ae uses. The listings resolve to their own files.
+    today = datetime.now().strftime("%Y-%m-%d")
 
     def lastmod_for(url_path):
-        # "/" is index.html; the other trailing-slash URLs (/blog/,
-        # /blog/page/N/) are generated listings with no file of their own, and
-        # they change exactly when the newest post does.
-        if url_path == "/":
-            f = PROJECT_ROOT / "index.html"
-        elif url_path.endswith("/"):
-            return newest_date
+        if url_path.endswith("/"):
+            f = PROJECT_ROOT / url_path.lstrip("/") / "index.html"
         else:
             f = PROJECT_ROOT / url_path.lstrip("/")
-        try:
-            return _mtime(f)
-        except OSError:
-            return newest_date
+        return git_lastmod(f, today) if f.exists() else today
 
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -604,9 +645,6 @@ def publish(keyword=None):
     # and the regenerated index picks up any fallback rewrites.
     ensure_images()
 
-    print("[+] Updating sitemap...")
-    update_sitemap()
-
     # Regenerated every run for the same reason as the sitemap: the cron adds
     # posts twice a week, so a hand-written llms.txt goes stale immediately.
     print("[+] Regenerating llms.txt...")
@@ -636,6 +674,12 @@ def publish(keyword=None):
                 print(f"    {line}")
     else:
         print(f"    [!] Journal update failed: {journal_result.stderr[:300]}")
+
+    # After journal_update since 2026-10-07: lastmod now follows each page's own
+    # change state (git_lastmod), and journal_update rewrites the listings and
+    # the homepage, so they must be in their final form first.
+    print("[+] Updating sitemap...")
+    update_sitemap()
 
     # COMMIT AND PUSH BEFORE THE DEPLOY. This replaced a commit-only step on
     # 2026-09-18. The old comment here said it plainly: "this alone does NOT
