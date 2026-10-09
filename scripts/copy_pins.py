@@ -37,7 +37,8 @@ ROOT = Path(__file__).resolve().parent.parent
 #
 # Later the same day: about.html (tenure and workshop claims), contact.html
 # ("workshop only") and the homepage steps (no How It Works label, no
-# drop-off or warranty wording) with the first-screen redesign.
+# drop-off or warranty wording) with the first-screen redesign. Then about.html's
+# staff claim and the Abu Dhabi page's How It Works label.
 PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners across Dubai and the UAE. ",
                  ''),
                 (" We've earned our reputation as the go-to Patrol specialists not through "
@@ -45,7 +46,12 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                  ''),
                 ('From routine maintenance to complex engine work, suspension and HBMC repair to '
                  "full restorations, we've become the workshop Patrol owners trust.",
-                 'Patrol Garage focuses on one car only: the Nissan Patrol Y62.')],
+                 'Patrol Garage focuses on one car only: the Nissan Patrol Y62.'),
+                ('We built Patrol Garage specifically around servicing this car—the right tools, '
+                 'the right parts supply, and mechanics who can diagnose problems from the sound '
+                 'the engine makes.',
+                 'We built Patrol Garage specifically around this car, from the parts it needs to '
+                 'the faults it is known for.')],
  'blog/best-oil-nissan-patrol-uae-heat.html': [('We regularly see Patrols with oil-related damage '
                                                 'that could have been prevented with the right '
                                                 'lubricant choice.',
@@ -488,6 +494,8 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                  'Pickup and delivery on request.</p>',
                  '<p>Repairs done with genuine parts where it matters, and you hear from us as '
                  'soon as the car is ready.</p>')],
+ 'nissan-patrol-abu-dhabi.html': [('<div class="section-num">01 &mdash; How It Works</div>',
+                                   '<div class="section-num">01 · Booking</div>')],
  'services/y62-major-service-dubai.html': [('Most Patrols in Dubai are better served on a shorter '
                                             'rhythm than the book interval, and we will tell you '
                                             'what yours actually needs based on how you drive it.',
