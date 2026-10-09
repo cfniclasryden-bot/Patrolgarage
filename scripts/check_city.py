@@ -17,8 +17,8 @@ this is a no-op for the Dubai and UAE posts.
 It also blocks ANY mention of the Y61 or Y63 on an Abu Dhabi post (2026-10-09,
 owner decision), passing mentions included: title, meta, H1, body, FAQ,
 related-reading links and JSON-LD. Only the site header and footer are
-excluded. One post predates the rule; its mentions are frozen in
-MODEL_BASELINE and a new one on that page still fails.
+excluded. MODEL_BASELINE can freeze a pre-rule page's mentions; it is empty
+since the specialist-abu-dhabi-vs-dubai post was cleaned (2026-10-09).
 
     python3 scripts/check_city.py                 # every post
     python3 scripts/check_city.py blog/<slug>.html
@@ -38,9 +38,7 @@ OTHER_MODEL = re.compile(r"\by6[13]\b", re.I)
 
 # Abu Dhabi posts published before the Y61/Y63 rule: slug -> mentions allowed.
 # Lower the number (or delete the entry) when the page is cleaned; never raise it.
-MODEL_BASELINE = {
-    "nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026": 5,  # Y63 section x3, Y61 link x2
-}
+MODEL_BASELINE = {}
 
 
 def _scope(html):

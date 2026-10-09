@@ -345,3 +345,28 @@ This website template is custom-built for Patrol Garage Dubai. All content is th
 **Questions?** Contact our team at [+971 58 221 1201](tel:+971582211201) or [WhatsApp](https://wa.me/971582211201).
 
 **Built with care in Dubai. No frameworks, maximum performance.**
+
+## When the Railway image must be rebuilt (`railway up`)
+
+The cron starts `scripts/cron_entry.py`, which runs `scripts/run_pipeline.py`
+**from the Docker image**. `sync_to_origin()` resets the tree to `origin/main`
+only after that process has started, so:
+
+- **Picked up from origin on the next run, no rebuild:** anything run as a
+  subprocess after the sync (`generate.py`, `assemble.py`, `publish.py`,
+  every `check_*.py` guard, `copy_rules.py`) and the site content itself.
+- **Needs `railway up` from a clean tree that matches origin:** any change to
+  `run_pipeline.py` (gate list, retry, requeue, queue picker), to a module it
+  imports before the sync (`supabase_log.py`, and on topchallenger
+  `site_config.py` functions such as `pick_next`), `cron_entry.py`,
+  `Dockerfile`, `requirements.txt` or `railway.json`.
+
+A Railway **redeploy** (including the automatic one after a crashed run) reuses
+the old image; it does not rebuild. Check the build date with
+`railway deployment list` and the gate lines in the run log
+(`railway logs --deployment <id>`): every gate in `gate_stages()` should log a
+`pre-publish:` line, in the order the code lists them.
+
+Found 2026-10-09: both images dated from 2026-09-29, so the 5 Oct retry and
+requeue, the 7 Oct Abu Dhabi picker and check_city, and the 9 Oct festival
+gate never ran in cron.

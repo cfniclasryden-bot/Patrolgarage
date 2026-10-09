@@ -324,15 +324,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                                      'components most prone to '
                                                                      'failure on high-mileage Y62s '
                                                                      'in UAE conditions.'),
-                                                                    ('so most owners with a Y62 '
-                                                                     'that needs one or two '
-                                                                     'specific jobs are better '
-                                                                     'served fixing what they '
-                                                                     'have,',
-                                                                     'so if your Y62 needs one or '
-                                                                     'two specific jobs, you are '
-                                                                     'usually better served fixing '
-                                                                     'what you have,'),
                                                                     ('The first sign most owners '
                                                                      'notice is a shudder or '
                                                                      'vibration on light throttle,',
@@ -542,6 +533,13 @@ _AD_HUB_PINS = {
          'reach the end of their useful life. If the car is based in Abu Dhabi, <a href="/nissan-patrol-abu-dhabi.html">Y62 upkeep for Abu Dhabi owners</a> covers what changes there.</p>'),
     ],
 }
+# 2026-10-09 (owner): no Y61/Y63 on an Abu Dhabi post. The Y63 repair-or-replace
+# section and the Y61 related link are deleted from the one post that had them.
+_AD_HUB_PINS.setdefault('blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html', []).extend([
+    ("<h2>How does the Y62 compare to the new Y63 for owners deciding whether to repair or replace?</h2>\n\n<p>The Y63 uses a twin-turbo V6, a fundamentally different mechanical platform from the Y62's VK56VD V8 and JR710E.</p>\n\n<p>For owners of a Y62 facing a large repair bill, the calculation is straightforward. A Y62 in good mechanical condition with a rebuilt transmission and fresh service is still a valuable truck in the used market, so fixing one or two specific problems on an otherwise solid truck is money well spent. If you are looking at a transmission rebuild plus an engine job plus suspension on a high-mileage SE trim, that is a different conversation.</p>\n\n<p>A new Y63 is a significant step up from even the cost of a comprehensive Y62 repair, so if your Y62 needs one or two specific jobs, you are usually better served fixing what you have, provided the work is done by someone who knows the platform.</p>\n\n",
+     ''),
+    ("<li><a href='/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026'>Y61 Snorkel Fitting Cost</a></li>", ''),
+])
 for _page, _pins in _AD_HUB_PINS.items():
     PINS.setdefault(_page, []).extend(_pins)
 
