@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Business-copy rules shared by check_prose.py and check_model_years.py.
+"""Business-copy rules shared by check_prose.py, check_model_years.py and
+(Round 6) check_claims.py.
 
 Added 2026-10-05, after a cleanup of this site found the same four defects on
 page after page, none of which any guard was looking for:
@@ -54,6 +55,25 @@ Round 5 (2026-10-05) generalised the last two and added an offer rule:
                Neutral owner information ("after a lift kit has been fitted by a
                third party...", "aftermarket parts can affect the warranty")
                passes, because it offers nothing.
+
+Round 6 (2026-10-09) added two unverifiable-claim rules. They are NOT in
+sentence_findings(), so check_prose never sees them: check_claims.py calls
+unverified_claims() instead, which puts a hit through the ONE claims
+regenerate (run_pipeline feeds check_claims' sentences back to generate.py)
+instead of a hard prose block with no retry. Found on the auto-published
+y62-liwa-trip-preparation-uae:
+
+  CROWD        a crowd or volume count followed by a claim about what those
+               people or cars do: "hundreds of Patrols make the same drive",
+               "most owners skip it", "many Patrols run hot". Nobody counted.
+               "Thousands of kilometres" (a unit) and "most owners." with no
+               claim after it do not fire.
+  FIRST_HAND   a first-hand workshop observation: "the ones we see",
+               "we often see / find", "we regularly see", "in our experience",
+               "most cars we get", "the component we see". Neither site knows
+               which cars have been through a workshop, and Patrolgarage has no
+               premises at all. A general statement of the mechanism is the
+               replacement ("fluid left too long can contribute to wear").
 
 Kept in one module, identical in topchallenger-site and Patrolgarage, so the
 two sites cannot drift. A rule can be switched off for ONE site in that
@@ -138,6 +158,37 @@ OFFER = re.compile(
     r"\b(?:book\w*|get (?:a|your|an) (?:exact |free )?quote|quote (?:you|the job|it)|"
     r"we (?:fit|install|supply|offer|do|can|will|carry|stock))\b", re.I)
 
+# Round 6 (2026-10-09): unverifiable crowd counts and first-hand observations.
+# Checked by check_claims.py through unverified_claims(), never by check_prose.
+_QUAL = r"(?:(?:Y62|Patrol|Nissan|UAE|Dubai|Abu Dhabi|local|other|desert|weekend)\s+){0,3}"
+CROWD = re.compile(
+    rf"\b(?:(?:hundreds|tens) of thousands|hundreds|thousands|dozens|scores)\s+of\s+{_QUAL}"
+    r"(?:Patrols?|Y62s?|owners|drivers|families|people|enthusiasts|motorists|customers|"
+    r"cars|vehicles|4x4s|SUVs|trucks)\b"
+    rf"|\b(?:most|many|plenty of|the majority of|countless|a lot of|lots of|nearly all|"
+    rf"almost all|a large number of)\s+{_QUAL}"
+    r"(?:owners|drivers|Patrols|Y62s|families|people|enthusiasts|motorists|customers)\b", re.I)
+# The claim after the count: a verb within the next few words. "most owners."
+# or "for most owners" at a sentence end states nothing about anybody.
+CROWD_CLAIM = re.compile(
+    r"^\s*(?:'s\s+)?(?:[\w-]+\s+){0,4}?(?:\w+(?:s|ed)|are|were|is|was|do|don't|drive|make|run|"
+    r"use|take|get|go|have|had|think|know|skip|ignore|leave|choose|prefer|need|want|buy|"
+    r"head|find|treat|wait|tow|carry|come|bring|book|change|end|forget|miss|keep|try|"
+    r"tend|will|would|can|never|rarely|only|still|already|just|also|often|usually|"
+    r"swear|rely|drop|fit|spend|pay|learn|discover|underestimate|overlook)\b", re.I)
+FIRST_HAND = re.compile(
+    r"\b(?:the|those)\s+ones\s+we\s+(?:see|get|find)\b"
+    r"|\bwe\s+(?:often|regularly|frequently|usually|commonly|typically|routinely|always|"
+    r"constantly|repeatedly|tend\s+to)\s+(?:see|find|get|notice|come\s+across|deal\s+with|"
+    r"hear|meet|replace|fix|repair|catch)\b"
+    r"|\bin\s+our\s+(?:own\s+)?experience\b"
+    r"|\b(?:most|many|plenty\s+of|a\s+lot\s+of)\s+(?:of\s+the\s+)?(?:cars?|Patrols?|Y62s?|vehicles|"
+    r"gearboxes|engines|jobs)\s+(?:that\s+)?we\s+(?:see|get|work\s+on|service|repair|inspect|handle)\b"
+    r"|\bwe\s+see\s+(?:a\s+lot|plenty|many|most|(?:this|it|them)\s+(?:a\s+lot|often|regularly|"
+    r"all\s+the\s+time|every\s+week))\b"
+    r"|\b(?:component|part|fault|problem|failure|issue|mistake)s?\s+(?:that\s+)?we\s+see\b", re.I)
+UNVERIFIED_RULES = ("CROWD", "FIRST_HAND")
+
 try:                                   # per-site switches; see the docstring
     from copy_rules_site import DISABLED
 except ImportError:
@@ -195,6 +246,30 @@ def sentence_findings(sent):
         m = MOD_TERM.search(sent)
         if m and (FIRST_PERSON.search(sent) or OFFER.search(sent)) and not NEGATION.search(sent):
             out.append(("MOD_OFFER", m.group(0)))
+    return [f for f in out if f[0] not in DISABLED]
+
+
+def unverified_claims(sent):
+    """[(rule, matched text)] for Round 6 (CROWD, FIRST_HAND), one sentence.
+
+    Called by check_claims.review_items(), deliberately not by
+    sentence_findings(): a hit here blocks at the claims gate, so the pipeline
+    regenerates once with the sentence fed back, as for any other claims hit.
+    """
+    out = []
+    if len(sent) > MAX_SENTENCE:
+        return out
+    for m in CROWD.finditer(sent):
+        # "for most owners in the city this is a local trip", "applies to most
+        # Y62 Patrols": a scope, not a claim about what anybody does.
+        if re.search(r"\b(?:for|to)\s+$", sent[:m.start()], re.I):
+            continue
+        if CROWD_CLAIM.match(sent[m.end():]):
+            out.append(("CROWD", m.group(0)))
+            break
+    m = FIRST_HAND.search(sent)
+    if m:
+        out.append(("FIRST_HAND", m.group(0)))
     return [f for f in out if f[0] not in DISABLED]
 
 

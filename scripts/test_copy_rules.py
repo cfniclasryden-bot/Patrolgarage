@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Regression test for copy_rules.py (and through it check_prose.py and
-check_model_years.py).
+"""Regression test for copy_rules.py (and through it check_prose.py,
+check_model_years.py and, for Round 6, check_claims.py).
 
     python3 scripts/test_copy_rules.py
 
@@ -103,8 +103,59 @@ MUST_NOT_FIRE = [
 ]
 
 
+# Round 6 (2026-10-09): checked through unverified_claims() by check_claims,
+# never by sentence_findings() / check_prose. First two are the live Liwa
+# sentences; the rest are live copy found by the first scan of both sites.
+UNVERIFIED_FIRE = [
+    ("CROWD", "December is the busiest time out there because the Liwa International Festival 2027 runs from 11 December 2026 to 3 January 2027, and hundreds of Patrols make the same drive in the same week."),
+    ("FIRST_HAND", "Cars at higher mileage that have had the fluid changed late are the ones we see with early wear in the valve body."),
+    ("CROWD", "Today, we're proud to serve hundreds of Patrol owners across Dubai and the UAE."),
+    ("CROWD", "Thousands of Y62 owners head to Liwa in December."),
+    ("CROWD", "Most owners skip the transmission service entirely."),
+    ("CROWD", "Many Patrols run hot on the climb."),
+    ("CROWD", "Many owners forget to reinflate after a desert run."),
+    ("CROWD", "Most Y62 owners think about engine oil at service intervals."),
+    ("FIRST_HAND", "We often see cracked coolant tanks in August."),
+    ("FIRST_HAND", "On a car with a documented history, we often find one component at fault."),
+    ("FIRST_HAND", "In our experience, genuine module failure on the Y62 is uncommon."),
+    ("FIRST_HAND", "We regularly see Y62 Patrols with overheated automatics."),
+    ("FIRST_HAND", "Most cars we get have skipped a fluid change."),
+    ("FIRST_HAND", "The Jatco JR710E transmission is the component we see fail most often."),
+    ("FIRST_HAND", "We see this regularly at the workshop."),
+]
+UNVERIFIED_QUIET = [
+    "On a higher-mileage gearbox, fluid that has been left too long between changes can contribute to early wear in the valve body.",
+    "The highway leg can add thousands of kilometres over a season.",
+    "This check suits most owners.",
+    "Mussafah is inside Abu Dhabi, so for most owners in the city this is a local trip.",
+    "The total cost for most Y62 owners depends on a few specific choices.",
+    "We pull the fluid, check the colour and smell.",
+    "If we see metal in the pan, we stop and tell you.",
+    "What we see on the dipstick tells us how hot it has run.",
+    "Many of the checks take ten minutes.",
+    "Most of the load comes from soft sand.",
+    "We often recommend a fluid change before a desert trip.",
+    "Owners ask whether 4L is needed; it is for technical climbs.",
+]
+
+
 def main():
     failures = []
+    for rule, sent in UNVERIFIED_FIRE:
+        got = [r for r, _ in copy_rules.unverified_claims(sent)]
+        if rule not in got:
+            failures.append(f"MISS   {rule}: {sent[:90]}")
+        elif any(r in copy_rules.UNVERIFIED_RULES for r, _ in copy_rules.sentence_findings(sent)):
+            # In sentence_findings, check_prose would block it first, with no retry.
+            failures.append(f"PROSE  {rule} reached sentence_findings: {sent[:70]}")
+        else:
+            print(f"  fires    {rule:12} {sent[:70]}")
+    for sent in UNVERIFIED_QUIET:
+        got = copy_rules.unverified_claims(sent)
+        if got:
+            failures.append(f"FALSE+ {got}: {sent[:90]}")
+        else:
+            print(f"  quiet    {sent[:80]}")
     for rule, sent in MUST_FIRE:
         got = [r for r, _ in copy_rules.sentence_findings(sent)]
         if rule not in got:
@@ -161,6 +212,19 @@ def main():
                           "<footer>Patrol Garage services</footer></body></html>", encoding="utf-8")
         if check_prose.check_file(chrome):
             failures.append("GUARD  header/nav/footer chrome was read as copy")
+        # Round 6 reaches the claims gate (and so the one regenerate), not prose.
+        import check_claims
+        crowd = Path(td) / "crowd.html"
+        crowd.write_text("<html><head><title>Y62 desert prep</title></head><body><article>"
+                         f"<p>{UNVERIFIED_FIRE[0][1]}</p><p>{UNVERIFIED_FIRE[1][1]}</p>"
+                         "</article></body></html>", encoding="utf-8")
+        rules = {a for _, a, _, _ in check_claims.review_items(crowd)}
+        if rules != {"CROWD", "FIRST_HAND"}:
+            failures.append(f"GUARD  check_claims missed CROWD/FIRST_HAND on a page: {rules}")
+        if check_prose.check_file(crowd):
+            failures.append("GUARD  check_prose blocked CROWD/FIRST_HAND (would skip the retry)")
+        if check_claims.review_items(clean):
+            failures.append("GUARD  check_claims flagged a clean page")
         if check_prose.check_file(clean) or check_model_years.review_items(clean):
             failures.append("GUARD  a clean page was flagged")
         else:
@@ -172,8 +236,8 @@ def main():
         for x in failures:
             print("    " + x)
         return 1
-    print(f"[+] copy rules regression passed: {len(MUST_FIRE)} must-fire, "
-          f"{len(MUST_NOT_FIRE)} must-not-fire, guard integration.")
+    print(f"[+] copy rules regression passed: {len(MUST_FIRE) + len(UNVERIFIED_FIRE)} must-fire, "
+          f"{len(MUST_NOT_FIRE) + len(UNVERIFIED_QUIET)} must-not-fire, guard integration.")
     return 0
 
 

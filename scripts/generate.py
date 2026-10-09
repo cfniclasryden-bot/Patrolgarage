@@ -152,6 +152,14 @@ PROMPT_TEMPLATE = """You are writing an AIO-ready blog post for Patrol Garage, a
 
 NO PREMISES — HARD RULE: Patrol Garage books the work and has no premises of its own: never write that it has a workshop, garage, facility or location anywhere, never give an address, district, opening hours or directions for it, and never say where it is based. "Bring it to us" and "message us" are fine.
 
+NO CROWD COUNTS OR FIRST-HAND OBSERVATIONS — HARD RULE:
+The claims check blocks both (copy_rules CROWD / FIRST_HAND, 2026-10-09). Never "hundreds of Patrols ...",
+"thousands of owners ...", "most owners ...", "many Patrols ...", "the ones we
+see", "we often see", "we often find", "we regularly see", "in our experience",
+"most cars we get". Nobody counted, and the site cannot vouch for a caseload.
+  BAD:  "Cars with late fluid changes are the ones we see with valve body wear."
+  GOOD: "Fluid left too long between changes can contribute to valve body wear."
+
 TARGET KEYWORD: {keyword}
 
 {dubai_context}
@@ -244,7 +252,12 @@ def retry_block():
     return (
         "\n\nRETRY. A DRAFT OF THIS POST WAS BLOCKED BEFORE PUBLISHING.\n"
         "The claims check stopped the previous draft on the sentence(s) below. "
-        "Each one credited a figure to an authority this site cannot produce. "
+        "Each one either credited a figure to an authority this site cannot produce, "
+        "or claimed something nobody can verify: a crowd or volume count "
+        "(\"hundreds of Patrols ...\", \"most owners ...\", \"many Patrols ...\") or a "
+        "first-hand workshop observation (\"the ones we see\", \"we often find\", "
+        "\"in our experience\"). For those, state the mechanism in general terms, "
+        "with no count and no observation. "
         "REMOVE these claims. Do not write these sentences, any rewording of "
         "them, or any other sentence making the same claim, anywhere: not in "
         "the body, the FAQ, the quick answer or the meta description. Do not "

@@ -137,6 +137,39 @@ check("dry run never reaches publish", not any("publish" in d for d in order), s
 
 
 # ----------------------------------------------------------------- requeue
+# ------------------------------------------- Round 6 reaches the retry (10-09)
+# CROWD / FIRST_HAND hits come from check_claims, so the real claims_flagged()
+# must return them and the regenerate prompt must carry them, worded for what
+# they are (not as an authority claim). Real functions, a real page on disk.
+_r6 = tempfile.TemporaryDirectory()
+(Path(_r6.name) / "blog").mkdir()
+_crowd = ("December is busy because the festival runs then, and hundreds of "
+          "Patrols make the same drive in the same week.")
+_first = ("Cars at higher mileage that have had the fluid changed late are the "
+          "ones we see with early wear in the valve body.")
+(Path(_r6.name) / "blog" / "r6-case.html").write_text(
+    f"<html><body><article><p>{_crowd}</p>"
+    f"<p>{_first}</p><p>Check the coolant first.</p></article></body></html>",
+    encoding="utf-8")
+_saved_root = rp.ROOT
+rp.ROOT = Path(_r6.name)
+try:
+    _flagged = rp.claims_flagged("r6-case")
+finally:
+    rp.ROOT = _saved_root
+check("Round 6: claims_flagged returns the crowd and first-hand sentences",
+      _flagged == [_crowd, _first], str(_flagged))
+os.environ["GATE_FEEDBACK"] = "\n".join(_flagged)
+try:
+    _prompt = generate.retry_block()
+finally:
+    del os.environ["GATE_FEEDBACK"]
+check("Round 6: the regenerate prompt carries both sentences",
+      _crowd in _prompt and _first in _prompt)
+check("Round 6: the regenerate prompt names crowd counts and first-hand observations",
+      "crowd or volume count" in _prompt and "first-hand workshop observation" in _prompt)
+
+
 def requeue_case(streak):
     moved = []
     saved = supabase_log.failure_streak, supabase_log.requeue_to_back

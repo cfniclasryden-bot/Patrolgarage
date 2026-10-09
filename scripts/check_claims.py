@@ -74,6 +74,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shipped_pages
+import copy_rules
 
 SITE = Path(__file__).parent.parent
 
@@ -276,6 +277,13 @@ def review_items(path):
       for sent in units:
         if scope_label == "body" and len(sent) > 400:
             continue
+        # Round 6 (2026-10-09): crowd counts and first-hand workshop observations,
+        # defined in copy_rules.py. Checked HERE, not in check_prose, so a hit gets
+        # the claims regenerate with the sentence fed back. Same tuple shape: the
+        # rule name sits where the authority goes, the matched words where the
+        # figure goes. No get-out: there is no source to cite for "we often see".
+        for rule, hit in copy_rules.unverified_claims(sent):
+            out.append((scope_label, rule, hit, sent))
         auth = AUTHORITY.search(sent)
         fig = FIGURE.search(sent)
         if not (auth and fig):
@@ -321,18 +329,24 @@ def main(argv):
             name = f
         print(f"\n  {name}")
         for scope_label, auth, fig, sent in items:
-            print(f"     · [{scope_label}] attributes {fig!r} to {auth!r}")
+            if auth in copy_rules.UNVERIFIED_RULES:
+                print(f"     · [{scope_label}] {auth}: {fig!r} (unverifiable)")
+            else:
+                print(f"     · [{scope_label}] attributes {fig!r} to {auth!r}")
             print(f"       {sent[:250]}")
 
     if total:
         # flagged, not len(files) — see the note in check_model_years.py.
-        print(f"\n[!] REVIEW REQUIRED — {total} figure(s) attributed to an external "
-              f"authority with no citation, across {flagged} of {len(files)} "
-              f"file(s) scanned.")
+        print(f"\n[!] REVIEW REQUIRED — {total} claim(s) with nothing behind them "
+              f"(an uncited authority, a crowd count or a first-hand observation), "
+              f"across {flagged} of {len(files)} file(s) scanned.")
         print("    For each: produce the source, or drop the attribution and keep the "
               "figure as\n    the workshop's own recommendation. A number the workshop "
               "stands behind needs\n    no citation; borrowed authority it cannot produce "
-              "is a liability.\n")
+              "is a liability.\n"
+              "    CROWD / FIRST_HAND: state the mechanism in general terms instead; "
+              "nobody\n    counted the crowd and the site cannot vouch for the workshop's "
+              "caseload.\n")
         return 2
 
     print(f"[+] Claims check: {len(files)} file(s), no uncited authority claims.")

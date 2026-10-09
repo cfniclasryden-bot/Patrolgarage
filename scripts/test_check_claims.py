@@ -240,8 +240,30 @@ def main():
     live += sorted((SITE / "services").glob("*.html"))
     live += [p for p in (SITE / "services.html", SITE / "index.html",
                          SITE / "nissan-patrol-abu-dhabi.html") if p.exists()]
-    dirty = [(f, check_claims.review_items(f)) for f in live]
-    dirty = [(f, i) for f, i in dirty if i]
+    # Round 6 (2026-10-09): CROWD / FIRST_HAND findings that were already live
+    # when the rule landed are frozen in unverified_claims_baseline.json and
+    # reported, not edited (owner's instruction). Exactly those are tolerated;
+    # a new one anywhere fails, as does any authority finding.
+    import json
+    import copy_rules
+    _base = json.loads((Path(__file__).parent / "unverified_claims_baseline.json")
+                       .read_text(encoding="utf-8"))["findings"]
+    baseline = {(b["page"], b["rule"], b["sentence"]) for b in _base}
+    tolerated = 0
+    dirty = []
+    for f in live:
+        items = []
+        for it in check_claims.review_items(f):
+            if (it[1] in copy_rules.UNVERIFIED_RULES
+                    and (str(f.relative_to(SITE)), it[1], it[3]) in baseline):
+                tolerated += 1
+            else:
+                items.append(it)
+        if items:
+            dirty.append((f, items))
+    if tolerated:
+        print(f"  known    {tolerated} pre-existing CROWD/FIRST_HAND finding(s) "
+              f"(unverified_claims_baseline.json)")
     if dirty:
         for f, items in dirty:
             failures.append(f"LIVE   — {f.relative_to(SITE)} carries {len(items)} finding(s)")
