@@ -32,7 +32,8 @@ fails += [f"drift: {d}" for d in drift]
 for page, pins in copy_pins.PINS.items():
     for old, new in pins:
         text = re.sub(r"<[^>]+>", "", new)
-        if '"' in new:
+        # Quotes inside tags are markup (class="..."); only text reaches JSON-LD.
+        if '"' in text:
             fails.append(f"{page}: double quote in replacement: {new[:60]!r}")
         if "—" in new or "–" in new:
             fails.append(f"{page}: dash in replacement: {new[:60]!r}")
@@ -40,7 +41,7 @@ for page, pins in copy_pins.PINS.items():
             fails.append(f"{page}: replacement still a CROWD/FIRST_HAND claim: {new[:60]!r}")
         if copy_rules.sentence_findings(text):
             fails.append(f"{page}: replacement trips copy_rules: {copy_rules.sentence_findings(text)}")
-        m = PREMISES.search(new)
+        m = PREMISES.search(text.replace("Patrol Garage", ""))   # the brand name is not a premises claim
         if m:
             fails.append(f"{page}: replacement implies premises/customers ({m.group(0)!r}): {new[:60]!r}")
 

@@ -306,8 +306,11 @@ def assemble(keyword):
     # top posts only, and this template IS one of them. Strip it before the
     # prefill rewrite below, which would otherwise give its Arabic button the
     # English article prefill on every new post.
-    template = re.sub(r'\s*<div class="fs-cta" data-fs="1">.*?</div>', "", template,
+    template = re.sub(r'\s*<div class="(?:fs-cta|pg-ask)" data-fs="1">.*?\n\s*</div>', "", template,
                       count=1, flags=re.S)
+    # ...and its stylesheet, which used to stay behind on every new post
+    # (nissan-patrol-losing-power carried an orphan fs-cta-css block).
+    template = re.sub(r'<style id="(?:fs-cta|pg-ask)-css">.*?</style>\n?', "", template, flags=re.S)
     template = cta_lib.set_all_wa_prefill(template, prefill)
 
     # Analytics safety net. The "template" is a real published post, so a tag

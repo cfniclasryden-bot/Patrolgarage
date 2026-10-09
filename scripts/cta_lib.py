@@ -195,9 +195,17 @@ _WA_HREF_RE = re.compile(r'href="https://wa\.me/' + WA_NUM + r'(?:\?text=[^"]*)?
 
 def set_all_wa_prefill(html, prefill):
     """Point every WhatsApp link on the page at the same context-rich pre-fill.
-    Idempotent: re-running with the same prefill is a no-op."""
+    Idempotent: re-running with the same prefill is a no-op.
+
+    A link marked lang="ar" keeps its own Arabic pre-fill (2026-10-09): the
+    first-screen Arabic WhatsApp link would otherwise be handed the English
+    article message by assemble.py or a re-run of patch_cta.py."""
     repl = f'href="https://wa.me/{WA_NUM}?text={enc(prefill)}"'
-    return _WA_HREF_RE.sub(repl, html)
+
+    def tag(m):
+        t = m.group(0)
+        return t if 'lang="ar"' in t else _WA_HREF_RE.sub(repl, t)
+    return re.sub(r"<a\b[^>]*>", tag, html)
 
 
 # Generic boilerplate banner that shipped on the high-intent pages — only rewrite these.

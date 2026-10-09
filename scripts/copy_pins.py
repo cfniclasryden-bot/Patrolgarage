@@ -34,8 +34,18 @@ ROOT = Path(__file__).resolve().parent.parent
 # that day's scan (copy_rules.unverified_claims), reworded to a neutral general
 # statement. This site has no premises, so no replacement may suggest a
 # workshop, a bay, a team inspecting cars or a customer base.
+#
+# Later the same day: about.html (tenure and workshop claims), contact.html
+# ("workshop only") and the homepage steps (no How It Works label, no
+# drop-off or warranty wording) with the first-screen redesign.
 PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners across Dubai and the UAE. ",
-                 '')],
+                 ''),
+                (" We've earned our reputation as the go-to Patrol specialists not through "
+                 'marketing, but through ten years of honest work.',
+                 ''),
+                ('From routine maintenance to complex engine work, suspension and HBMC repair to '
+                 "full restorations, we've become the workshop Patrol owners trust.",
+                 'Patrol Garage focuses on one car only: the Nissan Patrol Y62.')],
  'blog/best-oil-nissan-patrol-uae-heat.html': [('We regularly see Patrols with oil-related damage '
                                                 'that could have been prevented with the right '
                                                 'lubricant choice.',
@@ -451,7 +461,33 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                          'wait for dealer parts ordering.')],
  'contact.html': [('Most Patrol owners reach us from Deira, Mirdif, Nad Al Sheba, Al Quoz, '
                    'Business Bay and Sharjah.',
-                   'Send us a message with the symptom and we will take it from there.')],
+                   'Send us a message with the symptom and we will take it from there.'),
+                  ('Worth repeating before you get in touch: this is a Nissan Patrol Y62 workshop '
+                   'only.',
+                   'Worth repeating before you get in touch: Nissan Patrol Y62 only.')],
+ 'index.html': [('<div class="section-num">01 — How It Works</div>',
+                 '<div class="section-num">01 · Start Here</div>'),
+                ('<h2>Drop it off.<br>Drive it back.</h2>',
+                 '<h2>One message.<br>A clear next step.</h2>'),
+                ('<p>A four-step process, no surprises. You hear from us before any work '
+                 'happens.</p>',
+                 '<p>Tell us what the car is doing and you get a plain reply on what it could be '
+                 'and what comes next.</p>'),
+                ('<h3>Send the Issue</h3>', '<h3>Describe the Fault</h3>'),
+                ("<p>Message on WhatsApp or call. Describe the problem. We'll tell you what we "
+                 "suspect and what it'll likely cost.</p>",
+                 '<p>What the car is doing, when it started and the mileage. Text, a voice note or '
+                 'a video all work.</p>'),
+                ('<h3>Bring It In</h3>', '<h3>Get a Straight Answer</h3>'),
+                ('<p>Message us and we confirm the drop-off point and a time. We diagnose properly '
+                 '— no guessing, no parts roulette.</p>',
+                 '<p>We reply with the likely causes and how urgent it looks, so you know what you '
+                 'are dealing with.</p>'),
+                ('<h3>Drive It Out</h3>', '<h3>Back on the Road</h3>'),
+                ('<p>Repairs done with genuine parts where it matters. Warranty on every job. '
+                 'Pickup and delivery on request.</p>',
+                 '<p>Repairs done with genuine parts where it matters, and you hear from us as '
+                 'soon as the car is ready.</p>')],
  'services/y62-major-service-dubai.html': [('Most Patrols in Dubai are better served on a shorter '
                                             'rhythm than the book interval, and we will tell you '
                                             'what yours actually needs based on how you drive it.',
