@@ -244,9 +244,11 @@ def failure_streak(keyword):
 def requeue_to_back(article_id, keyword, reason):
     """Move a pending article to the back of the queue. True on success.
 
-    The runner takes the oldest pending row by created_at, so "the back" is
-    created_at = now. The reason goes in editorial_notes and in a `requeued`
-    pipeline_runs row, which also ends the failure streak.
+    The runner orders by queue_position (nulls last), then created_at, so "the
+    back" is queue_position = null and created_at = now. Clearing the position
+    matters: a positioned row moved by created_at alone would stay at the head.
+    The reason goes in editorial_notes and in a `requeued` pipeline_runs row,
+    which also ends the failure streak.
     """
     if not _enabled():
         return False
@@ -256,6 +258,7 @@ def requeue_to_back(article_id, keyword, reason):
             f"{SUPABASE_URL}/rest/v1/articles?id=eq.{quote(str(article_id), safe='')}"
             "&status=eq.pending",
             data=json.dumps({"created_at": datetime.utcnow().isoformat() + "Z",
+                             "queue_position": None,
                              "editorial_notes": reason}).encode("utf-8"),
             headers=_headers(),
             method="PATCH",

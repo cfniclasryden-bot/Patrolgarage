@@ -21,8 +21,20 @@ CSV_FILE = ROOT / "keywords.csv"
 # failed) and 2 (sync_to_origin refused to run), so the log says which it was.
 IDLE_EXIT = 3
 
+# Queue order (2026-10-09). An explicit queue_position wins, lowest first; rows
+# without one (refill inserts, requeued rows) follow, oldest first. Before this
+# the picker read created_at only and every queue_position was empty. The Abu
+# Dhabi mix (2 of every 3 runs) is written into queue_position, not computed
+# here, so the order is the one the table shows.
+QUEUE_ORDER = "queue_position.asc.nullslast,created_at.asc"
+
 # The one gate that earns a regenerate. See gate_with_one_retry().
 CLAIMS_STAGE = "pre-publish: no figure attributed to an authority we cannot produce"
+# The Abu Dhabi gate (check_city.py) earns the same one regenerate since
+# 2026-10-09: a Y61/Y63 mention is wording, and a draft told which sentences to
+# drop usually drops them. It shares the ONE retry with check_claims.
+CITY_STAGE = "pre-publish: an Abu Dhabi post names Abu Dhabi, and no Y61/Y63"
+RETRYABLE = (CLAIMS_STAGE, CITY_STAGE)
 LOG_DIR = ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -94,6 +106,9 @@ def gate_stages(slug):
         (["python3", "scripts/check_model_years.py", post],
          "pre-publish: no invented model-year or generation split", True),
         (["python3", "scripts/check_claims.py", post], CLAIMS_STAGE, True),
+        # Abu Dhabi posts (2026-10-09, ported from topchallenger-site): the city
+        # in title, H1, meta description and opening. A no-op for every other slug.
+        (["python3", "scripts/check_city.py", post], CITY_STAGE, True),
         # Repairs rather than refuses, as on topchallenger: a wrong alt has a
         # safe alternative, so it never costs the day's post.
         (["python3", "scripts/check_alt.py", "--repair", post],
@@ -116,6 +131,23 @@ def claims_flagged(slug):
     return list(dict.fromkeys(sent for _, _, _, sent in items))
 
 
+def warn_ad_mix(pending_rows):
+    """Log a warning when the Abu Dhabi rows are running out. Never fatal."""
+    try:
+        import ad_city
+        msg = ad_city.ad_mix_warning([r.get("keyword", "") for r in pending_rows])
+        if msg:
+            log(msg)
+    except Exception as e:
+        log(f"[warn] Abu Dhabi mix check skipped: {e}")
+
+
+def city_flagged(slug):
+    """The Y61/Y63 sentences check_city blocked on, for the regenerate prompt."""
+    import check_city
+    return list(dict.fromkeys(check_city.model_mentions(ROOT / "blog" / f"{slug}.html")))
+
+
 def gate_with_one_retry(slug, regenerate):
     """Run the gates; on a check_claims block, regenerate ONCE and gate again.
 
@@ -129,10 +161,10 @@ def gate_with_one_retry(slug, regenerate):
     drop usually drops them. Same logic as topchallenger-site.
     """
     failed = run_gates(slug)
-    if failed != CLAIMS_STAGE:
+    if failed not in RETRYABLE:
         return failed
-    flagged = claims_flagged(slug)
-    log(f"[retry] check_claims blocked {len(flagged)} sentence(s); regenerating once "
+    flagged = claims_flagged(slug) if failed == CLAIMS_STAGE else city_flagged(slug)
+    log(f"[retry] {failed} blocked {len(flagged)} sentence(s); regenerating once "
         f"with them fed back as claims to remove")
     broke = regenerate({"GATE_FEEDBACK": "\n".join(flagged)})
     if broke:
@@ -322,9 +354,11 @@ def main():
     # Auto-replenish queue if running low. Supabase is the queue; keywords.csv is
     # only a mirror of it and is not an input to anything (2026-09-29).
     r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
-                 params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id"})
-    pending_count = len(r.json())
+                 params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id,keyword"})
+    pending_rows = r.json()
+    pending_count = len(pending_rows)
     log(f"Pending in queue: {pending_count}")
+    warn_ad_mix(pending_rows)
 
     if pending_count < 5:
         log(f"Queue low. Auto-generating more keywords...")
@@ -348,10 +382,10 @@ def main():
                      params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id"})
         log(f"Pending in queue after replenishment: {len(r.json())} (was {pending_count})")
 
-    # Fetch the oldest pending article from Supabase
+    # Fetch the next pending article from Supabase, in QUEUE_ORDER
     r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
                  params={"site_id": f"eq.{site_id}", "status": "eq.pending",
-                         "select": "id,keyword,slug", "order": "created_at.asc", "limit": "1"})
+                         "select": "id,keyword,slug", "order": QUEUE_ORDER, "limit": "1"})
     pending_articles = r.json()
     if not pending_articles:
         log("No pending keywords. Pipeline idle.")
@@ -476,7 +510,8 @@ def dry_run_main():
                        params={"domain": f"eq.{domain}", "select": "id"}).json()[0]["id"]
     pending = _req.get(f"{url}/rest/v1/articles", headers=sh,
                        params={"site_id": f"eq.{site_id}", "status": "eq.pending",
-                               "select": "id,keyword,slug", "order": "created_at.asc"}).json()
+                               "select": "id,keyword,slug", "order": QUEUE_ORDER}).json()
+    warn_ad_mix(pending)
     log(f"[dry-run] pending in queue: {len(pending)}"
         + ("  (a real run would refill first: below 5)" if len(pending) < 5 else ""))
     if not pending:

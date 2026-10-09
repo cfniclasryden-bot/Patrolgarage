@@ -131,6 +131,7 @@ it. If a claim needs a source you do not have, leave the claim out."""
 # fragments the guard matches, so the prompt and the guard cannot drift apart.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import check_claims  # noqa: E402
+import ad_city  # noqa: E402
 DUBAI_CONTEXT = DUBAI_CONTEXT.replace(
     "<<ACCEPTED_SENTENCES>>",
     "\n".join(f'  - "{s}"' for s in check_claims.ACCEPTED_SENTENCES))
@@ -268,6 +269,19 @@ def retry_block():
     )
 
 
+def city_block(slug):
+    """Abu Dhabi rules for an Abu Dhabi slug (2026-10-09), "" for every other.
+
+    The reader's car is in Abu Dhabi, so the city goes in the H1 and the quick
+    answer, and the one location line is "the work is carried out in Mussafah".
+    check_city.py blocks the publish if the output ignores this. Every other
+    slug gets "", so its prompt is unchanged.
+    """
+    rules = ad_city.ad_city_rules_for(slug)
+    return ("\n\nCITY FOR THIS POST: sits alongside the rules above, does not replace them.\n"
+            + rules + "\n") if rules else ""
+
+
 def generate_post(keyword):
     slug = slugify(keyword)
     research_path = RESEARCH_DIR / f"{slug}.json"
@@ -301,7 +315,7 @@ def generate_post(keyword):
         sources=sources_text,
         current_month_year=current_month_year,
         authoritative_links="\n".join(f"  - {u}" for u in AUTHORITATIVE_LINKS),
-    ) + retry_block()
+    ) + city_block(slug) + retry_block()
 
     print(f"[+] Generating post for: {keyword}")
     print(f"    Using {len(sorted_sources[:12])} sources")

@@ -658,6 +658,15 @@ def publish(keyword=None):
     except Exception as e:
         print(f"    [!] copy pins failed: {e}")
 
+    # Mussafah routing (2026-10-09): the Abu Dhabi ask and "Mussafah:" pre-fills
+    # on the hub and every Abu Dhabi post, whatever rebuilt them. Never fatal.
+    try:
+        import patch_ad_routing
+        routed = patch_ad_routing.run(write=True)
+        print(f"[+] Abu Dhabi routing: {len(routed)} page(s) re-applied")
+    except Exception as e:
+        print(f"    [!] Abu Dhabi routing failed: {e}")
+
     # Regenerated every run for the same reason as the sitemap: the cron adds
     # posts twice a week, so a hand-written llms.txt goes stale immediately.
     print("[+] Regenerating llms.txt...")

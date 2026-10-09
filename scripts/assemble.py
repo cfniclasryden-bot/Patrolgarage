@@ -16,6 +16,7 @@ import patch_internal_traffic
 import patch_favicon
 import money_links
 import early_cta
+import ad_city
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
@@ -58,6 +59,10 @@ Return ONLY valid JSON (no markdown, no preamble):
   "h1_short": "3-5 word hero headline",
   "wa_text": "URL-encoded WhatsApp message"
 }}"""
+    # Abu Dhabi posts (2026-10-09): the city in title, description and H1, which
+    # check_city.py then requires. Every other keyword's prompt is unchanged.
+    if ad_city.ad_city_for(keyword):
+        prompt += ad_city.AD_META_RULE
 
     msg = client.messages.create(
         model="claude-sonnet-4-6",
@@ -107,8 +112,11 @@ def extract_faqs(draft_html):
     return faqs
 
 
-def get_related_posts(current_slug, max_links=3):
-    """Find related blog posts for internal linking."""
+def get_related_posts(current_slug, max_links=3, skip_other_models=False):
+    """Find related blog posts for internal linking.
+
+    skip_other_models: leave out any post whose slug, title or H1 names the Y61
+    or Y63 (Abu Dhabi posts, where check_city blocks any such mention)."""
     all_posts = []
     for f in BLOG_DIR.glob("*.html"):
         if f.name in ["index.html", f"{current_slug}.html"]:
@@ -120,6 +128,8 @@ def get_related_posts(current_slug, max_links=3):
         if title_match and h1_match:
             title = title_match.group(1).split("|")[0].strip()
             h1 = h1_match.group(1).strip()
+            if skip_other_models and re.search(r"(?i)\by6[13]\b", f"{f.stem.replace('-', ' ')} {title} {h1}"):
+                continue
             all_posts.append({"slug": f.stem, "title": title, "h1": h1})
 
     if len(all_posts) <= max_links:
@@ -237,7 +247,7 @@ def assemble(keyword):
     faqs = extract_faqs(draft_html)
     print(f"    Found {len(faqs)} FAQ pairs for schema")
 
-    related = get_related_posts(slug, max_links=3)
+    related = get_related_posts(slug, max_links=3, skip_other_models=bool(ad_city.ad_city_for(slug)))
     print(f"    Adding {len(related)} internal links")
 
     article_body = extract_article_body(draft_html)
@@ -246,6 +256,13 @@ def assemble(keyword):
     if cta_lib.wants_mid_cta(slug, meta["title"]):
         article_body = cta_lib.insert_mid_cta(article_body, cta_lib.mid_cta_html(meta["title"], slug))
     article_body = inject_internal_links(article_body, related)
+    # An Abu Dhabi post always links its hub. The prompt asks for an inline link;
+    # if the draft left it out, it heads the related-reading box instead.
+    if ad_city.ad_city_for(slug) and ad_city.HUB_PATH not in article_body:
+        article_body = article_body.replace(
+            '<div class="related-reading"><h3>Related reading</h3><ul>',
+            '<div class="related-reading"><h3>Related reading</h3><ul>'
+            f'<li><a href="{ad_city.HUB_PATH}">Nissan Patrol Y62 in Abu Dhabi</a></li>', 1)
     # One in-body /services link (plus a home link on pillars). The blog's other
     # /services links are nav/footer boilerplate, which Google discounts — this is
     # the only one inside <article>. Fail-safe: returns the body unchanged on any
@@ -256,6 +273,9 @@ def assemble(keyword):
     # so roughly half of readers never reached one. Fail-safe: returns the body
     # unchanged on any error. See early_cta.py.
     article_body = early_cta.insert(article_body, slug)
+    if ad_city.ad_city_for(slug):
+        # early_cta's copy is written for Dubai readers.
+        article_body = article_body.replace("in Dubai heat.", "in Abu Dhabi heat.")
 
     today = datetime.now().strftime("%Y-%m-%d")
     canonical_url = f"https://patrolgarage.ae/blog/{slug}.html"
@@ -295,6 +315,8 @@ def assemble(keyword):
     # pre-fills on EVERY WhatsApp link (floating bubble, footer, banner, mid-article).
     # Same cta_lib logic the static pages use, so cron articles match (see patch_cta.py).
     prefill = cta_lib.prefill_for(meta["title"], slug)
+    if ad_city.ad_city_for(slug):
+        prefill = ad_city.POST_PREFILL
     h2, p, label = cta_lib.banner_for(meta["title"], slug)
     template = re.sub(r'(<section class="cta-banner">.*?<h2>).*?(</h2>)',
                       lambda m: m.group(1) + h2 + m.group(2), template, count=1, flags=re.DOTALL)
@@ -312,6 +334,11 @@ def assemble(keyword):
     # (nissan-patrol-losing-power carried an orphan fs-cta-css block).
     template = re.sub(r'<style id="(?:fs-cta|pg-ask)-css">.*?</style>\n?', "", template, flags=re.S)
     template = cta_lib.set_all_wa_prefill(template, prefill)
+    # Abu Dhabi posts (2026-10-09): the Mussafah ask under the H1 (labels
+    # pg-ad-wa / pg-ad-wa-ar / pg-ad-call) and every WhatsApp pre-fill starting
+    # "Mussafah:". After set_all_wa_prefill, so the ask keeps its own message.
+    if ad_city.ad_city_for(slug):
+        template = ad_city.apply_routing(template)
 
     # Analytics safety net. The "template" is a real published post, so a tag
     # dropped from that file would silently stop tracking every new post from

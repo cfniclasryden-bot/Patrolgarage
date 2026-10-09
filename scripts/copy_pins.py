@@ -505,6 +505,46 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                             'drive it.')]}
 
 
+# Abu Dhabi hub, 2026-10-09: the Y62-led title and H1 (build_abu_dhabi_page.py
+# builds them; these stop an old copy of the builder bringing the old ones back),
+# and the one contextual link to the hub from each service page and from the
+# three Dubai posts GSC shows getting Abu Dhabi ownership impressions. Each pin
+# replaces a passage that does NOT survive inside its replacement, so a second
+# apply is a no-op (the insertion-pin trap fixed on topchallenger the same day).
+_AD_HUB_PINS = {
+    'nissan-patrol-abu-dhabi.html': [
+        ('<title>Nissan Patrol Abu Dhabi | Y62 Service &amp; Repair</title>',
+         '<title>Nissan Patrol Y62 Abu Dhabi | Reliability, Upkeep, Repair</title>'),
+        ('<h1>Nissan Patrol,<br>Abu Dhabi.</h1>', '<h1>Nissan Patrol Y62,<br>Abu Dhabi.</h1>'),
+    ],
+    'services/nissan-patrol-v8-engine.html': [
+        ('covers the cooling side.</p>',
+         'covers the cooling side. If the car lives in the capital, the <a href="/nissan-patrol-abu-dhabi.html" style="text-decoration: underline; text-underline-offset: 3px;">Nissan Patrol Y62 in Abu Dhabi</a> page covers reliability and upkeep there.</p>'),
+    ],
+    'services/y62-gearbox-transmission-dubai.html': [
+        ('Y62 transmission problems in Dubai</a>.</p>',
+         'Y62 transmission problems in Dubai</a>. Owners in Abu Dhabi can send the same details, and <a href="/nissan-patrol-abu-dhabi.html" style="text-decoration: underline; text-underline-offset: 3px;">how Abu Dhabi Y62 work is booked</a> is set out on its own page.</p>'),
+    ],
+    'y62-garage-dubai.html': [
+        ('Sharjah and the Northern Emirates. We do not quote',
+         'Sharjah and the Northern Emirates. For a Y62 kept in the capital, see <a href="/nissan-patrol-abu-dhabi.html" style="text-decoration: underline; text-underline-offset: 3px;">Patrol Y62 ownership in Abu Dhabi</a>. We do not quote'),
+    ],
+    'blog/nissan-patrol-service-cost-dubai.html': [
+        ('budget for major repairs and unexpected issues.</p>',
+         'budget for major repairs and unexpected issues. If your Patrol lives in Abu Dhabi, <a href="/nissan-patrol-abu-dhabi.html">what drives Y62 upkeep in Abu Dhabi</a> is covered on its own page.</p>'),
+    ],
+    'blog/nissan-patrol-y62-problems-dubai.html': [
+        ('every major repair category we handle at Patrol Garage.</p>',
+         'every major repair category we handle at Patrol Garage. For a Y62 kept in Abu Dhabi, the <a href="/nissan-patrol-abu-dhabi.html">Abu Dhabi reliability and ownership page</a> answers the same questions from there.</p>'),
+    ],
+    'blog/nissan-patrol-major-service.html': [
+        ('reach the end of their useful life.</p>',
+         'reach the end of their useful life. If the car is based in Abu Dhabi, <a href="/nissan-patrol-abu-dhabi.html">Y62 upkeep for Abu Dhabi owners</a> covers what changes there.</p>'),
+    ],
+}
+for _page, _pins in _AD_HUB_PINS.items():
+    PINS.setdefault(_page, []).extend(_pins)
+
 def apply_page(rel, pins, write=True):
     """(applied, already, drift) for one page."""
     path = ROOT / rel
