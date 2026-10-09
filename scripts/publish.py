@@ -645,6 +645,19 @@ def publish(keyword=None):
     # and the regenerated index picks up any fallback rewrites.
     ensure_images()
 
+    # Copy pins (2026-10-09): re-apply every correction to published copy, so a
+    # refresh or a rebuild that brings an old sentence back is fixed before it
+    # ships. Before the sitemap, so a re-applied pin is dated by git like any
+    # other change. Never fatal: drift is logged and test_copy_pins.py fails.
+    try:
+        import copy_pins
+        applied, already, drift = copy_pins.apply_all()
+        print(f"[+] Copy pins: {applied} re-applied, {already} already in place")
+        for d in drift:
+            print(f"    [!] copy pin DRIFT: {d}")
+    except Exception as e:
+        print(f"    [!] copy pins failed: {e}")
+
     # Regenerated every run for the same reason as the sitemap: the cron adds
     # posts twice a week, so a hand-written llms.txt goes stale immediately.
     print("[+] Regenerating llms.txt...")

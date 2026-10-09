@@ -47,10 +47,12 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 # 199 impressions in 90 days) removed on the owner's instruction; intercooler
 # upgrade (2 / 35) and suspension-and-lift-kits (1 / 21) fell below the keep
 # threshold. Each goes to the closest repair post. Both forms, as above.
-/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html  /blog/nissan-patrol-engine-problems.html 301
-/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost       /blog/nissan-patrol-engine-problems.html 301!
-/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html  /blog/nissan-patrol-engine-problems.html 301
-/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent       /blog/nissan-patrol-engine-problems.html 301!
+# 2026-10-09: turbo and intercooler repointed to /blog/nissan-patrol-losing-power.html
+# (published 2026-10-08), the closer match for a lost-power search than engine-problems.
+/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost.html  /blog/nissan-patrol-losing-power.html 301
+/blog/nissan-patrol-y62-turbo-upgrade-dubai-cost       /blog/nissan-patrol-losing-power.html 301!
+/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent.html  /blog/nissan-patrol-losing-power.html 301
+/blog/y62-intercooler-upgrade-cost-dubai-al-futtaim-vs-independent       /blog/nissan-patrol-losing-power.html 301!
 /blog/nissan-patrol-suspension-dubai.html  /blog/nissan-patrol-y62-problems-dubai.html 301
 /blog/nissan-patrol-suspension-dubai       /blog/nissan-patrol-y62-problems-dubai.html 301!
 

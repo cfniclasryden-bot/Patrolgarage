@@ -1,5 +1,7 @@
 # Unverified-claims scan, 2026-10-09
 
+> **Resolved 2026-10-09 (same day).** Every finding below was reworded to a neutral general statement and saved as a copy pin (topchallenger: `site_config.COPY_PINS`, plus `build_pages.py` for the homepage; patrolgarage: `scripts/copy_pins.py`, re-applied by `publish()` on every run, plus `build_service_pages.py`). One finding is kept on purpose: the owner's pinned festival sentence on topchallenger `y62-desert-driving-preparation-uae`, now the only baseline entry. The tables below are the pre-cleanup record.
+
 First scan of every shipped page on both sites with the Round 6 rules in `scripts/copy_rules.py`
 (`CROWD`: a crowd or volume count followed by a claim about behaviour; `FIRST_HAND`: a first-hand
 workshop observation). Checked through `check_claims.py`. **Report only: nothing below was edited.**
