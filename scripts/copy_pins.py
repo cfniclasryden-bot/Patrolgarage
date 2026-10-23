@@ -173,22 +173,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                  'summer.',
                                                  'A twice-yearly AC service in summer is an option '
                                                  'worth considering.')],
- 'blog/nissan-patrol-service-dubai-complete-guide.html': [('Skipping these milestones is the '
-                                                           'single biggest cause of the expensive '
-                                                           'failures we see.',
-                                                           'Skipping these milestones is the '
-                                                           'single biggest cause of expensive '
-                                                           'failures.'),
-                                                          ('Letting transmission fluid go beyond '
-                                                           'its service life is the leading cause '
-                                                           'of the Jatco gearbox failures we see '
-                                                           'in Y62 Patrols — the maths strongly '
-                                                           'favour the service schedule.',
-                                                           'Letting transmission fluid go beyond '
-                                                           'its service life is a leading cause of '
-                                                           'Jatco gearbox failure in Y62 Patrols, '
-                                                           'and the maths strongly favour the '
-                                                           'service schedule.')],
  'blog/nissan-patrol-shaking-at-high-speed.html': [('We regularly see bent rims on Y62s that '
                                                     'owners have used off-road without reducing '
                                                     'tyre pressure, and the deformation is often '
@@ -541,6 +525,29 @@ _AD_HUB_PINS.setdefault('blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-20
     ("<li><a href='/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026'>Y61 Snorkel Fitting Cost</a></li>", ''),
 ])
 for _page, _pins in _AD_HUB_PINS.items():
+    PINS.setdefault(_page, []).extend(_pins)
+
+# 2026-10-23: a factual first sentence (what, which car, where the work is
+# carried out, how to book) in place of the hero slogans on three root pages.
+# build_y62_garage_page.py carries the new y62-garage-dubai sentence too; these
+# pins catch a rebuild or patch that brings an old slogan back. The guide merged
+# into the service cost post the same day, so its own pins went with the file.
+_PH = "+971 58 514 3634"
+_FIRST_SENTENCE_PINS = {
+    'services.html': [
+        ('Engine to exhaust. Oil change to full rebuild. We cover every service your Patrol needs — with the expertise to handle it right.',
+         "Patrol Garage arranges servicing, diagnostics and repair for the Nissan Patrol Y62 in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on " + _PH + "."),
+    ],
+    'y62-garage-dubai.html': [
+        ('Most Dubai workshops see a Y62 a few times a month. We see them all day. That is the whole difference &mdash; the faults are familiar before you finish describing them.',
+         "Patrol Garage books engine, gearbox, suspension and cooling work on the Nissan Patrol Y62 for owners in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on " + _PH + "."),
+    ],
+    'about.html': [
+        ('Not generalists. Nissan Patrol specialists.',
+         "Patrol Garage books servicing and repair for the Nissan Patrol Y62 in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on " + _PH + "."),
+    ],
+}
+for _page, _pins in _FIRST_SENTENCE_PINS.items():
     PINS.setdefault(_page, []).extend(_pins)
 
 def apply_page(rel, pins, write=True):

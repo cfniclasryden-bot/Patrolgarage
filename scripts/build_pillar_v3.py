@@ -33,27 +33,9 @@ PILLARS = {
 - Off-road areas: Al Qudra, Big Red, Liwa
 """,
     },
-    "service": {
-        "slug": "nissan-patrol-service-dubai-complete-guide",
-        "title": "Nissan Patrol Service in Dubai: The Complete Guide",
-        "eyebrow": "Service · Workshops · Dubai",
-        "description": "Complete guide to servicing a Nissan Patrol in Dubai. Workshop selection, costs, intervals, dealer vs independent comparison.",
-        "meta_keywords": "Patrol service Dubai, Nissan Patrol workshop, Al Futtaim alternative, Patrol mechanic",
-        "source_template": "nissan-patrol-service-cost-dubai",
-        "clusters": [
-            ("nissan-patrol-service-cost-dubai", "Patrol Service Costs Dubai"),
-            ("nissan-patrol-mechanic-al-quoz", "Patrol Mechanic Al Quoz"),
-            ("nissan-patrol-pre-purchase-inspection", "Patrol Pre-Purchase Inspection"),
-            ("nissan-patrol-gearbox-problems-uae", "Patrol Gearbox Problems"),
-            ("nissan-patrol-ac-problems-dubai", "Patrol AC Problems"),
-        ],
-        "facts": """
-- Dubai workshop areas: Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
-- Al Futtaim Nissan = official dealer (premium pricing, genuine parts)
-- Independent workshops 30-50% cheaper, varying quality
-- Service intervals: every 5,000-7,500 km in Dubai (vs factory 10,000 km) due to heat
-""",
-    },
+    # "service" (nissan-patrol-service-dubai-complete-guide) REMOVED 2026-10-23.
+    # It duplicated nissan-patrol-service-cost-dubai and was merged into it with
+    # a 301. Do not restore it: building it would recreate the duplicate.
 }
 
 

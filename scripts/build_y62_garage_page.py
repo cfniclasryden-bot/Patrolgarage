@@ -51,7 +51,7 @@ HERO = '''<section class="hero">
       </div>
       <h1>The Y62<br>Garage.</h1>
       <p class="hero-lede">
-        Most Dubai workshops see a Y62 a few times a month. We see them all day. That is the whole difference &mdash; the faults are familiar before you finish describing them.
+        Patrol Garage books engine, gearbox, suspension and cooling work on the Nissan Patrol Y62 for owners in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on +971 58 514 3634.
       </p>
     </div>
   </section>'''

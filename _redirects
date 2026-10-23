@@ -93,6 +93,13 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-y62-problems-dni.html  /blog/nissan-patrol-y62-problems-dubai.html 301
 /blog/nissan-patrol-y62-problems-dni       /blog/nissan-patrol-y62-problems-dubai.html 301!
 
+# Merged 2026-10-23: the servicing guide duplicated the service cost post
+# (same intervals, same AC and budget advice). Its unique content (Dubai
+# intervals, choosing a workshop, dealer vs specialist) moved into the cost post.
+# Its queue keyword is retired so it is never regenerated. Both forms: no file.
+/blog/nissan-patrol-service-dubai-complete-guide.html  /blog/nissan-patrol-service-cost-dubai.html 301
+/blog/nissan-patrol-service-dubai-complete-guide       /blog/nissan-patrol-service-cost-dubai.html 301!
+
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 
@@ -110,16 +117,19 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /services/y62-major-service-dubai                                   /services/y62-major-service-dubai.html  301!
 /blog/best-oil-nissan-patrol-uae-heat                               /blog/best-oil-nissan-patrol-uae-heat.html  301!
 /blog/buying-a-used-nissan-patrol                                   /blog/buying-a-used-nissan-patrol.html  301!
+/blog/is-the-nissan-patrol-reliable-in-abu-dhabi                    /blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html  301!
 /blog/nissan-patrol-4wd-not-engaging                                /blog/nissan-patrol-4wd-not-engaging.html  301!
 /blog/nissan-patrol-ac-problems-dubai                               /blog/nissan-patrol-ac-problems-dubai.html  301!
 /blog/nissan-patrol-best-year-to-buy                                /blog/nissan-patrol-best-year-to-buy.html  301!
 /blog/nissan-patrol-black-smoke                                     /blog/nissan-patrol-black-smoke.html  301!
+/blog/nissan-patrol-brake-problems                                  /blog/nissan-patrol-brake-problems.html  301!
 /blog/nissan-patrol-diesel-vs-petrol                                /blog/nissan-patrol-diesel-vs-petrol.html  301!
 /blog/nissan-patrol-differential-repair-cost-uae                    /blog/nissan-patrol-differential-repair-cost-uae.html  301!
 /blog/nissan-patrol-engine-overheating                              /blog/nissan-patrol-engine-overheating.html  301!
 /blog/nissan-patrol-engine-problems                                 /blog/nissan-patrol-engine-problems.html  301!
 /blog/nissan-patrol-fuel-consumption                                /blog/nissan-patrol-fuel-consumption.html  301!
 /blog/nissan-patrol-high-mileage                                    /blog/nissan-patrol-high-mileage.html  301!
+/blog/nissan-patrol-losing-power                                    /blog/nissan-patrol-losing-power.html  301!
 /blog/nissan-patrol-major-service                                   /blog/nissan-patrol-major-service.html  301!
 /blog/nissan-patrol-mechanic-al-quoz                                /blog/nissan-patrol-mechanic-al-quoz.html  301!
 /blog/nissan-patrol-not-starting                                    /blog/nissan-patrol-not-starting.html  301!
@@ -128,7 +138,6 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-overheating-dubai-summer-fix                    /blog/nissan-patrol-overheating-dubai-summer-fix.html  301!
 /blog/nissan-patrol-pre-purchase-inspection                         /blog/nissan-patrol-pre-purchase-inspection.html  301!
 /blog/nissan-patrol-service-cost-dubai                              /blog/nissan-patrol-service-cost-dubai.html  301!
-/blog/nissan-patrol-service-dubai-complete-guide                    /blog/nissan-patrol-service-dubai-complete-guide.html  301!
 /blog/nissan-patrol-service-every-how-many-km-dubai                 /blog/nissan-patrol-service-every-how-many-km-dubai.html  301!
 /blog/nissan-patrol-shaking-at-high-speed                           /blog/nissan-patrol-shaking-at-high-speed.html  301!
 /blog/nissan-patrol-steering-problems                               /blog/nissan-patrol-steering-problems.html  301!
@@ -153,6 +162,7 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026             /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html  301!
 /blog/nissan-patrol-y62-transmission-problems-dubai                 /blog/nissan-patrol-y62-transmission-problems-dubai.html  301!
 /blog/nissan-patrol-y62-vs-y63-dubai-comparison                     /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html  301!
+/blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi      /blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi.html  301!
 /blog/y61-super-safari-snorkel-fitting-cost-dubai-2026              /blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html  301!
 /blog/y62-abs-sensor-replacement-cost-dubai-2026                    /blog/y62-abs-sensor-replacement-cost-dubai-2026.html  301!
 /blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026    /blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html  301!

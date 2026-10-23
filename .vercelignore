@@ -19,3 +19,8 @@ keywords.csv
 
 # Bing Webmaster API key (scripts/bing_client.py). Gitignored too; must never ship.
 .bing-api.json
+
+# Migration records, 2026-10-23. Kept in the repo as history (the Netlify to
+# Vercel URL baseline and the pre-cutover DNS dump), never served.
+URL-BASELINE-PRE-MIGRATION.json
+DNS-PRE-CUTOVER.txt

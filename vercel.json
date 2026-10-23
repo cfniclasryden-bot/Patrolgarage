@@ -286,6 +286,16 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-service-dubai-complete-guide.html",
+      "destination": "/blog/nissan-patrol-service-cost-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-service-dubai-complete-guide",
+      "destination": "/blog/nissan-patrol-service-cost-dubai.html",
+      "statusCode": 301
+    },
+    {
       "source": "/docs/:path*",
       "destination": "/",
       "statusCode": 404
@@ -341,6 +351,11 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi",
+      "destination": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-4wd-not-engaging",
       "destination": "/blog/nissan-patrol-4wd-not-engaging.html",
       "statusCode": 301
@@ -358,6 +373,11 @@
     {
       "source": "/blog/nissan-patrol-black-smoke",
       "destination": "/blog/nissan-patrol-black-smoke.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-brake-problems",
+      "destination": "/blog/nissan-patrol-brake-problems.html",
       "statusCode": 301
     },
     {
@@ -388,6 +408,11 @@
     {
       "source": "/blog/nissan-patrol-high-mileage",
       "destination": "/blog/nissan-patrol-high-mileage.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-losing-power",
+      "destination": "/blog/nissan-patrol-losing-power.html",
       "statusCode": 301
     },
     {
@@ -428,11 +453,6 @@
     {
       "source": "/blog/nissan-patrol-service-cost-dubai",
       "destination": "/blog/nissan-patrol-service-cost-dubai.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/nissan-patrol-service-dubai-complete-guide",
-      "destination": "/blog/nissan-patrol-service-dubai-complete-guide.html",
       "statusCode": 301
     },
     {
@@ -553,6 +573,11 @@
     {
       "source": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison",
       "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi",
+      "destination": "/blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi.html",
       "statusCode": 301
     },
     {

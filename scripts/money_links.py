@@ -62,7 +62,6 @@ TOPIC_RULES = [
 PILLARS = {
     "nissan-patrol-y62-dubai-complete-guide",
     "nissan-patrol-y61-dubai-complete-guide",
-    "nissan-patrol-service-dubai-complete-guide",
     "nissan-patrol-y62-problems-dubai",
     "nissan-patrol-y62-transmission-problems-dubai",
 }
