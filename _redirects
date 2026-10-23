@@ -96,7 +96,8 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 # Merged 2026-10-23: the servicing guide duplicated the service cost post
 # (same intervals, same AC and budget advice). Its unique content (Dubai
 # intervals, choosing a workshop, dealer vs specialist) moved into the cost post.
-# Its queue keyword is retired so it is never regenerated. Both forms: no file.
+# build_pillar_v3.py no longer carries its config, so it cannot be rebuilt.
+# Both forms: no file.
 /blog/nissan-patrol-service-dubai-complete-guide.html  /blog/nissan-patrol-service-cost-dubai.html 301
 /blog/nissan-patrol-service-dubai-complete-guide       /blog/nissan-patrol-service-cost-dubai.html 301!
 
