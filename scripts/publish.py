@@ -559,6 +559,22 @@ def run(cmd, cwd=PROJECT_ROOT, capture=True):
         return result.returncode == 0
 
 
+# IndexNow base (2026-10-23): the commit that was live before this run, taken at
+# the start of publish() so the ping after deploy_site() carries only the pages
+# this deploy changed. None when deploy_site() is called on its own.
+_INDEXNOW_BASE = None
+
+
+def _indexnow(step, *args):
+    """Never fatal: the post is live either way and Bing still reads the sitemap."""
+    try:
+        import indexnow
+        return getattr(indexnow, step)(*args)
+    except Exception as e:
+        print(f"    [!] IndexNow {step} skipped: {type(e).__name__}: {str(e)[:150]}")
+        return None
+
+
 def deploy_site(keyword=None):
     """Deploy the working directory to whichever platform DEPLOY_TARGET names.
 
@@ -615,6 +631,8 @@ def deploy_site(keyword=None):
         if keyword:
             slug = slugify(keyword)
             print(f"    Live: {SITE_URL}/blog/{slug}.html")
+        print("\n[+] IndexNow: pinging the pages this deploy changed...")
+        _indexnow("ping_deploy", _INDEXNOW_BASE or _indexnow("deploy_base"))
     else:
         print(f"\n[!] Deploy failed. Run manually: {manual}")
 
@@ -622,6 +640,9 @@ def deploy_site(keyword=None):
 
 
 def publish(keyword=None):
+    global _INDEXNOW_BASE
+    _INDEXNOW_BASE = _indexnow("deploy_base")
+
     # Runs BEFORE journal_update, because adopting a live page would otherwise
     # discard the journal grid that journal_update owns and regenerates.
     # SKIPPED ONCE GIT IS THE SOURCE OF TRUTH, decided 2026-09-18.

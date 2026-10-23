@@ -15,3 +15,4 @@ docs/
 # GSC OAuth refresh token (credential) — never commit
 .gsc-oauth.json
 .vercel
+.bing-api.json

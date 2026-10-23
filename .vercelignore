@@ -16,3 +16,6 @@ netlify.toml
 keywords.csv
 *.md
 .gsc-oauth.json
+
+# Bing Webmaster API key (scripts/bing_client.py). Gitignored too; must never ship.
+.bing-api.json
