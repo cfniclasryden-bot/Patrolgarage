@@ -1,0 +1,67 @@
+2026-11-02T06:27:54.662842101Z Starting Container
+2026-11-02T06:27:55.150327495Z [cron_entry] 2026-11-02T06:27:54.094217+00:00 Daily cron started
+2026-11-02T06:27:55.150330045Z [cron_entry] 2026-11-02T06:27:54.094250+00:00 Running: python3 scripts/check_refresh_queue.py
+2026-11-02T06:27:56.180360375Z [check_refresh_queue] 2026-11-02T06:27:56.007062 No queued refreshes for patrolgarage.ae
+2026-11-02T06:27:56.180363125Z 
+2026-11-02T06:27:56.180367065Z [cron_entry] 2026-11-02T06:27:56.029188+00:00 Returncode: 0
+2026-11-02T06:27:56.180369985Z /app/scripts/check_refresh_queue.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+2026-11-02T06:27:56.180372675Z   print(f"[check_refresh_queue] {datetime.utcnow().isoformat()} {msg}", flush=True)
+2026-11-02T06:27:56.180375095Z 
+2026-11-02T06:27:56.180377665Z [cron_entry] 2026-11-02T06:27:56.029210+00:00 check_refresh_queue returncode=0
+2026-11-02T06:27:56.180380465Z [cron_entry] 2026-11-02T06:27:56.029215+00:00 Running: python3 scripts/run_pipeline.py
+2026-11-02T06:32:48.361835126Z     $ git remote add origin ***REMOTE***
+2026-11-02T06:32:48.361843266Z     $ git fetch origin main
+2026-11-02T06:32:48.361848966Z     $ git reset --hard origin/main
+2026-11-02T06:32:48.361854845Z     HEAD is now at cda756c Hero image: retired gpt-image-1 -> gpt-image-2 snapshot, approved-image fallback, failure alert line
+2026-11-02T06:32:48.361859955Z     $ git checkout -B main
+2026-11-02T06:32:48.361865265Z     $ git rev-parse --short HEAD
+2026-11-02T06:32:48.361871865Z     cda756c
+2026-11-02T06:32:48.361877945Z [publish] synced to origin/main @ cda756c
+2026-11-02T06:32:48.361886345Z [06:28:00] Pending in queue: 14
+2026-11-02T06:32:48.361886525Z [06:27:56] === PIPELINE RUN START ===
+2026-11-02T06:32:48.361893485Z [publish] no .git in the container — initialising
+2026-11-02T06:32:48.361896375Z [06:28:01] Target keyword: nissan patrol long term ownership abu dhabi
+2026-11-02T06:32:48.361899765Z     $ git init
+2026-11-02T06:32:48.361905515Z [06:28:01] Slug: nissan-patrol-long-term-ownership-abu-dhabi
+2026-11-02T06:32:48.361906565Z     Initialized empty Git repository in /app/.git/
+2026-11-02T06:32:48.361914385Z     $ git config user.name Patrol Garage Blog Bot
+2026-11-02T06:32:48.361915725Z [06:28:01] Article ID: 975e82f4-a7f7-4a38-80ef-25f454b33a65
+2026-11-02T06:32:48.361920045Z     $ git config user.email cfniclas.ryden@gmail.com
+2026-11-02T06:32:48.361923835Z [06:28:01] Target keyword: nissan patrol long term ownership abu dhabi
+2026-11-02T06:32:48.361929725Z [06:28:01] Slug: nissan-patrol-long-term-ownership-abu-dhabi
+2026-11-02T06:32:48.361934384Z [06:28:01] → research: nissan patrol long term ownership abu dhabi
+2026-11-02T06:32:48.361939034Z [06:28:45]   ✓ research: nissan patrol long term ownership abu dhabi done
+2026-11-02T06:32:48.362470008Z [06:32:19]   ✓ pre-publish: no figure attributed to an authority we cannot produce done
+2026-11-02T06:32:48.362475818Z [06:32:19] → pre-publish: an Abu Dhabi post names Abu Dhabi, and no Y61/Y63
+2026-11-02T06:32:48.362482958Z [06:28:45] → generate draft
+2026-11-02T06:32:48.362484208Z [06:32:19]   ✓ pre-publish: an Abu Dhabi post names Abu Dhabi, and no Y61/Y63 done
+2026-11-02T06:32:48.362491437Z [06:30:22]   ✓ generate draft done
+2026-11-02T06:32:48.362495417Z [06:32:19] → pre-publish: hero alt asserts nothing the picture cannot support
+2026-11-02T06:32:48.362498217Z [06:30:22] → humour pass
+2026-11-02T06:32:48.362501717Z [06:31:42]   [humour_pass] applied: 4 beats added, +48 words
+2026-11-02T06:32:48.362504997Z [06:31:42]   ✓ humour pass done
+2026-11-02T06:32:48.362508147Z [06:31:42] → assemble final HTML
+2026-11-02T06:32:48.362511367Z [06:31:50]   ✓ assemble final HTML done
+2026-11-02T06:32:48.362514387Z [06:31:50] → generate hero image
+2026-11-02T06:32:48.362517607Z [06:32:19]   ✓ generate hero image done
+2026-11-02T06:32:48.362520467Z [06:32:19] → pre-publish: no editorial placeholders
+2026-11-02T06:32:48.362523487Z [06:32:19]   ✓ pre-publish: no editorial placeholders done
+2026-11-02T06:32:48.362527187Z [06:32:19] → pre-publish: JSON-LD parses, no placeholders, no premises
+2026-11-02T06:32:48.362530507Z [06:32:19]   ✓ pre-publish: JSON-LD parses, no placeholders, no premises done
+2026-11-02T06:32:48.362533787Z [06:32:19] → pre-publish: no invented model-year or generation split
+2026-11-02T06:32:48.362536687Z [06:32:19]   ✓ pre-publish: no invented model-year or generation split done
+2026-11-02T06:32:48.362539417Z [06:32:19] → pre-publish: no figure attributed to an authority we cannot produce
+2026-11-02T06:32:48.362978061Z [06:32:20]   [~] check_alt reset the hero alt to the neutral one
+2026-11-02T06:32:48.362982821Z [06:32:20]   ✓ pre-publish: hero alt asserts nothing the picture cannot support done
+2026-11-02T06:32:48.362987751Z [06:32:20] → publish + sitemap + deploy
+2026-11-02T06:32:48.362991921Z [06:32:37]   ✓ publish + sitemap + deploy done
+2026-11-02T06:32:48.362997521Z [06:32:38] Article marked published in Supabase: 975e82f4-a7f7-4a38-80ef-25f454b33a65
+2026-11-02T06:32:48.363001321Z [supabase_log] article logged: nissan-patrol-long-term-ownership-abu-dhabi
+2026-11-02T06:32:48.363005261Z [supabase_log] run logged: success
+2026-11-02T06:32:48.363009441Z [06:32:40] === PIPELINE COMPLETE: nissan patrol long term ownership abu dhabi ===
+2026-11-02T06:32:48.363014361Z 
+2026-11-02T06:32:48.363018941Z [cron_entry] 2026-11-02T06:32:40.604993+00:00 Returncode: 0
+2026-11-02T06:32:48.363022541Z /app/scripts/run_pipeline.py:452: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+2026-11-02T06:32:48.363026241Z   "published_at": datetime.utcnow().isoformat() + "Z",
+2026-11-02T06:32:48.363030231Z 
+2026-11-02T06:32:48.363034071Z [cron_entry] 2026-11-02T06:32:40.605018+00:00 run_pipeline returncode=0
