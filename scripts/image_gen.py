@@ -50,7 +50,16 @@ SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", os.environ.get("SUPABASE_S
 # These describe WHAT the article is about, brand profile describes HOW it should look.
 SUBJECT_HINT = "a Nissan Patrol Y62 SUV in a Dubai automotive context"
 
-client = OpenAI()
+_client = None
+
+
+def get_client():
+    """Built on first use: a module-level OpenAI() died at import when the key
+    was missing, before the approved-image fallback in main() could run."""
+    global _client
+    if _client is None:
+        _client = OpenAI()
+    return _client
 
 
 # ---------- Brand profile loading ----------
@@ -192,6 +201,97 @@ def build_prompt(title, brand):
     return base
 
 
+
+# ------------------------------------------------------------ image model chain
+#
+# Every run from 26 Oct 2026 died here with
+#   400 invalid_value: "The model 'gpt-image-1' does not exist."
+# gpt-image-1 still appears in /v1/models but OpenAI no longer serves it for
+# generation. The model is now a pinned snapshot, overridable with IMAGE_MODEL,
+# with fallbacks tried only when the API rejects the MODEL itself. Any other
+# error goes to main(), which falls back to an approved image.
+IMAGE_MODELS = [m for m in dict.fromkeys([
+    os.environ.get("IMAGE_MODEL", "").strip() or "gpt-image-2-2026-04-21",
+    "gpt-image-2",
+    "gpt-image-1.5",
+]) if m]
+
+
+def _is_model_rejection(e):
+    body = getattr(e, "body", None) or {}
+    err = body.get("error", body) if isinstance(body, dict) else {}
+    if isinstance(err, dict) and err.get("param") == "model":
+        return True
+    msg = str(e).lower()
+    return "model" in msg and ("does not exist" in msg or "not found" in msg
+                               or "deprecated" in msg or "retired" in msg)
+
+
+def _generate_bytes(prompt):
+    """Raw image bytes from the first model in IMAGE_MODELS that the API accepts."""
+    last = None
+    for model in IMAGE_MODELS:
+        try:
+            resp = get_client().images.generate(
+                model=model,
+                prompt=prompt,
+                size="1536x1024",
+                quality="medium",
+                n=1
+            )
+            print(f"[+] Image model: {model}")
+            return base64.b64decode(resp.data[0].b64_json)
+        except Exception as e:
+            if not _is_model_rejection(e):
+                raise
+            print(f"[!] Image model {model} rejected: {e}")
+            last = e
+    raise last
+
+
+# ------------------------------------------------------- approved-image fallback
+#
+# A hero-image failure must not cost the day's post. PG has no premises and
+# shows no real workshop, so its approved images are the heroes of posts that
+# are already live: each passed the gates and was published. The fallback
+# reuses the live hero of the post whose slug shares the most words with this
+# one. The alt is left to check_alt --repair, which gives every PG post the
+# neutral alt anyway.
+
+_STOP = {"nissan", "patrol", "y62", "dubai", "uae", "abu", "dhabi", "the", "and",
+         "for", "what", "how", "2026", "cost", "a", "in", "of", "on", "is"}
+
+
+def _words(text):
+    return {w for w in re.findall(r"[a-z0-9]+", text.lower()) if w not in _STOP and len(w) > 2}
+
+
+def approved_fallbacks(slug):
+    """Heroes of live posts (blog/<s>.html exists), never this post's own file."""
+    return sorted(j for j in IMAGES_DIR.glob("*.jpg")
+                  if j.stem != slug and (BLOG / f"{j.stem}.html").exists())
+
+
+def pick_fallback(slug):
+    pool = approved_fallbacks(slug)
+    if not pool:
+        return None
+    want = _words(slug.replace("-", " "))
+    # Ties go to the Y62 complete guide's hero when it exists: the most general picture.
+    general = "nissan-patrol-y62-dubai-complete-guide"
+    return max(pool, key=lambda j: (len(want & _words(j.stem.replace("-", " "))), j.stem == general))
+
+
+def use_fallback(slug):
+    src = pick_fallback(slug)
+    if not src:
+        return None
+    out = IMAGES_DIR / f"{slug}.jpg"
+    out.write_bytes(src.read_bytes())
+    print(f"[fallback] HERO_FALLBACK_USED: {slug} -> approved image images/blog/{src.name}")
+    return out
+
+
 def generate_image(slug, title):
     brand = fetch_brand_profile()
     if brand:
@@ -204,14 +304,7 @@ def generate_image(slug, title):
     print(f"[*] Prompt:\n{prompt}\n")
     print(f"[*] Generating image: {title[:60]}...")
 
-    resp = client.images.generate(
-        model="gpt-image-1",
-        prompt=prompt,
-        size="1536x1024",
-        quality="medium",
-        n=1
-    )
-    img_data = base64.b64decode(resp.data[0].b64_json)
+    img_data = _generate_bytes(prompt)
     out_path = IMAGES_DIR / f"{slug}.jpg"
     out_path.write_bytes(img_data)
     print(f"[+] Saved: {out_path.relative_to(ROOT)} ({len(img_data)//1024} KB)")
@@ -263,7 +356,16 @@ def main():
         print(f"[!] No <h1> title found in {post}")
         sys.exit(1)
 
-    generate_image(slug, title)
+    try:
+        generate_image(slug, title)
+    except Exception as e:
+        # One clear line, on both streams: run_pipeline logs stderr, Railway logs stdout.
+        line = f"[!] HERO IMAGE GENERATION FAILED for {slug}: {type(e).__name__}: {e}"
+        print(line)
+        print(line, file=sys.stderr)
+        if not use_fallback(slug):
+            print("[!] No approved fallback image available; failing the stage.", file=sys.stderr)
+            sys.exit(1)
     replace_template_hero(slug)
 
 

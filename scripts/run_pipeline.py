@@ -53,6 +53,20 @@ def slugify(text):
     text = re.sub(r"[\s_-]+", "-", text)
     return text.strip("-")
 
+# The last failed stage's one-line reason, for the alert line and Supabase.
+LAST_FAILURE = {"detail": ""}
+
+
+def _failure_detail(result):
+    """Best one-line reason for a failed stage: the last non-blank stderr line
+    (a traceback's exception message), else the last stdout line."""
+    for stream in (result.stderr, result.stdout):
+        lines = [l.strip() for l in (stream or "").splitlines() if l.strip()]
+        if lines:
+            return lines[-1][:300]
+    return f"exit code {result.returncode}"
+
+
 def run(cmd, desc, show_stdout_on_fail=False, env=None):
     """Run one stage. False if it failed.
 
@@ -73,8 +87,18 @@ def run(cmd, desc, show_stdout_on_fail=False, env=None):
             for line in result.stdout.splitlines():
                 log("    " + line)
         if result.stderr:
-            log(f"    stderr: {result.stderr[:500]}")
+            # The TAIL, not the head: a Python traceback ends with the exception
+            # message. The old stderr[:500] cut every 26 Oct-2 Nov hero failure off
+            # before "The model 'gpt-image-1' does not exist", so nine days of runs
+            # logged a traceback with no error in it.
+            for line in result.stderr.rstrip().splitlines()[-30:]:
+                log("    stderr: " + line)
+        LAST_FAILURE["detail"] = _failure_detail(result)
         return False
+    if "HERO_FALLBACK_USED" in (result.stdout or ""):
+        for line in result.stdout.splitlines():
+            if "HERO IMAGE GENERATION FAILED" in line or "HERO_FALLBACK_USED" in line:
+                log("  [~] " + line.strip())
     # --repair exits 0 but says so loudly; that line is the signal to look.
     if "ALT REPAIRED" in (result.stdout or ""):
         log("  [~] check_alt reset the hero alt to the neutral one")
@@ -412,7 +436,12 @@ def main():
     failed_at = run_stages(keyword, slug)
     if failed_at:
         log(f"=== PIPELINE FAILED at: {failed_at} ===")
-        log_run(keyword=keyword, status="failed", error_message=f"Failed at: {failed_at}")
+        detail = LAST_FAILURE["detail"]
+        # One greppable line per failed run. Railway also emails on the exit 1.
+        log(f"[ALERT] PIPELINE_FAILED site={SITE_DOMAIN} keyword={keyword!r} "
+            f"stage={failed_at!r} error={detail!r}")
+        log_run(keyword=keyword, status="failed",
+                error_message=f"Failed at: {failed_at}" + (f" | {detail}" if detail else ""))
         requeue_if_stuck(article_id, keyword, failed_at)
         return 1
 
