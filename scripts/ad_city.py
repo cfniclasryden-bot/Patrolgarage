@@ -27,9 +27,9 @@ from urllib.parse import quote
 HUB = "nissan-patrol-abu-dhabi.html"
 HUB_PATH = "/" + HUB
 
-WA = "971585143634"
-TEL = "+971585143634"
-TEL_SHOWN = "+971 58 514 3634"
+WA = "971558175637"
+TEL = "+971558175637"
+TEL_SHOWN = "+971 55 817 5637"
 
 _AD_RE = re.compile(r"\babu[ -]dhabi\b", re.I)
 

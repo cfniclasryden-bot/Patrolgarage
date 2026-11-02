@@ -51,7 +51,7 @@ HERO = '''<section class="hero">
       </div>
       <h1>The Y62<br>Garage.</h1>
       <p class="hero-lede">
-        Patrol Garage books engine, gearbox, suspension and cooling work on the Nissan Patrol Y62 for owners in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on +971 58 514 3634.
+        Patrol Garage books engine, gearbox, suspension and cooling work on the Nissan Patrol Y62 for owners in Dubai: the work is carried out in Ras Al Khor, Dubai, and you book it on WhatsApp or by phone on +971 55 817 5637.
       </p>
     </div>
   </section>'''
@@ -91,7 +91,7 @@ BODY = '''<section class="dark">
       </div>
 
       <div class="service-cta">
-        <a href="https://wa.me/971585143634?text=Y62%20garage%20enquiry%20-%20my%20Patrol%20needs" target="_blank" rel="noopener" class="btn btn-primary">Ask about your Y62</a>
+        <a href="https://wa.me/971558175637?text=Y62%20garage%20enquiry%20-%20my%20Patrol%20needs" target="_blank" rel="noopener" class="btn btn-primary">Ask about your Y62</a>
       </div>
     </div>
   </section>'''
@@ -103,7 +103,7 @@ SCHEMA = '''<script type="application/ld+json">
     "name": "Patrol Garage Dubai",
     "description": "Nissan Patrol Y62 specialists serving Dubai.",
     "url": "https://patrolgarage.ae/y62-garage-dubai.html",
-    "telephone": "+971585143634",
+    "telephone": "+971558175637",
     "areaServed": [
       { "@type": "City", "name": "Dubai" },
       { "@type": "City", "name": "Sharjah" }

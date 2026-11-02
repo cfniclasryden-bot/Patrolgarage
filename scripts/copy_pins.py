@@ -532,7 +532,7 @@ for _page, _pins in _AD_HUB_PINS.items():
 # build_y62_garage_page.py carries the new y62-garage-dubai sentence too; these
 # pins catch a rebuild or patch that brings an old slogan back. The guide merged
 # into the service cost post the same day, so its own pins went with the file.
-_PH = "+971 58 514 3634"
+_PH = "+971 55 817 5637"
 _FIRST_SENTENCE_PINS = {
     'services.html': [
         ('Engine to exhaust. Oil change to full rebuild. We cover every service your Patrol needs — with the expertise to handle it right.',
@@ -549,6 +549,43 @@ _FIRST_SENTENCE_PINS = {
 }
 for _page, _pins in _FIRST_SENTENCE_PINS.items():
     PINS.setdefault(_page, []).extend(_pins)
+
+# 2026-11-02: the call and WhatsApp number changed to +971 55 817 5637. A
+# site-wide pin rather than a per-page one: every shipped page, in every format
+# the site uses (tel:, wa.me, JSON-LD telephone, displayed text). The 58 221 1201
+# number was a leftover template number in three posts' JSON-LD. Generators carry
+# the new number too; this catches anything that brings an old one back.
+PHONE_PINS = [
+    ("585143634", "558175637"),        # tel:+971…, wa.me/971…, JSON-LD
+    ("58 514 3634", "55 817 5637"),    # displayed +971 58 514 3634
+    ("582211201", "558175637"),
+    ("58 221 1201", "55 817 5637"),
+]
+
+
+def phone_pages():
+    """Every file that ships: root/blog/services HTML (listing pages included) and llms.txt."""
+    pages = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("blog/**/*.html")) + sorted(ROOT.glob("services/*.html"))
+    llms = ROOT / "llms.txt"
+    return pages + ([llms] if llms.exists() else [])
+
+
+def apply_phone(write=True):
+    """Number of pages that carried an old number (and were fixed when write=True)."""
+    changed = 0
+    for path in phone_pages():
+        text = path.read_text(encoding="utf-8")
+        new_text = text
+        for old, new in PHONE_PINS:
+            new_text = new_text.replace(old, new)
+        if new_text != text:
+            changed += 1
+            if write:
+                st = path.stat()
+                path.write_text(new_text, encoding="utf-8")
+                os.utime(path, (st.st_atime, st.st_mtime))
+    return changed
+
 
 def apply_page(rel, pins, write=True):
     """(applied, already, drift) for one page."""
@@ -573,7 +610,7 @@ def apply_page(rel, pins, write=True):
 
 
 def apply_all(write=True):
-    totals, drift = [0, 0], []
+    totals, drift = [apply_phone(write), 0], []
     for rel, pins in PINS.items():
         a, al, d = apply_page(rel, pins, write)
         totals[0] += a

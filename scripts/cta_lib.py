@@ -11,7 +11,7 @@ Pure functions, no I/O. All derivation is deterministic from the page title/slug
 import re
 import urllib.parse
 
-WA_NUM = "971585143634"
+WA_NUM = "971558175637"
 # Used on non-article pages (home, about, services, contact) — no article context.
 GENERIC_QUOTE = "Hi, I'd like a quote for my Nissan Patrol"
 

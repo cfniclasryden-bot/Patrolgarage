@@ -85,15 +85,15 @@ The contact form uses Netlify Forms. To enable submissions:
 ### Update Contact Information (Site-Wide)
 
 Replace the following in every HTML file:
-- **Phone:** `+971582211201` → Your phone number
-- **WhatsApp:** `971582211201` → Your WhatsApp number (same format, no +)
+- **Phone:** `+971558175637` → Your phone number
+- **WhatsApp:** `971558175637` → Your WhatsApp number (same format, no +)
 - **Address:** `15 16A Street, Ras Al Khor Industrial Area 1, Dubai, UAE`
 - **Hours:** Sunday-Thursday 9am-7pm, Friday Closed, Saturday 9am-2pm
 - **Google Maps link:** `https://maps.app.goo.gl/qhVxKvuUq7Qe2Tuy8?g_st=aw` → Your actual maps link
 
 **Automated replacement for all files:**
 ```bash
-find . -name "*.html" -type f -exec sed -i '' 's/+971582211201/YOUR_NEW_NUMBER/g' {} \;
+find . -name "*.html" -type f -exec sed -i '' 's/+971558175637/YOUR_NEW_NUMBER/g' {} \;
 find . -name "*.html" -type f -exec sed -i '' 's/15 16A Street, Ras Al Khor.*/YOUR_ADDRESS/g' {} \;
 ```
 
@@ -342,7 +342,7 @@ This website template is custom-built for Patrol Garage Dubai. All content is th
 
 ---
 
-**Questions?** Contact our team at [+971 58 221 1201](tel:+971582211201) or [WhatsApp](https://wa.me/971582211201).
+**Questions?** Contact our team at [+971 55 817 5637](tel:+971558175637) or [WhatsApp](https://wa.me/971558175637).
 
 **Built with care in Dubai. No frameworks, maximum performance.**
 

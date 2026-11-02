@@ -57,7 +57,7 @@ Every page has `[REPLACE: ...]` sections. Priority:
 **Tip:** Blog posts already have [REPLACE:] notes showing word counts and what to cover.
 
 ### 2. Update Contact Info Site-Wide
-- Phone: `+971582211201` (use find/replace in code editor)
+- Phone: `+971558175637` (use find/replace in code editor)
 - WhatsApp: Same number (already in <a href>)
 - Address: Update in footer, contact page, schema markup
 - Hours: Sunday-Thursday 9am-7pm, Friday closed, Saturday 9am-2pm (already set, confirm)

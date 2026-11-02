@@ -39,9 +39,9 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-WA = "971585143634"
-TEL = "+971585143634"
-TEL_SHOWN = "+971 58 514 3634"
+WA = "971558175637"
+TEL = "+971558175637"
+TEL_SHOWN = "+971 55 817 5637"
 MARKER = 'data-cta-label="pg-hero-wa"'
 
 BUTTON = "WhatsApp us about your Y62"

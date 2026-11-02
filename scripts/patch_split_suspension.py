@@ -47,14 +47,14 @@ CARD_NEW = '''          <h3><a href="/services.html#suspension-hbmc-repair">Susp
 
 # --- services.html section --------------------------------------------------
 SEC_OLD = '''      <div class="service-article" id="suspension-upgrade-lift-kits">
-        <h2><a href="https://wa.me/971585143634?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener">Suspension Upgrade & Lift Kits</a></h2>
+        <h2><a href="https://wa.me/971558175637?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener">Suspension Upgrade & Lift Kits</a></h2>
         <p>Want better ground clearance and off-road capability? We install suspension lifts, replace shocks and springs, align your wheels, and set up custom off-road configurations. OEM, Ironman, and custom options available.</p>'''
 SEC_NEW = '''      <div class="service-article" id="suspension-hbmc-repair">
-        <h2><a href="https://wa.me/971585143634?text=Suspension%20Repair%20for%20my%20Patrol" target="_blank" rel="noopener">Suspension &amp; HBMC Repair</a></h2>
+        <h2><a href="https://wa.me/971558175637?text=Suspension%20Repair%20for%20my%20Patrol" target="_blank" rel="noopener">Suspension &amp; HBMC Repair</a></h2>
         <p>Bouncy ride, body roll, clunks over speed bumps or a corner sitting low? We diagnose the fault and replace what has actually worn — shocks and springs, HBMC accumulators and hydraulic lines, bushes and top mounts — then road-test the car before it goes back to you.</p>'''
 
-CTA_OLD = '<a href="https://wa.me/971585143634?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>'
-CTA_NEW = '<a href="https://wa.me/971585143634?text=Suspension%20Repair%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>'
+CTA_OLD = '<a href="https://wa.me/971558175637?text=Suspension%20Upgrade%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>'
+CTA_NEW = '<a href="https://wa.me/971558175637?text=Suspension%20Repair%20for%20my%20Patrol" target="_blank" rel="noopener" class="btn btn-primary">Quote via WhatsApp</a>'
 
 SWAPS = [
     ("index.html", "S/02 card", CARD_OLD, CARD_NEW),

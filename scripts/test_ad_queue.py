@@ -144,7 +144,7 @@ for banned in ("Top Challenger", "topchallenger", "AED", "dirham", "opening hour
                "streetAddress", "our workshop", "visit us"):
     check(banned.lower() not in hub.lower(), f"hub carries {banned!r}")
 check(not re.search(r"\d", visible.replace("Y62", "").replace("VK56VD", "").replace("JR710E", "")
-                    .replace("P0300", "").replace("+971 58 514 3634", "")
+                    .replace("P0300", "").replace("+971 55 817 5637", "")
                     .replace("01 · Booking", "").replace("4x4", "").replace("V8", "")),
       "hub: a figure in visible copy (no figures, prices or intervals)")
 faq = [json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', hub, re.S)]

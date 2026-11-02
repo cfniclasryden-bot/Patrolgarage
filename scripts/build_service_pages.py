@@ -124,7 +124,7 @@ PAGES = [
       </div>
 
       <div class="service-cta">
-        <a href="https://wa.me/971585143634?text=Patrol%20service%20-%20year%20and%20mileage%3A" target="_blank" rel="noopener" class="btn btn-primary">Ask what yours is due for</a>
+        <a href="https://wa.me/971558175637?text=Patrol%20service%20-%20year%20and%20mileage%3A" target="_blank" rel="noopener" class="btn btn-primary">Ask what yours is due for</a>
       </div>
     </div>
   </section>''',
@@ -172,7 +172,7 @@ PAGES = [
       </div>
 
       <div class="service-cta">
-        <a href="https://wa.me/971585143634?text=Patrol%20gearbox%20-%20symptom%20and%20year%3A" target="_blank" rel="noopener" class="btn btn-primary">Describe the symptom</a>
+        <a href="https://wa.me/971558175637?text=Patrol%20gearbox%20-%20symptom%20and%20year%3A" target="_blank" rel="noopener" class="btn btn-primary">Describe the symptom</a>
       </div>
     </div>
   </section>''',
@@ -222,7 +222,7 @@ PAGES = [
       </div>
 
       <div class="service-cta">
-        <a href="https://wa.me/971585143634?text=Question%20about%20my%20Patrol%20V8%3A" target="_blank" rel="noopener" class="btn btn-primary">Ask about your V8</a>
+        <a href="https://wa.me/971558175637?text=Question%20about%20my%20Patrol%20V8%3A" target="_blank" rel="noopener" class="btn btn-primary">Ask about your V8</a>
       </div>
     </div>
   </section>''',
@@ -266,7 +266,7 @@ def build(page):
                   "serviceType": page["schema_name"],
                   "url": url,
                   "provider": {"@type": "AutoRepair", "name": "Patrol Garage Dubai",
-                               "telephone": "+971585143634"},
+                               "telephone": "+971558175637"},
                   "areaServed": [{"@type": "City", "name": n} for n in ("Dubai", "Sharjah")]}
     html = re.sub(r'<script type="application/ld\+json">.*?</script>',
                   '<script type="application/ld+json">\n  ' + json.dumps(schema, indent=2) + '\n  </script>',

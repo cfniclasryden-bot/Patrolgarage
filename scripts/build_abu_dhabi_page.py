@@ -191,7 +191,7 @@ BODY = f'''<section class="dark">
       </div>
 
       <div class="service-cta">
-        <a href="https://wa.me/971585143634?text=Mussafah%3A%20Abu%20Dhabi%20Y62%20-%20my%20Patrol%20is%20" target="_blank" rel="noopener" class="btn btn-primary">Ask about your Y62</a>
+        <a href="https://wa.me/971558175637?text=Mussafah%3A%20Abu%20Dhabi%20Y62%20-%20my%20Patrol%20is%20" target="_blank" rel="noopener" class="btn btn-primary">Ask about your Y62</a>
       </div>
     </div>
   </section>'''
@@ -206,7 +206,7 @@ SCHEMA = '''<script type="application/ld+json">
     "name": "Patrol Garage Dubai",
     "description": "Nissan Patrol Y62 service and repair for owners in Abu Dhabi.",
     "url": "https://patrolgarage.ae/nissan-patrol-abu-dhabi.html",
-    "telephone": "+971585143634",
+    "telephone": "+971558175637",
     "areaServed": [
       { "@type": "City", "name": "Abu Dhabi" },
       { "@type": "City", "name": "Dubai" },

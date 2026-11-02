@@ -43,8 +43,8 @@ BUSINESS_DATA = {
         "Whether you need a transmission rebuild, AC repair, suspension work, or diagnostic "
         "inspection, we help you find the right specialist for your Patrol."
     ),
-    "phone": "+971 58 514 3634",
-    "whatsapp": "+971 58 514 3634",
+    "phone": "+971 55 817 5637",
+    "whatsapp": "+971 55 817 5637",
     "email": "info@patrolgarage.ae",
     "website": "https://patrolgarage.ae",
     "area": "Ras Al Khor, Dubai",

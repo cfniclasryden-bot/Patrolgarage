@@ -36,7 +36,7 @@ rather than just which page. Without that this change is unmeasurable.
 """
 import re
 
-WA = "971585143634"
+WA = "971558175637"
 MARKER = 'data-cta="early"'
 
 # slug pattern -> type. First match wins; order matters.

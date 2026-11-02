@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CONTACT_POINT = {
     "@type": "ContactPoint",
     "contactType": "customer service",
-    "telephone": "+971585143634",
+    "telephone": "+971558175637",
     "areaServed": "AE",
     "availableLanguage": ["en", "ar"],
     "hoursAvailable": [

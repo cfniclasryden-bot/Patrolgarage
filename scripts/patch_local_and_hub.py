@@ -50,7 +50,7 @@ MARKER = "<!-- LOCALLAYER -->"
 
 HOME_TITLE = "Nissan Patrol Garage in Ras Al Khor, Dubai | Y62 Specialists"   # 540px
 HOME_DESC = ("Nissan Patrol specialist garage in Ras Al Khor, Dubai. Patrols only: "
-             "engine, gearbox, major servicing and diagnostics. Call +971 58 514 3634.")
+             "engine, gearbox, major servicing and diagnostics. Call +971 55 817 5637.")
 
 CONTACT_TITLE = "Patrol Garage, Ras Al Khor | Nissan Patrol Workshop Dubai"    # 531px
 CONTACT_DESC = ("Book a Nissan Patrol Y62 service in Dubai. Message or call and we confirm the "
@@ -122,13 +122,13 @@ def patch_contact(dry):
         "name": "Patrol Garage Dubai",
         "description": "Nissan Patrol Y62 specialists serving Dubai.",
         "url": "https://patrolgarage.ae/contact.html",
-        "telephone": "+971585143634",
+        "telephone": "+971558175637",
         "email": "info@patrolgarage.ae",
         "areaServed": [{"@type": "City", "name": n} for n in ("Dubai", "Sharjah")],
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "telephone": "+971585143634",
+            "telephone": "+971558175637",
             "areaServed": "AE",
             "availableLanguage": ["en", "ar"],
             "hoursAvailable": [
