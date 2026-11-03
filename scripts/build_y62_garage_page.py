@@ -103,7 +103,6 @@ SCHEMA = '''<script type="application/ld+json">
     "name": "Patrol Garage Dubai",
     "description": "Nissan Patrol Y62 specialists serving Dubai.",
     "url": "https://patrolgarage.ae/y62-garage-dubai.html",
-    "telephone": "+971558175637",
     "areaServed": [
       { "@type": "City", "name": "Dubai" },
       { "@type": "City", "name": "Sharjah" }

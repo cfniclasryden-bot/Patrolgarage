@@ -21,7 +21,7 @@ claim that pass removed, somewhere harder to defend.
 So this page carries, deliberately and permanently:
     NO street address        NO opening hours        NO map or directions
     NO geo coordinates       NO "our workshop"       NO walk-in invitation
-Schema is the site's standard shape: AutoRepair + name + telephone + areaServed
+Schema is the site's standard shape: AutoRepair + name + areaServed
 + makesOffer. Abu Dhabi is added to areaServed. Nothing else changes.
 
 Mussafah is named ONLY as where the work is done, never as somewhere this
@@ -196,8 +196,8 @@ BODY = f'''<section class="dark">
     </div>
   </section>'''
 
-# Same shape as every other page on this site: AutoRepair, name, telephone,
-# areaServed, makesOffer. NO address, NO geo, NO openingHoursSpecification —
+# Same shape as every other page on this site: AutoRepair, name,
+# areaServed, makesOffer. No telephone in JSON-LD (owner, 2026-11-03). NO address, NO geo, NO openingHoursSpecification —
 # see the module docstring. Abu Dhabi joins areaServed; nothing else changes.
 SCHEMA = '''<script type="application/ld+json">
   {
@@ -206,7 +206,6 @@ SCHEMA = '''<script type="application/ld+json">
     "name": "Patrol Garage Dubai",
     "description": "Nissan Patrol Y62 service and repair for owners in Abu Dhabi.",
     "url": "https://patrolgarage.ae/nissan-patrol-abu-dhabi.html",
-    "telephone": "+971558175637",
     "areaServed": [
       { "@type": "City", "name": "Abu Dhabi" },
       { "@type": "City", "name": "Dubai" },

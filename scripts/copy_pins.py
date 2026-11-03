@@ -24,7 +24,9 @@ but nothing here should look like a content date change to anything else.
     python3 scripts/copy_pins.py            # apply, report
     python3 scripts/copy_pins.py --check    # report only, exit 1 on pending/drift
 """
+import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -563,6 +565,43 @@ PHONE_PINS = [
 ]
 
 
+# 2026-11-03: no JSON-LD carries a telephone (owner). The number stays on every
+# call and WhatsApp button; it is only taken out of structured data. Removed in
+# the generators too; this strips it again on every publish() if anything adds
+# it back. Text-level, so the block's formatting is untouched, and only applied
+# when the result parses to exactly the original data minus "telephone" keys.
+_LD_BLOCK_RE = re.compile(r'(<script type="application/ld\+json">)(.*?)(</script>)', re.S)
+_TEL_AFTER_RE = re.compile(r',\s*"telephone"\s*:\s*"[^"]*"')
+_TEL_FIRST_RE = re.compile(r'"telephone"\s*:\s*"[^"]*"\s*,\s*')
+_TEL_ONLY_RE = re.compile(r'"telephone"\s*:\s*"[^"]*"\s*')
+
+
+def _drop_telephone(obj):
+    if isinstance(obj, dict):
+        return {k: _drop_telephone(v) for k, v in obj.items() if k != "telephone"}
+    if isinstance(obj, list):
+        return [_drop_telephone(v) for v in obj]
+    return obj
+
+
+def strip_ld_telephone(html):
+    """Remove every "telephone" from the page's JSON-LD. A block that would change
+    in any other way, or does not parse, is left exactly as it is (never
+    half-edited); test_phone_number.py then fails on the telephone still in it."""
+    def fix(m):
+        block = m.group(2)
+        if '"telephone"' not in block:
+            return m.group(0)
+        new = _TEL_ONLY_RE.sub("", _TEL_FIRST_RE.sub("", _TEL_AFTER_RE.sub("", block)))
+        try:
+            if json.loads(new) != _drop_telephone(json.loads(block)):
+                return m.group(0)
+        except ValueError:
+            return m.group(0)
+        return m.group(1) + new + m.group(3)
+    return _LD_BLOCK_RE.sub(fix, html)
+
+
 def phone_pages():
     """Every file that ships: root/blog/services HTML (listing pages included) and llms.txt."""
     pages = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("blog/**/*.html")) + sorted(ROOT.glob("services/*.html"))
@@ -578,6 +617,8 @@ def apply_phone(write=True):
         new_text = text
         for old, new in PHONE_PINS:
             new_text = new_text.replace(old, new)
+        if path.suffix == ".html":
+            new_text = strip_ld_telephone(new_text)
         if new_text != text:
             changed += 1
             if write:

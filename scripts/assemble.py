@@ -196,13 +196,11 @@ def build_schemas(meta, keyword, today, faqs, canonical_url):
         "@type": "AutoRepair",
         "name": "Patrol Garage Dubai",
         "image": "https://patrolgarage.ae/images/og-blog-y62.jpg",
-        "telephone": "+971558175637",
         "url": "https://patrolgarage.ae",
         "areaServed": {"@type": "City", "name": "Dubai"},
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "telephone": "+971558175637",
             "areaServed": "AE",
             "availableLanguage": ["en", "ar"],
             "hoursAvailable": [

@@ -5,7 +5,9 @@
     carries an old number in any format;
   * every tel: link is tel:+971558175637;
   * every wa.me / api.whatsapp.com link targets 971558175637;
-  * every JSON-LD "telephone" is +971558175637.
+  * no JSON-LD carries a "telephone" at all (owner, 2026-11-03): the number is on
+    the buttons only, and no generator script may write one into structured data;
+  * every shipped HTML page has a call link to +971558175637.
 
     python3 scripts/test_phone_number.py
 """
@@ -24,6 +26,10 @@ OLD = re.compile(r"585143634|58 514 3634|582211201|58 221 1201")
 SKIP_SCRIPTS = {"site_update.py", "test_phone_number.py", "copy_pins.py"}
 # test fixture placeholders (e.g. 971500000000 in test_check_claims.py) are not the site number
 FIXTURE = re.compile(r"971500000000")
+LD_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+# A generator that would put a telephone into JSON-LD: a "telephone" key with a
+# value, in a dict literal, a JSON string or a subscript assignment.
+GEN_TEL_RE = re.compile(r"""["']telephone["']\s*[:\]]""")
 
 fails = []
 pages = copy_pins.phone_pages()
@@ -38,9 +44,12 @@ for path in pages:
     for m in re.finditer(r"(?:wa\.me/|api\.whatsapp\.com/send\?phone=)(\d+)", text):
         if m.group(1) != NEW:
             fails.append(f"{rel}: WhatsApp link to {m.group(1)}")
-    for m in re.finditer(r'"telephone":\s*"([^"]+)"', text):
-        if m.group(1) != "+" + NEW:
-            fails.append(f"{rel}: JSON-LD telephone {m.group(1)!r}")
+    # No JSON-LD carries a telephone (owner, 2026-11-03); the buttons keep the number.
+    for block in LD_RE.findall(text):
+        if re.search(r'"telephone"\s*:', block):
+            fails.append(f"{rel}: JSON-LD carries a telephone")
+    if rel.suffix == ".html" and "tel:+" + NEW not in text:
+        fails.append(f"{rel}: no call link to +{NEW}")
 
 for path in sorted((ROOT / "scripts").glob("*.py")):
     if path.name in SKIP_SCRIPTS:
@@ -48,6 +57,8 @@ for path in sorted((ROOT / "scripts").glob("*.py")):
     text = path.read_text(encoding="utf-8")
     for m in OLD.finditer(text):
         fails.append(f"scripts/{path.name}: old number {m.group(0)!r}")
+    if GEN_TEL_RE.search(text):
+        fails.append(f"scripts/{path.name}: writes a telephone into JSON-LD")
     for m in re.finditer(r"(?:wa\.me/|tel:\+?)(\d{9,})", text):
         if m.group(1) != NEW and not FIXTURE.fullmatch(m.group(1)):
             fails.append(f"scripts/{path.name}: link to {m.group(1)}")

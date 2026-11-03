@@ -122,13 +122,11 @@ def patch_contact(dry):
         "name": "Patrol Garage Dubai",
         "description": "Nissan Patrol Y62 specialists serving Dubai.",
         "url": "https://patrolgarage.ae/contact.html",
-        "telephone": "+971558175637",
         "email": "info@patrolgarage.ae",
         "areaServed": [{"@type": "City", "name": n} for n in ("Dubai", "Sharjah")],
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "telephone": "+971558175637",
             "areaServed": "AE",
             "availableLanguage": ["en", "ar"],
             "hoursAvailable": [

@@ -18,7 +18,7 @@ WHAT CHANGES, PER AutoRepair NODE
   removed  openingHoursSpecification means "hours these premises are open"
   added    contactPoint              booking hours, which are real, kept as
                                      hoursAvailable on a ContactPoint
-  kept     @type AutoRepair, name, telephone, url, image, areaServed,
+  kept     @type AutoRepair, name, url, image, areaServed,
            knowsAbout, serviceType — the service is real and so is the brand.
 
 `Service.provider` nodes are retyped the same way.
@@ -49,7 +49,6 @@ ROOT = Path(__file__).resolve().parent.parent
 CONTACT_POINT = {
     "@type": "ContactPoint",
     "contactType": "customer service",
-    "telephone": "+971558175637",
     "areaServed": "AE",
     "availableLanguage": ["en", "ar"],
     "hoursAvailable": [
@@ -89,6 +88,8 @@ def clean_node(node):
 
     # Only the top-level business node carries contact details; a nested
     # provider stub is just an identity reference and needs no contactPoint.
+    # Since 2026-11-03 no JSON-LD carries a telephone (owner), so this no longer
+    # fires; contactPoints already on pages keep their hours and languages.
     if "telephone" in node and "contactPoint" not in node:
         node["contactPoint"] = json.loads(json.dumps(CONTACT_POINT))
         changed = True
