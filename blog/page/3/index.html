@@ -447,6 +447,20 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+<style id="pg-mobile-css">
+  @media (max-width: 768px) {
+    body .btn { white-space: normal; max-width: 100%; text-align: center; justify-content: center; line-height: 1.3; overflow-wrap: anywhere; }
+    body .whatsapp-float { display: none; }
+    body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+    .pg-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); background: rgba(10,10,10,0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.1); }
+    .pg-sticky a { display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0 0.75rem; font-family: 'Archivo', system-ui, sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+    .pg-sticky svg { width: 16px; height: 16px; flex: none; }
+    .pg-sticky-call { background: #ffffff; color: #0a0a0a; }
+    .pg-sticky-wa { background: #25d366; color: #0a0a0a; }
+  }
+  @media (min-width: 769px) { .pg-sticky { display: none; } }
+  @media print { .pg-sticky { display: none; } }
+</style>
 </head>
 
 <body>
@@ -467,10 +481,10 @@
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href='/services'>Services</a></li>
-          <li><a href='/about'>About</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/about.html">About</a></li>
           <li><a href="/blog/">Journal</a></li>
-          <li><a href='/contact'>Contact</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </nav>
       <a href="tel:+971558175637" class="header-cta">
@@ -519,7 +533,7 @@
           <h3><a href='/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html'>Nissan Patrol Transmission Rebuild Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">Nissan Patrol transmission rebuild costs in Dubai depend on the model and the extent of damage. Expert Y62 service. Get a quote today!</p>
           <a class='journal-read' href='/blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -531,7 +545,7 @@
           <h3><a href='/blog/nissan-patrol-y62-transmission-problems-dubai.html'>Nissan Patrol Y62 Transmission Problems Dubai 2026</a></h3>
           <p class="journal-excerpt">Expert guide to Y62 transmission issues in Dubai. Overheating, shifting delays & fluid breakdown solutions. Get diagnosed fast. Call...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-transmission-problems-dubai.html'>
-            Read · 12 min
+            Read · 13 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -543,7 +557,7 @@
           <h3><a href='/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html'>Nissan Patrol Y62 vs Y63 Dubai 2026 Guide</a></h3>
           <p class="journal-excerpt">Compare Nissan Patrol Y62 vs Y63 in Dubai. Expert analysis on reliability, ownership costs and performance in extreme heat. Get...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html'>
-            Read · 13 min
+            Read · 14 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -555,7 +569,7 @@
           <h3><a href='/blog/nissan-patrol-ac-problems-dubai.html'>Nissan Patrol AC Problems in Dubai Heat (Diagnosis & Repair)</a></h3>
           <p class="journal-excerpt">Why Patrol ACs fail in UAE summer. Compressor, refrigerant leaks, blower motor issues. Diagnosis and repair costs in Dubai.</p>
           <a class='journal-read' href='/blog/nissan-patrol-ac-problems-dubai.html'>
-            Read · 7 min
+            Read · 8 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -567,7 +581,7 @@
           <h3><a href='/blog/nissan-patrol-mechanic-al-quoz.html'>Patrol Mechanics in Al Quoz Dubai (Expert Shops & Services)</a></h3>
           <p class="journal-excerpt">Find trusted Nissan Patrol mechanics in Al Quoz and Ras Al Khor Dubai. Y62 engine specialists. Services, pricing, reputation guide.</p>
           <a class='journal-read' href='/blog/nissan-patrol-mechanic-al-quoz.html'>
-            Read · 3 min
+            Read · 4 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -579,7 +593,7 @@
           <h3><a href='/blog/nissan-patrol-off-road-uae.html'>Nissan Patrol Off-Road UAE: Dunes, Tips & Preparation (2026)</a></h3>
           <p class="journal-excerpt">Off-roading in Nissan Patrol in UAE. Dune driving tips, preparation, upgrades, safety. Y62 off-road guide for Dubai drivers.</p>
           <a class='journal-read' href='/blog/nissan-patrol-off-road-uae.html'>
-            Read · 3 min
+            Read · 4 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -627,7 +641,7 @@
           <h3><a href='/blog/nissan-patrol-y61-vs-y62-dubai.html'>Nissan Patrol Y61 vs Y62: Which to Buy in Dubai (2026 Guide)</a></h3>
           <p class="journal-excerpt">Y61 vs Y62 comparison: reliability, costs, engine, off-road capability. Which Patrol is best for Dubai? Expert buying guide.</p>
           <a class='journal-read' href='/blog/nissan-patrol-y61-vs-y62-dubai.html'>
-            Read · 3 min
+            Read · 4 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -639,7 +653,7 @@
           <h3><a href='/blog/nissan-patrol-y62-dubai-complete-guide.html'>Nissan Patrol Y62 Buying Guide: vs Y61 and Y63 in the UAE</a></h3>
           <p class="journal-excerpt">The Nissan Patrol Y62 explained for UAE buyers: how it compares with the Y61 and the new Y63, what goes wrong on each, and what to check...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-dubai-complete-guide.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -651,7 +665,7 @@
           <h3><a href='/blog/nissan-patrol-y62-problems-dubai.html'>Common Nissan Patrol Y62 Problems in Dubai (2026 Guide)</a></h3>
           <p class="journal-excerpt">Nissan Patrol Y62 problems in Dubai: transmission failures, overheating, suspension wear and differential repairs, with symptoms and...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-problems-dubai.html'>
-            Read · 12 min
+            Read · 13 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -696,20 +710,20 @@
           <h4>Pages</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href='/services'>Services</a></li>
-            <li><a href='/about'>About</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/about.html">About</a></li>
             <li><a href="/blog/">Journal</a></li>
-            <li><a href='/contact'>Contact</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href='/services'>Diagnostics</a></li>
-            <li><a href='/services'>Suspension</a></li>
-            <li><a href='/services'>AC Service</a></li>
-            <li><a href='/services'>Performance</a></li>
-            <li><a href='/services'>Inspection</a></li>
+            <li><a href="/services.html">Diagnostics</a></li>
+            <li><a href="/services.html">Suspension</a></li>
+            <li><a href="/services.html">AC Service</a></li>
+            <li><a href="/services.html">Performance</a></li>
+            <li><a href="/services.html">Inspection</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -733,21 +747,38 @@
   </a>
 
 
+<div class="pg-sticky" data-cta="sticky_bar" role="navigation" aria-label="Call or WhatsApp Patrol Garage"><a class="pg-sticky-call" data-cta-label="pg-sticky-call" href="tel:+971558175637"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg><span>Call</span></a><a class="pg-sticky-wa" data-cta-label="pg-sticky-wa" href="https://wa.me/971558175637?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20my%20Nissan%20Patrol" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4h.1c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.3zM12 21.9c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 0 1 2.2 12C2.2 6.6 6.6 2.2 12 2.2c2.7 0 5.2 1 7 3a9.8 9.8 0 0 1 2.9 7c0 5.4-4.4 9.7-9.9 9.7zm5.5-7.5c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg><span>WhatsApp</span></a></div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="sticky_bar"]')) return 'sticky_bar';
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'cta_position': ctaPos(el),
+          'event_label': (el.closest('[data-cta-label]') ? el.closest('[data-cta-label]').getAttribute('data-cta-label') : window.location.pathname + ' | ' + ctaPos(el))
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

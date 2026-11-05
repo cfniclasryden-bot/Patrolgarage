@@ -448,6 +448,20 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+<style id="pg-mobile-css">
+  @media (max-width: 768px) {
+    body .btn { white-space: normal; max-width: 100%; text-align: center; justify-content: center; line-height: 1.3; overflow-wrap: anywhere; }
+    body .whatsapp-float { display: none; }
+    body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+    .pg-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); background: rgba(10,10,10,0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.1); }
+    .pg-sticky a { display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0 0.75rem; font-family: 'Archivo', system-ui, sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+    .pg-sticky svg { width: 16px; height: 16px; flex: none; }
+    .pg-sticky-call { background: #ffffff; color: #0a0a0a; }
+    .pg-sticky-wa { background: #25d366; color: #0a0a0a; }
+  }
+  @media (min-width: 769px) { .pg-sticky { display: none; } }
+  @media print { .pg-sticky { display: none; } }
+</style>
 </head>
 
 <body>
@@ -468,10 +482,10 @@
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href='/services'>Services</a></li>
-          <li><a href='/about'>About</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/about.html">About</a></li>
           <li><a href="/blog/">Journal</a></li>
-          <li><a href='/contact'>Contact</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </nav>
       <a href="tel:+971558175637" class="header-cta">
@@ -520,7 +534,7 @@
           <h3><a href='/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html'>Nissan Patrol Y62 Tow Bar Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">What drives Nissan Patrol Y62 tow bar fitting cost in Dubai in 2026. Fixed, detachable, and wiring harness options explained.</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -532,7 +546,7 @@
           <h3><a href='/blog/y62-rear-air-bag-replacement-cost-uae-2026.html'>Y62 Rear Air Bag Cost UAE 2026</a></h3>
           <p class="journal-excerpt">What drives Y62 rear air bag replacement cost in the UAE. See OEM vs aftermarket parts, labour, and what to expect in 2026.</p>
           <a class='journal-read' href='/blog/y62-rear-air-bag-replacement-cost-uae-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -544,7 +558,7 @@
           <h3><a href='/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html'>Nissan Patrol Y62 PPF Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">Full-body PPF on a Nissan Patrol Y62 in Dubai: film brand, coverage and installer set the price. See what drives it and how to check if...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -556,7 +570,7 @@
           <h3><a href='/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html'>Y62 Patrol Specialist Abu Dhabi vs Dubai 2026</a></h3>
           <p class="journal-excerpt">Y62 Patrol owners: compare Abu Dhabi vs Dubai specialist workshops for VK56VD rebuilds, Jatco JR710E transmission work, and...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -592,7 +606,7 @@
           <h3><a href='/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html'>Y62 Fuel Pressure Regulator Cost Dubai 2026: In-Tank Job</a></h3>
           <p class="journal-excerpt">Y62 fuel pressure regulator replacement in Dubai 2026. See what drives the cost, part vs labour, and how the in-tank location affects...</p>
           <a class='journal-read' href='/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -616,7 +630,7 @@
           <h3><a href='/blog/y62-engine-mount-replacement-cost-dubai-2026.html'>Y62 Engine Mount Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">Y62 engine mount replacement cost in Dubai: what drives the price of a full set in 2026. Book at Patrol Garage for same-day diagnosis...</p>
           <a class='journal-read' href='/blog/y62-engine-mount-replacement-cost-dubai-2026.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -652,7 +666,7 @@
           <h3><a href='/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html'>Y62 Throttle Body Cleaning Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">Nissan Patrol Y62 throttle body cleaning cost in Dubai explained. See what's included, how long it takes, and when to reset the throttle...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html'>
-            Read · 14 min
+            Read · 15 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -664,7 +678,7 @@
           <h3><a href='/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html'>Nissan Patrol Y62 Driveshaft Repair Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">Nissan Patrol Y62 driveshaft repair costs in Dubai in 2026. CV joint, giubo, prop shaft: what drives the price and what to check before...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -676,7 +690,7 @@
           <h3><a href='/blog/y62-abs-sensor-replacement-cost-dubai-2026.html'>Y62 ABS Sensor Cost Dubai 2026</a></h3>
           <p class="journal-excerpt">What drives Y62 ABS sensor replacement cost in Dubai. See the part and labour factors, fault causes, and how to book at Patrol Garage in...</p>
           <a class='journal-read' href='/blog/y62-abs-sensor-replacement-cost-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -688,7 +702,7 @@
           <h3><a href='/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html'>Y62 Head Gasket Replacement Cost UAE 2026: What Drives It</a></h3>
           <p class="journal-excerpt">Nissan Patrol Y62 head gasket replacement cost in the UAE depends on one or both heads, resurfacing and parts. See what drives the price...</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -712,7 +726,7 @@
           <h3><a href='/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html'>Y62 Starter Motor Cost UAE 2026</a></h3>
           <p class="journal-excerpt">What drives Nissan Patrol Y62 starter motor replacement cost in UAE 2026. Compare genuine, aftermarket, and used parts plus labour in Dubai.</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -724,7 +738,7 @@
           <h3><a href='/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html'>Y61 Super Safari Snorkel Fitting in Dubai: What the Job Involves</a></h3>
           <p class="journal-excerpt">Snorkel fitting on a Y61 Super Safari: what the job involves, which kits fit, what drives the cost, and what to check before the...</p>
           <a class='journal-read' href='/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -772,7 +786,7 @@
           <h3><a href='/blog/nissan-patrol-differential-repair-cost-uae.html'>Nissan Patrol Differential Repair Cost UAE 2026</a></h3>
           <p class="journal-excerpt">Complete guide to Nissan Patrol Y62 differential repair costs in UAE. What drives the cost, from seals to full rebuilds. Expert Dubai...</p>
           <a class='journal-read' href='/blog/nissan-patrol-differential-repair-cost-uae.html'>
-            Read · 13 min
+            Read · 14 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -784,7 +798,7 @@
           <h3><a href='/blog/nissan-patrol-overheating-dubai-summer-fix.html'>Nissan Patrol Overheating Dubai Summer Fix 2026</a></h3>
           <p class="journal-excerpt">Fix your overheating Nissan Patrol in Dubai's 50°C heat. Expert cooling system service for Y62 models and what drives the cost. Book now...</p>
           <a class='journal-read' href='/blog/nissan-patrol-overheating-dubai-summer-fix.html'>
-            Read · 14 min
+            Read · 15 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -842,20 +856,20 @@
           <h4>Pages</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href='/services'>Services</a></li>
-            <li><a href='/about'>About</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/about.html">About</a></li>
             <li><a href="/blog/">Journal</a></li>
-            <li><a href='/contact'>Contact</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href='/services'>Diagnostics</a></li>
-            <li><a href='/services'>Suspension</a></li>
-            <li><a href='/services'>AC Service</a></li>
-            <li><a href='/services'>Performance</a></li>
-            <li><a href='/services'>Inspection</a></li>
+            <li><a href="/services.html">Diagnostics</a></li>
+            <li><a href="/services.html">Suspension</a></li>
+            <li><a href="/services.html">AC Service</a></li>
+            <li><a href="/services.html">Performance</a></li>
+            <li><a href="/services.html">Inspection</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -879,21 +893,38 @@
   </a>
 
 
+<div class="pg-sticky" data-cta="sticky_bar" role="navigation" aria-label="Call or WhatsApp Patrol Garage"><a class="pg-sticky-call" data-cta-label="pg-sticky-call" href="tel:+971558175637"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg><span>Call</span></a><a class="pg-sticky-wa" data-cta-label="pg-sticky-wa" href="https://wa.me/971558175637?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20my%20Nissan%20Patrol" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4h.1c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.3zM12 21.9c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 0 1 2.2 12C2.2 6.6 6.6 2.2 12 2.2c2.7 0 5.2 1 7 3a9.8 9.8 0 0 1 2.9 7c0 5.4-4.4 9.7-9.9 9.7zm5.5-7.5c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg><span>WhatsApp</span></a></div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="sticky_bar"]')) return 'sticky_bar';
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'cta_position': ctaPos(el),
+          'event_label': (el.closest('[data-cta-label]') ? el.closest('[data-cta-label]').getAttribute('data-cta-label') : window.location.pathname + ' | ' + ctaPos(el))
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

@@ -276,6 +276,8 @@ def build(page):
     end = html.index('<section class="cta-banner">')
     html = html[:start] + page["body"] + "\n\n  " + html[end:]
 
+    import mobile_ux  # phone layer: .btn wrap, sticky Call/WhatsApp bar, .html links
+    html = mobile_ux.apply(html)
     OUT_DIR.mkdir(exist_ok=True)
     (OUT_DIR / page["file"]).write_text(html, encoding="utf-8")
     return html

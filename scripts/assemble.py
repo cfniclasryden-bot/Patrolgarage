@@ -17,6 +17,7 @@ import patch_favicon
 import money_links
 import early_cta
 import ad_city
+import mobile_ux
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DRAFTS_DIR = PROJECT_ROOT / "drafts"
@@ -358,6 +359,11 @@ def assemble(keyword):
     template, injected = patch_internal_traffic.inject(template)
     if injected:
         print("[i] GA4 internal-traffic flag was missing from the template — injected")
+
+    # Phone layer (2026-11-05): long .btn labels wrap, the sticky Call/WhatsApp
+    # bar (cta_position = sticky_bar), and no extensionless internal links.
+    # Last, so the bar copies the post's final WhatsApp pre-fill.
+    template = mobile_ux.apply(template)
 
     out_path = BLOG_DIR / f"{slug}.html"
     with open(out_path, "w", encoding="utf-8") as f:

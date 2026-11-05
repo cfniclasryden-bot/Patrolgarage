@@ -447,6 +447,20 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+<style id="pg-mobile-css">
+  @media (max-width: 768px) {
+    body .btn { white-space: normal; max-width: 100%; text-align: center; justify-content: center; line-height: 1.3; overflow-wrap: anywhere; }
+    body .whatsapp-float { display: none; }
+    body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+    .pg-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); background: rgba(10,10,10,0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.1); }
+    .pg-sticky a { display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0 0.75rem; font-family: 'Archivo', system-ui, sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+    .pg-sticky svg { width: 16px; height: 16px; flex: none; }
+    .pg-sticky-call { background: #ffffff; color: #0a0a0a; }
+    .pg-sticky-wa { background: #25d366; color: #0a0a0a; }
+  }
+  @media (min-width: 769px) { .pg-sticky { display: none; } }
+  @media print { .pg-sticky { display: none; } }
+</style>
 </head>
 
 <body>
@@ -467,10 +481,10 @@
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href='/services'>Services</a></li>
-          <li><a href='/about'>About</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/about.html">About</a></li>
           <li><a href="./">Journal</a></li>
-          <li><a href='/contact'>Contact</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </nav>
       <a href="tel:+971558175637" class="header-cta">
@@ -519,7 +533,7 @@
           <h3><a href='/blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance.html'>Abu Dhabi Heat & Nissan Patrol Maintenance 2026</a></h3>
           <p class="journal-excerpt">Abu Dhabi summers above 45C wear out Patrol engine oil, coolant, transmission, and AC faster than the standard schedule allows. See what...</p>
           <a class='journal-read' href='/blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance.html'>
-            Read · 17 min
+            Read · 18 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -531,7 +545,7 @@
           <h3><a href='/blog/nissan-patrol-long-term-ownership-abu-dhabi.html'>Nissan Patrol Long-Term Ownership Abu Dhabi 2026</a></h3>
           <p class="journal-excerpt">Y62 ownership past 100,000 km in Abu Dhabi: transmission, HBMC suspension, and cooling wear explained with what to fix first and when to...</p>
           <a class='journal-read' href='/blog/nissan-patrol-long-term-ownership-abu-dhabi.html'>
-            Read · 18 min
+            Read · 19 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -543,7 +557,7 @@
           <h3><a href='/blog/nissan-patrol-brake-problems.html'>Nissan Patrol Brake Problems 2026</a></h3>
           <p class="journal-excerpt">Warped rotors, spongy pedal, seized calipers: fix Nissan Patrol brake problems in Dubai heat. Y62 causes, symptoms and repair costs covered.</p>
           <a class='journal-read' href='/blog/nissan-patrol-brake-problems.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -567,7 +581,7 @@
           <h3><a href='/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html'>Is the Nissan Patrol Reliable in Abu Dhabi 2026</a></h3>
           <p class="journal-excerpt">Find out if the Nissan Patrol Y62 holds up in Abu Dhabi heat and desert conditions. Covers engine, transmission, and suspension wear...</p>
           <a class='journal-read' href='/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -591,7 +605,7 @@
           <h3><a href='/blog/nissan-patrol-4wd-not-engaging.html'>Nissan Patrol 4WD Not Engaging 2026</a></h3>
           <p class="journal-excerpt">Patrol 4WD not engaging? Diagnose shift motor, axle actuator, fuse, and module faults on the Y62. Step-by-step fixes from a Dubai workshop.</p>
           <a class='journal-read' href='/blog/nissan-patrol-4wd-not-engaging.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -603,7 +617,7 @@
           <h3><a href='/blog/nissan-patrol-vibration-when-driving.html'>Nissan Patrol Vibration When Driving 2026</a></h3>
           <p class="journal-excerpt">Patrol shaking at speed or under braking? Find the exact cause, tyre balance to worn ball joints, and fix it right the first time in Dubai.</p>
           <a class='journal-read' href='/blog/nissan-patrol-vibration-when-driving.html'>
-            Read · 17 min
+            Read · 18 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -627,7 +641,7 @@
           <h3><a href='/blog/nissan-patrol-steering-problems.html'>Nissan Patrol Steering Problems 2026</a></h3>
           <p class="journal-excerpt">Worn tie rods, failing rack seals, HBMC faults: fix Nissan Patrol steering problems in the UAE. Y61 and Y62 causes, costs and same-day...</p>
           <a class='journal-read' href='/blog/nissan-patrol-steering-problems.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -639,7 +653,7 @@
           <h3><a href='/blog/nissan-patrol-diesel-vs-petrol.html'>Is the Nissan Patrol Diesel or Petrol? The Y62 Is Petrol-Only</a></h3>
           <p class="journal-excerpt">The Y62 and the new Y63 are petrol-only in the UAE; diesel exists only on the older Y61. Fuel use, upkeep and off-road ability compared...</p>
           <a class='journal-read' href='/blog/nissan-patrol-diesel-vs-petrol.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -651,7 +665,7 @@
           <h3><a href='/blog/nissan-patrol-warning-lights-meaning.html'>Nissan Patrol Warning Lights Meaning 2026</a></h3>
           <p class="journal-excerpt">Red means stop, amber means book in, green means active. Decode every Y61, Y62, and Y63 Patrol dashboard warning light before it turns...</p>
           <a class='journal-read' href='/blog/nissan-patrol-warning-lights-meaning.html'>
-            Read · 17 min
+            Read · 18 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -663,7 +677,7 @@
           <h3><a href='/blog/nissan-patrol-oil-leak.html'>Nissan Patrol Oil Leak Fix 2026</a></h3>
           <p class="journal-excerpt">Valve cover gasket, rear main seal, oil pan: find where your Patrol is leaking, what it costs to fix, and which UAE workshops to trust.</p>
           <a class='journal-read' href='/blog/nissan-patrol-oil-leak.html'>
-            Read · 17 min
+            Read · 18 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -675,7 +689,7 @@
           <h3><a href='/blog/nissan-patrol-major-service.html'>Nissan Patrol Major Service 2026: Cost & What's Covered</a></h3>
           <p class="journal-excerpt">What drives Nissan Patrol major service cost in Dubai. See what the 40,000 km service covers, when to book, and Y62 V8 specifics for UAE...</p>
           <a class='journal-read' href='/blog/nissan-patrol-major-service.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -687,7 +701,7 @@
           <h3><a href='/blog/nissan-patrol-best-year-to-buy.html'>Best Nissan Patrol Y62 Year? Check the Service History First</a></h3>
           <p class="journal-excerpt">Which Nissan Patrol year is best? On a used Y62 in the UAE the service history matters more than the build year. What to check, and the...</p>
           <a class='journal-read' href='/blog/nissan-patrol-best-year-to-buy.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -699,7 +713,7 @@
           <h3><a href='/blog/nissan-patrol-shaking-at-high-speed.html'>Nissan Patrol Shaking at High Speed 2026</a></h3>
           <p class="journal-excerpt">Patrol shaking at 100 km/h? Causes include unbalanced tyres, bent rims, worn bearings and ball joints. Book a diagnosis in Dubai and fix...</p>
           <a class='journal-read' href='/blog/nissan-patrol-shaking-at-high-speed.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -711,7 +725,7 @@
           <h3><a href='/blog/nissan-patrol-engine-overheating.html'>Nissan Patrol Engine Overheating 2026</a></h3>
           <p class="journal-excerpt">Low coolant, failed water pump, clogged radiator: find the exact cause of Nissan Patrol engine overheating and what to fix first in...</p>
           <a class='journal-read' href='/blog/nissan-patrol-engine-overheating.html'>
-            Read · 17 min
+            Read · 18 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -723,7 +737,7 @@
           <h3><a href='/blog/nissan-patrol-black-smoke.html'>Nissan Patrol Black Smoke Fix 2026</a></h3>
           <p class="journal-excerpt">Black smoke from your Nissan Patrol means a rich fuel mix. Fix clogged air filters, bad injectors, or a failed MAF sensor. Y62 and Y61...</p>
           <a class='journal-read' href='/blog/nissan-patrol-black-smoke.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -735,7 +749,7 @@
           <h3><a href='/blog/nissan-patrol-fuel-consumption.html'>Nissan Patrol Fuel Consumption 2026: Real UAE L/100km &amp; km/l</a></h3>
           <p class="journal-excerpt">Real Nissan Patrol fuel use in the UAE: a Y62 V8 does 18-22 L/100km (about 4.5-5.5 km/l) in city traffic and 13-14 on the highway. Y61...</p>
           <a class='journal-read' href='/blog/nissan-patrol-fuel-consumption.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -759,7 +773,7 @@
           <h3><a href='/blog/nissan-patrol-high-mileage.html'>Nissan Patrol High Mileage Guide 2026</a></h3>
           <p class="journal-excerpt">Y62 Patrol hitting 150k or 250k km? Learn which engines, gearboxes, and suspension parts need attention first, and what drives UAE...</p>
           <a class='journal-read' href='/blog/nissan-patrol-high-mileage.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -771,7 +785,7 @@
           <h3><a href='/blog/buying-a-used-nissan-patrol.html'>Buying a Used Nissan Patrol 2026 Guide</a></h3>
           <p class="journal-excerpt">Transmission rebuilds are the costliest fault. Learn what to inspect on a used Nissan Patrol in the UAE before you pay, covering Y61,...</p>
           <a class='journal-read' href='/blog/buying-a-used-nissan-patrol.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -783,7 +797,7 @@
           <h3><a href='/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html'>Y62 Coolant Temperature Sensor Cost UAE 2026: Part + Labour</a></h3>
           <p class="journal-excerpt">Nissan Patrol Y62 coolant temperature sensor replacement cost in UAE 2026. Part, labour and diagnosis explained. Ask for a quote.</p>
           <a class='journal-read' href='/blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html'>
-            Read · 16 min
+            Read · 17 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -795,7 +809,7 @@
           <h3><a href='/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html'>Y62 Crankshaft Position Sensor Cost Dubai 2026: Which One</a></h3>
           <p class="journal-excerpt">Y62 crankshaft position sensor replacement cost in Dubai depends on parts and labour. Learn which of the two VK56VD sensors is failing...</p>
           <a class='journal-read' href='/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html'>
-            Read · 15 min
+            Read · 16 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </article>
@@ -840,20 +854,20 @@
           <h4>Pages</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href='/services'>Services</a></li>
-            <li><a href='/about'>About</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/about.html">About</a></li>
             <li><a href="./">Journal</a></li>
-            <li><a href='/contact'>Contact</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href='/services'>Diagnostics</a></li>
-            <li><a href='/services'>Suspension</a></li>
-            <li><a href='/services'>AC Service</a></li>
-            <li><a href='/services'>Performance</a></li>
-            <li><a href='/services'>Inspection</a></li>
+            <li><a href="/services.html">Diagnostics</a></li>
+            <li><a href="/services.html">Suspension</a></li>
+            <li><a href="/services.html">AC Service</a></li>
+            <li><a href="/services.html">Performance</a></li>
+            <li><a href="/services.html">Inspection</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -877,21 +891,38 @@
   </a>
 
 
+<div class="pg-sticky" data-cta="sticky_bar" role="navigation" aria-label="Call or WhatsApp Patrol Garage"><a class="pg-sticky-call" data-cta-label="pg-sticky-call" href="tel:+971558175637"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg><span>Call</span></a><a class="pg-sticky-wa" data-cta-label="pg-sticky-wa" href="https://wa.me/971558175637?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20my%20Nissan%20Patrol" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.7 1.4h.1c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.3zM12 21.9c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 0 1 2.2 12C2.2 6.6 6.6 2.2 12 2.2c2.7 0 5.2 1 7 3a9.8 9.8 0 0 1 2.9 7c0 5.4-4.4 9.7-9.9 9.7zm5.5-7.5c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg><span>WhatsApp</span></a></div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+  // Which CTA earned the click. Without this every WhatsApp link reports only
+  // the page path, so the early CTA cannot be told apart from the footer one.
+  function ctaPos(el) {
+    if (el.closest('[data-cta="sticky_bar"]')) return 'sticky_bar';
+    if (el.closest('[data-cta="early"]')) return 'early';
+    if (el.closest('[data-cta="mid"]')) return 'mid';
+    if (el.closest('.whatsapp-float')) return 'float';
+    if (el.closest('.cta-banner')) return 'banner';
+    if (el.closest('header')) return 'header';
+    if (el.closest('footer')) return 'footer';
+    return 'body';
+  }
+  function track(el, name) {
     el.addEventListener('click', function() {
       if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
+        gtag('event', name, {
+          'event_category': 'engagement',
+          'cta_position': ctaPos(el),
+          'event_label': (el.closest('[data-cta-label]') ? el.closest('[data-cta-label]').getAttribute('data-cta-label') : window.location.pathname + ' | ' + ctaPos(el))
+        });
       }
     });
+  }
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
+    track(el, 'whatsapp_click');
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'phone_click', { 'event_category': 'engagement', 'event_label': window.location.pathname });
-      }
-    });
+    track(el, 'phone_click');
   });
 });
 </script>

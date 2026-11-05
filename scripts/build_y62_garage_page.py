@@ -154,6 +154,8 @@ def build():
     end = html.index('<section class="cta-banner">')
     html = html[:start] + BODY + "\n\n  " + html[end:]
 
+    import mobile_ux  # phone layer: .btn wrap, sticky Call/WhatsApp bar, .html links
+    html = mobile_ux.apply(html)
     OUT.write_text(html, encoding="utf-8")
     return html
 

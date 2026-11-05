@@ -280,6 +280,8 @@ def build():
     # The FAQ questions need air above them; services.html has no FAQ styles.
     html = html.replace("</head>", '<style id="pg-ad-faq-css">.service-article .faq h3'
                         '{margin:1.75rem 0 .6rem}</style>\n</head>', 1)
+    import mobile_ux  # phone layer: .btn wrap, sticky Call/WhatsApp bar, .html links
+    html = mobile_ux.apply(html)
     OUT.write_text(html, encoding="utf-8")
     return html
 

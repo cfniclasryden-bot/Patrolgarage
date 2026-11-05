@@ -679,6 +679,18 @@ def publish(keyword=None):
     except Exception as e:
         print(f"    [!] copy pins failed: {e}")
 
+    # Phone layer (2026-11-05): .btn labels wrap on phones, the sticky Call /
+    # WhatsApp bar (cta_position = sticky_bar) and .html on every internal link,
+    # on every shipped page whatever rebuilt it. Before the Abu Dhabi routing so
+    # the bar's WhatsApp link gets the Mussafah pre-fill too. Never fatal:
+    # test_mobile_ux.py fails on any page left without it.
+    try:
+        import mobile_ux
+        ux_pages, ux_links = mobile_ux.run(write=True)
+        print(f"[+] Mobile layer: {len(ux_pages)} page(s) re-applied, {ux_links} link(s) fixed")
+    except Exception as e:
+        print(f"    [!] mobile layer failed: {e}")
+
     # Mussafah routing (2026-10-09): the Abu Dhabi ask and "Mussafah:" pre-fills
     # on the hub and every Abu Dhabi post, whatever rebuilt them. Never fatal.
     try:
