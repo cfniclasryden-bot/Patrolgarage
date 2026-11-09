@@ -1,5 +1,50 @@
 # Working notes for patrolgarage
 
+## THE BLOG PIPELINE IS PAUSED (since 2026-11-09, owner's request)
+
+No PG post publishes until the owner says to re-enable it. Paused together with
+topchallenger's, after a customer called the workshop asking for a towbar that
+this site's tow bar post had offered ("bring it to us at Patrol Garage"). See
+`topchallenger/site/research/BLOG-SERVICE-AUDIT-2026-11-09.md`, Appendix A.
+
+**State as paused (verified 2026-11-09 08:44 UTC):** Railway project
+`patrolgarage` (5db32147-4574-49cb-8bfe-4c50b47b764b), service
+`patrolgarage-pipeline` (4e6167e9-44c1-4881-b414-5aab2c3db605), env production
+(3c2233d7-3297-49af-ae1d-36f0edde084a). Active deployment `bdf4f89b` has **no
+cronSchedule** and start command `echo patrolgarage-pipeline PAUSED 2026-11-09 -
+see CLAUDE.md`; it ran the echo once and EXITED. The previous deployment
+(88cee22c, cron `0 5 * * 1,4`) is REMOVED. Service instance: `cronSchedule:
+null`, `nextCronRunAt: null`. `railway.json` carries the same pause.
+
+**Why both the cron AND the start command.** A deployment with no cron and the
+real start command runs the pipeline ONCE at deploy time, which publishes a
+post. The echo makes every deploy harmless while paused. And a
+`serviceInstanceRedeploy` does NOT apply a changed instance setting: it copies
+the previous deployment's manifest (found on topchallenger the same morning).
+Only `railway up` builds a deployment with the new values. Trust the ACTIVE
+DEPLOYMENT's `meta.serviceManifest.deploy`, not the instance fields.
+
+**`railway up` timed out client-side twice** ("error sending request ... /up ...
+operation timed out") on this 225 MB tree. The first attempt left a FAILED
+deployment; the second had in fact uploaded and built fine. After a timeout,
+check `deployments(first:3, ...)` before retrying.
+
+**To re-enable (only when the owner asks):**
+
+1. In `railway.json` restore `"startCommand": "python3 scripts/cron_entry.py"`
+   and `"cronSchedule": "0 5 * * 1,4"` (Mon/Thu 05:00 UTC). Commit and push.
+2. Set the instance to match FIRST (GraphQL, `User-Agent: railwayapp/4.56.1`):
+   `serviceInstanceUpdate(serviceId:"4e6167e9-44c1-4881-b414-5aab2c3db605",
+   environmentId:"3c2233d7-3297-49af-ae1d-36f0edde084a", input:{cronSchedule:"0 5 * * 1,4",
+   startCommand:"python3 scripts/cron_entry.py", restartPolicyType:NEVER})`.
+   With the cron set, the deploy waits for the tick instead of publishing at once.
+3. `cd ~/Desktop/Projects/patrolgarage && railway up --ci` (cd in the same command).
+4. Verify: the new active deployment's manifest shows the cron and
+   `cron_entry.py`, and the service instance `nextCronRunAt` is the next Mon/Thu
+   05:00 UTC.
+5. The topic blocklist (`scripts/topic_blocklist.py`) and the offer guard
+   (`scripts/test_no_offers.py`) added the same day stay in force after re-enabling.
+
 ## GH_TOKEN on patrolgarage-pipeline is SHARED and TEMPORARY — replace it
 
 The `GH_TOKEN` set on the Railway service `patrolgarage-pipeline` on 2026-09-18

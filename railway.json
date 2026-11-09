@@ -5,8 +5,7 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "python3 scripts/cron_entry.py",
-    "restartPolicyType": "NEVER",
-    "cronSchedule": "0 5 * * 1,4"
+    "startCommand": "echo patrolgarage-pipeline PAUSED 2026-11-09 - see CLAUDE.md",
+    "restartPolicyType": "NEVER"
   }
 }
