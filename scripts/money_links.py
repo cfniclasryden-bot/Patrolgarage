@@ -113,9 +113,10 @@ def add_money_links(body, slug):
         if slug in PILLARS:
             addition += HOME_SENTENCE.format(url=HOME_URL)
 
-        # Preferred slot: first paragraph of the "When to bring it to …" section.
+        # Preferred slot: first paragraph of the closing section ("Ask us about
+        # your Patrol" since 2026-11-09; "When to bring it to …" before that).
         m = re.search(
-            r"<h2[^>]*>\s*When to [Bb]ring[^<]*</h2>\s*(<p>.*?</p>)",
+            r"<h2[^>]*>\s*(?:When to [Bb]ring[^<]*|Ask us about your Patrol)</h2>\s*(<p>.*?</p>)",
             body, re.S,
         )
         if m:

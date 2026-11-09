@@ -137,6 +137,11 @@ def gate_stages(slug):
         # safe alternative, so it never costs the day's post.
         (["python3", "scripts/check_alt.py", "--repair", post],
          "pre-publish: hero alt asserts nothing the picture cannot support", True),
+        # 2026-11-09 (owner): no post offers to fit, install or supply anything,
+        # and none says "bring it to us". Blocking. Image code: live after the
+        # next `railway up`, which re-enabling the paused cron requires anyway.
+        (["python3", "scripts/test_no_offers.py", post],
+         "pre-publish: no fit / install / supply / bring-it-to-us offers", True),
     ]
 
 
@@ -405,6 +410,19 @@ def main():
         r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
                      params={"site_id": f"eq.{site_id}", "status": "eq.pending", "select": "id"})
         log(f"Pending in queue after replenishment: {len(r.json())} (was {pending_count})")
+
+    # Blocked topics (2026-11-09, owner): retire any pending row on a blocked
+    # topic before picking, so it is never written and never picked again. The
+    # row stays in Supabase, which is what keeps the refill from re-adding it.
+    import topic_blocklist
+    for row in _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
+                        params={"site_id": f"eq.{site_id}", "status": "eq.pending",
+                                "select": "id,keyword,slug"}).json():
+        topic = topic_blocklist.blocked_topic(row.get("keyword")) or topic_blocklist.blocked_topic(row.get("slug"))
+        if topic:
+            log(f"[!] Retiring blocked pending keyword ({topic}): {row.get('keyword')}")
+            _req.patch(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
+                       params={"id": f"eq.{row['id']}"}, json={"status": "retired"})
 
     # Fetch the next pending article from Supabase, in QUEUE_ORDER
     r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,

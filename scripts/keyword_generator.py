@@ -378,6 +378,22 @@ def main():
         print("[!] Every candidate was a modification topic. Queue not grown.")
         return 0
 
+    # Gate 0c (2026-11-09, owner): blocked topics. Tow bars, PPF, snorkels,
+    # dashcams, lift kits and accessory fitting are never queued again; a post
+    # on one is an offer neither this site nor its partner workshop fulfils.
+    import topic_blocklist
+    _kept = []
+    for kw in unique_new:
+        topic = topic_blocklist.blocked_topic(kw)
+        if topic:
+            print(f"    [reject] {kw}  — blocked topic: {topic} (Gate 0c)")
+        else:
+            _kept.append(kw)
+    unique_new = _kept
+    if not unique_new:
+        print("[!] Every candidate was a blocked topic (Gate 0c). Queue not grown.")
+        return 0
+
     # Gate 0b (2026-10-07): the refill accept/reject rules above. Before the
     # DataForSEO lookups, like Gate 0, so a rejected idea costs nothing.
     _kept = []

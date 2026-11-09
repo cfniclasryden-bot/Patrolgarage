@@ -74,7 +74,7 @@ LOCATION FOR THIS POST: THE READER'S PATROL IS IN ABU DHABI, NOT DUBAI.
   * The Y62 only. Do not write "Y61", "Y63" or "Super Safari" ANYWHERE in this
     post, not even in passing: no section, no aside, no comparison, no FAQ. A
     pre-publish check blocks the post on a single mention.
-  * The "When to bring it to Patrol Garage" section should say Abu Dhabi
+  * The "Ask us about your Patrol" section should say Abu Dhabi
     owners can message on WhatsApp with the symptom, the year and the mileage.
 """
 

@@ -229,6 +229,11 @@ def extract_article_body(draft_html):
 
 def assemble(keyword):
     slug = slugify(keyword)
+    # Blocked topics (2026-11-09, owner): never assemble one, whatever drafted it.
+    import topic_blocklist
+    if topic_blocklist.is_blocked(keyword) or topic_blocklist.is_blocked(slug):
+        raise SystemExit(f"[!] REFUSED: '{keyword}' is a blocked topic "
+                         f"({topic_blocklist.blocked_topic(keyword) or topic_blocklist.blocked_topic(slug)}).")
     draft_path = DRAFTS_DIR / f"{slug}.html"
 
     if not draft_path.exists():

@@ -166,7 +166,7 @@ PAGES = [
       </div>
 
       <div class="section-head" style="margin-top:4rem;">
-        <div class="section-num">02 &mdash; Bring It In</div>
+        <div class="section-num">02 &mdash; Ask Early</div>
         <h2>Before it gets<br>expensive.</h2>
         <p>If your Patrol is doing any of the above, the useful thing to send us is the symptom, the year and roughly when it started. We will tell you whether it sounds like fluid, solenoid or something that needs the unit out, before the car comes in. Further reading: <a href="/blog/nissan-patrol-y62-transmission-problems-dubai.html" style="text-decoration: underline; text-underline-offset: 3px;">Y62 transmission problems in Dubai</a>.</p>
       </div>

@@ -55,7 +55,7 @@ NO-JOKE ZONES. These stay completely deadpan, no exceptions:
 part name or a measurement.
 - Safety and urgency advice, anything a reader could act on wrongly and get hurt or land a \
 repair bill.
-- The final "When to bring it to Patrol Garage" section and the <div class="cta"> block.
+- The final "Ask us about your Patrol" section and the <div class="cta"> block.
 - The first sentence of the post, and the one-sentence direct answer under each H2.
 
 HARD RULES

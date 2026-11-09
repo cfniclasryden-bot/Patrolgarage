@@ -67,12 +67,12 @@
     },
     {
       "source": "/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026.html",
-      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
       "statusCode": 301
     },
     {
       "source": "/blog/nissan-patrol-y63-towbar-fitting-specialist-dubai-2026",
-      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
       "statusCode": 301
     },
     {
@@ -296,6 +296,46 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-y61-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-y61-dubai-complete-guide.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
+      "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026",
+      "destination": "/blog/nissan-patrol-y62-vs-y63-dubai-comparison.html",
+      "statusCode": 301
+    },
+    {
       "source": "/docs/:path*",
       "destination": "/",
       "statusCode": 404
@@ -351,6 +391,11 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance",
+      "destination": "/blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi",
       "destination": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html",
       "statusCode": 301
@@ -391,6 +436,11 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-engine-hesitation",
+      "destination": "/blog/nissan-patrol-engine-hesitation.html",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/nissan-patrol-engine-overheating",
       "destination": "/blog/nissan-patrol-engine-overheating.html",
       "statusCode": 301
@@ -408,6 +458,11 @@
     {
       "source": "/blog/nissan-patrol-high-mileage",
       "destination": "/blog/nissan-patrol-high-mileage.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-long-term-ownership-abu-dhabi",
+      "destination": "/blog/nissan-patrol-long-term-ownership-abu-dhabi.html",
       "statusCode": 301
     },
     {
@@ -531,11 +586,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026",
-      "destination": "/blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-y62-problems-dubai",
       "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
       "statusCode": 301
@@ -561,11 +611,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026",
-      "destination": "/blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-y62-transmission-problems-dubai",
       "destination": "/blog/nissan-patrol-y62-transmission-problems-dubai.html",
       "statusCode": 301
@@ -578,11 +623,6 @@
     {
       "source": "/blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi",
       "destination": "/blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026",
-      "destination": "/blog/y61-super-safari-snorkel-fitting-cost-dubai-2026.html",
       "statusCode": 301
     },
     {
@@ -623,11 +663,6 @@
     {
       "source": "/blog/y62-water-pump-replacement-cost-uae-2026",
       "destination": "/blog/y62-water-pump-replacement-cost-uae-2026.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026",
-      "destination": "/blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html",
       "statusCode": 301
     }
   ],

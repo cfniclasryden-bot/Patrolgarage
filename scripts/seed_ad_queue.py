@@ -190,8 +190,12 @@ def main():
             requests.post(f"{url}/rest/v1/articles", headers=h, json={
                 "site_id": pg, "keyword": kw, "slug": slugify(kw), "status": "retired",
                 "editorial_notes": note}).raise_for_status()
+    import topic_blocklist  # 2026-11-09: blocked topics are never queued
     for kw in AD_KEYWORDS:
         if kw in all_kw:
+            continue
+        if topic_blocklist.is_blocked(kw):
+            print(f"[skip] {kw!r}: blocked topic ({topic_blocklist.blocked_topic(kw)})")
             continue
         print(f"[insert] {kw!r}")
         row = {"keyword": kw, "slug": slugify(kw), "id": None}

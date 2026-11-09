@@ -270,14 +270,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                                             'workshop:</p>',
                                                                             '<p>Other signs to '
                                                                             'watch for:</p>')],
- 'blog/nissan-patrol-y62-paint-protection-film-cost-dubai-2026.html': [('We work on Y62 Patrols '
-                                                                        'every day, and we see a '
-                                                                        'lot of paint damage that '
-                                                                        'PPF could have prevented.',
-                                                                        'Paint damage that PPF '
-                                                                        'could have prevented is '
-                                                                        'easier to avoid than to '
-                                                                        'fix.')],
  'blog/nissan-patrol-y62-problems-dubai.html': [('The most common differential failures we see '
                                                  'come from two sources:',
                                                  'The most common differential failures come from '
@@ -322,29 +314,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                                     'In a temperate climate, a Y62 '
                                                                     'can go 80,000 km or more '
                                                                     'without issue.')],
- 'blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html': [('What surprises most owners is '
-                                                                  'how affordable a proper tow bar '
-                                                                  'fitting actually is compared to '
-                                                                  'what the dealership charges for '
-                                                                  'accessories.',
-                                                                  'A proper tow bar fitting can be '
-                                                                  'more affordable than you might '
-                                                                  'expect compared to what the '
-                                                                  'dealership charges for '
-                                                                  'accessories.'),
-                                                                 ('We see a lot of Y62s with '
-                                                                  'aftermarket tow bars fitted at '
-                                                                  'varying quality levels, and the '
-                                                                  'price difference',
-                                                                  'Aftermarket tow bars on a Y62 '
-                                                                  'are fitted at varying quality '
-                                                                  'levels, and the price '
-                                                                  'difference'),
-                                                                 ('Yes, and it is something most '
-                                                                  'owners do not think about until '
-                                                                  'corrosion sets in.',
-                                                                  'Yes, and it is easy to overlook '
-                                                                  'until corrosion sets in.')],
  'blog/nissan-patrol-y62-transmission-problems-dubai.html': [('We regularly see Y62 Patrols with '
                                                               'transmission issues that could have '
                                                               'been prevented with early '

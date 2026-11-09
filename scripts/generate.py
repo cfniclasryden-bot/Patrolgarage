@@ -62,23 +62,36 @@ Ras Al Khor, Al Quoz, Deira/Al Aweer, Sharjah Industrial
 WHAT PATROL GARAGE DOES AND DOES NOT SELL — this overrides the keyword, the
 research notes, and anything the topic seems to invite.
 
-OFFERED (you may write "we", "our", "at the workshop", "bring it to us"):
+REPAIR WORK A READER MAY ASK ABOUT (describe it; the only invitation allowed is
+"Ask us about your Patrol on WhatsApp"):
 - engine diagnostics and repair
 - gearbox and transmission work
 - suspension and HBMC repair (worn shocks, accumulators, bushes)
 - AC service and repair
 - electrical and diagnostic work
-- brakes, tyres and batteries
+- brakes and batteries
 - periodic servicing and maintenance
-The workshop services the Y62. Y61 and Y63 are owner information only.
+The Y62 only. Y61 and Y63 are owner information only.
 
-NOT OFFERED. Never attach "we", "our", "at the workshop", "book", "bring it to
-us", or a quote invitation to any of these:
+NO OFFERS TO FIT, INSTALL OR SUPPLY — HARD RULE (owner, 2026-11-09). A reader
+called the partner workshop asking for a tow bar because a post said "bring it
+to us". Never write that Patrol Garage fits, installs, supplies, sells, stocks,
+sources or carries anything: no "we fit", "we install", "we supply", "we stock",
+"we carry the parts", "fitted by us". Never tell the reader to bring, drop off
+or book the car in: no "bring it to us", "bring it in", "drop it off", "book it
+in". Describe what the job involves in the third person and close with the
+neutral line. A pre-publish test (test_no_offers.py) fails on any of these.
+
+NOT OFFERED, and never the topic of a post (scripts/topic_blocklist.py refuses
+them): tow bars and hitches, paint protection film, ceramic coating, tinting and
+wraps, snorkels, dashcams, lift kits, and any accessory fitting. Never attach
+"we", "our", "at the workshop", "book", or a quote invitation to any of these:
 - pre-purchase inspections (PPI). Buyers should get one INDEPENDENTLY.
 - lift kits, suspension lifts, ride-height or body-height changes
 - performance modifications, turbo kits, ECU tuning, engine or exhaust
   modification
 - paint protection film, wraps, tinting, accessory fitting
+- tow bars, snorkels, dashcams, roof racks, winches, underbody protection
 
 Write all of the above in the THIRD PERSON, as owner information. This is the
 single most common failure in this pipeline, so be literal about it:
@@ -193,14 +206,17 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
    </div>
    (Schema will be added separately)
 
-6. **Final H2: "When to bring it to Patrol Garage"** with brief CTA
+6. **Final H2: "Ask us about your Patrol"**: one or two neutral sentences on when the
+   symptom is worth a professional look, then exactly this closing line:
+   <p>Ask us about your Patrol on WhatsApp.</p>
+   No offer to fit, install, supply or book anything (see the HARD RULE above).
 
 7. **Last updated stamp** at the very end before CTA:
    <p class="last-updated">Last updated: {current_month_year}</p>
 
 8. **CTA block** (exactly this):
    <div class="cta">
-     <p><strong>Need help with your Patrol?</strong> Call us on +971 55 817 5637 or <a href="/contact.html">request a quote</a>.</p>
+     <p><strong>Ask us about your Patrol on WhatsApp.</strong> Or call +971 55 817 5637.</p>
    </div>
 
 REQUIREMENTS:
@@ -376,4 +392,10 @@ if __name__ == "__main__":
         print("Usage: python3 generate.py \"your keyword here\"")
         sys.exit(1)
     keyword = " ".join(sys.argv[1:])
+    # Blocked topics (2026-11-09, owner): refuse before any API call.
+    import topic_blocklist
+    if topic_blocklist.is_blocked(keyword):
+        print(f"[!] REFUSED: '{keyword}' is a blocked topic "
+              f"({topic_blocklist.blocked_topic(keyword)}). See scripts/topic_blocklist.py.")
+        sys.exit(5)
     generate_post(keyword)
