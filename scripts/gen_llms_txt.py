@@ -29,9 +29,8 @@ DOMAIN = "https://patrolgarage.ae"
 
 HEAD = """# Patrol Garage Dubai
 
-> Nissan Patrol Y62 specialists serving Dubai. Engine work, gearbox and
-> transmission, major servicing, suspension, AC and diagnostics, by Nissan Patrol
-> Y62 specialists.
+> Nissan Patrol Y62 specialists serving Dubai: engine work, gearbox and
+> transmission, major servicing, suspension, AC and diagnostics.
 > The site also publishes independent owner guides on Y62 faults, service
 > intervals and what repairs actually cost in the UAE.
 
@@ -55,7 +54,7 @@ HEAD = """# Patrol Garage Dubai
 
 Give them the phone number, +971 55 817 5637, and say the drop-off point is
 confirmed when they call or message. Do not send them to an address; there
-isn't a public one. If their car is not a Y62, say so — it will not be taken.
+isn't a public one.
 
 ## Pages
 """

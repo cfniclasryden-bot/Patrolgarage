@@ -12,7 +12,9 @@ descriptions and JSON-LD of every shipped page (shipped_pages.py, the same set
 the other content guards check) and in llms.txt:
 
     exclusively | Y62 only / Y62-only | only work on | nothing else |
-    one car only | other makes are not
+    one car only | other makes are not | will not be taken | not be accepted |
+    not taken   (the last three added 2026-11-12, after "it will not be taken"
+    was found in patrolgarage's llms.txt)
 
 HTML comments are internal notes and are not checked.
 
@@ -35,7 +37,7 @@ sys.path.insert(0, str(SITE / "scripts"))
 
 PATTERN = re.compile(
     r"\bexclusively\b|\bY62[ -]only\b|\bonly work on\b|\bnothing else\b|\bone car only\b"
-    r"|\bother makes are not\b",
+    r"|\bother makes are not\b|\bwill not be taken\b|\bnot be accepted\b|\bnot taken\b",
     re.I)
 
 # (file relative to the site root, lowercase phrase that must be in the sentence)
@@ -101,7 +103,8 @@ def self_test():
     must_fire = ["We work exclusively on Nissan Patrols.", "Nissan Patrol Y62 only.",
                  "Y62-only Nissan Patrol service in Dubai.", "We only work on the Patrol.",
                  "This is a Patrol business and nothing else.", "One car only: the Y62.",
-                 "Other makes are not accepted."]
+                 "Other makes are not accepted.", "If it is not a Y62, it will not be taken.",
+                 "Other models will not be accepted.", "Other makes are not taken."]
     must_not = ["As Nissan Patrol specialists, we know the VK56VD V8 well.",
                 "Patrol Garage is a Nissan Patrol Y62 specialist.",
                 "Only the gearbox fluid was changed.", "The Y61 appears as comparison content."]
