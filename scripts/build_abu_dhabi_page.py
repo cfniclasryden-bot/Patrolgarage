@@ -99,7 +99,7 @@ HERO = '''<section class="hero">
     <div class="hero-inner">
       <div class="hero-meta">
         <span class="hero-meta-line"></span>
-        <span>Y62 Only</span>
+        <span>Y62 Specialist</span>
         <span>&middot;</span>
         <span>Abu Dhabi</span>
       </div>
