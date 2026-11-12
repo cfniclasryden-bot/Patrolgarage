@@ -31,6 +31,10 @@ import re
 MARKER = "<!-- MONEYLINK -->"
 
 SERVICES_URL = "/services.html"
+# 2026-11-12 (rank fix plan batch 1): the servicing anchor points at the page made
+# for it, not the menu. Only the template that carries the topical anchor uses it;
+# the generic templates ("what we do to a Y62", "Patrol Garage") still link the menu.
+TOPICAL_URLS = {"service": "/services/y62-major-service-dubai.html"}
 HOME_URL = "/"
 
 # Real service categories, lifted from the <h3>s in services.html so an anchor
@@ -94,7 +98,8 @@ def _sentence(slug):
     # it: it carries the keyword signal. Stable per-slug, but varied across the
     # catalogue.
     idx = sum(ord(c) for c in slug) % 3
-    return TEMPLATES[idx].format(url=SERVICES_URL, anchor=anchor)
+    url = TOPICAL_URLS.get(key, SERVICES_URL) if idx == 0 else SERVICES_URL
+    return TEMPLATES[idx].format(url=url, anchor=anchor)
 
 
 def already_linked(body):
