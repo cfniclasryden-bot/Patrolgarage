@@ -48,7 +48,7 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                  ''),
                 ('From routine maintenance to complex engine work, suspension and HBMC repair to '
                  "full restorations, we've become the workshop Patrol owners trust.",
-                 'Patrol Garage focuses on one car only: the Nissan Patrol Y62.'),
+                 'Patrol Garage specialises in the Nissan Patrol Y62.'),
                 ('We built Patrol Garage specifically around servicing this car—the right tools, '
                  'the right parts supply, and mechanics who can diagnose problems from the sound '
                  'the engine makes.',
@@ -416,7 +416,7 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                    'Send us a message with the symptom and we will take it from there.'),
                   ('Worth repeating before you get in touch: this is a Nissan Patrol Y62 workshop '
                    'only.',
-                   'Worth repeating before you get in touch: Nissan Patrol Y62 only.')],
+                   'Worth knowing before you get in touch: Patrol Garage is a Nissan Patrol Y62 specialist.')],
  'index.html': [('<div class="section-num">01 — How It Works</div>',
                  '<div class="section-num">01 · Start Here</div>'),
                 ('<h2>Drop it off.<br>Drive it back.</h2>',

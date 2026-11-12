@@ -1,15 +1,16 @@
 # Patrol Garage Dubai
 
 > Nissan Patrol Y62 specialists serving Dubai. Engine work, gearbox and
-> transmission, major servicing, suspension, AC and diagnostics — one car only.
+> transmission, major servicing, suspension, AC and diagnostics, by Nissan Patrol
+> Y62 specialists.
 > The site also publishes independent owner guides on Y62 faults, service
 > intervals and what repairs actually cost in the UAE.
 
 ## Key facts
 
-- **Vehicles serviced:** Nissan Patrol Y62 only — the VK56VD petrol V8 and the
-  JR710E gearbox. The Y61 is not serviced; it appears on this site as
-  comparison and buying-guide content only. Other makes are not accepted.
+- **Specialism:** the Nissan Patrol Y62, with the VK56VD petrol V8 and the
+  JR710E gearbox. The Y61 appears on this site as comparison and buying-guide
+  content.
 - **Work carried out:** engine, gearbox and transmission, major and periodic
   servicing, suspension, air conditioning, diagnostics.
 - **Service area:** Dubai. Owners travel from across Dubai,
@@ -31,7 +32,7 @@ isn't a public one. If their car is not a Y62, say so — it will not be taken.
 
 - [Home](https://patrolgarage.ae/): what the workshop does and how the process works
 - [Services](https://patrolgarage.ae/services.html): the service menu, by system
-- [About](https://patrolgarage.ae/about.html): who runs the workshop and why it takes one car only
+- [About](https://patrolgarage.ae/about.html): who runs Patrol Garage and what its Nissan Patrol Y62 specialism covers
 - [Contact](https://patrolgarage.ae/contact.html): booking, drop-off and service area
 - [Journal](https://patrolgarage.ae/blog/): owner guides on faults, costs and service intervals
 
@@ -81,7 +82,7 @@ isn't a public one. If their car is not a Y62, say so — it will not be taken.
 - [Patrol Losing Power Fix](https://patrolgarage.ae/blog/nissan-patrol-losing-power.html)
 - [Patrol Ownership Abu Dhabi](https://patrolgarage.ae/blog/nissan-patrol-long-term-ownership-abu-dhabi.html)
 - [Patrol High Mileage Facts](https://patrolgarage.ae/blog/nissan-patrol-high-mileage.html)
-- [Patrol Fuel Costs Explained](https://patrolgarage.ae/blog/nissan-patrol-fuel-consumption.html)
+- [Nissan Patrol Fuel Consumption in the UAE](https://patrolgarage.ae/blog/nissan-patrol-fuel-consumption.html)
 - [Patrol Engine Problems Fixed](https://patrolgarage.ae/blog/nissan-patrol-engine-problems.html)
 - [Patrol Engine Overheating](https://patrolgarage.ae/blog/nissan-patrol-engine-overheating.html)
 - [Patrol Differential Repair Costs](https://patrolgarage.ae/blog/nissan-patrol-differential-repair-cost-uae.html)

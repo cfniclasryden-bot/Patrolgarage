@@ -30,15 +30,16 @@ DOMAIN = "https://patrolgarage.ae"
 HEAD = """# Patrol Garage Dubai
 
 > Nissan Patrol Y62 specialists serving Dubai. Engine work, gearbox and
-> transmission, major servicing, suspension, AC and diagnostics — one car only.
+> transmission, major servicing, suspension, AC and diagnostics, by Nissan Patrol
+> Y62 specialists.
 > The site also publishes independent owner guides on Y62 faults, service
 > intervals and what repairs actually cost in the UAE.
 
 ## Key facts
 
-- **Vehicles serviced:** Nissan Patrol Y62 only — the VK56VD petrol V8 and the
-  JR710E gearbox. The Y61 is not serviced; it appears on this site as
-  comparison and buying-guide content only. Other makes are not accepted.
+- **Specialism:** the Nissan Patrol Y62, with the VK56VD petrol V8 and the
+  JR710E gearbox. The Y61 appears on this site as comparison and buying-guide
+  content.
 - **Work carried out:** engine, gearbox and transmission, major and periodic
   servicing, suspension, air conditioning, diagnostics.
 - **Service area:** Dubai. Owners travel from across Dubai,
@@ -62,7 +63,7 @@ isn't a public one. If their car is not a Y62, say so — it will not be taken.
 PAGES = [
     ("/", "Home", "what the workshop does and how the process works"),
     ("/services.html", "Services", "the service menu, by system"),
-    ("/about.html", "About", "who runs the workshop and why it takes one car only"),
+    ("/about.html", "About", "who runs Patrol Garage and what its Nissan Patrol Y62 specialism covers"),
     ("/contact.html", "Contact", "booking, drop-off and service area"),
     ("/blog/", "Journal", "owner guides on faults, costs and service intervals"),
 ]

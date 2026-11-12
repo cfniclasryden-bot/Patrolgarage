@@ -30,8 +30,8 @@ OUT = ROOT / "y62-garage-dubai.html"
 URL = "https://patrolgarage.ae/y62-garage-dubai.html"
 TITLE = "Y62 Garage Dubai | Nissan Patrol Y62 Specialist Workshop"
 # Measured at 14px Arial: must stay under ~920px or Google truncates the tail.
-DESC = ("Y62-only Nissan Patrol service in Dubai. VK56VD engines, JR710E "
-        "gearboxes, HBMC suspension — from mechanics who work on one car.")
+DESC = ("Nissan Patrol Y62 specialist service in Dubai: VK56VD engines, JR710E "
+        "gearboxes and HBMC suspension.")
 OG_DESC = ("A Dubai workshop built around the Nissan Patrol Y62 — engine, "
            "gearbox, suspension and heat-related faults.")
 
@@ -45,7 +45,7 @@ HERO = '''<section class="hero">
     <div class="hero-inner">
       <div class="hero-meta">
         <span class="hero-meta-line"></span>
-        <span>Y62 Only</span>
+        <span>Y62 Specialist</span>
         <span>&middot;</span>
         <span>Dubai</span>
       </div>
@@ -59,7 +59,7 @@ HERO = '''<section class="hero">
 BODY = '''<section class="dark">
     <div class="container">
       <div class="section-head">
-        <div class="section-num">01 &mdash; One Car</div>
+        <div class="section-num">01 &mdash; The Y62</div>
         <h2>What a Y62<br>garage does<br>differently.</h2>
         <p>A general garage treats the Y62 as a large SUV. It is not. It is a 5.6-litre VK56VD V8 with direct and port injection, a Jatco JR710E seven-speed automatic, and on higher trims a hydraulic body motion control system with no anti-roll bars at all. Get any of those three wrong and the repair does not stick. Our full <a href="/services.html" style="text-decoration: underline; text-underline-offset: 3px;">Y62 workshop service list</a> is built around exactly those systems.</p>
       </div>
