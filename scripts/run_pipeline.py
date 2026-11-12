@@ -142,6 +142,11 @@ def gate_stages(slug):
         # next `railway up`, which re-enabling the paused cron requires anyway.
         (["python3", "scripts/test_no_offers.py", post],
          "pre-publish: no fit / install / supply / bring-it-to-us offers", True),
+        # 2026-11-12 (owner): specialist wording, never "we work exclusively on",
+        # "Y62 only", "nothing else" and the like. Blocking. Live in the
+        # container after the next `railway up`, like test_no_offers.
+        (["python3", "scripts/test_exclusivity.py", post],
+         "pre-publish: no exclusivity wording (Nissan Patrol specialist, not one model only)", True),
     ]
 
 
