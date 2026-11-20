@@ -359,12 +359,8 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                                         'faults are more likely on '
                                                                         'Y62s with higher mileage '
                                                                         '(above 120,000 km).'),
-                                                                       ('most owners have the car '
-                                                                        'back the same day if they '
-                                                                        'bring it in before '
-                                                                        'midday.',
-                                                                        'the job can often be '
-                                                                        'finished the same day.')],
+                                                                       (
+    'Including the diagnostic pressure test at the start and a post-repair pressure hold test at the end, most owners have the car back the same day if they bring it in before midday.', 'The job includes a diagnostic pressure test at the start and a post-repair pressure hold test at the end.')],
  'blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html': [('We see this regularly at '
                                                                         'Patrol Garage, especially '
                                                                         'on Y62 models with higher '
