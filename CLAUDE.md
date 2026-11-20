@@ -1,6 +1,16 @@
 # Working notes for patrolgarage
 
-## THE BLOG PIPELINE IS PAUSED (since 2026-11-09, owner's request)
+## BLOG PIPELINE: RE-ENABLED DRAFT-ONLY on 2026-11-20 (owner)
+
+Cron `0 5 * * 4` (Thursday 05:00 UTC, one draft per run), start command
+`python3 scripts/cron_entry.py`, set on the service instance first and then
+`railway up` (2026-11-20). **A run never publishes:** it parks one draft in
+`drafts/review/<slug>/` and pushes it; a person publishes with
+`scripts/approve.py <slug>` (see "Blog pipeline since 2026-11-20" below / in
+the site README). To pause again, use the steps below in reverse (cron null +
+echo start command on the instance, then `railway up`).
+
+### History: paused 2026-11-09 to 2026-11-20 (owner's request)
 
 No PG post publishes until the owner says to re-enable it. Paused together with
 topchallenger's, after a customer called the workshop asking for a towbar that

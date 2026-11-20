@@ -51,10 +51,22 @@ def supabase_mark(slug):
         return
     import requests
     h = {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
-    r = requests.patch(f"{url}/rest/v1/articles", headers=h, params={"slug": f"eq.{slug}"},
-                       json={"status": "published", "editorial_status": "approved",
-                             "published_at": datetime.now(timezone.utc).isoformat()})
-    print(f"    Supabase: {r.status_code}")
+    body = {"status": "published", "editorial_status": "approved",
+            "published_at": datetime.now(timezone.utc).isoformat()}
+    r = requests.patch(f"{url}/rest/v1/articles", headers={**h, "Prefer": "return=representation"},
+                       params={"slug": f"eq.{slug}"}, json=body)
+    if r.ok and r.json():
+        print(f"    Supabase: row marked published ({r.status_code})")
+        return
+    # No row (a draft made outside the cron): create it. A PATCH that matches
+    # nothing still answers 204, which is how this went unnoticed on 2026-11-20.
+    domain = os.environ.get("SITE_DOMAIN") or ("topchallenger.ae" if er.SITE == "tc" else "patrolgarage.ae")
+    sid = requests.get(f"{url}/rest/v1/sites", headers=h, params={"domain": f"eq.{domain}", "select": "id"}).json()[0]["id"]
+    e = er.entry_for(slug) or {}
+    r = requests.post(f"{url}/rest/v1/articles", headers=h,
+                      json={**body, "site_id": sid, "slug": slug,
+                            "keyword": e.get("keyword", slug.replace("-", " "))})
+    print(f"    Supabase: row created as published ({r.status_code})")
 
 
 def main(argv):
