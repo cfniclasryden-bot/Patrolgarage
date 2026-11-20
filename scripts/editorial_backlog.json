@@ -1,0 +1,223 @@
+{
+ "site": "pg",
+ "updated": "2026-11-20",
+ "source": "research/BLOG-AUDIT-2026-11-20.md §7.2 (PG), reordered 2026-11-20: problem/symptom topics before reference, comparisons last",
+ "rules": "Order = drafting order. Only entries with evidence, a PG service page and no blocked_by/hold_until are drafted. No cost/price topics on PG. See scripts/editorial_rules.py.",
+ "topics": [
+  {
+   "keyword": "nissan patrol dashboard lights not working",
+   "slug": "nissan-patrol-dashboard-lights-not-working",
+   "type": "symptom",
+   "area": "none",
+   "service_page": "/services.html",
+   "target_query": "nissan patrol dash lights not working",
+   "evidence": {
+    "volume": 10,
+    "volume_source": "Google Ads",
+    "gsc": {
+     "query": "nissan patrol dashboard symbols and meanings",
+     "impressions": 3,
+     "position": 4.3,
+     "window": "2026-08-18..2026-11-17"
+    }
+   },
+   "notes": "Lights that fail (bulbs, cluster, dimmer), not warning-light meanings: that is nissan-patrol-warning-lights-meaning.",
+   "anchor": "Y62 electrical and diagnostic work"
+  },
+  {
+   "keyword": "nissan patrol service reminder reset",
+   "slug": "nissan-patrol-service-reminder-reset",
+   "type": "problem",
+   "area": "none",
+   "service_page": "/services/y62-major-service-dubai.html",
+   "target_query": "nissan patrol service reset / y62 service reset",
+   "evidence": {
+    "volume": 20,
+    "volume_source": "DataForSEO Labs 10 + Google Ads 10"
+   },
+   "anchor": "Nissan Patrol service in Dubai"
+  },
+  {
+   "keyword": "nissan patrol fuel smell",
+   "slug": "nissan-patrol-fuel-smell",
+   "type": "symptom",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {},
+   "notes": "Pending in Supabase since the old generator; no measured evidence yet.",
+   "anchor": "Y62 engine diagnostics and repair"
+  },
+  {
+   "keyword": "nissan patrol stalling problems",
+   "slug": "nissan-patrol-stalling-problems",
+   "type": "symptom",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {},
+   "notes": "Pending in Supabase since the old generator; no measured evidence yet.",
+   "anchor": "Y62 engine diagnostics and repair"
+  },
+  {
+   "keyword": "nissan patrol vibration at idle",
+   "slug": "nissan-patrol-vibration-at-idle",
+   "type": "symptom",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {},
+   "notes": "Pending in Supabase; overlaps vibration-when-driving and shaking-at-high-speed; no measured evidence yet.",
+   "anchor": "Y62 engine diagnostics and repair"
+  },
+  {
+   "keyword": "does the nissan patrol y62 have a manual gearbox",
+   "slug": "does-the-nissan-patrol-y62-have-a-manual-gearbox",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services/y62-gearbox-transmission-dubai.html",
+   "target_query": "nissan patrol y62 manual transmission",
+   "evidence": {
+    "gsc": {
+     "query": "y62 manual transmission",
+     "impressions": 7,
+     "position": 10.0,
+     "window": "2026-08-18..2026-11-17"
+    },
+    "volume": 20,
+    "volume_source": "Google Ads"
+   },
+   "anchor": "Y62 gearbox and transmission work"
+  },
+  {
+   "keyword": "nissan patrol y62 v6 or v8",
+   "slug": "nissan-patrol-y62-v6-or-v8",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services/nissan-patrol-v8-engine.html",
+   "target_query": "nissan patrol v6 engine / v6 vs v8 fuel consumption",
+   "evidence": {
+    "gsc": {
+     "query": "nissan patrol v6 fuel consumption km/l",
+     "impressions": 18,
+     "position": 5.9,
+     "window": "2026-08-18..2026-11-17"
+    },
+    "volume": 140,
+    "volume_source": "Google Ads"
+   },
+   "notes": "The Y62 is V8-only; the V6 is the newer model, information only.",
+   "anchor": "the Nissan Patrol V8 engine"
+  },
+  {
+   "keyword": "nissan patrol y62 tyre size",
+   "slug": "nissan-patrol-y62-tyre-size",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services.html",
+   "target_query": "what is the original tire size for a nissan patrol y62",
+   "evidence": {
+    "volume": 70,
+    "volume_source": "DataForSEO Labs",
+    "paa": "what is the original tire size for a nissan patrol y62?"
+   },
+   "notes": "Reference only, no fitting or sales wording (owner question 7).",
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol y62 dimensions and weight",
+   "slug": "nissan-patrol-y62-dimensions-and-weight",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services.html",
+   "target_query": "nissan patrol dimensions / size / length / weight",
+   "evidence": {
+    "volume": 110,
+    "volume_source": "DataForSEO Labs (x4 terms, plus weight 110)"
+   },
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol y62 fuel tank capacity",
+   "slug": "nissan-patrol-y62-fuel-tank-capacity",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services.html",
+   "target_query": "nissan patrol fuel tank capacity",
+   "evidence": {
+    "volume": 210,
+    "volume_source": "Google Ads",
+    "gsc": {
+     "query": "nissan patrol full tank range",
+     "impressions": 11,
+     "position": 7.6,
+     "window": "2026-08-18..2026-11-17"
+    }
+   },
+   "hold_until": "2026-12-10",
+   "notes": "May be better as a section in the fuel-consumption post (title test read 2026-12-10).",
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol y62 changes by model year",
+   "slug": "nissan-patrol-y62-changes-by-model-year",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {
+    "volume": 480,
+    "volume_source": "DataForSEO Labs ('nissan patrol 2022'; 2016/2014 320, 2013 210)"
+   },
+   "notes": "check_model_years gate applies.",
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol generations y60 y61 y62",
+   "slug": "nissan-patrol-generations-y60-y61-y62",
+   "type": "reference",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {
+    "volume": 210,
+    "volume_source": "DataForSEO Labs ('nissan patrol old models')"
+   },
+   "notes": "Y60/Y61 as information only.",
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol titanium vs platinum",
+   "slug": "nissan-patrol-titanium-vs-platinum",
+   "type": "comparison",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {
+    "volume": 70,
+    "volume_source": "Google Ads"
+   },
+   "anchor": "Y62 servicing and repair"
+  },
+  {
+   "keyword": "nissan patrol vs land cruiser uae",
+   "slug": "nissan-patrol-vs-land-cruiser-uae",
+   "type": "comparison",
+   "area": "none",
+   "service_page": "/services/y62-major-service-dubai.html",
+   "evidence": {
+    "volume": 170,
+    "volume_source": "DataForSEO Labs",
+    "paa": "is nissan patrol as reliable as land cruiser?"
+   },
+   "blocked_by": "owner: an earlier Patrol vs Land Cruiser post was rejected (Supabase row archived 2026-10-05); confirm before drafting",
+   "anchor": "Nissan Patrol service in Dubai"
+  },
+  {
+   "keyword": "nissan armada vs patrol y62",
+   "slug": "nissan-armada-vs-patrol-y62",
+   "type": "comparison",
+   "area": "none",
+   "service_page": "/services.html",
+   "evidence": {
+    "volume": 140,
+    "volume_source": "DataForSEO Labs"
+   },
+   "anchor": "Y62 servicing and repair"
+  }
+ ]
+}

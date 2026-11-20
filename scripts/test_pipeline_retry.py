@@ -122,9 +122,10 @@ try:
     rp.run_stages("nissan patrol test", "nissan-patrol-test", dry_run=False)
 finally:
     rp.run, rp.gate_with_one_retry = saved
-check("gates run after the hero image and before publish",
+check("gates run after the hero image and before the draft is parked (no publish, 2026-11-20)",
       order.index("GATES") == order.index("generate hero image") + 1
-      and order[-1] == "publish + sitemap + deploy", str(order))
+      and order[-1] == "park draft for review (not published)"
+      and not any("publish" in o and "not published" not in o for o in order), str(order))
 
 order.clear()
 rp.run = lambda cmd, desc, show_stdout_on_fail=False, env=None: order.append(desc) or True

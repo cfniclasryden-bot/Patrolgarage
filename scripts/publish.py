@@ -168,7 +168,7 @@ def commit_and_push(keyword=None):
         except Exception as e:
             print(f"    [warn] keywords.csv mirror not written (non-fatal): {e}")
     _git(["add", "blog/", "images/", "sitemap.xml", "llms.txt", "scripts/",
-          "keywords.csv", *STATIC_PAGES], check=False)
+          "keywords.csv", "services/", "drafts/", *STATIC_PAGES], check=False)
     st = _git(["status", "--porcelain"], check=False).stdout.strip()
     if not st:
         print("    [i] nothing to commit — tree already matches origin")
@@ -733,6 +733,17 @@ def publish(keyword=None):
     # After journal_update since 2026-10-07: lastmod now follows each page's own
     # change state (git_lastmod), and journal_update rewrites the listings and
     # the homepage, so they must be in their final form first.
+    # "From the blog" links on service pages (2026-11-20, BLOG-AUDIT-2026-11-20
+    # §6): every approved post is linked from the service page its backlog entry
+    # names. Registry: scripts/related_posts.json. Re-applied every run so a
+    # rebuilt service page keeps them. Never fatal.
+    try:
+        import editorial_rules
+        rp = editorial_rules.apply_related(write=True)
+        print(f"[+] Service-page blog links: {len(rp)} page(s) updated")
+    except Exception as e:
+        print(f"    [!] service-page blog links failed: {e}")
+
     print("[+] Updating sitemap...")
     update_sitemap()
 

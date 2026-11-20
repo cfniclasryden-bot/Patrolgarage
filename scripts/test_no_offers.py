@@ -100,7 +100,13 @@ def main(argv):
                    "y63 dashcam installation", "lift kit y62", "roof rack installation"):
             if not topic_blocklist.is_blocked(kw):
                 fails.append(f"topic_blocklist: no longer blocks {kw!r}")
-        for kw in ("y62 gearbox repair cost", "nissan patrol overheating", "y62 fuel line fitting leak"):
+        # 2026-11-20: cost / price topics and unconfirmed services are blocked too.
+        for kw in ("y62 water pump replacement cost", "nissan patrol service price",
+                   "y62 wheel alignment after desert", "nissan patrol tyre fitting dubai"):
+            if not topic_blocklist.is_blocked(kw):
+                fails.append(f"topic_blocklist: no longer blocks {kw!r}")
+        for kw in ("y62 gearbox repair", "nissan patrol overheating", "y62 fuel line fitting leak",
+                   "nissan patrol dashboard lights not working", "nissan patrol tyre size by trim"):
             if topic_blocklist.is_blocked(kw):
                 fails.append(f"topic_blocklist: wrongly blocks {kw!r}")
 

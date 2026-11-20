@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Topics this site must never publish (owner, 2026-11-09).
+"""Topics this site must never publish (owner, 2026-11-09; identical in both repos since 2026-11-20).
 
 A customer called the partner workshop asking for a tow bar after reading
 /blog/nissan-patrol-y62-tow-bar-fitting-cost-dubai-2026.html, which closed with
@@ -35,7 +35,17 @@ TOPICS = {
     "dashcams": r"\bdash[\s-]?cams?\b|\bdashboard cameras?\b",
     "lift kits": r"\blift kits?\b|\bsuspension lift\b|\bbody lift\b|\blevell?ing kits?\b|\b\d(?:\.\d)?[\s-]?inch lift\b",
     "accessory fitting": r"\baccessor(?:y|ies)\b|\broof racks?\b|\bwinch(?:es)?\b|\bbull[\s-]?bars?\b|\bnudge bars?\b|\bside steps?\b|\brock sliders?\b|\bskid plates? install\w*|\bunderbody protection\b|\blight bars?\b|\bspotlights?\b|\bdual battery\b|\bfridge install\w*",
+    # 2026-11-20 (BLOG-AUDIT-2026-11-20 §6.3): services neither workshop has
+    # confirmed. Wheel alignment waits on owner question 1, tyres on question 7.
+    "unconfirmed services": r"\b(?:wheel\s+)?alignment\b|\bgeometry\b|\bcamber\b|\btoe[\s-](?:in|out)\b|\b(?:tyre|tire)s?\s+(?:fitting|sales|shop|balancing|rotation|change)\b|\bwheel\s+balancing\b|\bdisc\s+skimming\b|\bskim(?:ming)?\s+(?:brake\s+)?discs?\b|\brecovery\s+(?:service|truck)\b|\btowing\s+service\b|\bparts\s+(?:shop|store|sales|supplier)\b",
 }
+# Per-site additions: topic_blocklist_site.py, like copy_rules_site.py. This
+# module stays identical in topchallenger-site and patrolgarage (2026-11-20).
+try:
+    from topic_blocklist_site import EXTRA_TOPICS
+except ImportError:
+    EXTRA_TOPICS = {}
+TOPICS.update(EXTRA_TOPICS)
 _COMPILED = {k: re.compile(v, re.I) for k, v in TOPICS.items()}
 
 

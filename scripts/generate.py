@@ -189,7 +189,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
 
 2. **Direct Answer block** (FIRST thing after H1): 
    <div class="direct-answer">
-     <p><strong>Quick answer:</strong> 2-3 sentence direct answer to the keyword query with specific facts and numbers. This is what AI Overviews will cite.</p>
+     <p><strong>Quick answer:</strong> 2-3 sentence direct answer to the keyword query, 40-60 words, with specific facts. This is what AI Overviews will cite.</p>
    </div>
 
 3. **Evidence/Context paragraph** (200-250 words intro that hooks the reader)
@@ -199,7 +199,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
    - Have a 1-sentence direct answer immediately after the H2
    - Then expand with details, what drives the cost (never a figure), mileage, Dubai context
 
-5. **FAQ section** (H2: "Frequently Asked Questions") with exactly 4 Q&A pairs in this format:
+5. **FAQ section** (H2: "Frequently Asked Questions") with exactly 4 Q&A pairs (3-5 allowed by the gate) in this format:
    <div class="faq">
      <h3>Question phrased exactly as someone would type it?</h3>
      <p>2-4 sentence direct answer with specific facts.</p>
@@ -220,7 +220,7 @@ THIS POST MUST BE STRUCTURED FOR AI OVERVIEW AND LLM CITATION. Structure exactly
    </div>
 
 REQUIREMENTS:
-- Length: 1500-2200 words
+- Length: 1,300-1,700 words of article text (the gate accepts 1,200-1,800; BLOG-AUDIT-2026-11-20 §6.2). No H2 called "Conclusion", "Summary" or "Final thoughts".
 - Tone: conversational expert. First-person plural ("we see", "we recommend").
 - Cite specific details: mileage, part names, what drives the cost. NO prices (see PRICING). Use Dubai context facts above. NOT model years beyond the MODEL YEARS rule, and NOT fluid grades, capacities or service intervals (see the HARD RULE).
 - AUTHORITATIVE SOURCES REQUIREMENT: You MUST include at least 2 outbound links to government or research authorities in the article body. Naturally integrate them where a fact is stated that benefits from a citation.

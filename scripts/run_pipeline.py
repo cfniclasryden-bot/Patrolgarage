@@ -147,6 +147,15 @@ def gate_stages(slug):
         # container after the next `railway up`, like test_no_offers.
         (["python3", "scripts/test_exclusivity.py", post],
          "pre-publish: no exclusivity wording (Nissan Patrol specialist, not one model only)", True),
+        # 2026-11-20 (BLOG-AUDIT-2026-11-20 §6): banned claim words and
+        # unconfirmed services (expert, same-day, book now, alignment, best,
+        # genuine, warranty...), then the post rules: backlog topic, one service
+        # link in the first third, the closing WhatsApp line, no Top Challenger
+        # photo, answer first, title/meta, 3-5 FAQs, 1,200-1,800 words.
+        (["python3", "scripts/check_editorial.py", post],
+         "pre-draft: no banned claim words or unconfirmed services", True),
+        (["python3", "scripts/check_post_rules.py", post],
+         "pre-draft: backlog topic, one service link, CTA, structure", True),
     ]
 
 
@@ -298,13 +307,15 @@ def run_refresh_mode(keyword, slug):
     if failed_at:
         log(f"=== REFRESH FAILED at: {failed_at} ==="); return 1
 
-    # Stage 5: publish (also uses slug-derived keyword)
-    if not run(["python3", "scripts/publish.py", canonical_keyword_for_slug], f"publish + sitemap + deploy"):
-        log(f"=== REFRESH FAILED at: publish ==="); return 1
+    # Stage 5: DRAFT ONLY since 2026-11-20. The refreshed copy is parked in
+    # drafts/review/<slug>/ and the live post is reset to its committed version
+    # (draft.py, in the cloud); scripts/approve.py replaces the live post with it.
+    if not run(["python3", "scripts/draft.py", slug], "park refreshed draft for review (not published)"):
+        log(f"=== REFRESH FAILED at: park draft ==="); return 1
 
-    # Read updated HTML and push to Supabase
+    # Read the refreshed draft and push to Supabase
     try:
-        article_path = ROOT / "blog" / f"{slug}.html"
+        article_path = ROOT / "drafts" / "review" / slug / f"{slug}.html"
         if article_path.exists():
             content_html = article_path.read_text()
             title_match = re.search(r"<title>(.*?)</title>", content_html, re.IGNORECASE | re.DOTALL)
@@ -394,7 +405,7 @@ def main():
     log(f"Pending in queue: {pending_count}")
     warn_ad_mix(pending_rows)
 
-    if pending_count < 5:
+    if False:  # keyword_generator refill disabled 2026-11-20: topics come from editorial_backlog.json
         log(f"Queue low. Auto-generating more keywords...")
         kw_result = subprocess.run(
             ["python3", "scripts/keyword_generator.py"],
@@ -429,11 +440,15 @@ def main():
             _req.patch(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
                        params={"id": f"eq.{row['id']}"}, json={"status": "retired"})
 
-    # Fetch the next pending article from Supabase, in QUEUE_ORDER
-    r = _req.get(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
-                 params={"site_id": f"eq.{site_id}", "status": "eq.pending",
-                         "select": "id,keyword,slug", "order": QUEUE_ORDER, "limit": "1"})
-    pending_articles = r.json()
+    # The next topic comes from scripts/editorial_backlog.json since 2026-11-20
+    # (BLOG-AUDIT-2026-11-20 §6.1): evidence, a PG service page, no open owner
+    # question, in backlog order (problem/symptom topics first). Supabase rows
+    # outside the backlog are never picked.
+    import editorial_rules
+    _row, _why = editorial_rules.pick_row(SUPABASE_URL, SH, site_id, _req, write=True, log=log)
+    if _row is None:
+        log(f"[backlog] {_why}")
+    pending_articles = [_row] if _row else []
     if not pending_articles:
         log("No pending keywords. Pipeline idle.")
         # A scheduled run that publishes nothing exits NON-ZERO (2026-09-29), so
@@ -468,13 +483,14 @@ def main():
         requeue_if_stuck(article_id, keyword, failed_at)
         return 1
 
-    # Mark this article as published in Supabase (source of truth)
+    # Draft only (2026-11-20): the row stays `pending` with editorial_status
+    # `review`, so the picker skips it; approve.py marks it published.
     _req.patch(f"{SUPABASE_URL}/rest/v1/articles", headers=SH,
                params={"id": f"eq.{article_id}"},
-               json={"status": "published",
-                     "published_at": datetime.utcnow().isoformat() + "Z",
+               json={"editorial_status": "review",
+                     "generated_at": datetime.utcnow().isoformat() + "Z",
                      "slug": slug})
-    log(f"Article marked published in Supabase: {article_id}")
+    log(f"Draft ready for review: drafts/review/{slug}/ (Supabase {article_id}: editorial_status=review)")
 
     site_domain = os.environ.get("SITE_DOMAIN", "patrolgarage.ae")
     article_url = f"https://{site_domain}/blog/{slug}.html"
@@ -484,7 +500,7 @@ def main():
     title = None
     try:
         import re
-        article_path = Path(__file__).resolve().parent.parent / "blog" / f"{slug}.html"
+        article_path = Path(__file__).resolve().parent.parent / "drafts" / "review" / slug / f"{slug}.html"
         if article_path.exists():
             content_html = article_path.read_text()
             title_match = re.search(r"<title>(.*?)</title>", content_html, re.IGNORECASE | re.DOTALL)
@@ -493,11 +509,12 @@ def main():
     except Exception as e:
         log(f"[warn] could not read published HTML for upload: {e}")
 
-    log_article(keyword=keyword, slug=slug, url=article_url, status="published",
+    # status stays "pending" (draft only); approve.py sets "published".
+    log_article(keyword=keyword, slug=slug, url=article_url, status="pending",
                 content_html=content_html, title=title)
     log_run(keyword=keyword, status="success")
 
-    log(f"=== PIPELINE COMPLETE: {keyword} ===")
+    log(f"=== PIPELINE COMPLETE (DRAFT, NOT PUBLISHED): {keyword} ===")
     return 0
 
 def content_stages(keyword, slug):
@@ -538,8 +555,10 @@ def run_stages(keyword, slug, dry_run=False):
         log("[dry-run] every gate passed — publish, commit, push and deploy SKIPPED")
         return None
 
-    if not run(["python3", "scripts/publish.py", slug], "publish + sitemap + deploy"):
-        return "publish + sitemap + deploy"
+    # DRAFT ONLY since 2026-11-20 (owner: nothing publishes until approved).
+    # Parked in drafts/review/<slug>/ and pushed; scripts/approve.py publishes.
+    if not run(["python3", "scripts/draft.py", slug], "park draft for review (not published)"):
+        return "park draft for review"
     return None
 
 
@@ -560,9 +579,11 @@ def dry_run_main():
     sh = {"apikey": key, "Authorization": f"Bearer {key}"}
     site_id = _req.get(f"{url}/rest/v1/sites", headers=sh,
                        params={"domain": f"eq.{domain}", "select": "id"}).json()[0]["id"]
-    pending = _req.get(f"{url}/rest/v1/articles", headers=sh,
-                       params={"site_id": f"eq.{site_id}", "status": "eq.pending",
-                               "select": "id,keyword,slug", "order": QUEUE_ORDER}).json()
+    import editorial_rules
+    _row, _why = editorial_rules.pick_row(url, sh, site_id, _req, write=False, log=log)
+    if _row is None:
+        log(f"[backlog] {_why}")
+    pending = [_row] if _row else []
     warn_ad_mix(pending)
     log(f"[dry-run] pending in queue: {len(pending)}"
         + ("  (a real run would refill first: below 5)" if len(pending) < 5 else ""))

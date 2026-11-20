@@ -46,8 +46,8 @@ STYLE: plain and specific. No promotional filler or AI-tell words (renowned, sea
 
 Return ONLY valid JSON (no markdown, no preamble):
 {{
-  "title": "60-char SEO title with keyword and year 2026, ending with '| Patrol Garage Dubai'",
-  "description": "155-char meta description, action-oriented",
+  "title": "SEO title with the keyword, under 60 characters before ' | Patrol Garage Dubai', NO year, ending with '| Patrol Garage Dubai'",
+  "description": "155-char meta description: the finding first, then what the post covers. No booking line.",
   "keywords": "5-8 comma-separated keywords",
   "og_title": "55-char OG title",
   "og_description": "120-char OG description",
@@ -59,7 +59,9 @@ Return ONLY valid JSON (no markdown, no preamble):
   "hero_tag_2": "1-word hero tag (e.g. 'Diagnosis')",
   "h1_short": "3-5 word hero headline",
   "wa_text": "URL-encoded WhatsApp message"
-}}"""
+}}
+
+RULES FOR EVERY FIELD (BLOG-AUDIT-2026-11-20 §6.2-6.3): the title names the question or symptom in the searcher's words and promises the specific thing inside (the check, the number, the order); under 60 characters before the brand suffix; NO year. The description states the finding in one sentence, then what the post covers; never a booking line (no 'Book', 'Call', 'Get a quote', 'Get diagnosed today'). Never use: expert, same day, same-day, book now, best, #1, genuine, warranty, guarantee, approved, certified, wheel alignment, geometry."""
     # Abu Dhabi posts (2026-10-09): the city in title, description and H1, which
     # check_city.py then requires. Every other keyword's prompt is unchanged.
     if ad_city.ad_city_for(keyword):

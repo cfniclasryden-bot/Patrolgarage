@@ -318,3 +318,64 @@ def page_findings(raw):
             seen.add(f)
             uniq.append(f)
     return uniq
+
+
+# ---------------------------------------------------------------------------
+# EDITORIAL BANS, 2026-11-20 (BLOG-AUDIT-2026-11-20 §6.3; identical in both
+# repos). Claim words and unconfirmed services that no new copy may carry:
+#
+#   EXPERT      "expert", "experts", "expertise" (a self-awarded claim)
+#   SAME_DAY    "same day" / "same-day" (turnaround is owner question 5, open)
+#   BOOK_NOW    "book now" (a booking push in place of an answer)
+#   ALIGNMENT   wheel alignment / geometry / camber / toe (unconfirmed service,
+#               owner question 1; the TC alignment post waits on the answer)
+#   WARRANTY    warranty / guarantee
+#   APPROVED, CERTIFIED, GENUINE, BEST, NUMBER_ONE   the other claim words
+#   TYRE_FITTING, DISC_SKIMMING, RECOVERY, PARTS_SALES   unconfirmed services
+#
+# NOT part of sentence_findings()/page_findings(): those feed check_prose.py,
+# which build_pages.py runs over every shipped page, and dozens of legacy pages
+# carry these words in neutral use ("the manufacturer's warranty", a customer
+# review that says "same day"). editorial_findings() is read by
+# check_editorial.py instead, which blocks a NEW post on any hit and blocks a
+# legacy page only on a hit that is not in scripts/editorial_baseline.json.
+# Remove baseline entries as pages are fixed; never add to it by hand.
+EDITORIAL_RULES = (
+    ("EXPERT", re.compile(r"\bexpert(?:s|ise|ly)?\b", re.I)),
+    ("SAME_DAY", re.compile(r"\bsame[\s‑-]?day\b", re.I)),
+    ("BOOK_NOW", re.compile(r"\bbook\s+now\b", re.I)),
+    ("ALIGNMENT", re.compile(r"\b(?:wheel\s+)?alignment\b|\bgeometry\b|\bcamber\b|\btoe[\s-](?:in|out)\b", re.I)),
+    ("WARRANTY", re.compile(r"\bwarrant(?:y|ies)\b|\bguarantee[sd]?\b", re.I)),
+    ("APPROVED", re.compile(r"\bapproved\b", re.I)),
+    ("CERTIFIED", re.compile(r"\bcertified\b", re.I)),
+    ("GENUINE", re.compile(r"\bgenuine\b", re.I)),
+    ("BEST", re.compile(r"\bbest\b", re.I)),
+    ("NUMBER_ONE", re.compile(r"#\s?1\b|\bnumber\s+one\b|\bno\.\s?1\b", re.I)),
+    ("TYRE_FITTING", re.compile(r"\b(?:tyre|tire)s?\s+(?:fitting|fitted|sales|balancing|rotation)\b|\bwheel\s+balancing\b", re.I)),
+    ("DISC_SKIMMING", re.compile(r"\b(?:skim(?:med|ming)?|machin(?:ed|ing))\s+(?:the\s+)?(?:brake\s+)?(?:discs?|rotors?)\b|\bdisc\s+skimming\b", re.I)),
+    ("RECOVERY", re.compile(r"\b(?:we|our)\b[^.]{0,40}\b(?:recovery|tow(?:ing)?)\s+(?:service|truck)\b", re.I)),
+    ("PARTS_SALES", re.compile(r"\b(?:we|our)\b[^.]{0,30}\b(?:sell|supply|stock)\b[^.]{0,20}\bparts\b", re.I)),
+)
+EDITORIAL_RULE_NAMES = tuple(r for r, _ in EDITORIAL_RULES)
+
+
+def editorial_findings(raw):
+    """[(scope, rule, matched, sentence)] for EDITORIAL_RULES, every scope.
+
+    Same scopes as page_findings() (visible text without header/nav/footer,
+    <title>, meta and og/twitter tags, JSON-LD strings), so a word cannot hide
+    in a snippet the visible-text check never reads.
+    """
+    out = []
+    for scope, text in scopes(raw):
+        for sent in sentences(text):
+            for rule, rx in EDITORIAL_RULES:
+                m = rx.search(sent)
+                if m:
+                    out.append((scope, rule, m.group(0), sent))
+    seen, uniq = set(), []
+    for f in out:
+        if f not in seen:
+            seen.add(f)
+            uniq.append(f)
+    return uniq

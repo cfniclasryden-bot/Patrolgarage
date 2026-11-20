@@ -170,7 +170,9 @@ check("carried out in" in rules and "Mussafah" in rules and "Top Challenger" not
 # ------------------------------------------------------------------ picker + requeue
 rp = (HERE / "run_pipeline.py").read_text(encoding="utf-8")
 check('QUEUE_ORDER = "queue_position.asc.nullslast,created_at.asc"' in rp, "picker order")
-check(rp.count('"order": QUEUE_ORDER') == 2, "both the run and the dry run must use QUEUE_ORDER")
+# 2026-11-20: topics come from scripts/editorial_backlog.json, in its order, via
+# editorial_rules.pick_row(); QUEUE_ORDER is kept only for the idle-queue reads.
+check(rp.count("editorial_rules.pick_row(") == 2, "both the run and the dry run must use the backlog picker")
 check('"order": "created_at.asc", "limit": "1"' not in rp, "picker still oldest-first only")
 check("check_city.py" in rp, "check_city is not a gate")
 sl = (HERE / "supabase_log.py").read_text(encoding="utf-8")

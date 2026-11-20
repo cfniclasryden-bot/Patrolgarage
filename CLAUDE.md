@@ -45,6 +45,37 @@ check `deployments(first:3, ...)` before retrying.
 5. The topic blocklist (`scripts/topic_blocklist.py`) and the offer guard
    (`scripts/test_no_offers.py`) added the same day stay in force after re-enabling.
 
+## Blog pipeline since 2026-11-20: backlog only, draft only (BLOG-AUDIT-2026-11-20 §6)
+
+**Nothing the pipeline writes goes live on its own.** A run (new post or refresh)
+ends in `scripts/draft.py`, which parks the post in `drafts/review/<slug>/`
+(excluded from the deploy) with a `REVIEW.md` (evidence, gate results, the
+7-point reviewer checklist), commits and pushes it. The Supabase row stays
+`pending` with `editorial_status = review`.
+
+- **Approve:** `python3 scripts/approve.py <slug> --check` (gates only), then
+  `python3 scripts/approve.py <slug>`: moves it into `blog/`, links it from its
+  service page ("From the blog", `scripts/related_posts.json`), and runs
+  `publish.publish()` (blog hub, sitemap, commit + push, deploy, IndexNow).
+  Export SUPABASE_URL / SUPABASE_SERVICE_KEY first (from Railway, never printed)
+  so the row is marked published.
+- **Reject:** delete `drafts/review/<slug>/`, set the row `editorial_status = rejected`.
+- **Topics** come only from `scripts/editorial_backlog.json`, in its order, and
+  only with evidence (GSC / rank-fix gap / measured volume / PAA), a confirmed
+  service page, and no `blocked_by` (open owner question) or `hold_until`.
+  `python3 scripts/editorial_rules.py` prints what is eligible and why not.
+  The keyword_generator refill is off.
+- **Gates added:** `check_editorial.py` (expert, same-day, book now, alignment,
+  best, genuine, warranty, approved, certified, #1, tyre fitting, disc skimming,
+  recovery, parts sales; legacy hits frozen in `scripts/editorial_baseline.json`)
+  and `check_post_rules.py` (one service link in the first third, branch CTA,
+  photo rule, answer first, title < 60 chars and no year, no booking line in the
+  meta, 3-5 FAQs, 1,200-1,800 words, no "Conclusion" H2).
+- **Re-enabling** still needs the owner's go and the steps above; `railway up` is
+  part of them and is REQUIRED for this change (run_pipeline.py's picker runs from
+  the image). Do a `run_pipeline.py --dry-run` in a scratch copy first: the new
+  length/FAQ/title rules have not yet been exercised against a live generation.
+
 ## GH_TOKEN on patrolgarage-pipeline is SHARED and TEMPORARY — replace it
 
 The `GH_TOKEN` set on the Railway service `patrolgarage-pipeline` on 2026-09-18

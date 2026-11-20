@@ -118,6 +118,28 @@ def add_money_links(body, slug):
         if slug in PILLARS:
             addition += HOME_SENTENCE.format(url=HOME_URL)
 
+        # 2026-11-20 (BLOG-AUDIT-2026-11-20 §6.2): a backlog topic links the ONE
+        # service page its entry names, in the first third of the post (first
+        # paragraph after the second <h2>), not in the closing section.
+        # check_post_rules.py verifies it.
+        try:
+            import editorial_rules
+            e = editorial_rules.entry_for(slug)
+        except Exception:
+            e = None
+        if e:
+            url = e["service_page"]
+            anchor = e.get("anchor") or SERVICE_ANCHORS[service_key(slug)]
+            # No "at the workshop": patrolgarage.ae has no premises.
+            addition = f'Here is what <a href="{url}">{anchor}</a> covers.'
+            h2s = list(re.finditer(r"<h2[^>]*>.*?</h2>", body, re.S))
+            start = h2s[1].end() if len(h2s) >= 2 else 0
+            para = re.search(r"<p>.*?</p>", body[start:], re.S)
+            if para:
+                close = start + para.end() - len("</p>")
+                return body[:close] + " " + addition + MARKER + body[close:]
+            return body
+
         # Preferred slot: first paragraph of the closing section ("Ask us about
         # your Patrol" since 2026-11-09; "When to bring it to …" before that).
         m = re.search(
