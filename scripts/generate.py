@@ -236,6 +236,7 @@ HUMAN-VOICE RULES (write clean on the first pass so the copy reads like a real D
 - No em or en dashes anywhere (restated for emphasis). Scan the output and replace every — or – with a period, comma, colon, or parentheses before returning.
 - No promotional filler. Do not use: renowned, nestled, stunning, vibrant, seamless, robust, world-class, cutting-edge, must-visit, commitment to, in the heart of. Describe the car and the work plainly.
 - Ban these AI-tell words: crucial, vital, pivotal, testament, landscape (figurative), delve, underscore, foster, elevate, enhance, unlock, realm, ever-evolving. Use the plain equivalent.
+- Never use these words anywhere (title, body, FAQ, meta), not even in a neutral sense: expert, expertise, same day, same-day, book now, best, #1, number one, genuine (write "real" or "actual"), warranty, guarantee, approved, certified, wheel alignment, geometry, camber, tyre fitting, wheel balancing, disc skimming. The pre-draft gate (check_editorial.py) blocks every one of them.
 - Use "is / are / has". Do not write "serves as / boasts / features / offers a" in place of a simple verb.
 - No forced groups of three. List as many real symptoms, causes, or costs as actually exist, not a tidy trio for rhythm.
 - No "-ing" filler tails ("...ensuring optimal performance", "...highlighting the importance of regular servicing"). End the sentence on the concrete fact.

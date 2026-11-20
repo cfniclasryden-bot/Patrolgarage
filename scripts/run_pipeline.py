@@ -34,7 +34,10 @@ CLAIMS_STAGE = "pre-publish: no figure attributed to an authority we cannot prod
 # 2026-10-09: a Y61/Y63 mention is wording, and a draft told which sentences to
 # drop usually drops them. It shares the ONE retry with check_claims.
 CITY_STAGE = "pre-publish: an Abu Dhabi post names Abu Dhabi, and no Y61/Y63"
-RETRYABLE = (CLAIMS_STAGE, CITY_STAGE)
+# 2026-11-20: the banned-word gate (check_editorial.py) also earns the ONE
+# regenerate: its blocks are wording ("a genuine risk"), not substance.
+EDITORIAL_STAGE = "pre-draft: no banned claim words or unconfirmed services"
+RETRYABLE = (CLAIMS_STAGE, CITY_STAGE, EDITORIAL_STAGE)
 LOG_DIR = ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -190,6 +193,13 @@ def warn_ad_mix(pending_rows):
         log(f"[warn] Abu Dhabi mix check skipped: {e}")
 
 
+def editorial_flagged(slug):
+    """The sentences check_editorial blocked on, for the regenerate prompt."""
+    import check_editorial
+    return list(dict.fromkeys(f"{sent}  [banned word: {hit}]" for _s, _r, hit, sent
+                              in check_editorial.new_findings(ROOT / "blog" / f"{slug}.html")))
+
+
 def city_flagged(slug):
     """The Y61/Y63 sentences check_city blocked on, for the regenerate prompt."""
     import check_city
@@ -211,7 +221,8 @@ def gate_with_one_retry(slug, regenerate):
     failed = run_gates(slug)
     if failed not in RETRYABLE:
         return failed
-    flagged = claims_flagged(slug) if failed == CLAIMS_STAGE else city_flagged(slug)
+    flagged = (claims_flagged(slug) if failed == CLAIMS_STAGE
+               else editorial_flagged(slug) if failed == EDITORIAL_STAGE else city_flagged(slug))
     log(f"[retry] {failed} blocked {len(flagged)} sentence(s); regenerating once "
         f"with them fed back as claims to remove")
     broke = regenerate({"GATE_FEEDBACK": "\n".join(flagged)})
