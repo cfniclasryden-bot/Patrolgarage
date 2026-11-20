@@ -87,29 +87,14 @@
  "blog/nissan-patrol-service-cost-dubai.html": [
   "body|BEST|Best Engine Oil for Nissan Patrol in UAE Heat",
   "body|GENUINE|Quick answer: What a Patrol service costs in Dubai depends on which interval the car has reached (the 10,000 km routine service, the 40,000 km major maintenance or the 80,000 km major service), whether genuine or aftermarket parts and which oil go in, and whether wear items such as brake pads, shocks or the battery need replacing at the same visit.",
-  "body|TYRE_FITTING|A routine service covers an oil and filter change, tire rotation and balancing, and an air filter replacement.",
   "body|WARRANTY|A main dealer is only required for warranty claims and manufacturer recalls; for routine and preventive work, what matters is the right parts, Nissan-compatible diagnostics and technicians who know the Y62."
  ],
  "blog/nissan-patrol-service-every-how-many-km-dubai.html": [
   "body|WARRANTY|As detailed by the UAE's consumer protection authority , regular maintenance also protects warranty coverage and maintains resale value — critical considerations in Dubai's competitive used car market."
  ],
- "blog/nissan-patrol-shaking-at-high-speed.html": [
-  "body|ALIGNMENT|It is a tempting one, because an alignment is quick and it sounds thorough.",
-  "body|ALIGNMENT|Misalignment can cause uneven tyre wear that eventually produces vibration, but alignment by itself does not cause high-speed shaking in a car that has been driving straight.",
-  "body|ALIGNMENT|Skipping straight to an alignment without going through this list is a common mistake.",
-  "body|ALIGNMENT|When a bushing collapses, the suspension geometry shifts under load.",
-  "body|TYRE_FITTING|At motorway speeds, this shows up as a directional instability and vibration that no amount of tyre balancing will fix."
- ],
  "blog/nissan-patrol-steering-problems.html": [
-  "body|ALIGNMENT|A constant pull in one direction is usually an alignment issue, a tyre pressure difference, or uneven tyre wear.",
-  "body|ALIGNMENT|A wheel balance and alignment check is the simplest job.",
-  "body|ALIGNMENT|Alignment on a Patrol that is used off-road drifts faster than on a road-only vehicle because the suspension takes hits that nudge the geometry out of spec.",
-  "body|ALIGNMENT|If you are dealing with any of the symptoms above, the workshop carries out steering and suspension diagnostics, tie rod and rack repairs, HBMC shock absorber work, wheel alignment, brake inspection, and full front-end checks.",
-  "body|ALIGNMENT|Partial failures, where one or two corners are down, can make the car handle asymmetrically and are sometimes misdiagnosed as an alignment problem.",
-  "body|ALIGNMENT|That is why a proper diagnosis looks at the full front-end geometry, not just the rack or column in isolation.",
   "body|SAME_DAY|Most faults are diagnosed in one session and repaired the same day or next day at a specialist workshop.",
-  "body|SAME_DAY|Same-day reply.",
-  "json-ld|ALIGNMENT|A wheel balance and alignment check is the simplest job."
+  "body|SAME_DAY|Same-day reply."
  ],
  "blog/nissan-patrol-transmission-rebuild-cost-dubai-aed.html": [
   "body|EXPERT|As Nissan Patrol specialists, we make sure your vehicle receives expert attention from technicians who understand these vehicles inside and out.",
@@ -132,7 +117,6 @@
   "json-ld|WARRANTY|What warranty do you get on a rebuilt Nissan Patrol transmission?"
  ],
  "blog/nissan-patrol-vibration-when-driving.html": [
-  "body|ALIGNMENT|If you run large-diameter aftermarket wheels, you have a vehicle that is more sensitive to imbalance and alignment issues than the factory setup.",
   "body|DISC_SKIMMING|The fix is machining the rotors if they have enough material left, or replacing them.",
   "json-ld|DISC_SKIMMING|The fix is machining the rotors if they have enough material left, or replacing them."
  ],
@@ -182,7 +166,6 @@
   "body|GENUINE|Our recommendation at Patrol Garage is always to use either a genuine Nissan part or a Denso/NTK equivalent."
  ],
  "blog/nissan-patrol-y62-problems-dubai.html": [
-  "body|ALIGNMENT|Tyre wear patterns reveal the story: cupping or feathering indicates shocks that are no longer controlling wheel movement, while edge wear points to alignment issues from worn control arm bushings.",
   "body|GENUINE|The cost of a full suspension overhaul on a Y62 depends on which components are worn and whether you're using genuine Nissan parts or quality aftermarket alternatives.",
   "body|GENUINE|We handle all levels of Y62 transmission work at Patrol Garage using genuine Jatco-spec ATF and OEM components.",
   "body|SAME_DAY|Same-day reply.",
@@ -268,7 +251,6 @@
   "json-ld|WARRANTY|Per the UAE Consumer Protection guidelines, independent repairs using equivalent-quality parts do not void statutory consumer rights on a post-warranty vehicle."
  ],
  "index.html": [
-  "body|ALIGNMENT|Pads, discs, fluid flush, power steering pumps, alignment, and full safety inspection.",
   "body|GENUINE|Repairs done with genuine parts where it matters, and you hear from us as soon as the car is ready."
  ],
  "nissan-patrol-abu-dhabi.html": [
@@ -277,7 +259,6 @@
   "json-ld|GENUINE|What moves the cost is the mileage, how the car has been used (long highway runs, short trips in summer heat, or desert driving), whether genuine or aftermarket parts go in, and whether a fault is caught early or left until it becomes a bigger job."
  ],
  "services.html": [
-  "body|ALIGNMENT|We replace pads and rotors, flush brake fluid, inspect brake systems, and perform wheel alignment.",
   "body|GENUINE|Factory-trained mechanics, genuine parts, warranty on every job.",
   "body|WARRANTY|Factory-trained mechanics, genuine parts, warranty on every job."
  ]

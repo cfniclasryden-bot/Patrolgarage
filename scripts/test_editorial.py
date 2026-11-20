@@ -32,14 +32,12 @@ HITS = {
     "EXPERT": "Our expert team checks the gearbox.",
     "SAME_DAY": "Most jobs are a same-day repair.",
     "BOOK_NOW": "Book now and we will look at it.",
-    "ALIGNMENT": "We set the wheel alignment after the job.",
     "WARRANTY": "Every repair carries a warranty.",
     "APPROVED": "An approved workshop for the Y62.",
     "CERTIFIED": "Certified technicians do the work.",
     "GENUINE": "We fit genuine parts.",
     "BEST": "The best Y62 garage in Dubai.",
     "NUMBER_ONE": "The #1 Patrol specialist.",
-    "TYRE_FITTING": "We also do tyre fitting and wheel balancing.",
     "DISC_SKIMMING": "We skim the brake discs when they are scored.",
     "RECOVERY": "Call our recovery truck if it will not start.",
     "PARTS_SALES": "We sell Y62 parts over the counter.",
@@ -49,7 +47,10 @@ for rule, sent in HITS.items():
         fails.append(f"{rule} did not fire on: {sent}")
 for clean in ("The gearbox is checked with a scan tool before anything is replaced.",
               "A whine that changes with road speed points to the differential.",
-              "Send the model year and the mileage on WhatsApp."):
+              "Send the model year and the mileage on WhatsApp.",
+              # allowed since 2026-11-20 (OWNER-ANSWERS-2026-11-20.md)
+              "We check the wheel alignment after desert driving.",
+              "Tyre fitting, balancing and rotation are part of the visit."):
     if rules_in(clean):
         fails.append(f"clean sentence flagged {rules_in(clean)}: {clean}")
 

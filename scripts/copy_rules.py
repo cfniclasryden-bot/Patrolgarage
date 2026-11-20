@@ -327,11 +327,13 @@ def page_findings(raw):
 #   EXPERT      "expert", "experts", "expertise" (a self-awarded claim)
 #   SAME_DAY    "same day" / "same-day" (turnaround is owner question 5, open)
 #   BOOK_NOW    "book now" (a booking push in place of an answer)
-#   ALIGNMENT   wheel alignment / geometry / camber / toe (unconfirmed service,
-#               owner question 1; the TC alignment post waits on the answer)
 #   WARRANTY    warranty / guarantee
 #   APPROVED, CERTIFIED, GENUINE, BEST, NUMBER_ONE   the other claim words
-#   TYRE_FITTING, DISC_SKIMMING, RECOVERY, PARTS_SALES   unconfirmed services
+#   DISC_SKIMMING, RECOVERY, PARTS_SALES   unconfirmed services
+#
+# Removed 2026-11-20 on the owners' answers (research/OWNER-ANSWERS-2026-11-20.md
+# in topchallenger-site): ALIGNMENT (wheel alignment is done in-house) and
+# TYRE_FITTING (fitting, balancing and rotation offered at both branches).
 #
 # NOT part of sentence_findings()/page_findings(): those feed check_prose.py,
 # which build_pages.py runs over every shipped page, and dozens of legacy pages
@@ -344,14 +346,12 @@ EDITORIAL_RULES = (
     ("EXPERT", re.compile(r"\bexpert(?:s|ise|ly)?\b", re.I)),
     ("SAME_DAY", re.compile(r"\bsame[\s‑-]?day\b", re.I)),
     ("BOOK_NOW", re.compile(r"\bbook\s+now\b", re.I)),
-    ("ALIGNMENT", re.compile(r"\b(?:wheel\s+)?alignment\b|\bgeometry\b|\bcamber\b|\btoe[\s-](?:in|out)\b", re.I)),
     ("WARRANTY", re.compile(r"\bwarrant(?:y|ies)\b|\bguarantee[sd]?\b", re.I)),
     ("APPROVED", re.compile(r"\bapproved\b", re.I)),
     ("CERTIFIED", re.compile(r"\bcertified\b", re.I)),
     ("GENUINE", re.compile(r"\bgenuine\b", re.I)),
     ("BEST", re.compile(r"\bbest\b", re.I)),
     ("NUMBER_ONE", re.compile(r"#\s?1\b|\bnumber\s+one\b|\bno\.\s?1\b", re.I)),
-    ("TYRE_FITTING", re.compile(r"\b(?:tyre|tire)s?\s+(?:fitting|fitted|sales|balancing|rotation)\b|\bwheel\s+balancing\b", re.I)),
     ("DISC_SKIMMING", re.compile(r"\b(?:skim(?:med|ming)?|machin(?:ed|ing))\s+(?:the\s+)?(?:brake\s+)?(?:discs?|rotors?)\b|\bdisc\s+skimming\b", re.I)),
     ("RECOVERY", re.compile(r"\b(?:we|our)\b[^.]{0,40}\b(?:recovery|tow(?:ing)?)\s+(?:service|truck)\b", re.I)),
     ("PARTS_SALES", re.compile(r"\b(?:we|our)\b[^.]{0,30}\b(?:sell|supply|stock)\b[^.]{0,20}\bparts\b", re.I)),
