@@ -587,6 +587,11 @@ def deploy_site(keyword=None):
     # an env-var change on Railway rather than a code change and a rebuild: set
     # it to "netlify" and the old path runs again, unchanged.
     target = os.environ.get("DEPLOY_TARGET", "vercel").strip().lower()
+    # 2026-11-20: a dry run needs no token (approve.py on a Mac, where the git
+    # push is what deploys patrolgarage.ae).
+    if os.environ.get("DEPLOY_DRY_RUN", "").strip() not in ("", "0", "false"):
+        print(f"[dry-run] deploy skipped (DEPLOY_DRY_RUN); target={os.environ.get('DEPLOY_TARGET', 'vercel')}")
+        return True
 
     if target == "netlify":
         print("\n[+] Deploying to Netlify (DEPLOY_TARGET=netlify)...")
@@ -612,17 +617,6 @@ def deploy_site(keyword=None):
                "--token", token]
         manual = "vercel deploy --prod --yes"
 
-    # DEPLOY_DRY_RUN prints the command that WOULD run and stops. It exists so
-    # both branches of the DEPLOY_TARGET switch can be exercised for real —
-    # same env, same code path, same argv construction — without shipping a
-    # site. A switch nobody has ever run is not a rollback plan.
-    if os.environ.get("DEPLOY_DRY_RUN", "").strip() not in ("", "0", "false"):
-        redacted = ["***" if i and cmd[i - 1] in ("--token", "--auth") else a
-                    for i, a in enumerate(cmd)]
-        print(f"[dry-run] target={target}")
-        print(f"[dry-run] would run: {' '.join(redacted)}")
-        print(f"[dry-run] cwd={PROJECT_ROOT}")
-        return True
 
     success = run(cmd, capture=False)
 

@@ -426,21 +426,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/page/3/index.html",
-      "destination": "/blog/page/2/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/page/3/",
-      "destination": "/blog/page/2/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/page/3",
-      "destination": "/blog/page/2/",
-      "statusCode": 301
-    },
-    {
       "source": "/docs/:path*",
       "destination": "/",
       "statusCode": 404

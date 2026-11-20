@@ -95,7 +95,11 @@ def commit(slug):
     # Undo side effects of the content stages on OTHER tracked files.
     publish._git(["checkout", "--", "blog/", "services/", "index.html"], check=False)
     publish._ensure_identity_and_remote()
-    publish._git(["add", "drafts/", "research/"], check=False)
+    # -f for the one review folder only: patrolgarage .gitignores drafts/, and
+    # without it the draft never reached the repo (found 2026-11-20). research/
+    # is added WITHOUT -f, so a site that ignores it keeps ignoring it.
+    publish._git(["add", "-f", f"drafts/review/{slug}"], check=False)
+    publish._git(["add", "research/"], check=False)
     staged = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT)
     if staged.returncode == 0:
         return True

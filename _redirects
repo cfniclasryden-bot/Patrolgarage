@@ -136,12 +136,6 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/buying-a-used-nissan-patrol.html  /blog/nissan-patrol-pre-purchase-inspection.html 301
 /blog/buying-a-used-nissan-patrol  /blog/nissan-patrol-pre-purchase-inspection.html 301!
 
-# 2026-11-20: 9 posts retired -> 48 posts fit on 2 listing pages, so
-# journal_update.py removed /blog/page/3/. Point it at the last page.
-/blog/page/3/index.html  /blog/page/2/ 301
-/blog/page/3/  /blog/page/2/ 301
-/blog/page/3  /blog/page/2/ 301
-
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 

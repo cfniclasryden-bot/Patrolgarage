@@ -101,12 +101,24 @@ def main(argv):
     shutil.rmtree(er.REVIEW_DIR / slug, ignore_errors=True)
 
     import publish
+    # patrolgarage from a Mac: the git push is the deploy (Vercel git integration)
+    # and publish() only pushes in the cloud, so approve does the push itself.
+    local_pg = er.SITE == "pg" and not os.environ.get("RAILWAY_ENVIRONMENT") and not os.environ.get("VERCEL_TOKEN")
+    if local_pg:
+        os.environ["DEPLOY_DRY_RUN"] = "1"
+        base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     if er.SITE == "tc":
         import site_config
         keyword = e["keyword"] if e else site_config.CLUSTERS.get(slug, {}).get("keyword", slug.replace("-", " "))
     else:
         keyword = slug
     ok = publish.publish(keyword)
+    if ok and local_pg:
+        r = subprocess.run(["git", "push", "origin", "HEAD:main"], cwd=ROOT)
+        ok = r.returncode == 0
+        print("[+] pushed: Vercel deploys from the push" if ok else "[!] push failed: NOT live")
+        if ok:
+            subprocess.run(["python3", "scripts/indexnow.py", "--since", base], cwd=ROOT)
     if ok:
         supabase_mark(slug)
     return 0 if ok else 1
