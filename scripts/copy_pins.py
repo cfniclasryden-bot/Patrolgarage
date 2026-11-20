@@ -85,7 +85,7 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                 'Patrols</h2>',
                                                 '<h2>Common Oil-Related Problems in Dubai '
                                                 'Patrols</h2>')],
- 'blog/buying-a-used-nissan-patrol.html': [('We see this regularly: a Y62 that looks immaculate on '
+ 'blog/nissan-patrol-pre-purchase-inspection.html': [('We see this regularly: a Y62 that looks immaculate on '
                                             'the outside but has transmission fluid that has never '
                                             'been changed.',
                                             'Watch for this: a Y62 that looks immaculate on the '
@@ -242,13 +242,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                                            'starting and fans '
                                                                            'running continuously '
                                                                            'even after shutdown.')],
- 'blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html': [('CV joints and axle shafts '
-                                                                     'are among the components we '
-                                                                     'see regularly.',
-                                                                     'CV joints and axle shafts '
-                                                                     'are among the components '
-                                                                     'that need regular '
-                                                                     'attention.')],
  'blog/nissan-patrol-y62-dubai-complete-guide.html': [('Most Dubai Patrols doing casual desert '
                                                        "days don't need anything beyond what "
                                                        'leaves the factory.',
@@ -283,15 +276,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                  'right maintenance intervals; the most common '
                                                  'cause is following factory schedules designed '
                                                  'for temperate climates, not UAE heat.')],
- 'blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html': [('Most of the Y62 rear '
-                                                                          'differential failures '
-                                                                          'we see at Patrol Garage '
-                                                                          'trace back to one root '
-                                                                          'cause:',
-                                                                          'Y62 rear differential '
-                                                                          'failures often trace '
-                                                                          'back to one root '
-                                                                          'cause:')],
  'blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html': [('The Jatco JR710E '
                                                                      'transmission is the '
                                                                      'component we see fail most '
@@ -346,17 +330,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                               'Skipping fluid changes to save '
                                                               'money can lead to a rebuild bill '
                                                               'two years later.')],
- 'blog/y62-abs-sensor-replacement-cost-dubai-2026.html': [('On a dry motorway in normal '
-                                                           'conditions, most drivers would not '
-                                                           'notice any difference.',
-                                                           'On a dry motorway in normal '
-                                                           'conditions, you might not notice any '
-                                                           'difference.'),
-                                                          ('In our experience, genuine module '
-                                                           'failure on the Y62 is uncommon before '
-                                                           '200,000 km.',
-                                                           'Genuine module failure on the Y62 is '
-                                                           'uncommon before 200,000 km.')],
  'blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html': [('The Y62 models most '
                                                                            'commonly presenting '
                                                                            'with this fault in our '
@@ -377,10 +350,6 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
                                                              'km can have mounts that have '
                                                              'softened and cracked enough to need '
                                                              'replacement.')],
- 'blog/y62-fuel-injector-cleaning-cost-dubai-2026.html': [('Most owners assume it is just the '
-                                                           'heat.',
-                                                           'It is easy to assume it is just the '
-                                                           'heat.')],
  'blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html': [('Y62s with higher mileage '
                                                                         '(above 120,000 km) are '
                                                                         'the ones we see most '

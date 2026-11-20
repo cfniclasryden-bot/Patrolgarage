@@ -127,12 +127,12 @@
     },
     {
       "source": "/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026.html",
-      "destination": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-losing-power.html",
       "statusCode": 301
     },
     {
       "source": "/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026",
-      "destination": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-losing-power.html",
       "statusCode": 301
     },
     {
@@ -336,6 +336,111 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
+      "destination": "/blog/nissan-patrol-differential-repair-cost-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-differential-repair-cost-uae.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-warning-lights-meaning.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-abs-sensor-replacement-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-warning-lights-meaning.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-brake-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026",
+      "destination": "/blog/nissan-patrol-brake-problems.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
+      "destination": "/blog/nissan-patrol-losing-power.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026",
+      "destination": "/blog/nissan-patrol-losing-power.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
+      "destination": "/blog/nissan-patrol-vibration-when-driving.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-vibration-when-driving.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
+      "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/y62-rear-air-bag-replacement-cost-uae-2026",
+      "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-mechanic-al-quoz.html",
+      "destination": "/y62-garage-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-mechanic-al-quoz",
+      "destination": "/y62-garage-dubai.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-long-term-ownership-abu-dhabi.html",
+      "destination": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nissan-patrol-long-term-ownership-abu-dhabi",
+      "destination": "/blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buying-a-used-nissan-patrol.html",
+      "destination": "/blog/nissan-patrol-pre-purchase-inspection.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buying-a-used-nissan-patrol",
+      "destination": "/blog/nissan-patrol-pre-purchase-inspection.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/3/index.html",
+      "destination": "/blog/page/2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/3/",
+      "destination": "/blog/page/2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/3",
+      "destination": "/blog/page/2/",
+      "statusCode": 301
+    },
+    {
       "source": "/docs/:path*",
       "destination": "/",
       "statusCode": 404
@@ -383,11 +488,6 @@
     {
       "source": "/blog/best-oil-nissan-patrol-uae-heat",
       "destination": "/blog/best-oil-nissan-patrol-uae-heat.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/buying-a-used-nissan-patrol",
-      "destination": "/blog/buying-a-used-nissan-patrol.html",
       "statusCode": 301
     },
     {
@@ -461,11 +561,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-long-term-ownership-abu-dhabi",
-      "destination": "/blog/nissan-patrol-long-term-ownership-abu-dhabi.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-losing-power",
       "destination": "/blog/nissan-patrol-losing-power.html",
       "statusCode": 301
@@ -473,11 +568,6 @@
     {
       "source": "/blog/nissan-patrol-major-service",
       "destination": "/blog/nissan-patrol-major-service.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/nissan-patrol-mechanic-al-quoz",
-      "destination": "/blog/nissan-patrol-mechanic-al-quoz.html",
       "statusCode": 301
     },
     {
@@ -556,11 +646,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026",
-      "destination": "/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026",
       "destination": "/blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html",
       "statusCode": 301
@@ -568,11 +653,6 @@
     {
       "source": "/blog/nissan-patrol-y62-dubai-complete-guide",
       "destination": "/blog/nissan-patrol-y62-dubai-complete-guide.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026",
-      "destination": "/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html",
       "statusCode": 301
     },
     {
@@ -588,11 +668,6 @@
     {
       "source": "/blog/nissan-patrol-y62-problems-dubai",
       "destination": "/blog/nissan-patrol-y62-problems-dubai.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026",
-      "destination": "/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html",
       "statusCode": 301
     },
     {
@@ -626,11 +701,6 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/y62-abs-sensor-replacement-cost-dubai-2026",
-      "destination": "/blog/y62-abs-sensor-replacement-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026",
       "destination": "/blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html",
       "statusCode": 301
@@ -641,18 +711,8 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026",
-      "destination": "/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026",
       "destination": "/blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/y62-rear-air-bag-replacement-cost-uae-2026",
-      "destination": "/blog/y62-rear-air-bag-replacement-cost-uae-2026.html",
       "statusCode": 301
     },
     {

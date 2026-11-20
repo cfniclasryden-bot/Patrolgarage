@@ -47,7 +47,7 @@ check(ad_city.is_ad_page("blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2
 check(not ad_city.is_ad_page("blog/nissan-patrol-service-cost-dubai.html"), "Dubai post read as AD")
 
 tmp = Path(subprocess.run(["mktemp", "-d"], capture_output=True, text=True).stdout.strip())
-good = tmp / "nissan-patrol-long-term-ownership-abu-dhabi.html"
+good = tmp / "what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi.html"
 good.write_text('<title>Owning a Y62 in Abu Dhabi | Patrol Garage</title>'
                 '<meta name="description" content="What keeping a Y62 in Abu Dhabi involves.">'
                 '<h1>Y62 ownership, Abu Dhabi</h1><article><div class="direct-answer"><p>'
@@ -75,7 +75,7 @@ def ad_post(name, body="<p>Intro in Abu Dhabi.</p>", title="Y62 in Abu Dhabi | P
 
 
 MODEL = "Y61/Y63 mentioned"
-clean = ad_post("nissan-patrol-long-term-ownership-abu-dhabi")
+clean = ad_post("what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi")
 check(check_city.problems(clean) == [], f"clean AD post flagged (header/footer must not count): "
       f"{check_city.problems(clean)}")
 passing = ad_post("what-to-check-on-a-used-nissan-patrol-in-abu-dhabi",

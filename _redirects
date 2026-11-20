@@ -60,8 +60,8 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 # showed in the 90 days to 2026-10-02 that returned 404 live: posts removed in
 # August with no redirect (four had June-July lead clicks), and mistyped URLs.
 # Single hop to a live .html page, both forms, closest repair or owner-info post.
-/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026.html  /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html 301
-/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026       /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html 301!
+/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026.html  /blog/nissan-patrol-losing-power.html 301
+/blog/nissan-patrol-y62-injector-replacement-cost-dubai-2026       /blog/nissan-patrol-losing-power.html 301!
 /blog/nissan-patrol-y62-timing-chain-replacement-cost-dubai.html  /blog/nissan-patrol-engine-problems.html 301
 /blog/nissan-patrol-y62-timing-chain-replacement-cost-dubai       /blog/nissan-patrol-engine-problems.html 301!
 /blog/y63-independent-service-centre-dubai-al-barsha-2026.html  /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html 301
@@ -114,6 +114,34 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/y63-dashcam-installation-specialist-dubai-best-price-2026.html  /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html 301
 /blog/y63-dashcam-installation-specialist-dubai-best-price-2026  /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html 301!
 
+# 2026-11-20: BLOG-AUDIT-2026-11-20 §5 merges
+# (merged or redirected into the closest live page; both forms, no file).
+# Built by scripts/retire_posts.py.
+/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html  /blog/nissan-patrol-differential-repair-cost-uae.html 301
+/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026  /blog/nissan-patrol-differential-repair-cost-uae.html 301!
+/blog/y62-abs-sensor-replacement-cost-dubai-2026.html  /blog/nissan-patrol-warning-lights-meaning.html 301
+/blog/y62-abs-sensor-replacement-cost-dubai-2026  /blog/nissan-patrol-warning-lights-meaning.html 301!
+/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html  /blog/nissan-patrol-brake-problems.html 301
+/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026  /blog/nissan-patrol-brake-problems.html 301!
+/blog/y62-fuel-injector-cleaning-cost-dubai-2026.html  /blog/nissan-patrol-losing-power.html 301
+/blog/y62-fuel-injector-cleaning-cost-dubai-2026  /blog/nissan-patrol-losing-power.html 301!
+/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html  /blog/nissan-patrol-vibration-when-driving.html 301
+/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026  /blog/nissan-patrol-vibration-when-driving.html 301!
+/blog/y62-rear-air-bag-replacement-cost-uae-2026.html  /blog/nissan-patrol-y62-problems-dubai.html 301
+/blog/y62-rear-air-bag-replacement-cost-uae-2026  /blog/nissan-patrol-y62-problems-dubai.html 301!
+/blog/nissan-patrol-mechanic-al-quoz.html  /y62-garage-dubai.html 301
+/blog/nissan-patrol-mechanic-al-quoz  /y62-garage-dubai.html 301!
+/blog/nissan-patrol-long-term-ownership-abu-dhabi.html  /blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html 301
+/blog/nissan-patrol-long-term-ownership-abu-dhabi  /blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html 301!
+/blog/buying-a-used-nissan-patrol.html  /blog/nissan-patrol-pre-purchase-inspection.html 301
+/blog/buying-a-used-nissan-patrol  /blog/nissan-patrol-pre-purchase-inspection.html 301!
+
+# 2026-11-20: 9 posts retired -> 48 posts fit on 2 listing pages, so
+# journal_update.py removed /blog/page/3/. Point it at the last page.
+/blog/page/3/index.html  /blog/page/2/ 301
+/blog/page/3/  /blog/page/2/ 301
+/blog/page/3  /blog/page/2/ 301
+
 # Internal docs — not for the public site (force 404 over the existing file)
 /docs/*  /  404!
 
@@ -130,7 +158,6 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /services/y62-gearbox-transmission-dubai                            /services/y62-gearbox-transmission-dubai.html  301!
 /services/y62-major-service-dubai                                   /services/y62-major-service-dubai.html  301!
 /blog/best-oil-nissan-patrol-uae-heat                               /blog/best-oil-nissan-patrol-uae-heat.html  301!
-/blog/buying-a-used-nissan-patrol                                   /blog/buying-a-used-nissan-patrol.html  301!
 /blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance          /blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance.html  301!
 /blog/is-the-nissan-patrol-reliable-in-abu-dhabi                    /blog/is-the-nissan-patrol-reliable-in-abu-dhabi.html  301!
 /blog/nissan-patrol-4wd-not-engaging                                /blog/nissan-patrol-4wd-not-engaging.html  301!
@@ -145,10 +172,8 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-engine-problems                                 /blog/nissan-patrol-engine-problems.html  301!
 /blog/nissan-patrol-fuel-consumption                                /blog/nissan-patrol-fuel-consumption.html  301!
 /blog/nissan-patrol-high-mileage                                    /blog/nissan-patrol-high-mileage.html  301!
-/blog/nissan-patrol-long-term-ownership-abu-dhabi                   /blog/nissan-patrol-long-term-ownership-abu-dhabi.html  301!
 /blog/nissan-patrol-losing-power                                    /blog/nissan-patrol-losing-power.html  301!
 /blog/nissan-patrol-major-service                                   /blog/nissan-patrol-major-service.html  301!
-/blog/nissan-patrol-mechanic-al-quoz                                /blog/nissan-patrol-mechanic-al-quoz.html  301!
 /blog/nissan-patrol-not-starting                                    /blog/nissan-patrol-not-starting.html  301!
 /blog/nissan-patrol-off-road-uae                                    /blog/nissan-patrol-off-road-uae.html  301!
 /blog/nissan-patrol-oil-leak                                        /blog/nissan-patrol-oil-leak.html  301!
@@ -164,26 +189,20 @@ http://www.patrolgarage.ae/*   https://patrolgarage.ae/:splat  301!
 /blog/nissan-patrol-y61-dubai-complete-guide                        /blog/nissan-patrol-y61-dubai-complete-guide.html  301!
 /blog/nissan-patrol-y61-vs-y62-dubai                                /blog/nissan-patrol-y61-vs-y62-dubai.html  301!
 /blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026    /blog/nissan-patrol-y62-coolant-temperature-sensor-cost-uae-2026.html  301!
-/blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026          /blog/nissan-patrol-y62-cv-joint-replacement-cost-uae-2026.html  301!
 /blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026           /blog/nissan-patrol-y62-driveshaft-repair-cost-dubai-2026.html  301!
 /blog/nissan-patrol-y62-dubai-complete-guide                        /blog/nissan-patrol-y62-dubai-complete-guide.html  301!
-/blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026   /blog/nissan-patrol-y62-fourth-brake-light-replacement-dubai-2026.html  301!
 /blog/nissan-patrol-y62-head-gasket-replacement-cost-uae            /blog/nissan-patrol-y62-head-gasket-replacement-cost-uae.html  301!
 /blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026   /blog/nissan-patrol-y62-oxygen-sensor-replacement-cost-dubai-2026.html  301!
 /blog/nissan-patrol-y62-problems-dubai                              /blog/nissan-patrol-y62-problems-dubai.html  301!
-/blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026     /blog/nissan-patrol-y62-rear-differential-rebuild-cost-uae-2026.html  301!
 /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026          /blog/nissan-patrol-y62-specialist-abu-dhabi-vs-dubai-2026.html  301!
 /blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026     /blog/nissan-patrol-y62-starter-motor-replacement-cost-uae-2026.html  301!
 /blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai           /blog/nissan-patrol-y62-throttle-body-cleaning-cost-dubai.html  301!
 /blog/nissan-patrol-y62-transmission-problems-dubai                 /blog/nissan-patrol-y62-transmission-problems-dubai.html  301!
 /blog/nissan-patrol-y62-vs-y63-dubai-comparison                     /blog/nissan-patrol-y62-vs-y63-dubai-comparison.html  301!
 /blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi      /blog/what-affects-nissan-patrol-maintenance-cost-in-abu-dhabi.html  301!
-/blog/y62-abs-sensor-replacement-cost-dubai-2026                    /blog/y62-abs-sensor-replacement-cost-dubai-2026.html  301!
 /blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026    /blog/y62-crankshaft-position-sensor-replacement-cost-dubai-2026.html  301!
 /blog/y62-engine-mount-replacement-cost-dubai-2026                  /blog/y62-engine-mount-replacement-cost-dubai-2026.html  301!
-/blog/y62-fuel-injector-cleaning-cost-dubai-2026                    /blog/y62-fuel-injector-cleaning-cost-dubai-2026.html  301!
 /blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026       /blog/y62-fuel-pressure-regulator-replacement-cost-dubai-2026.html  301!
-/blog/y62-rear-air-bag-replacement-cost-uae-2026                    /blog/y62-rear-air-bag-replacement-cost-uae-2026.html  301!
 /blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026       /blog/y62-vk56-valve-cover-gasket-replacement-cost-dubai-2026.html  301!
 /blog/y62-water-pump-replacement-cost-uae-2026                      /blog/y62-water-pump-replacement-cost-uae-2026.html  301!
 # END managed
