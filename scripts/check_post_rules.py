@@ -30,6 +30,12 @@ Exit 2 with one line per problem. Checks, in order:
   faq        3 to 5 questions in the FAQPage JSON-LD
   length     1,200 to 1,800 words of article text
   headings   no "Conclusion" / "Summary" / "Final thoughts" H2
+  codes      no part / engine / gearbox codes (JR710E, VK56VD, TB48...) in the
+             title, metas, JSON-LD headline/description or the answer block
+  opener     no "This post covers" / "This article" / "In this guide" in a meta
+  procedure  no first-person workshop procedure ("we check / change / measure /
+             drop / scan...") unless a first-person sentence on the linked service
+             page says the same (half its content words or more)
 """
 import html as _html
 import json
@@ -46,6 +52,34 @@ TC_NUM = {"ras_al_khor": ["971566080951"], "mussafah": ["971558175637"],
 PG_NUM = "971558175637"
 BRAND_SUFFIX = re.compile(r"\s*\|\s*(?:Top Challenger|Patrol Garage(?: Dubai)?)\s*$")
 WORDS_MIN, WORDS_MAX = 1200, 1800
+# Part, engine and gearbox codes (2026-11-20). Fault codes (P0430) are topics,
+# not part codes, and stay allowed.
+PART_CODE = re.compile(r"\b(?:JR\d{3}[A-Z]{0,2}|VK\d{2}[A-Z]{0,4}|VQ\d{2}[A-Z]{0,4}|RE\d[A-Z]\d{2}[A-Z]?"
+                       r"|TB\d{2}[A-Z]{0,2}|TD\d{2}[A-Z]{0,2}|ZD\d{2}[A-Z]{0,2}|KLE\w{5,})\b")
+META_OPENER = re.compile(r"\b(?:this|the) (?:post|article|guide|page|blog)\b|\bin this (?:post|article|guide)\b"
+                         r"|\bhere(?:'s| is) (?:what|everything)\b", re.I)
+FIRST_PERSON_PROC = re.compile(
+    r"\b(?:we|our (?:team|technicians?|mechanics?|workshop))\b(?:\s+\w+){0,3}?\s+"
+    r"(?:check|checks|change|changes|replace|replaces|measure|measures|inspect|inspects|test|tests|scan|scans|"
+    r"look at|looks at|drop|drops|pull|pulls|remove|removes|flush|flushes|clean|cleans|rebuild|rebuilds|strip|"
+    r"strips|run|runs|fit|fits|use|uses|start with|starts with|reset|resets|read|reads|combine|pressure-test|"
+    r"road-test|top up|bleed|recharge|refill|swap)\b", re.I)
+STOP = set("the a an and or of to in on at for with is are be it its this that as by from into before after "
+           "any not no if then than we our us you your y62 patrol nissan".split())
+
+
+def _content_words(t):
+    return {w for w in re.findall(r"[a-z][a-z'-]+", t.lower()) if w not in STOP and len(w) > 2}
+
+
+def _service_page_sentences(target):
+    f = er.page_file(target) if target else None
+    if not f or not f.exists():
+        return []
+    raw = f.read_text(encoding="utf-8")
+    m = re.search(r"<main\b.*?</main>", raw, re.S) or re.search(r"</header>(.*?)<footer", raw, re.S)
+    t = _text(m.group(0)) if m else ""
+    return [x for x in re.split(r"(?<=[.!?])\s+", t) if re.search(r"\b(?:we|our|us)\b", x, re.I)]
 ANSWER_MIN, ANSWER_MAX = 25, 90
 
 
@@ -217,6 +251,34 @@ def problems(path, refresh=False):
     n = _words(text)
     if not WORDS_MIN <= n <= WORDS_MAX:
         out.append(f"length: {n:,} words (want {WORDS_MIN:,}-{WORDS_MAX:,})")
+
+    # codes: title, metas, JSON-LD headline/description, answer block
+    heads = [("title", title), ("meta", desc)]
+    for mm in re.finditer(r'<meta\s+(?:name|property)="(og:title|og:description|twitter:title|twitter:description)"'
+                          r'\s+content="([^"]*)"', raw):
+        heads.append((mm.group(1), _html.unescape(mm.group(2))))
+    for blk in re.findall(r'<script type="application/ld\+json">(.*?)</script>', raw, re.S):
+        for mm in re.finditer(r'"(headline|description)"\s*:\s*"((?:[^"\\]|\\.)*)"', blk):
+            heads.append((f"json-ld {mm.group(1)}", mm.group(2)))
+    if am:
+        heads.append(("answer block", _text(am.group(0))))
+    for where, txt in heads:
+        c = PART_CODE.search(txt or "")
+        if c:
+            out.append(f"codes: part code {c.group(0)!r} in the {where}")
+        if where != "answer block" and where != "title" and META_OPENER.search(txt or ""):
+            out.append(f"opener: '{META_OPENER.search(txt).group(0)}' in the {where} (lead with the answer)")
+
+    # procedure: first-person workshop process must match the service page
+    svc = _service_page_sentences(target) + sum((_service_page_sentences(t) for t in _twins(target)), [])
+    svc_words = [_content_words(x) for x in svc]
+    for sent in re.split(r"(?<=[.!?])\s+", text):
+        if not FIRST_PERSON_PROC.search(sent):
+            continue
+        cw = _content_words(sent)
+        best = max((len(cw & w) / max(len(cw), 1) for w in svc_words), default=0)
+        if best < 0.5:
+            out.append(f"procedure: first-person workshop claim not on the service page: {sent[:150]!r}")
 
     # headings
     for h in re.findall(r"<h2[^>]*>(.*?)</h2>", art, re.S):

@@ -63,6 +63,15 @@ check("refresh skips the banned-word gate", any("check_editorial.py" in c for c 
 rpm.REFRESH_MODE = False
 check("new-post gate runs with --refresh", not any("--refresh" in " ".join(c[0]) for c in rpm.gate_stages("x")))
 
+# 1c ------------------------------------------- codes / meta openers / procedure
+check("part code not caught", cpr.PART_CODE.search("a slipping JR710E gearbox") and cpr.PART_CODE.search("the VK56VD engine"))
+check("fault code wrongly caught as a part code", not cpr.PART_CODE.search("P0430 and P0420 on a Y62"))
+check("meta opener not caught", cpr.META_OPENER.search("This post covers the seven signs") and cpr.META_OPENER.search("In this article, the causes"))
+check("answer-first meta wrongly caught", not cpr.META_OPENER.search("Check the fuse first and the cluster last."))
+check("procedure claim not caught", cpr.FIRST_PERSON_PROC.search("We check bore dimensions once the unit is out.")
+      and cpr.FIRST_PERSON_PROC.search("If the fluid is dark, we change it first."))
+check("contact line wrongly caught", not cpr.FIRST_PERSON_PROC.search("Send us the mileage and we will tell you what it needs."))
+
 # 2 --------------------------------------------------------------- draft.py
 import draft  # noqa: E402
 with tempfile.TemporaryDirectory() as d:
