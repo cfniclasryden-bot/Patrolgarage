@@ -37,6 +37,7 @@ isn't a public one.
 
 ## Owner guides
 
+- [Dashboard Lights Not Working](https://patrolgarage.ae/blog/nissan-patrol-dashboard-lights-not-working.html)
 - [Patrol Engine Hesitation Fixed](https://patrolgarage.ae/blog/nissan-patrol-engine-hesitation.html)
 - [Abu Dhabi Heat Kills Patrols](https://patrolgarage.ae/blog/how-abu-dhabi-heat-affects-nissan-patrol-maintenance.html)
 - [Y62 Water Pump Cost](https://patrolgarage.ae/blog/y62-water-pump-replacement-cost-uae-2026.html)
