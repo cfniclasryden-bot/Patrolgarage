@@ -42,8 +42,9 @@ Reject:    delete drafts/review/{slug}/ and set the Supabase row editorial_statu
 """
 
 
-def _gate(cmd, path):
-    r = subprocess.run(["python3", f"scripts/{cmd}", str(path)], cwd=ROOT, capture_output=True, text=True)
+def _gate(cmd, path, refresh=False):
+    extra = ["--refresh"] if (refresh and cmd == "check_post_rules.py") else []
+    r = subprocess.run(["python3", f"scripts/{cmd}", *extra, str(path)], cwd=ROOT, capture_output=True, text=True)
     return r.returncode, (r.stdout + r.stderr).strip()
 
 
@@ -53,20 +54,34 @@ def park(slug):
         raise SystemExit(f"[!] draft.py: {post} does not exist")
     dest = er.REVIEW_DIR / slug
     (dest / "images").mkdir(parents=True, exist_ok=True)
+    # A REFRESH rewrites a post that is already live (tracked in git). Park the
+    # rewrite and put the live version straight back, so neither a local run nor
+    # the next deploy loses the published post while the rewrite waits.
+    rel_post = f"blog/{slug}.html"
+    tracked = subprocess.run(["git", "cat-file", "-e", f"HEAD:{rel_post}"], cwd=ROOT,
+                             capture_output=True).returncode == 0
     shutil.move(str(post), str(dest / post.name))
-    for img in (ROOT / "images" / "blog").glob(f"{slug}.*"):
+    imgs = sorted((ROOT / "images" / "blog").glob(f"{slug}.*"))
+    for img in imgs:
         shutil.move(str(img), str(dest / "images" / img.name))
+    if tracked:
+        restore = [rel_post] + [f"images/blog/{i.name}" for i in imgs
+                                if subprocess.run(["git", "cat-file", "-e", f"HEAD:images/blog/{i.name}"],
+                                                  cwd=ROOT, capture_output=True).returncode == 0]
+        subprocess.run(["git", "checkout", "HEAD", "--", *restore], cwd=ROOT, check=False)
+        print(f"[+] refresh: live {rel_post} restored from git; the rewrite waits in review")
 
     e = er.entry_for(slug) or {}
-    lines = [f"# Draft for review: {slug}", "",
+    refresh = tracked
+    lines = [f"# {'REFRESH of a live post' if refresh else 'Draft'} for review: {slug}", "",
              f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}. NOT LIVE.", "",
              "## Backlog entry", "", "```json"]
     import json
     lines += [json.dumps(e, indent=1, ensure_ascii=False), "```", "", "## Gates on the draft", ""]
     for g in ("check_editorial.py", "check_post_rules.py"):
-        code, out = _gate(g, dest / post.name)
+        code, out = _gate(g, dest / post.name, refresh=refresh)
         lines += [f"### {g}: {'PASS' if code == 0 else 'FAIL'}", "", "```", out[-3000:], "```", ""]
-    lines.append(CHECKLIST.format(service_page=e.get("service_page", "?"), slug=slug))
+    lines.append(CHECKLIST.format(service_page=e.get("service_page", "the page the post links"), slug=slug))
     (dest / "REVIEW.md").write_text("\n".join(lines), encoding="utf-8")
     print(f"[+] draft parked in drafts/review/{slug}/ (not live)")
     return dest

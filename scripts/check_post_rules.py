@@ -3,6 +3,13 @@
 Identical in topchallenger-site and patrolgarage.
 
     python3 scripts/check_post_rules.py blog/<slug>.html
+    python3 scripts/check_post_rules.py --refresh blog/<slug>.html   # refresh of an existing post
+
+REFRESH (2026-11-20): a rewrite of a post that is already live needs no backlog
+entry and no evidence. Its service page is the one the post links (the backlog
+entry's, if it has one), its branch comes from the slug, and the photo rule
+applies only if a backlog entry names a photo. Every other check is the same,
+and a refresh is still draft-only (draft.py, then approve.py).
 
 Exit 2 with one line per problem. Checks, in order:
 
@@ -80,19 +87,46 @@ HUBS = {"tc": {"/services", "/abu-dhabi", "/contact", "/"},
                "/contact.html", "/"}}
 
 
-def problems(path):
+def _refresh_entry(slug, art):
+    """A stand-in backlog entry for a refresh: the post's own first service link."""
+    import topic_blocklist
+    confirmed = {_norm(c): c for c in er.confirmed_service_pages()}
+    hubs = HUBS[er.SITE] - ({"/services.html"} if er.SITE == "pg" else set())
+    target = None
+    for mm in re.finditer(r'<a\b[^>]*href="([^"]+)"', art):
+        h = _norm(mm.group(1))
+        if h in confirmed and h not in hubs:
+            target = confirmed[h]
+            break
+    branch = "mussafah" if re.search(r"abu-dhabi|mussafah", slug) else "ras_al_khor"
+    blocked = topic_blocklist.blocked_topic(slug)
+    return {"slug": slug, "service_page": target, "branch": branch, "_blocked": blocked}
+
+
+def problems(path, refresh=False):
     path = Path(path)
     raw = path.read_text(encoding="utf-8")
     slug = path.stem
     out = []
-    e = er.entry_for(slug)
-    if not e:
-        return [f"topic: {slug} is not in scripts/editorial_backlog.json (topics come from the backlog only)"]
-    tp = [p for p in er.topic_problems(e) if p not in ("already published", "draft already waiting for review")]
-    out += [f"topic: {p}" for p in tp]
-
     m = re.search(r"<article\b[^>]*>(.*?)</article>", raw, re.S)
     art = m.group(1) if m else ""
+    e = er.entry_for(slug)
+    if refresh and not e:
+        e = _refresh_entry(slug, art)
+        if e["_blocked"]:
+            out.append(f"topic: blocked topic ({e['_blocked']})")
+        if not e["service_page"]:
+            out.append("link: the post links no service page (a refresh keeps one)")
+            e["service_page"] = "/__none__"
+    elif not e:
+        return [f"topic: {slug} is not in scripts/editorial_backlog.json (topics come from the backlog only; "
+                "an existing post goes through --refresh)"]
+    else:
+        tp = [p for p in er.topic_problems(e) if p not in ("already published", "draft already waiting for review")]
+        if refresh:
+            tp = [p for p in tp if not p.startswith("no evidence")]
+        out += [f"topic: {p}" for p in tp]
+
     if not art:
         return out + ["structure: no <article> element"]
     art_clean = re.sub(r'<div class="related-reading">.*?</div>|<!--.*?-->', " ", art, flags=re.S)
@@ -103,7 +137,7 @@ def problems(path):
     confirmed = er.confirmed_service_pages()
     hrefs = [(mm.start(), _norm(mm.group(1))) for mm in re.finditer(r'<a\b[^>]*href="([^"]+)"', art)]
     first = next((pos for pos, h in hrefs if h == _norm(target)), None)
-    if first is None:
+    if first is None and target != "/__none__":
         out.append(f"link: the post does not link its service page {target}")
     else:
         share = len(_text(art[:first])) / max(len(_text(art)), 1)
@@ -193,12 +227,13 @@ def problems(path):
 
 def main(argv):
     files = [a for a in argv if not a.startswith("--")]
+    refresh = "--refresh" in argv
     if not files:
         print(__doc__)
         return 1
     bad = 0
     for f in files:
-        for p in problems(f):
+        for p in problems(f, refresh=refresh):
             bad += 1
             print(f"  BLOCK {f}: {p}")
     if bad:

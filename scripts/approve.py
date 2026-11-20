@@ -34,10 +34,11 @@ os.chdir(ROOT)
 import editorial_rules as er  # noqa: E402
 
 
-def gates(path):
+def gates(path, refresh=False):
     ok = True
     for g in ("check_editorial.py", "check_post_rules.py"):
-        r = subprocess.run(["python3", f"scripts/{g}", str(path)], cwd=ROOT)
+        extra = ["--refresh"] if (refresh and g == "check_post_rules.py") else []
+        r = subprocess.run(["python3", f"scripts/{g}", *extra, str(path)], cwd=ROOT)
         ok = ok and r.returncode == 0
     return ok
 
@@ -66,7 +67,8 @@ def main(argv):
     if not src.exists():
         print(f"[!] no draft at {src}")
         return 1
-    if not gates(src):
+    refresh = (ROOT / "blog" / f"{slug}.html").exists()   # a live post being replaced
+    if not gates(src, refresh=refresh):
         print("[!] the draft fails a gate: fix it (or reject it) before publishing")
         return 2
     if "--check" in argv:
@@ -88,15 +90,22 @@ def main(argv):
             assemble.backfill_cross_links(slug)
 
     e = er.entry_for(slug)
-    title = re.sub(r"\s*\|.*$", "", re.search(r"<title>(.*?)</title>", post.read_text(encoding="utf-8"), re.S).group(1)).strip()
-    er.add_related(e["service_page"], slug, title)
-    changed = er.apply_related(write=True)
-    print(f"[+] service page link: {changed or 'already in place'}")
+    if e:
+        title = re.sub(r"\s*\|.*$", "", re.search(r"<title>(.*?)</title>", post.read_text(encoding="utf-8"), re.S).group(1)).strip()
+        er.add_related(e["service_page"], slug, title)
+        changed = er.apply_related(write=True)
+        print(f"[+] service page link: {changed or 'already in place'}")
+    else:
+        print("[i] refresh of an existing post: service-page links unchanged")
 
     shutil.rmtree(er.REVIEW_DIR / slug, ignore_errors=True)
 
     import publish
-    keyword = e["keyword"] if er.SITE == "tc" else slug
+    if er.SITE == "tc":
+        import site_config
+        keyword = e["keyword"] if e else site_config.CLUSTERS.get(slug, {}).get("keyword", slug.replace("-", " "))
+    else:
+        keyword = slug
     ok = publish.publish(keyword)
     if ok:
         supabase_mark(slug)

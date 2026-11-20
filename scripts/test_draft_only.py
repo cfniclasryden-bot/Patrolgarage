@@ -46,6 +46,23 @@ for g in ("check_editorial.py", "check_post_rules.py"):
 vi = (ROOT / ".vercelignore").read_text(encoding="utf-8")
 check("drafts/ is deployable", re.search(r"^drafts/\s*$", vi, re.M) is not None)
 
+# 1b ------------------------------------------------------------- refresh path
+import importlib  # noqa: E402
+import check_post_rules as cpr  # noqa: E402
+sys.argv = [sys.argv[0]]
+rpm = importlib.import_module("run_pipeline")
+live = sorted(p for p in (ROOT / "blog").glob("*.html") if p.name != "index.html")
+if live:
+    probs = cpr.problems(live[0], refresh=True)
+    check("refresh path still demands a backlog entry", not any("editorial_backlog.json" in p for p in probs), probs)
+    check("new-post path accepts a non-backlog post", any("editorial_backlog.json" in p for p in cpr.problems(live[0])))
+rpm.REFRESH_MODE = True
+g = [" ".join(c[0]) for c in rpm.gate_stages("x")]
+check("refresh gate lacks --refresh", any("check_post_rules.py --refresh" in c for c in g), g)
+check("refresh skips the banned-word gate", any("check_editorial.py" in c for c in g), g)
+rpm.REFRESH_MODE = False
+check("new-post gate runs with --refresh", not any("--refresh" in " ".join(c[0]) for c in rpm.gate_stages("x")))
+
 # 2 --------------------------------------------------------------- draft.py
 import draft  # noqa: E402
 with tempfile.TemporaryDirectory() as d:

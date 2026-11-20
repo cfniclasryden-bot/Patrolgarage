@@ -140,15 +140,9 @@ def add_money_links(body, slug):
                 return body[:close] + " " + addition + MARKER + body[close:]
             return body
 
-        # Preferred slot: first paragraph of the closing section ("Ask us about
-        # your Patrol" since 2026-11-09; "When to bring it to …" before that).
-        m = re.search(
-            r"<h2[^>]*>\s*(?:When to [Bb]ring[^<]*|Ask us about your Patrol)</h2>\s*(<p>.*?</p>)",
-            body, re.S,
-        )
-        if m:
-            close = m.end(1) - len("</p>")
-            return body[:close] + " " + addition + MARKER + body[close:]
+        # Since 2026-11-20 the service link sits in the first third of every
+        # assembled post, refreshes included (check_post_rules.py); the old
+        # closing-section slot put it at the very end.
 
         # Fallback: first paragraph after the SECOND <h2>, keeping the link
         # mid-article rather than stranded at the end.

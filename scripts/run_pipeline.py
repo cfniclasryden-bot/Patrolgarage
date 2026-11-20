@@ -120,6 +120,11 @@ def run(cmd, desc, show_stdout_on_fail=False, env=None):
 # address, check_prose and check_schema also block the partner workshop's
 # name, and check_alt's neutral alt names nobody.
 
+# 2026-11-20: a refresh of an existing post needs no backlog evidence; the
+# post-rules gate runs with --refresh (same banned-word and post rules, draft only).
+REFRESH_MODE = False
+
+
 def gate_stages(slug):
     post = f"blog/{slug}.html"
     return [
@@ -154,7 +159,7 @@ def gate_stages(slug):
         # photo, answer first, title/meta, 3-5 FAQs, 1,200-1,800 words.
         (["python3", "scripts/check_editorial.py", post],
          "pre-draft: no banned claim words or unconfirmed services", True),
-        (["python3", "scripts/check_post_rules.py", post],
+        (["python3", "scripts/check_post_rules.py", *(["--refresh"] if REFRESH_MODE else []), post],
          "pre-draft: backlog topic, one service link, CTA, structure", True),
     ]
 
@@ -244,6 +249,8 @@ def run_refresh_mode(keyword, slug):
     """Re-run pipeline stages for an existing article. Always honors the existing
     slug, even if the keyword would slugify differently. This ensures we update
     the original URL rather than creating a new one."""
+    global REFRESH_MODE
+    REFRESH_MODE = True
     log(f"=== REFRESH MODE: {keyword} ({slug}) ===")
 
     # Helper: slugify keyword like the other scripts do
