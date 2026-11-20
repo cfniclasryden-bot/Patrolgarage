@@ -288,6 +288,11 @@ def assemble(keyword):
 
     with open(TEMPLATE_FILE, encoding="utf-8") as f:
         template = f.read()
+    # 2026-11-20: the template is a live post, so its "UPDATED · <month>" badge
+    # came along into every new post (a November draft read "UPDATED · MAY 2026").
+    template = re.sub(r'(<span class="updated-badge">UPDATED · )[^<]*(</span>)',
+                      lambda m: m.group(1) + datetime.now().strftime("%B %Y").upper() + m.group(2),
+                      template)
 
     template = re.sub(r"<title>.*?</title>", f"<title>{meta['title']}</title>", template, count=1)
     template = re.sub(r'<meta name="description" content=".*?">', f'<meta name="description" content="{meta["description"]}">', template, count=1)
