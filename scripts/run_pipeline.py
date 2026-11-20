@@ -37,7 +37,8 @@ CITY_STAGE = "pre-publish: an Abu Dhabi post names Abu Dhabi, and no Y61/Y63"
 # 2026-11-20: the banned-word gate (check_editorial.py) also earns the ONE
 # regenerate: its blocks are wording ("a genuine risk"), not substance.
 EDITORIAL_STAGE = "pre-draft: no banned claim words or unconfirmed services"
-RETRYABLE = (CLAIMS_STAGE, CITY_STAGE, EDITORIAL_STAGE)
+POST_RULES_STAGE = "pre-draft: backlog topic, one service link, CTA, structure"
+RETRYABLE = (CLAIMS_STAGE, CITY_STAGE, EDITORIAL_STAGE, POST_RULES_STAGE)
 LOG_DIR = ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -206,6 +207,24 @@ def city_flagged(slug):
     return list(dict.fromkeys(check_city.model_mentions(ROOT / "blog" / f"{slug}.html")))
 
 
+def all_feedback(slug):
+    """Everything the ONE regenerate should fix, from every rewritable gate at
+    once (2026-11-20): claims, banned words and post rules ("FIX: ..." lines).
+    Fixing one gate's problem must not cost the run on another's."""
+    out = []
+    for fn in (claims_flagged, editorial_flagged):
+        try:
+            out += fn(slug)
+        except Exception:
+            pass
+    try:
+        import check_post_rules
+        out += check_post_rules.feedback(ROOT / "blog" / f"{slug}.html", refresh=REFRESH_MODE)
+    except Exception:
+        pass
+    return list(dict.fromkeys(out))
+
+
 def gate_with_one_retry(slug, regenerate):
     """Run the gates; on a check_claims block, regenerate ONCE and gate again.
 
@@ -221,8 +240,7 @@ def gate_with_one_retry(slug, regenerate):
     failed = run_gates(slug)
     if failed not in RETRYABLE:
         return failed
-    flagged = (claims_flagged(slug) if failed == CLAIMS_STAGE
-               else editorial_flagged(slug) if failed == EDITORIAL_STAGE else city_flagged(slug))
+    flagged = city_flagged(slug) if failed == CITY_STAGE else all_feedback(slug)
     log(f"[retry] {failed} blocked {len(flagged)} sentence(s); regenerating once "
         f"with them fed back as claims to remove")
     broke = regenerate({"GATE_FEEDBACK": "\n".join(flagged)})

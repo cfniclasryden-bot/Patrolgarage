@@ -264,10 +264,15 @@ def retry_block():
     because every argument here is joined into the keyword. Unset, this
     returns "" and the prompt is unchanged. Same as topchallenger-site.
     """
-    flagged = [s.strip() for s in os.environ.get("GATE_FEEDBACK", "").splitlines()
-               if s.strip()]
+    lines_all = [s.strip() for s in os.environ.get("GATE_FEEDBACK", "").splitlines() if s.strip()]
+    # "FIX: ..." lines (2026-11-20) come from check_post_rules.feedback(): length,
+    # meta opener, part codes, first-person procedure. Instructions, not claims.
+    fixes = [s[5:].strip() for s in lines_all if s.startswith("FIX: ")]
+    flagged = [s for s in lines_all if not s.startswith("FIX: ")]
+    fix_block = ("\n\nRETRY: ALSO FIX THESE BEFORE ANYTHING ELSE (the post rules blocked the previous draft):\n"
+                 + "\n".join(f"  - {f}" for f in fixes)) if fixes else ""
     if not flagged:
-        return ""
+        return fix_block
     lines = "\n".join(f'  - "{s}"' for s in flagged)
     return (
         "\n\nRETRY. A DRAFT OF THIS POST WAS BLOCKED BEFORE PUBLISHING.\n"
@@ -285,7 +290,7 @@ def retry_block():
         "form of a grade, capacity, interval or owner's manual mention is an "
         "approved sentence copied word for word, as the hard rule above says. "
         "Every other rule in this prompt still applies.\n" + lines + "\n"
-    )
+    ) + fix_block
 
 
 def city_block(slug):

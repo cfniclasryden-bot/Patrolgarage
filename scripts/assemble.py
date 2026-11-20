@@ -2,6 +2,7 @@
 """assemble.py — wrap draft in template with schema, internal links, AIO optimizations"""
 
 import sys
+import os
 import re
 import json
 import random
@@ -62,6 +63,12 @@ Return ONLY valid JSON (no markdown, no preamble):
 }}
 
 RULES FOR EVERY FIELD (BLOG-AUDIT-2026-11-20 §6.2-6.3): the title names the question or symptom in the searcher's words and promises the specific thing inside (the check, the number, the order); under 60 characters before the brand suffix; NO year. The description states the finding in one sentence, then what the post covers; never a booking line (no 'Book', 'Call', 'Get a quote', 'Get diagnosed today'). Never put a part or engine code (JR710E, VK56VD) in any field, and never open a description with "This post", "This article" or "In this guide". Never use: expert, same day, same-day, book now, best, #1, genuine, warranty, guarantee, approved, certified."""
+    # 2026-11-20: on the one regenerate, the post-rules feedback about the meta
+    # (opener, codes, booking line) reaches this prompt too.
+    _meta_fixes = [l[5:] for l in os.environ.get("GATE_FEEDBACK", "").splitlines()
+                   if l.startswith("FIX: ") and ("meta" in l or "codes" in l or "title" in l)]
+    if _meta_fixes:
+        prompt += "\n\nRETRY: fix these in the metadata:\n" + "\n".join("- " + f for f in _meta_fixes)
     # Abu Dhabi posts (2026-10-09): the city in title, description and H1, which
     # check_city.py then requires. Every other keyword's prompt is unchanged.
     if ad_city.ad_city_for(keyword):

@@ -287,6 +287,34 @@ def problems(path, refresh=False):
     return out
 
 
+def feedback(path, refresh=False):
+    """The post-rules problems as instructions for the ONE regenerate (2026-11-20).
+
+    Lines start with "FIX: " so generate.retry_block() renders them as
+    instructions, not as claims to delete. Problems a rewrite cannot fix (topic,
+    service-link placement, photo) are left out: those are assembler or backlog
+    matters.
+    """
+    out = []
+    for p in problems(path, refresh=refresh):
+        kind, _, detail = p.partition(": ")
+        if kind == "length":
+            out.append(f"FIX: the article was {detail.split(' (')[0]}; write about 1,400 words of article text, "
+                       f"never more than 1,700, and keep every section short.")
+        elif kind in ("opener", "meta"):
+            out.append("FIX: the meta description must state the answer in its first words. Never "
+                       "'This post', 'The post', 'This article', 'This guide' or a booking line. " + detail)
+        elif kind == "codes":
+            out.append("FIX: no part or engine codes (JR710E, VK56VD...) in the title, meta or direct answer; "
+                       "name the part in words. " + detail)
+        elif kind == "procedure":
+            out.append("FIX: this sentence describes the workshop's own procedure in the first person; "
+                       "rewrite it as general advice with no 'we': " + detail.split("service page: ", 1)[-1])
+        elif kind in ("answer", "title", "faq", "headings"):
+            out.append(f"FIX: {kind}: {detail}")
+    return out
+
+
 def main(argv):
     files = [a for a in argv if not a.startswith("--")]
     refresh = "--refresh" in argv
