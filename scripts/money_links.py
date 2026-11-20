@@ -133,7 +133,7 @@ def add_money_links(body, slug):
             # No "at the workshop": patrolgarage.ae has no premises.
             addition = f'Here is what <a href="{url}">{anchor}</a> covers.'
             h2s = list(re.finditer(r"<h2[^>]*>.*?</h2>", body, re.S))
-            start = h2s[1].end() if len(h2s) >= 2 else 0
+            start = h2s[0].end() if h2s else 0   # first <h2> (2026-11-20; was the second)
             para = re.search(r"<p>.*?</p>", body[start:], re.S)
             if para:
                 close = start + para.end() - len("</p>")
