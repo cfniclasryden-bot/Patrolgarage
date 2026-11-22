@@ -229,5 +229,41 @@ def main():
     return 0
 
 
+
+# ---- Write access: sitemap submission ---------------------------------------
+# The default token above is read-only (webmasters.readonly) and gets 403
+# "insufficient authentication scopes" on any write. Submitting a sitemap uses
+# a SEPARATE full-scope token: env GSC_OAUTH_WRITE_JSON, or .gsc-oauth-write.json
+# next to .gsc-oauth.json. Create it with `python3 scripts/gsc_auth.py --write`.
+
+OAUTH_WRITE_FILE = os.path.join(os.path.dirname(OAUTH_FILE), ".gsc-oauth-write.json")
+SITEMAPS = "https://searchconsole.googleapis.com/webmasters/v3/sites/{site}/sitemaps/{feed}"
+
+
+def _write_token():
+    raw = os.environ.get("GSC_OAUTH_WRITE_JSON")
+    if not raw:
+        if not os.path.exists(OAUTH_WRITE_FILE):
+            raise GSCError("no write-scope token: run `python3 scripts/gsc_auth.py --write` "
+                           f"in {os.path.dirname(OAUTH_WRITE_FILE)}")
+        with open(OAUTH_WRITE_FILE) as fh:
+            raw = fh.read()
+    d = json.loads(raw)
+    return _oauth_token((d["client_id"], d["client_secret"], d["refresh_token"]))
+
+
+def submit_sitemap(sitemap_url, property_uri=None):
+    """(Re)submit a sitemap, then return Google's record of it (lastSubmitted etc.)."""
+    site = requests.utils.quote(property_uri or DEFAULT_PROPERTY, safe="")
+    url = SITEMAPS.format(site=site, feed=requests.utils.quote(sitemap_url, safe=""))
+    h = {"Authorization": f"Bearer {_write_token()}"}
+    r = requests.put(url, headers=h, timeout=60)
+    if r.status_code not in (200, 204):
+        raise GSCError(f"sitemap submit failed: {r.status_code} {r.text[:300]}")
+    g = requests.get(url, headers=h, timeout=60)
+    g.raise_for_status()
+    return g.json()
+
+
 if __name__ == "__main__":
     sys.exit(main())

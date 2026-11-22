@@ -14,6 +14,15 @@ Only needs `requests` plus the standard library — no google-auth-oauthlib.
 
     python3 scripts/gsc_auth.py --client-secret-file ~/Downloads/client_secret_*.json
 
+WRITE ACCESS (--write, added 2026-11-22): asks for the full `webmasters` scope
+instead of read-only, which sitemap submission needs (the read-only token gets
+403 "insufficient authentication scopes"). The token goes to a SEPARATE file,
+.gsc-oauth-write.json, so the read-only .gsc-oauth.json every report and cron
+uses is never replaced. Without --client-secret-file it reuses the OAuth client
+already stored in .gsc-oauth.json.
+
+    python3 scripts/gsc_auth.py --write
+
 THE 7-DAY TRAP: if the OAuth consent screen is User type "External" and still in
 "Testing", Google expires refresh tokens after 7 DAYS and the cron dies quietly
 a week later. Either set User type to "Internal" (available on a Workspace org,
@@ -34,6 +43,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import requests
 
 SCOPE = "https://www.googleapis.com/auth/webmasters.readonly"
+WRITE_SCOPE = "https://www.googleapis.com/auth/webmasters"
 AUTH_URI = "https://accounts.google.com/o/oauth2/v2/auth"
 TOKEN_URI = "https://oauth2.googleapis.com/token"
 
@@ -94,9 +104,22 @@ def main():
     ap.add_argument("--print-secret", action="store_true",
                     help="echo the refresh token to stdout. Off by default so a live "
                          "credential is not pasted into scrollback or a transcript.")
+    ap.add_argument("--write", action="store_true",
+                    help="request the full webmasters scope (sitemap submit) and write "
+                         ".gsc-oauth-write.json instead of .gsc-oauth.json.")
+    ap.add_argument("--wait", type=int, default=300,
+                    help="seconds to wait for the browser approval (default 300).")
     args = ap.parse_args()
 
-    client_id, client_secret = load_client(args.client_secret_file)
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    existing = os.path.join(root, ".gsc-oauth.json")
+    if args.write and not args.client_secret_file and os.path.exists(existing):
+        with open(existing) as fh:
+            d = json.load(fh)
+        client_id, client_secret = d["client_id"], d["client_secret"]
+        print(f"[i] reusing the OAuth client in {existing}")
+    else:
+        client_id, client_secret = load_client(args.client_secret_file)
     port = free_port()
     redirect = f"http://localhost:{port}"
 
@@ -104,7 +127,7 @@ def main():
         "client_id": client_id,
         "redirect_uri": redirect,
         "response_type": "code",
-        "scope": SCOPE,
+        "scope": WRITE_SCOPE if args.write else SCOPE,
         "access_type": "offline",   # required to get a refresh token at all
         "prompt": "consent",        # forces a NEW refresh token even if previously granted
     }
@@ -115,15 +138,16 @@ def main():
 
     print(f"\n[i] redirect URI in use: {redirect}")
     print("[i] opening your browser. Sign in as the account that owns the Search")
-    print("    Console property, and approve read-only Search Console access.\n")
+    print("    Console property, and approve "
+          + ("FULL (read + write) Search Console access.\n" if args.write else "read-only Search Console access.\n"))
     print(f"    If the browser does not open, paste this:\n\n{url}\n")
     try:
         webbrowser.open(url)
     except Exception:
         pass
 
-    server.socket.settimeout(300)
-    for _ in range(300):
+    server.socket.settimeout(args.wait)
+    for _ in range(args.wait):
         if _result:
             break
         threading.Event().wait(1)
@@ -151,8 +175,7 @@ def main():
     blob = json.dumps({"client_id": client_id, "client_secret": client_secret,
                        "refresh_token": refresh}, separators=(",", ":"))
 
-    out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                       ".gsc-oauth.json")
+    out = os.path.join(root, ".gsc-oauth-write.json" if args.write else ".gsc-oauth.json")
 
     print("\n" + "=" * 72)
     print("AUTHORISED.")
@@ -167,6 +190,10 @@ def main():
         os.chmod(out, 0o600)
         print(f"\nRefresh token written to {out} (chmod 600, gitignored).")
         print(f"  token fingerprint: …{refresh[-6:]}  (last 6 chars, for matching only)")
+        if args.write:
+            print("\nWrite-scope token: gsc_client.submit_sitemap() reads this file.")
+            print("The read-only .gsc-oauth.json is unchanged.")
+            return 0
         print("\nLocal shell — the client reads that file automatically, or:\n")
         print("  export GSC_OAUTH_JSON=\"$(cat .gsc-oauth.json)\"\n")
         print("Railway — pipes the file straight in, so the value never appears\n"

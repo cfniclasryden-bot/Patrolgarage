@@ -16,3 +16,4 @@ docs/
 .gsc-oauth.json
 .vercel
 .bing-api.json
+.gsc-oauth-write.json
