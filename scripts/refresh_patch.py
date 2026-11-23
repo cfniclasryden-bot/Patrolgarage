@@ -44,6 +44,7 @@ ships, with no second API call:
 Usage:
     python3 scripts/refresh_patch.py <slug> [--gaps "kw1,kw2"] [--dry-run]
                                             [--out FILE] [--apply-from FILE] [--bump-date]
+                                            [--brief "text" | --brief-file FILE]
 """
 import os
 import re
@@ -106,7 +107,7 @@ YOUR THREE JOBS:
 3. MISSING SUBTOPICS: if an obvious reader question is unanswered, add ONE new
    <h2> section with 2-3 paragraphs. Only if genuinely missing. Never more than one.
 
-ARTICLE BODY:
+{brief}ARTICLE BODY:
 ---
 {body}
 ---
@@ -194,7 +195,15 @@ def stamp_updated(html):
                   rf"\g<1>{today}\g<2>", html, count=1)
 
 
-def refresh(slug, gaps, dry, bump_date, out_path=None, apply_from=None):
+def brief_block(brief):
+    """Editor's requirements for this one refresh (--brief). Same absolute rules apply."""
+    if not brief:
+        return ""
+    return ("EDITOR'S REQUIREMENTS FOR THIS REFRESH (the absolute rules above still apply, "
+            "including the word budget and the one new heading):\n" + brief.strip() + "\n\n")
+
+
+def refresh(slug, gaps, dry, bump_date, out_path=None, apply_from=None, brief=None):
     path = BLOG / f"{slug}.html"
     if not path.exists():
         print(f"[!] no such post: {path.name}")
@@ -232,7 +241,7 @@ def refresh(slug, gaps, dry, bump_date, out_path=None, apply_from=None):
     ow = len(words(body))
     budget = int(max(ow * (MAX_GROWTH - 1), MIN_HEADROOM) * 0.6)
     prompt = PROMPT.format(gaps=", ".join(gaps) if gaps else "(none supplied)",
-                           body=body, budget=budget)
+                           body=body, budget=budget, brief=brief_block(brief))
     resp = client.messages.create(model=MODEL, max_tokens=16000,
                                   messages=[{"role": "user", "content": prompt}])
     # content[0] is not necessarily the answer: with extended thinking enabled the
@@ -295,8 +304,11 @@ def main():
             if a.startswith(f"--{name}="):
                 return a.split("=", 1)[1]
         return None
+    brief = opt("brief")
+    if opt("brief-file"):
+        brief = Path(opt("brief-file")).read_text(encoding="utf-8")
     return refresh(args[0], gaps, "--dry-run" in sys.argv, "--bump-date" in sys.argv,
-                   out_path=opt("out"), apply_from=opt("apply-from"))
+                   out_path=opt("out"), apply_from=opt("apply-from"), brief=brief)
 
 
 if __name__ == "__main__":
