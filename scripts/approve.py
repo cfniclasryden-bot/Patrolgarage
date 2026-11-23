@@ -18,7 +18,13 @@ On publish, in order:
   5. publish.publish(): blog hub / listing (journal_update.py), sitemap, commit
      and push, deploy, then IndexNow for the changed URLs;
   6. Supabase (when SUPABASE_URL / SUPABASE_SERVICE_KEY are set): the row is
-     marked published, editorial_status 'approved'.
+     marked published, editorial_status 'approved';
+  7. submits the sitemap to Google Search Console (sc-domain:<site>) with the
+     write-scope token (gsc_client.submit_sitemap; .gsc-oauth-write.json or env
+     GSC_OAUTH_WRITE_JSON). Never fatal, never prints the token; the result is
+     appended to logs/gsc-sitemap-submit.log (gitignored).
+
+    python3 scripts/approve.py --submit-sitemap   # step 7 only
 """
 import os
 import re
@@ -69,7 +75,45 @@ def supabase_mark(slug):
     print(f"    Supabase: row created as published ({r.status_code})")
 
 
+GSC_LOG = ROOT / "logs" / "gsc-sitemap-submit.log"
+_SECRETISH = re.compile(r"ya29\.[\w.-]+|1//[\w-]{20,}|(refresh_token|client_secret|access_token)[\"']?\s*[:=]\s*[\"']?[^\s\"',}]+")
+
+
+def gsc_submit_sitemap():
+    """Submit this site's sitemap to Search Console (2026-11-23). Returns True on success.
+
+    Uses the write-scope token only (read-only gets 403). Any failure is logged and
+    swallowed: a publish is never undone because Google refused a sitemap ping.
+    """
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+    prop, sitemap, ok = "?", "?", False
+    try:
+        import gsc_client
+        prop = gsc_client.DEFAULT_PROPERTY
+        domain = prop.split(":", 1)[1] if prop.startswith("sc-domain:") else re.sub(r"^https?://|/$", "", prop)
+        sitemap = f"https://{domain}/sitemap.xml"
+        rec = gsc_client.submit_sitemap(sitemap, property_uri=prop)
+        contents = ", ".join(f"{c.get('type')} submitted={c.get('submitted')}" for c in rec.get("contents", []))
+        line = (f"OK lastSubmitted={rec.get('lastSubmitted')} isPending={rec.get('isPending')} "
+                f"lastDownloaded={rec.get('lastDownloaded', '-')} errors={rec.get('errors', 0)} "
+                f"warnings={rec.get('warnings', 0)} {contents}").strip()
+        ok = True
+    except Exception as e:
+        line = f"FAILED {type(e).__name__}: {str(e)[:300]}"
+    line = _SECRETISH.sub("[redacted]", line)
+    print(f"[gsc] sitemap {sitemap} -> {prop}: {line}")
+    try:
+        GSC_LOG.parent.mkdir(exist_ok=True)
+        with open(GSC_LOG, "a", encoding="utf-8") as fh:
+            fh.write(f"{stamp}\t{prop}\t{sitemap}\t{line}\n")
+    except OSError as e:
+        print(f"    [i] could not write {GSC_LOG.name}: {e}")
+    return ok
+
+
 def main(argv):
+    if "--submit-sitemap" in argv:
+        return 0 if gsc_submit_sitemap() else 1
     args = [a for a in argv if not a.startswith("--")]
     if len(args) != 1:
         print(__doc__)
@@ -133,6 +177,7 @@ def main(argv):
             subprocess.run(["python3", "scripts/indexnow.py", "--since", base], cwd=ROOT)
     if ok:
         supabase_mark(slug)
+        gsc_submit_sitemap()
     return 0 if ok else 1
 
 
