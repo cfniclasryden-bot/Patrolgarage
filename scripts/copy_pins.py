@@ -117,9 +117,9 @@ PINS = {'about.html': [("Today, we're proud to serve hundreds of Patrol owners a
  'blog/nissan-patrol-black-smoke.html': [('There are five causes we see most often, and the right '
                                           'diagnosis depends on which engine you have and when the '
                                           'smoke appears.',
-                                          'There are five common causes, and the right diagnosis '
-                                          'depends on which engine you have and when the smoke '
-                                          'appears.')],
+                                          'There are five common causes, and <a href="/services.html">the '
+                                          'right diagnosis</a> depends on which engine you have and '
+                                          'when the smoke appears.')],
  'blog/nissan-patrol-engine-problems.html': [('but the reality is that the majority of engine '
                                               'problems we see at Patrol Garage come down to '
                                               'maintenance timing and oil spec, not factory '
