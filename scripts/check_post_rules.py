@@ -57,7 +57,10 @@ WORDS_MIN, WORDS_MAX = 1200, 1800
 PART_CODE = re.compile(r"\b(?:JR\d{3}[A-Z]{0,2}|VK\d{2}[A-Z]{0,4}|VQ\d{2}[A-Z]{0,4}|RE\d[A-Z]\d{2}[A-Z]?"
                        r"|TB\d{2}[A-Z]{0,2}|TD\d{2}[A-Z]{0,2}|ZD\d{2}[A-Z]{0,2}|KLE\w{5,})\b")
 META_OPENER = re.compile(r"\b(?:this|the) (?:post|article|guide|page|blog)\b|\bin this (?:post|article|guide)\b"
-                         r"|\bhere(?:'s| is) (?:what|everything)\b", re.I)
+                         r"|\bhere(?:'s| is) (?:what|everything)\b"
+                         # 2026-11-25: "Covers how vapour enters..." slipped through on the
+                         # fuel-smell draft. Any sentence that opens with "Covers" is blocked.
+                         r"|(?:^|[.!?:;]\s+)covers\b", re.I)
 FIRST_PERSON_PROC = re.compile(
     r"\b(?:we|our (?:team|technicians?|mechanics?|workshop))\b(?:\s+\w+){0,3}?\s+"
     r"(?:check|checks|change|changes|replace|replaces|measure|measures|inspect|inspects|test|tests|scan|scans|"
